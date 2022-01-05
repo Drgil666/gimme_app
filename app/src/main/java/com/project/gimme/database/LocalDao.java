@@ -1,4 +1,4 @@
-package com.project.gimme.database.dao;
+package com.project.gimme.database;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -13,7 +13,7 @@ import com.project.gimme.pojo.User;
  * @date 2022/1/5 16:50
  */
 @Dao
-public interface UserDao {
+public interface LocalDao {
     /**
      * 插入用户
      *
