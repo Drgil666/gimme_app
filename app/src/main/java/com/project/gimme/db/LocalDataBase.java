@@ -1,4 +1,4 @@
-package com.project.gimme.database;
+package com.project.gimme.db;
 
 import android.content.Context;
 

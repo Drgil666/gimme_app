@@ -1,4 +1,4 @@
-package com.project.gimme.database;
+package com.project.gimme.db;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.User;
 
 /**
@@ -40,4 +41,13 @@ public interface LocalDao {
      */
     @Query("select * from user where id= :id")
     User getUser(Integer id);
+
+    /**
+     * 创建频道
+     *
+     * @param channel 被创建的频道类
+     * @return 是否成功
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Boolean createChannel(Channel channel);
 }

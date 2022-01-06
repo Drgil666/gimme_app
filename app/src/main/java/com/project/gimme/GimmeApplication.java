@@ -7,7 +7,7 @@ import android.content.ContextWrapper;
 
 import com.project.gimme.controller.Controller;
 import com.project.gimme.controller.RetrofitClient;
-import com.project.gimme.database.LocalDataBase;
+import com.project.gimme.db.LocalDataBase;
 
 import lombok.Data;
 
