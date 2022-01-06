@@ -1,8 +1,8 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 import lombok.Data;
 
@@ -11,27 +11,27 @@ import lombok.Data;
  * @date 2022/1/4 9:34
  */
 @Data
-@Entity(tableName = "group_notice")
+@Entity(nameInDb = "group_notice")
 public class GroupNotice {
     /**
      * 群公告id
      */
-    @PrimaryKey()
-    @ColumnInfo(name = "id", typeAffinity = ColumnInfo.INTEGER)
+    @Id
+    @Property(nameInDb = "id")
     private Integer id;
     /**
      * 发布者id
      */
-    @ColumnInfo(name = "owner_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "owner_id")
     private Integer ownerId;
     /**
      * 公告所在群聊id
      */
-    @ColumnInfo(name = "group_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "group_id")
     private Integer groupId;
     /**
      * 公告内容
      */
-    @ColumnInfo(name = "text", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "text")
     private String text;
 }

@@ -24,6 +24,7 @@ public class GimmeApplication extends Application {
         localDataBase = LocalDataBase.getInstance(this);
         controller = RetrofitClient.getInstance().getController();
         //创建单例
+
     }
 
     /**

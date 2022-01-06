@@ -1,7 +1,8 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.Property;
 
 import java.util.Date;
 
@@ -12,21 +13,22 @@ import lombok.Data;
  * @date 2022/1/4 16:02
  */
 @Data
-@Entity(tableName = "checkin_user")
+@Entity(nameInDb = "checkin_user",
+        indexes = @Index(value = "user_id,checkin_id", unique = true))
 public class CheckInUser {
     /**
      * 用户id
      */
-    @ColumnInfo(name = "user_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "user_id")
     private Integer userId;
     /**
      * 签到id
      */
-    @ColumnInfo(name = "checkin_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "checkin_id")
     private Integer checkInId;
     /**
      * 签到时间
      */
-    @ColumnInfo(name = "timestamp")
+    @Property(nameInDb = "timestamp")
     private Date timestamp;
 }

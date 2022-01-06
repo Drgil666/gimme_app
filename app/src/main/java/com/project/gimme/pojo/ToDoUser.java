@@ -1,8 +1,8 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.Property;
 
 import lombok.Data;
 
@@ -11,23 +11,22 @@ import lombok.Data;
  * @date 2022/1/4 16:39
  */
 @Data
-@Entity(tableName = "todo_user")
+@Entity(nameInDb = "todo_user",
+        indexes = @Index(value = "todo_id,user_id", unique = true))
 public class ToDoUser {
     /**
      * 待办id
      */
-    @PrimaryKey()
-    @ColumnInfo(name = "todo_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "todo_id")
     private Integer toDoId;
     /**
      * 用户id
      */
-    @ColumnInfo(name = "user_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "user_id")
     private Integer userId;
     /**
      * 待办状态
      */
-    @ColumnInfo(name = "status", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "status")
     private Integer status;
-    //TODO:需要添加类转换器
 }

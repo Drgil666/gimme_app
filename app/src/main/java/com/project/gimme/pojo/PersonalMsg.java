@@ -1,8 +1,8 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 import lombok.Data;
 
@@ -12,32 +12,32 @@ import lombok.Data;
  */
 
 @Data
-@Entity(tableName = "personal_msg")
+@Entity(nameInDb = "personal_msg")
 public class PersonalMsg {
     /**
      * 信息通知id
      */
-    @PrimaryKey()
-    @ColumnInfo(name = "id", typeAffinity = ColumnInfo.INTEGER)
+    @Id
+    @Property(nameInDb = "id")
     private Integer id;
     /**
      * 消息通知类型
      */
-    @ColumnInfo(name = "type", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "type")
     private Integer type;
     /**
      * 消息创建者id
      */
-    @ColumnInfo(name = "owner_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "owner_id")
     private Integer ownerId;
     /**
      * 被操作者id
      */
-    @ColumnInfo(name = "operator_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "operator_id")
     private Integer operatorId;
     /**
      * 群聊/个人/频道id
      */
-    @ColumnInfo(name = "object_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "object_id")
     private Integer objectId;
 }

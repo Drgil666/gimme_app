@@ -1,8 +1,8 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 import lombok.Data;
 
@@ -11,32 +11,32 @@ import lombok.Data;
  * @date 2022/1/4 16:56
  */
 @Data
-@Entity(tableName = "group_file")
+@Entity(nameInDb = "group_file")
 public class GroupFile {
     /**
      * 群文件id
      */
-    @PrimaryKey()
-    @ColumnInfo(name = "id", typeAffinity = ColumnInfo.INTEGER)
+    @Id
+    @Property(nameInDb = "id")
     private Integer id;
     /**
      * 上传者id
      */
-    @ColumnInfo(name = "owner_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "owner_id")
     private Integer ownerId;
     /**
      * 群聊id
      */
-    @ColumnInfo(name = "group_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "group_id")
     private Integer groupId;
     /**
      * 文件对应的mongoId
      */
-    @ColumnInfo(name = "mongo_id", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "mongo_id")
     private String mongoId;
     /**
      * 文件名
      */
-    @ColumnInfo(name = "filename", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "filename")
     private String filename;
 }

@@ -1,7 +1,8 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 import java.util.Date;
 
@@ -12,21 +13,22 @@ import lombok.Data;
  * @date 2022/1/3 10:28
  */
 @Data
-@Entity(tableName = "group")
+@Entity(nameInDb = "group")
 public class Group {
     /**
      * 用户id
      */
-    @ColumnInfo(name = "id", typeAffinity = ColumnInfo.INTEGER)
+    @Id
+    @Property(nameInDb = "id")
     private Integer id;
     /**
      * 创建时间
      */
-    @ColumnInfo(name = "create_time")
+    @Property(nameInDb = "create_time")
     private Date createTime;
     /**
      * 群聊昵称
      */
-    @ColumnInfo(name = "nick", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "nick")
     private String nick;
 }

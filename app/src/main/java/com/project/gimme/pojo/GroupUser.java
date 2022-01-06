@@ -1,8 +1,9 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.Property;
 
 import lombok.Data;
 
@@ -11,27 +12,27 @@ import lombok.Data;
  * @date 2022/1/3 10:47
  */
 @Data
-@Entity(tableName = "group_user")
+@Entity(nameInDb = "group_user",
+        indexes = @Index(value = "group_id,user_id", unique = true))
 public class GroupUser {
     /**
      * 群聊id
      */
-    @PrimaryKey()
-    @ColumnInfo(name = "group_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "group_id")
     private Integer groupId;
     /**
      * 用户id
      */
-    @ColumnInfo(name = "user_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "user_id")
     private Integer userId;
     /**
      * 用户权限类型
      */
-    @ColumnInfo(name = "type", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "type")
     private Integer type;
     /**
      * 群聊昵称
      */
-    @ColumnInfo(name = "group_nick", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "group_nick")
     private String groupNick;
 }

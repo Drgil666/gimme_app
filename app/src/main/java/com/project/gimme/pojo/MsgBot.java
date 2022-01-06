@@ -1,10 +1,8 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import java.util.Date;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 import lombok.Data;
 
@@ -13,32 +11,27 @@ import lombok.Data;
  * @date 2022/1/4 15:26
  */
 @Data
-@Entity(tableName = "msg_bot")
+@Entity(nameInDb = "msg_bot")
 public class MsgBot {
     /**
      * 机器人id
      */
-    @PrimaryKey()
-    @ColumnInfo(name = "id", typeAffinity = ColumnInfo.INTEGER)
+    @Id
+    @Property(nameInDb = "id")
     private Integer id;
     /**
      * 机器人广播消息
      */
-    @ColumnInfo(name = "text", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "text")
     private String text;
-    /**
-     * 机器人广播时间
-     */
-    @ColumnInfo(name = "date")
-    private Date date;
     /**
      * 群聊id
      */
-    @ColumnInfo(name = "group_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "group_id")
     private Integer groupId;
     /**
      * 执行时间频率
      */
-    @ColumnInfo(name = "cron", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "cron")
     private String cron;
 }

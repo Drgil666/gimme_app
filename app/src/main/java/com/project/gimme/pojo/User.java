@@ -1,8 +1,8 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 import java.util.Date;
 
@@ -13,62 +13,62 @@ import lombok.Data;
  * @date 2022/1/2 11:51
  */
 @Data
-@Entity(tableName = "user")
+@Entity(nameInDb = "user")
 public class User {
     /**
      * 用户id
      */
-    @PrimaryKey()
-    @ColumnInfo(name = "id", typeAffinity = ColumnInfo.INTEGER)
+    @Id
+    @Property(nameInDb = "id")
     private Integer id;
     /**
      * 用户昵称
      */
-    @ColumnInfo(name = "nick", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "nick")
     private String nick;
     /**
      * 用户头像的mongoId
      */
-    @ColumnInfo(name = "avatar", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "avatar")
     private String avatar;
     /**
      * 用户国家id
      */
-    @ColumnInfo(name = "country", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "country")
     private Integer country;
     /**
      * 用户城市id
      */
-    @ColumnInfo(name = "city", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "city")
     private Integer city;
     /**
      * 用户省份id
      */
-    @ColumnInfo(name = "province", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "province")
     private Integer province;
     /**
      * 用户生日
      */
-    @ColumnInfo(name = "birthday", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "birthday")
     private Date birthday;
     /**
      * 用户邮箱
      */
-    @ColumnInfo(name = "mail", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "mail")
     private String mail;
     /**
      * 用户职业
      */
-    @ColumnInfo(name = "occupation", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "occupation")
     private Integer occupation;
     /**
      * 用户公司
      */
-    @ColumnInfo(name = "company", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "company")
     private Integer company;
     /**
      * 用户个性签名
      */
-    @ColumnInfo(name = "motto", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "motto")
     private String motto;
 }

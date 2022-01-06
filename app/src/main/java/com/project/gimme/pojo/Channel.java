@@ -1,8 +1,8 @@
 package com.project.gimme.pojo;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 import java.util.Date;
 
@@ -13,27 +13,27 @@ import lombok.Data;
  * @date 2022/1/4 10:02
  */
 @Data
-@Entity(tableName = "channel")
+@Entity(nameInDb = "channel")
 public class Channel {
     /**
      * 频道id
      */
-    @PrimaryKey()
-    @ColumnInfo(name = "id", typeAffinity = ColumnInfo.INTEGER)
+    @Id
+    @Property(nameInDb = "id")
     private Integer id;
     /**
      * 创建者id
      */
-    @ColumnInfo(name = "owner_id", typeAffinity = ColumnInfo.INTEGER)
+    @Property(nameInDb = "owner_id")
     private Integer ownerId;
     /**
      * 频道名
      */
-    @ColumnInfo(name = "nick", typeAffinity = ColumnInfo.TEXT)
+    @Property(nameInDb = "nick")
     private String nick;
     /**
      * 创建时间
      */
-    @ColumnInfo(name = "create_time")
+    @Property(nameInDb = "create_time")
     private Date createTime;
 }

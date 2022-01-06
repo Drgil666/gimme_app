@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'//greendao
 android {
     compileSdk 30
 
@@ -22,6 +23,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    greendao {
+        schemaVersion 1 //数据库版本号，升级时可配置
+        daoPackage 'com.project.gimme.gen'
+        //dao的包名，包名默认是entity实体类所在的包
+        targetGenDir 'src/main/java'
+        //生成数据库文件的目录DaoMaster和DaoSession
+    }
 }
 
 dependencies {
@@ -34,12 +42,11 @@ dependencies {
     // lombok
     implementation 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
-    // 数据库androidX-room
-    implementation "androidx.room:room-runtime:2.2.4"
-    annotationProcessor "androidx.room:room-compiler:2.2.4"
     // 后端链接用retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     // 常用工具库
     implementation 'org.apache.commons:commons-lang3:3.7'
+    // 管理本地数据库greendao
+    implementation 'org.greenrobot:greendao:3.3.0'
 }
