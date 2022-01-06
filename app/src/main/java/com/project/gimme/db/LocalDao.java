@@ -77,6 +77,7 @@ public interface LocalDao {
      * @param idList id列表
      * @return 影响行数
      */
-    @Query("delete from channel where id in :idList")
+    @Query("delete from channel where id is :idList")
     Long deleteChannel(List<Integer> idList);
+    //TODO：可能需要更换Room数据库工具
 }
