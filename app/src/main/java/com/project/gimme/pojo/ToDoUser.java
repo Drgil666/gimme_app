@@ -29,4 +29,5 @@ public class ToDoUser {
      */
     @ColumnInfo(name = "status", typeAffinity = ColumnInfo.INTEGER)
     private Integer status;
+    //TODO:需要添加类转换器
 }

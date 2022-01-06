@@ -9,6 +9,8 @@ import androidx.room.Update;
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.User;
 
+import java.util.List;
+
 /**
  * @author DrGilbert
  * @date 2022/1/5 16:50
@@ -50,4 +52,31 @@ public interface LocalDao {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Boolean createChannel(Channel channel);
+
+    /**
+     * 更新频道
+     *
+     * @param channel 要更新的频道
+     * @return 影响行数
+     */
+    @Update
+    Long updateChannel(Channel channel);
+
+    /**
+     * 通过id获取频道
+     *
+     * @param id 频道id
+     * @return 频道
+     */
+    @Query("select * from channel where id=:id")
+    Channel getChannel(Integer id);
+
+    /**
+     * 批量删除频道
+     *
+     * @param idList id列表
+     * @return 影响行数
+     */
+    @Query("delete from channel where id in :idList")
+    Long deleteChannel(List<Integer> idList);
 }

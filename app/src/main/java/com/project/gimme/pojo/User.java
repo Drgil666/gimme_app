@@ -49,7 +49,7 @@ public class User {
     /**
      * 用户生日
      */
-    @ColumnInfo(name = "birthday")
+    @ColumnInfo(name = "birthday", typeAffinity = ColumnInfo.INTEGER)
     private Date birthday;
     /**
      * 用户邮箱

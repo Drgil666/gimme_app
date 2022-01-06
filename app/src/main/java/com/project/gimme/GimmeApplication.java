@@ -9,13 +9,10 @@ import com.project.gimme.controller.Controller;
 import com.project.gimme.controller.RetrofitClient;
 import com.project.gimme.db.LocalDataBase;
 
-import lombok.Data;
-
 /**
  * @author DrGilbert
  * @date 2022/1/5 17:05
  */
-@Data
 public class GimmeApplication extends Application {
     private static LocalDataBase localDataBase;
     private static Controller controller;
