@@ -49,8 +49,7 @@ public class DataBaseManager {
         if (openHelper == null) {
             openHelper = new DaoMaster.DevOpenHelper(context, DB_NAME, null);
         }
-        SQLiteDatabase db = openHelper.getWritableDatabase();
-        return db;
+        return openHelper.getWritableDatabase();
     }
 
     /**
@@ -59,11 +58,11 @@ public class DataBaseManager {
      * @param user 要加入的用户
      * @return 是否插入成功
      */
-    public Boolean insertUser(User user) {
+    public void insertUser(User user) {
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         UserDao userDao = daoSession.getUserDao();
-        return userDao.insert(user) == 1;
+        userDao.insert(user);
     }
 
     /**

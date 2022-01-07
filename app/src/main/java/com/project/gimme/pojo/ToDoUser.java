@@ -9,7 +9,7 @@ import org.greenrobot.greendao.annotation.Property;
  * @author DrGilbert
  * @date 2022/1/4 16:14
  */
-@Entity(nameInDb = "todo_list",
+@Entity(nameInDb = "todo_user",
         indexes = {@Index(value = "toDoId,userId", unique = true)})
 public class ToDoUser {
     /**

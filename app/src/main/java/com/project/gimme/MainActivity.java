@@ -14,8 +14,9 @@ import com.project.gimme.DataBase.DataBaseManager;
 import com.project.gimme.databinding.ActivityMainBinding;
 import com.project.gimme.pojo.User;
 
-import java.util.Date;
-
+/**
+ * @author DrGilbert
+ */
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
@@ -40,21 +41,21 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        User user = new User();
-        user.setBirthday(new Date());
-        user.setAvatar("111");
-        user.setCity(1);
-        user.setCompany("111");
-        user.setMail("111");
-        user.setMotto("11");
-        user.setNick("11");
-        user.setId(1);
-        user.setOccupation(1);
-        user.setProvince(1);
-        user.setCountry(1);
-        System.out.println("创建一个用户...");
         DataBaseManager dataBaseManager = DataBaseManager.getInstance(this);
-        dataBaseManager.insertUser(user);
+//        User user = new User();
+//        user.setBirthday(new Date());
+//        user.setAvatar("111");
+//        user.setCity(1);
+//        user.setCompany("111");
+//        user.setMail("111");
+//        user.setMotto("11");
+//        user.setNick("11");
+//        user.setId(1);
+//        user.setOccupation(1);
+//        user.setProvince(1);
+//        user.setCountry(1);
+//        System.out.println("创建一个用户...");
+//        dataBaseManager.insertUser(user);
         User user1 = dataBaseManager.getUser(1);
         System.out.println(user1.getAvatar());
     }

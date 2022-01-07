@@ -15,10 +15,10 @@ import com.project.gimme.controller.RetrofitClient;
 public class GimmeApplication extends Application {
     private static Controller controller;
     private String token;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        System.out.println("opening...");
         controller = RetrofitClient.getInstance().getController();
     }
 
