@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         user.setProvince(1);
         user.setCountry(1);
         System.out.println("创建一个用户...");
-        DataBaseManager dataBaseManager = GimmeApplication.getDataBaseManager();
+        DataBaseManager dataBaseManager = DataBaseManager.getInstance(this);
         dataBaseManager.insertUser(user);
         User user1 = dataBaseManager.getUser(1);
         System.out.println(user1.getAvatar());

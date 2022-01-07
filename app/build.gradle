@@ -24,7 +24,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     greendao {
-        schemaVersion 1 //数据库版本号，升级时可配置
+        schemaVersion 2 //数据库版本号，升级时可配置
         daoPackage 'com.project.gimme.gen'
         //dao的包名，包名默认是entity实体类所在的包
         targetGenDir 'src/main/java'

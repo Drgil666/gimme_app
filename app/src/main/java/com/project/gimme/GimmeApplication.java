@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
 
-import com.project.gimme.DataBase.DataBaseManager;
 import com.project.gimme.controller.Controller;
 import com.project.gimme.controller.RetrofitClient;
 
@@ -15,13 +14,12 @@ import com.project.gimme.controller.RetrofitClient;
  */
 public class GimmeApplication extends Application {
     private static Controller controller;
-    private static String token;
-    private static DataBaseManager dataBaseManager;
+    private String token;
     @Override
     public void onCreate() {
         super.onCreate();
+        System.out.println("opening...");
         controller = RetrofitClient.getInstance().getController();
-        dataBaseManager = DataBaseManager.getInstance(this);
     }
 
     /**
@@ -40,9 +38,5 @@ public class GimmeApplication extends Application {
         } else {
             return null;
         }
-    }
-
-    public static DataBaseManager getDataBaseManager() {
-        return dataBaseManager;
     }
 }
