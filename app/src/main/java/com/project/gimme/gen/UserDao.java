@@ -109,22 +109,22 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (birthday != null) {
             stmt.bindLong(7, birthday.getTime());
         }
-
+ 
         String mail = entity.getMail();
         if (mail != null) {
             stmt.bindString(8, mail);
         }
-
+ 
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
             stmt.bindLong(9, occupation);
         }
-
+ 
         String company = entity.getCompany();
         if (company != null) {
             stmt.bindString(10, company);
         }
-
+ 
         String motto = entity.getMotto();
         if (motto != null) {
             stmt.bindString(11, motto);
@@ -169,17 +169,17 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (birthday != null) {
             stmt.bindLong(7, birthday.getTime());
         }
-
+ 
         String mail = entity.getMail();
         if (mail != null) {
             stmt.bindString(8, mail);
         }
-
+ 
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
             stmt.bindLong(9, occupation);
         }
-
+ 
         String company = entity.getCompany();
         if (company != null) {
             stmt.bindString(10, company);
