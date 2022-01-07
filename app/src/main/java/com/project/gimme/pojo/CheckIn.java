@@ -1,16 +1,14 @@
 package com.project.gimme.pojo;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
-
-import lombok.Data;
 
 /**
  * @author DrGilbert
  * @date 2022/1/4 15:09
  */
-@Data
 @Entity(nameInDb = "checkin")
 public class CheckIn {
     /**
@@ -34,4 +32,48 @@ public class CheckIn {
      */
     @Property(nameInDb = "type")
     private Integer type;
+
+    @Generated(hash = 1969079022)
+    public CheckIn(Integer id, Integer groupId, String address, Integer type) {
+        this.id = id;
+        this.groupId = groupId;
+        this.address = address;
+        this.type = type;
+    }
+
+    @Generated(hash = 1821846413)
+    public CheckIn() {
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getGroupId() {
+        return this.groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 }

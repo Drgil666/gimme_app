@@ -1,17 +1,14 @@
 package com.project.gimme.pojo;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
-
-import lombok.Data;
 
 /**
  * @author DrGilbert
  * @date 2022/1/4 15:47
  */
-
-@Data
 @Entity(nameInDb = "personal_msg")
 public class PersonalMsg {
     /**
@@ -40,4 +37,58 @@ public class PersonalMsg {
      */
     @Property(nameInDb = "object_id")
     private Integer objectId;
+
+    @Generated(hash = 1093439052)
+    public PersonalMsg(Integer id, Integer type, Integer ownerId,
+                       Integer operatorId, Integer objectId) {
+        this.id = id;
+        this.type = type;
+        this.ownerId = ownerId;
+        this.operatorId = operatorId;
+        this.objectId = objectId;
+    }
+
+    @Generated(hash = 1820845707)
+    public PersonalMsg() {
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getOwnerId() {
+        return this.ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Integer getOperatorId() {
+        return this.operatorId;
+    }
+
+    public void setOperatorId(Integer operatorId) {
+        this.operatorId = operatorId;
+    }
+
+    public Integer getObjectId() {
+        return this.objectId;
+    }
+
+    public void setObjectId(Integer objectId) {
+        this.objectId = objectId;
+    }
 }

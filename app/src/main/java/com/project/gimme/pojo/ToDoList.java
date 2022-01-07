@@ -1,18 +1,16 @@
 package com.project.gimme.pojo;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
 import java.util.Date;
 
-import lombok.Data;
-
 /**
  * @author DrGilbert
  * @date 2022/1/4 16:14
  */
-@Data
 @Entity(nameInDb = "todo_list")
 public class ToDoList {
     /**
@@ -41,4 +39,58 @@ public class ToDoList {
      */
     @Property(nameInDb = "end_time")
     private Date endTime;
+
+    @Generated(hash = 1512001051)
+    public ToDoList(Integer id, Integer ownerId, String text, Date startTime,
+                    Date endTime) {
+        this.id = id;
+        this.ownerId = ownerId;
+        this.text = text;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    @Generated(hash = 707050199)
+    public ToDoList() {
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getOwnerId() {
+        return this.ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Date getStartTime() {
+        return this.startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return this.endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 }

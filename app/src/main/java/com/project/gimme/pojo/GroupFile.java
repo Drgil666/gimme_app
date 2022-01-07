@@ -1,16 +1,14 @@
 package com.project.gimme.pojo;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
-
-import lombok.Data;
 
 /**
  * @author DrGilbert
  * @date 2022/1/4 16:56
  */
-@Data
 @Entity(nameInDb = "group_file")
 public class GroupFile {
     /**
@@ -39,4 +37,58 @@ public class GroupFile {
      */
     @Property(nameInDb = "filename")
     private String filename;
+
+    @Generated(hash = 1859552118)
+    public GroupFile(Integer id, Integer ownerId, Integer groupId, String mongoId,
+                     String filename) {
+        this.id = id;
+        this.ownerId = ownerId;
+        this.groupId = groupId;
+        this.mongoId = mongoId;
+        this.filename = filename;
+    }
+
+    @Generated(hash = 892659331)
+    public GroupFile() {
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getOwnerId() {
+        return this.ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Integer getGroupId() {
+        return this.groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getMongoId() {
+        return this.mongoId;
+    }
+
+    public void setMongoId(String mongoId) {
+        this.mongoId = mongoId;
+    }
+
+    public String getFilename() {
+        return this.filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 }

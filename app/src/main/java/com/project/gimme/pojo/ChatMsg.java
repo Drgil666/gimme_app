@@ -2,18 +2,16 @@ package com.project.gimme.pojo;
 
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 
 import java.util.Date;
 
-import lombok.Data;
-
 /**
  * @author DrGilbert
  * @date 2022/1/4 11:48
  */
-@Data
 @Entity(nameInDb = "chat_msg")
 public class ChatMsg {
     /**
@@ -47,4 +45,67 @@ public class ChatMsg {
      */
     @Property(nameInDb = "owner_id")
     private Integer ownerId;
+
+    @Generated(hash = 1952304784)
+    public ChatMsg(Integer id, String text, Integer type, Integer objectId,
+                   Date timeStamp, Integer ownerId) {
+        this.id = id;
+        this.text = text;
+        this.type = type;
+        this.objectId = objectId;
+        this.timeStamp = timeStamp;
+        this.ownerId = ownerId;
+    }
+
+    @Generated(hash = 1355502543)
+    public ChatMsg() {
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return this.text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getObjectId() {
+        return this.objectId;
+    }
+
+    public void setObjectId(Integer objectId) {
+        this.objectId = objectId;
+    }
+
+    public Date getTimeStamp() {
+        return this.timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public Integer getOwnerId() {
+        return this.ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
 }
