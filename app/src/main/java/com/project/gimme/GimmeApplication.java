@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.database.sqlite.SQLiteDatabase;
 
+import com.project.gimme.DataBase.DataBaseManager;
 import com.project.gimme.controller.Controller;
 import com.project.gimme.controller.RetrofitClient;
-import com.project.gimme.gen.DaoMaster;
-import com.project.gimme.gen.DaoSession;
 
 /**
  * @author DrGilbert
@@ -18,25 +16,12 @@ import com.project.gimme.gen.DaoSession;
 public class GimmeApplication extends Application {
     private static Controller controller;
     private static String token;
-    private static final String DB_NAME = "gimme.db";
-    private DaoSession daoSession;
-
+    private static DataBaseManager dataBaseManager;
     @Override
     public void onCreate() {
         super.onCreate();
         controller = RetrofitClient.getInstance().getController();
-        initGreenDao();
-        //创建单例
-    }
-
-    /**
-     * 初始化GreenDao
-     */
-    private void initGreenDao() {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME);
-        SQLiteDatabase database = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(database);
-        daoSession = daoMaster.newSession();
+        dataBaseManager = DataBaseManager.getInstance(this);
     }
 
     /**
@@ -57,7 +42,7 @@ public class GimmeApplication extends Application {
         }
     }
 
-    public DaoSession getDaoSession() {
-        return daoSession;
+    public static DataBaseManager getDataBaseManager() {
+        return dataBaseManager;
     }
 }

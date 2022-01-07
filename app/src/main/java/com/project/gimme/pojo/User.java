@@ -63,17 +63,17 @@ public class User {
      * 用户公司
      */
     @Property(nameInDb = "company")
-    private Integer company;
+    private String company;
     /**
      * 用户个性签名
      */
     @Property(nameInDb = "motto")
     private String motto;
 
-    @Generated(hash = 192849480)
+    @Generated(hash = 804202015)
     public User(Integer id, String nick, String avatar, Integer country,
                 Integer city, Integer province, Date birthday, String mail,
-                Integer occupation, Integer company, String motto) {
+                Integer occupation, String company, String motto) {
         this.id = id;
         this.nick = nick;
         this.avatar = avatar;
@@ -86,75 +86,57 @@ public class User {
         this.company = company;
         this.motto = motto;
     }
-
     @Generated(hash = 586692638)
     public User() {
     }
-
     public Integer getId() {
         return this.id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
-
     public String getNick() {
         return this.nick;
     }
-
     public void setNick(String nick) {
         this.nick = nick;
     }
-
     public String getAvatar() {
         return this.avatar;
     }
-
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-
     public Integer getCountry() {
         return this.country;
     }
-
     public void setCountry(Integer country) {
         this.country = country;
     }
-
     public Integer getCity() {
         return this.city;
     }
-
     public void setCity(Integer city) {
         this.city = city;
     }
-
     public Integer getProvince() {
         return this.province;
     }
-
     public void setProvince(Integer province) {
         this.province = province;
     }
-
     public Date getBirthday() {
         return this.birthday;
     }
-
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
-
     public String getMail() {
         return this.mail;
     }
-
     public void setMail(String mail) {
         this.mail = mail;
     }
-
     public Integer getOccupation() {
         return this.occupation;
     }
@@ -163,18 +145,17 @@ public class User {
         this.occupation = occupation;
     }
 
-    public Integer getCompany() {
+    public String getCompany() {
         return this.company;
     }
 
-    public void setCompany(Integer company) {
+    public void setCompany(String company) {
         this.company = company;
     }
 
     public String getMotto() {
         return this.motto;
     }
-
     public void setMotto(String motto) {
         this.motto = motto;
     }
