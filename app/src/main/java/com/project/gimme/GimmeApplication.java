@@ -14,7 +14,11 @@ import com.project.gimme.controller.RetrofitClient;
  */
 public class GimmeApplication extends Application {
     private static Controller controller;
-    private String token;
+
+
+    private static String token;
+    private static Integer height;
+    private static Integer weight;
 
     @Override
     public void onCreate() {
@@ -39,4 +43,29 @@ public class GimmeApplication extends Application {
             return null;
         }
     }
+
+    public static void setHeight(Integer height) {
+        GimmeApplication.height = height;
+    }
+
+    public static void setWeight(Integer weight) {
+        GimmeApplication.weight = weight;
+    }
+
+    public static Integer getHeight() {
+        return height;
+    }
+
+    public static Integer getWeight() {
+        return weight;
+    }
+
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String token) {
+        GimmeApplication.token = token;
+    }
 }
+

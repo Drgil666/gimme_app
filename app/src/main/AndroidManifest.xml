@@ -11,15 +11,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Gimme.NoActionBar">
+            android:name=".view.activity.WelcomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Gimme.NoActionBar" />
     </application>
 
 </manifest>
