@@ -9,15 +9,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 
 /**
  * @author DrGilbert
  */
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +26,8 @@ public class WelcomeActivity extends AppCompatActivity {
         //隐藏标题栏
         setContentView(R.layout.activity_welcome);
         setScreen();
-        setWelcomeIcon();
-        setWelcomeText();
+        setWelcomeIcon(0.5, 0.4);
+        setWelcomeText(0.6);
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -58,34 +56,32 @@ public class WelcomeActivity extends AppCompatActivity {
         GimmeApplication.setWeight(x);
     }
 
-    public void setWelcomeIcon() {
+    private void setWelcomeIcon(Double size, Double top) {
         Integer height = GimmeApplication.getHeight();
         Integer weight = GimmeApplication.getWeight();
         ImageView welcomeIcon = findViewById(R.id.welcome_icon);
-        int imageSize = (int) Math.floor((Math.min(height, weight) * 0.5));
-        int top = (int) Math.floor((Math.min(height, weight) * 0.4));
+        int imageSize = (int) Math.floor((Math.min(height, weight) * size));
+        int marginTop = (int) Math.floor((Math.min(height, weight) * top));
         welcomeIcon.getLayoutParams().height = imageSize;
         welcomeIcon.getLayoutParams().width = imageSize;
         //动态设置icon大小
         ViewGroup.MarginLayoutParams marginParams =
                 (ViewGroup.MarginLayoutParams) welcomeIcon.getLayoutParams();
         marginParams.setMargins(marginParams.leftMargin,
-                top,
+                marginTop,
                 marginParams.leftMargin,
                 marginParams.bottomMargin);
         //动态设置icon居中位置
-//        System.out.println("imageSize:" + imageSize);
-//        System.out.println("size:" + top);
     }
 
-    public void setWelcomeText() {
+    private void setWelcomeText(Double top) {
         TextView welcomeText = findViewById(R.id.welcome_text);
         Integer height = GimmeApplication.getHeight();
-        int top = (int) Math.floor(height * 0.6);
+        int marginTop = (int) Math.floor(height * top);
         ViewGroup.MarginLayoutParams marginParams =
                 (ViewGroup.MarginLayoutParams) welcomeText.getLayoutParams();
         marginParams.setMargins(marginParams.leftMargin,
-                top,
+                marginTop,
                 marginParams.leftMargin,
                 marginParams.bottomMargin);
     }

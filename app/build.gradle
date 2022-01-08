@@ -63,4 +63,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //calligraphy
+    implementation 'uk.co.chrisjenx:calligraphy:2.1.0'
 }
