@@ -8,21 +8,17 @@
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
-        <activity
-            android:name=".view.activity.WelcomeActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".view.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.activity.LoginActivity"
-            android:label="@string/title_activity_main"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Gimme.NoActionBar" />
+        <activity android:name=".view.activity.LoginActivity" />
+        <activity android:name=".view.activity.MessageActivity" />
     </application>
 
 </manifest>

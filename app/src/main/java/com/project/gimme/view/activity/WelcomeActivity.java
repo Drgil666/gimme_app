@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author DrGilbert
  */
@@ -22,10 +24,8 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //全屏，隐藏状态栏。
-        getSupportActionBar().hide();
-        //隐藏标题栏
         setContentView(R.layout.activity_welcome);
-        setScreen();
+        initScreenSize();
         setWelcomeIcon(0.5, 0.4);
         setWelcomeText(0.6);
         Thread thread = new Thread() {
@@ -33,10 +33,14 @@ public class WelcomeActivity extends BaseActivity {
             public void run() {
                 try {
                     sleep(1500);
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent intent;
+                    if (StringUtils.isEmpty(GimmeApplication.getToken())) {
+                        intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    } else {
+                        intent = new Intent(getApplicationContext(), MessageActivity.class);
+                    }
                     startActivity(intent);
                     finish();
-                    //跳转
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -45,7 +49,7 @@ public class WelcomeActivity extends BaseActivity {
         thread.start();
     }
 
-    public void setScreen() {
+    public void initScreenSize() {
         Display display = getWindowManager().getDefaultDisplay();
         Point outSize = new Point();
         display.getSize(outSize);

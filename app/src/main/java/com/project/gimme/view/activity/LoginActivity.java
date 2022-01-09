@@ -1,5 +1,6 @@
 package com.project.gimme.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,10 +18,10 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setUserAvatar(0.4, 0.3);
-        setUserAccount(0.45);
-        setUserPassword(0.45);
-        setLoginButton(0.45);
+        initUserAvatar(0.4, 0.3);
+        initUserAccount(0.45);
+        initUserPassword(0.45);
+        initLoginButton(0.45);
     }
 
     private Boolean tokenValidate() {
@@ -29,7 +30,7 @@ public class LoginActivity extends BaseActivity {
         return true;
     }
 
-    private void setUserAvatar(Double size, Double top) {
+    private void initUserAvatar(Double size, Double top) {
         Integer height = GimmeApplication.getHeight();
         Integer weight = GimmeApplication.getWeight();
         ImageView welcomeIcon = findViewById(R.id.user_avatar);
@@ -47,21 +48,26 @@ public class LoginActivity extends BaseActivity {
         //动态设置icon居中位置
     }
 
-    private void setUserAccount(Double size) {
+    private void initUserAccount(Double size) {
         Integer weight = GimmeApplication.getWeight();
         EditText userAccount = findViewById(R.id.user_account);
         userAccount.getLayoutParams().width = (int) Math.floor(weight * size);
     }
 
-    private void setUserPassword(Double size) {
+    private void initUserPassword(Double size) {
         Integer weight = GimmeApplication.getWeight();
         EditText userPassword = findViewById(R.id.user_password);
         userPassword.getLayoutParams().width = (int) Math.floor(weight * size);
     }
 
-    private void setLoginButton(Double size) {
+    private void initLoginButton(Double size) {
         Integer weight = GimmeApplication.getWeight();
         Button loginButton = findViewById(R.id.login_button);
         loginButton.getLayoutParams().width = (int) Math.floor(weight * size);
+        loginButton.setOnClickListener(view -> {
+            System.out.println("click!");
+            Intent intent = new Intent(LoginActivity.this, MessageActivity.class);
+            startActivity(intent);
+        });
     }
 }

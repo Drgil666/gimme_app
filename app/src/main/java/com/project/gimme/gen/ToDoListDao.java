@@ -44,7 +44,7 @@ public class ToDoListDao extends AbstractDao<ToDoList, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"todo_list\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"owner_id\" INTEGER," + // 1: ownerId

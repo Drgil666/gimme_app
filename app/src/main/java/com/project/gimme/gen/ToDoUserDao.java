@@ -42,7 +42,7 @@ public class ToDoUserDao extends AbstractDao<ToDoUser, Void> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"todo_user\" (" + //
                 "\"todo_id\" INTEGER," + // 0: toDoId
                 "\"status\" INTEGER," + // 1: status
