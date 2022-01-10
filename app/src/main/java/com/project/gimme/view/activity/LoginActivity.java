@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity {
         loginButton.getLayoutParams().width = (int) Math.floor(weight * size);
         loginButton.setOnClickListener(view -> {
             System.out.println("click!");
-            Intent intent = new Intent(LoginActivity.this, MessageActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         });
     }

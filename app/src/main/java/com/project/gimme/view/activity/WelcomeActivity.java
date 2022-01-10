@@ -37,7 +37,7 @@ public class WelcomeActivity extends BaseActivity {
                     if (StringUtils.isEmpty(GimmeApplication.getToken())) {
                         intent = new Intent(getApplicationContext(), LoginActivity.class);
                     } else {
-                        intent = new Intent(getApplicationContext(), MessageActivity.class);
+                        intent = new Intent(getApplicationContext(), MainActivity.class);
                     }
                     startActivity(intent);
                     finish();

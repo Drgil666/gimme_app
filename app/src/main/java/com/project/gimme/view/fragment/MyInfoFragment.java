@@ -12,17 +12,17 @@ import com.project.gimme.R;
 /**
  * @author DrGilbert
  */
-public class MessageFragment extends Fragment {
+public class MyInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_message, container, false);
+        return inflater.inflate(R.layout.fragment_my_info, container, false);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("destroy1!");
+        System.out.println("destroy3!");
     }
 }
