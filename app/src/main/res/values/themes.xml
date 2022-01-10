@@ -16,13 +16,4 @@
         <item name="windowNoTitle">true</item>
         <!--        强制隐藏标题栏-->
     </style>
-
-    <style name="Theme.Gimme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.Gimme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.Gimme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -35,7 +35,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="20sp"
-                android:background="@mipmap/app_icon" />
+                android:src="@mipmap/app_icon" />
         </RelativeLayout>
 
         <RelativeLayout
