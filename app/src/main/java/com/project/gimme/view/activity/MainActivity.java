@@ -21,7 +21,13 @@ public class MainActivity extends BaseActivity {
     private final int TYPE_MESSAGE = 1;
     private final int TYPE_FRIEND = 2;
     private final int TYPE_MY_INFO = 3;
+    private final double TOP_BAR_SIZE = 0.1;
+    private final double TOP_TEXT_SIZE = 0.2;
+    private final double BOTTOM_BAR_SIZE = 0.1;
+    private final double SEARCH_LAYOUT_SIZE = 0.07;
     private Integer currentFragment;
+    private final Integer height = GimmeApplication.getHeight();
+    private final Integer weight = GimmeApplication.getWeight();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +40,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initTopBar(double size) {
-        Integer height = GimmeApplication.getHeight();
         RelativeLayout relativeLayout = findViewById(R.id.top_bar);
         relativeLayout.getLayoutParams().height = (int) Math.floor(height * size);
     }
@@ -58,12 +63,11 @@ public class MainActivity extends BaseActivity {
         );
     }
 
+
     private void initBottomBar(double size) {
-        Integer height = GimmeApplication.getHeight();
-        Integer weight = GimmeApplication.getWeight();
         RelativeLayout relativeLayout = findViewById(R.id.bottom_bar);
         relativeLayout.getLayoutParams().height = (int) Math.floor(height * size);
-        Double layoutWeight = weight / 3.0;
+        double layoutWeight = weight / 3.0;
         initMessageLayout(layoutWeight);
         initFriendLayout(layoutWeight);
         initMyInfoLayout(weight - 2 * layoutWeight);

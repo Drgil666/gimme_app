@@ -20,7 +20,7 @@ public class GimmeApplication extends Application {
     private static String token;
     private static Integer height;
     private static Integer weight;
-
+    public static final Integer TYPE_ERROR = -1;
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));

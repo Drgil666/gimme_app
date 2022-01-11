@@ -4,4 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_700"
-    tools:context=".view.fragment.FriendFragment"></FrameLayout>
+    tools:context=".view.fragment.FriendFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/friend_search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:background="@color/gimme_background_dark">
+
+        </RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>

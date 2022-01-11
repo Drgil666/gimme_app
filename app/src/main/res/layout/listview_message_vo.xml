@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/list_item_color_bg"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/listview_message_vo_image"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:src="@mipmap/app_icon"></ImageView>
+
+    <TextView
+        android:id="@+id/listview_message_vo_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/listview_message_vo_image"
+        android:layout_marginLeft="10sp"
+        android:text="111"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="22sp"></TextView>
+
+    <TextView
+        android:id="@+id/listview_message_vo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="msg1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/gimme_font1"
+        android:layout_toRightOf="@id/listview_message_vo_image"
+        android:layout_marginTop="35sp"
+        android:layout_marginLeft="10sp"
+        android:textSize="18sp"></TextView>
+
+    <TextView
+        android:id="@+id/listview_message_vo_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:text="16:00"
+        android:textSize="22sp"
+        android:textColor="@color/gimme_font1"
+        android:layout_marginRight="10sp"
+        android:layout_alignParentRight="true">
+
+    </TextView>
+</RelativeLayout>

@@ -14,7 +14,7 @@
             android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="80sp"
-            android:background="@color/white">
+            android:background="@color/gimme_background_lighter">
 
             <TextView
                 android:id="@+id/top_text"
@@ -44,26 +44,13 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_bar"
             android:layout_below="@+id/top_bar"
-            android:background="@color/teal_700">
+            android:background="@color/gimme_background_lighter">
 
-            <RelativeLayout
-                android:id="@+id/search_layout"
+            <fragment
+                android:id="@+id/body_fragment"
+                android:name="com.project.gimme.view.fragment.MessageFragment"
                 android:layout_width="match_parent"
-                android:layout_height="60sp"
-                android:background="@color/teal_200"></RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/body_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/search_layout">
-
-                <fragment
-                    android:id="@+id/body_fragment"
-                    android:name="com.project.gimme.view.fragment.MessageFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </RelativeLayout>
+                android:layout_height="match_parent" />
         </RelativeLayout>
         <!--底边栏-->
         <RelativeLayout

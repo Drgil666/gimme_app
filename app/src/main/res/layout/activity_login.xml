@@ -23,16 +23,16 @@
             android:id="@+id/user_account"
             android:layout_width="220dp"
             android:layout_height="45dp"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/user_avatar"
-            android:textSize="22sp"
-            android:inputType="number"
-            android:hint="Gimme账号"
-            android:gravity="center"
-            android:maxLength="12"
-            android:background="@drawable/rounded_edit_view"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="" />
+            android:background="@drawable/rounded_edit_view"
+            android:gravity="center"
+            android:hint="Gimme账号"
+            android:inputType="number"
+            android:maxLength="12"
+            android:text=""
+            android:textSize="22sp" />
 
         <EditText
             android:id="@+id/user_password"
