@@ -77,7 +77,6 @@ public class MainActivity extends BaseActivity {
         RelativeLayout relativeLayout = findViewById(R.id.message_layout);
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
-            System.out.println("click1!");
             if (currentFragment != TYPE_MESSAGE) {
                 currentFragment = TYPE_MESSAGE;
                 setTopText("信息");
@@ -90,7 +89,6 @@ public class MainActivity extends BaseActivity {
         RelativeLayout relativeLayout = findViewById(R.id.friend_layout);
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
-            System.out.println("click2!");
             if (currentFragment != TYPE_FRIEND) {
                 setTopText("联系人");
                 currentFragment = TYPE_FRIEND;
@@ -103,7 +101,6 @@ public class MainActivity extends BaseActivity {
         RelativeLayout relativeLayout = findViewById(R.id.my_info_layout);
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
-            System.out.println("click3!");
             if (currentFragment != TYPE_MY_INFO) {
                 setTopText("我的");
                 currentFragment = TYPE_MY_INFO;

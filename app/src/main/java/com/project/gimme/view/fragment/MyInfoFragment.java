@@ -23,6 +23,5 @@ public class MyInfoFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("destroy3!");
     }
 }

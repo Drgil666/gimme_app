@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import io.github.rockerhieu.emojiconize.Emojiconize;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -15,6 +16,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Emoji初始化
+        Emojiconize.activity(this).go();
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }

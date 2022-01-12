@@ -60,9 +60,12 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.3.0'
     // RxAndroid响应规范
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
-    //calligraphy
+    //calligraphy(全局自定义支持)
     implementation 'uk.co.chrisjenx:calligraphy:2.1.0'
+    //Emoji表情支持
+    implementation 'io.github.rockerhieu:emojiconize:1.0.0'
+    implementation 'io.github.rockerhieu:emojicon:1.4.2'
 }

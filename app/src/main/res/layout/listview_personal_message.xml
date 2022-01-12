@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/list_item_color_bg"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/listview_personal_message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="10sp"
+        android:layout_marginLeft="5sp"
+        android:text="item1"></TextView>
+
+    <ImageView
+        android:id="@+id/listview_personal_message_icon"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:src="@mipmap/app_icon"
+        android:layout_marginRight="10sp"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>

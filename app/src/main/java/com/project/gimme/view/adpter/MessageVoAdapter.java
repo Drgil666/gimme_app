@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class MessageVoAdapter extends BaseAdapter {
     private List<MessageVO> messageVOList = new ArrayList<>();
-    LayoutInflater layoutInflater;
+    private LayoutInflater layoutInflater;
 
     public MessageVoAdapter(Context context, List<MessageVO> messageVOList) {
         this.messageVOList = messageVOList;
