@@ -37,7 +37,14 @@
 
         </ListView>
         <!--横向选项卡-->
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/friend_personal_msg_list_view"
+            android:name="com.project.gimme.view.fragment.FriendListFragment"
+            android:id="@+id/friend_fragment">
 
+        </fragment>
 
     </RelativeLayout>
 </FrameLayout>

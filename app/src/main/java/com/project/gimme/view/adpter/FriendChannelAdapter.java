@@ -9,48 +9,50 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.gimme.R;
+import com.project.gimme.pojo.Channel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author DrGilbert
- * @date 2022/1/12 15:46
+ * @date 2022/1/13 12:56
  */
-public class PersonalMsgAdapter extends BaseAdapter {
-    private List<String> itemList;
+public class FriendChannelAdapter extends BaseAdapter {
+    private List<Channel> channelList = new ArrayList<>();
     private LayoutInflater layoutInflater;
 
-    public PersonalMsgAdapter(Context context, List<String> list) {
+    public FriendChannelAdapter(Context context, List<Channel> channelList) {
         layoutInflater = LayoutInflater.from(context);
-        itemList = list;
+        this.channelList = channelList;
     }
 
     @Override
     public int getCount() {
-        if (itemList == null) {
+        if (channelList == null) {
             return 0;
         }
-        return itemList.size();
+        return channelList.size();
     }
 
     @Override
-    public String getItem(int position) {
-        return itemList.get(position);
+    public Channel getItem(int position) {
+        return channelList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return channelList.get(position).getId();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String text = itemList.get(position);
-        convertView = layoutInflater.inflate(R.layout.listview_personal_message, parent, false);
+        Channel channel = channelList.get(position);
+        convertView = layoutInflater.inflate(R.layout.listview_friend_list_channel_list, parent, false);
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.text = convertView.findViewById(R.id.listview_personal_message_text);
-        viewHolder.text.setText(text);
-        viewHolder.icon = convertView.findViewById(R.id.listview_personal_message_icon);
+        viewHolder.text = convertView.findViewById(R.id.listview_friend_list_channel_list_nick);
+        viewHolder.text.setText(channel.getNick());
+        viewHolder.icon = convertView.findViewById(R.id.listview_friend_list_channel_list_image);
         viewHolder.icon.setImageResource(R.mipmap.app_icon);
         return convertView;
     }

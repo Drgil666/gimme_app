@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gimme_background_lighter"
+    tools:context=".view.fragment.FriendListFragment">
+
+    <TabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <HorizontalScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:scrollbars="none">
+                <!-- TabWidget组件id值不可变-->
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </HorizontalScrollView>
+            <!-- FrameLayout布局，id值不可变-->
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@android:id/tabs">
+                <!-- 第一个tab的布局 -->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <ListView
+                        android:id="@+id/friend_list_friend_list"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:cacheColorHint="@android:color/transparent"
+                        android:divider="@null"></ListView>
+                </LinearLayout>
+                <!-- 第二个tab的布局 -->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <ListView
+                        android:id="@+id/friend_list_group_list"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:cacheColorHint="@android:color/transparent"
+                        android:divider="@null"></ListView>
+                </LinearLayout>
+                <!-- 第三个tab的布局 -->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <ListView
+                        android:id="@+id/friend_list_channel_list"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:cacheColorHint="@android:color/transparent"
+                        android:divider="@null"></ListView>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+</FrameLayout>

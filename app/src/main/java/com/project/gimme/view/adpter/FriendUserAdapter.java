@@ -9,48 +9,50 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.gimme.R;
+import com.project.gimme.pojo.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author DrGilbert
- * @date 2022/1/12 15:46
+ * @date 2022/1/13 12:17
  */
-public class PersonalMsgAdapter extends BaseAdapter {
-    private List<String> itemList;
+public class FriendUserAdapter extends BaseAdapter {
+    private List<User> userList = new ArrayList<>();
     private LayoutInflater layoutInflater;
 
-    public PersonalMsgAdapter(Context context, List<String> list) {
+    public FriendUserAdapter(Context context, List<User> userList) {
         layoutInflater = LayoutInflater.from(context);
-        itemList = list;
+        this.userList = userList;
     }
 
     @Override
     public int getCount() {
-        if (itemList == null) {
+        if (userList == null) {
             return 0;
         }
-        return itemList.size();
+        return userList.size();
     }
 
     @Override
-    public String getItem(int position) {
-        return itemList.get(position);
+    public User getItem(int position) {
+        return userList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return userList.get(position).getId();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String text = itemList.get(position);
-        convertView = layoutInflater.inflate(R.layout.listview_personal_message, parent, false);
+        User user = userList.get(position);
+        convertView = layoutInflater.inflate(R.layout.listview_friend_list_friend_list, parent, false);
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.text = convertView.findViewById(R.id.listview_personal_message_text);
-        viewHolder.text.setText(text);
-        viewHolder.icon = convertView.findViewById(R.id.listview_personal_message_icon);
+        viewHolder.text = convertView.findViewById(R.id.listview_friend_list_friend_list_nick);
+        viewHolder.text.setText(user.getNick());
+        viewHolder.icon = convertView.findViewById(R.id.listview_friend_list_friend_list_image);
         viewHolder.icon.setImageResource(R.mipmap.app_icon);
         return convertView;
     }

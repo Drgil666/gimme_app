@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/list_item_color_bg"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/listview_friend_list_friend_list_image"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:src="@mipmap/app_icon"></ImageView>
+
+    <TextView
+        android:id="@+id/listview_friend_list_friend_list_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/listview_friend_list_friend_list_image"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="15sp"
+        android:text="111"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/black"
+        android:textSize="22sp"></TextView>
+</RelativeLayout>
