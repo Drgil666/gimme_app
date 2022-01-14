@@ -15,6 +15,8 @@
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/activity_main.xml" value="0.18931159420289856" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/activity_message.xml" value="0.225" />
+        <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/activity_personal_msg.xml" value="0.225" />
+        <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/activity_personal_msg_list.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/activity_welcome.xml" value="0.14130434782608695" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/content_main.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/fragment_friend.xml" value="0.264" />
@@ -28,6 +30,7 @@
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_friend_list_group_list.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_message_vo.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_personal_message.xml" value="0.225" />
+        <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_personal_msg_list.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_user_vo.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2453125" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.24947916666666667" />

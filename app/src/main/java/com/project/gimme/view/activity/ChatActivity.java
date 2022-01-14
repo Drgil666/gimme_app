@@ -6,8 +6,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.project.gimme.R;
 import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.ChannelVO;
@@ -23,7 +21,7 @@ import java.util.List;
 /**
  * @author DrGilbert
  */
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseActivity {
     private Integer type;
     private Integer objectId;
     private List<ChatMsgVO> chatMsgList = new ArrayList<>();

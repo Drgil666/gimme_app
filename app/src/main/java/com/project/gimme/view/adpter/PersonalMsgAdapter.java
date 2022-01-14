@@ -46,7 +46,7 @@ public class PersonalMsgAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         String text = itemList.get(position);
-        convertView = layoutInflater.inflate(R.layout.listview_personal_message, parent, false);
+        convertView = layoutInflater.inflate(R.layout.listview_personal_msg, parent, false);
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.text = convertView.findViewById(R.id.listview_personal_message_text);
         viewHolder.text.setText(text);
