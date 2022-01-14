@@ -1,5 +1,6 @@
 package com.project.gimme.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.project.gimme.R;
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.Group;
 import com.project.gimme.pojo.User;
+import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendChannelAdapter;
 import com.project.gimme.view.adpter.FriendGroupAdapter;
 import com.project.gimme.view.adpter.FriendUserAdapter;
@@ -68,6 +71,14 @@ public class FriendListFragment extends Fragment {
     private void initUserListView() {
         getUserList();
         userListView.setAdapter(new FriendUserAdapter(getContext(), userList));
+        userListView.setOnItemClickListener((parent, view, position, id) -> {
+            System.out.println("friend");
+            Bundle bundle = getBundle((int) id,
+                    ChatMsgUtil.Character.TYPE_FRIEND.getCode());
+            Intent intent = new Intent(getActivity(), ChatActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
     }
 
     private void getUserList() {
@@ -82,6 +93,14 @@ public class FriendListFragment extends Fragment {
     private void initGroupListView() {
         getGroupList();
         groupListView.setAdapter(new FriendGroupAdapter(getContext(), groupList));
+        groupListView.setOnItemClickListener((parent, view, position, id) -> {
+            System.out.println("group");
+            Bundle bundle = getBundle((int) id,
+                    ChatMsgUtil.Character.TYPE_GROUP.getCode());
+            Intent intent = new Intent(getActivity(), ChatActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
     }
 
     private void getGroupList() {
@@ -97,6 +116,14 @@ public class FriendListFragment extends Fragment {
     private void initChannelListView() {
         getChannelList();
         channelListView.setAdapter(new FriendChannelAdapter(getContext(), channelList));
+        channelListView.setOnItemClickListener((parent, view, position, id) -> {
+            System.out.println("channel");
+            Bundle bundle = getBundle((int) id,
+                    ChatMsgUtil.Character.TYPE_CHANNEL.getCode());
+            Intent intent = new Intent(getActivity(), ChatActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
     }
 
     private void getChannelList() {
@@ -108,5 +135,12 @@ public class FriendListFragment extends Fragment {
             channel.setOwnerId(1);
             channelList.add(channel);
         }
+    }
+
+    private Bundle getBundle(Integer id, Integer type) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("objectId", id);
+        bundle.putInt("type", type);
+        return bundle;
     }
 }

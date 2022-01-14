@@ -44,7 +44,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:cacheColorHint="@android:color/transparent"
-                        android:divider="@null"></ListView>
+                        android:divider="@null" />
                 </LinearLayout>
                 <!-- 第二个tab的布局 -->
                 <LinearLayout
@@ -56,7 +56,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:cacheColorHint="@android:color/transparent"
-                        android:divider="@null"></ListView>
+                        android:divider="@null" />
                 </LinearLayout>
                 <!-- 第三个tab的布局 -->
                 <LinearLayout
@@ -68,7 +68,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:cacheColorHint="@android:color/transparent"
-                        android:divider="@null"></ListView>
+                        android:divider="@null" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

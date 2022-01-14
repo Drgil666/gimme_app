@@ -40,23 +40,23 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initTopBar(double size) {
-        RelativeLayout relativeLayout = findViewById(R.id.top_bar);
+        RelativeLayout relativeLayout = findViewById(R.id.main_top_bar);
         relativeLayout.getLayoutParams().height = (int) Math.floor(height * size);
     }
 
     private void initTopText(double size) {
-        TextView tabText = findViewById(R.id.top_text);
+        TextView tabText = findViewById(R.id.main_top_text);
         tabText.setText("消息");
 
     }
 
     private void setTopText(String text) {
-        TextView tabText = findViewById(R.id.top_text);
+        TextView tabText = findViewById(R.id.main_top_text);
         tabText.setText(text);
     }
 
     private void setTopRightButton(double size) {
-        ImageView topRightButton = findViewById(R.id.top_right_button);
+        ImageView topRightButton = findViewById(R.id.main_top_right_button);
         topRightButton.setOnClickListener(view -> {
                     System.out.println("click!");
                 }
@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity {
 
 
     private void initBottomBar(double size) {
-        RelativeLayout relativeLayout = findViewById(R.id.bottom_bar);
+        RelativeLayout relativeLayout = findViewById(R.id.main_bottom_bar);
         relativeLayout.getLayoutParams().height = (int) Math.floor(height * size);
         double layoutWeight = weight / 3.0;
         initMessageLayout(layoutWeight);
@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initMessageLayout(double size) {
-        RelativeLayout relativeLayout = findViewById(R.id.message_layout);
+        RelativeLayout relativeLayout = findViewById(R.id.main_message_layout);
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
             if (currentFragment != TYPE_MESSAGE) {
@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initFriendLayout(double size) {
-        RelativeLayout relativeLayout = findViewById(R.id.friend_layout);
+        RelativeLayout relativeLayout = findViewById(R.id.main_friend_layout);
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
             if (currentFragment != TYPE_FRIEND) {
@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initMyInfoLayout(double size) {
-        RelativeLayout relativeLayout = findViewById(R.id.my_info_layout);
+        RelativeLayout relativeLayout = findViewById(R.id.main_my_info_layout);
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
             if (currentFragment != TYPE_MY_INFO) {
@@ -114,17 +114,17 @@ public class MainActivity extends BaseActivity {
         FragmentTransaction transaction = manager.beginTransaction();
         switch (op) {
             case TYPE_MESSAGE: {
-                transaction.replace(R.id.body_fragment, new MessageFragment());
+                transaction.replace(R.id.main_body_fragment, new MessageFragment());
                 transaction.commit();
                 break;
             }
             case TYPE_FRIEND: {
-                transaction.replace(R.id.body_fragment, new FriendFragment());
+                transaction.replace(R.id.main_body_fragment, new FriendFragment());
                 transaction.commit();
                 break;
             }
             case TYPE_MY_INFO: {
-                transaction.replace(R.id.body_fragment, new MyInfoFragment());
+                transaction.replace(R.id.main_body_fragment, new MyInfoFragment());
                 transaction.commit();
                 break;
             }

@@ -11,13 +11,13 @@
         android:layout_height="match_parent">
         <!--顶边栏-->
         <RelativeLayout
-            android:id="@+id/top_bar"
+            android:id="@+id/main_top_bar"
             android:layout_width="match_parent"
             android:layout_height="80sp"
             android:background="@color/gimme_background_lighter">
 
             <TextView
-                android:id="@+id/top_text"
+                android:id="@+id/main_top_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -29,7 +29,7 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/top_right_button"
+                android:id="@+id/main_top_right_button"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
@@ -39,22 +39,22 @@
         </RelativeLayout>
         <!--主体内容-->
         <RelativeLayout
-            android:id="@+id/body"
+            android:id="@+id/main_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_bar"
-            android:layout_below="@+id/top_bar"
+            android:layout_above="@+id/main_bottom_bar"
+            android:layout_below="@+id/main_top_bar"
             android:background="@color/gimme_background_lighter">
 
             <fragment
-                android:id="@+id/body_fragment"
+                android:id="@+id/main_body_fragment"
                 android:name="com.project.gimme.view.fragment.MessageFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
         <!--底边栏-->
         <RelativeLayout
-            android:id="@+id/bottom_bar"
+            android:id="@+id/main_bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="80sp"
             android:layout_alignParentBottom="true"
@@ -67,22 +67,22 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:id="@+id/message_layout"
+                    android:id="@+id/main_message_layout"
                     android:layout_width="130dp"
                     android:layout_height="match_parent"
-                    android:background="@color/purple_200"></RelativeLayout>
+                    android:background="@color/purple_200" />
 
                 <RelativeLayout
-                    android:id="@+id/friend_layout"
+                    android:id="@+id/main_friend_layout"
                     android:layout_width="130dp"
                     android:layout_height="match_parent"
-                    android:background="@color/purple_500"></RelativeLayout>
+                    android:background="@color/purple_500" />
 
                 <RelativeLayout
-                    android:id="@+id/my_info_layout"
+                    android:id="@+id/main_my_info_layout"
                     android:layout_width="130dp"
                     android:layout_height="match_parent"
-                    android:background="@color/purple_700"></RelativeLayout>
+                    android:background="@color/purple_700" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
