@@ -11,15 +11,15 @@ import lombok.Data;
 @Data
 public class MessageVO {
     /**
-     * 用户id
+     * 好友/群聊/频道id
      */
-    private Integer id;
+    private Integer objectId;
     /**
-     * 用户昵称
+     * 好友/群聊/频道昵称
      */
     private String nick;
     /**
-     * 用户头像的mongoId
+     * 好友/群聊/频道头像的mongoId
      */
     private String avatar;
     /**
@@ -30,4 +30,8 @@ public class MessageVO {
      * 时间戳
      */
     private Date timestamp;
+    /**
+     * 聊天类型
+     */
+    private Integer type;
 }

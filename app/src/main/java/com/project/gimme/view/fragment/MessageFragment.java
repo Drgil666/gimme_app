@@ -1,5 +1,6 @@
 package com.project.gimme.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.MessageVO;
+import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.MessageVoAdapter;
 
 import java.util.ArrayList;
@@ -50,20 +53,39 @@ public class MessageFragment extends Fragment {
     }
 
     private void getMessageVOList() {
-        MessageVO messageVO = new MessageVO();
-        messageVO.setText("这是一条消息这是一条消息这是一条消息");
-        messageVO.setId(12345);
-        messageVO.setNick("nick1");
-        messageVO.setAvatar("avatar1");
-        messageVO.setTimestamp(new Date());
         for (int i = 1; i <= 10; i++) {
+            MessageVO messageVO = new MessageVO();
+            messageVO.setText("这是一条消息这是一条消息这是一条消息");
+            messageVO.setObjectId(i);
+            messageVO.setNick("nick" + i);
+            messageVO.setAvatar("avatar" + i);
+            if (i < 3) {
+                messageVO.setType(ChatMsgUtil.Character.TYPE_FRIEND.getCode());
+            } else if (i < 6) {
+                messageVO.setType(ChatMsgUtil.Character.TYPE_GROUP.getCode());
+            } else {
+                messageVO.setType(ChatMsgUtil.Character.TYPE_CHANNEL.getCode());
+            }
+            messageVO.setTimestamp(new Date());
             messageVOList.add(messageVO);
         }
     }
 
     private void initListView() {
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            System.out.println("tag: " + view.getTag() + "pos: " + position + "id: " + id);
+            Integer type = ((MessageVoAdapter) listView.getAdapter()).getItem(position).getType();
+            System.out.println("friend");
+            Bundle bundle = getBundle((int) id, type);
+            Intent intent = new Intent(getActivity(), ChatActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
+    }
+
+    private Bundle getBundle(Integer id, Integer type) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("objectId", id);
+        bundle.putInt("type", type);
+        return bundle;
     }
 }

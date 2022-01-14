@@ -48,7 +48,7 @@ public class MessageVoAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         if (position >= 0 && position < messageVOList.size()) {
-            return messageVOList.get(position).getId();
+            return messageVOList.get(position).getObjectId();
         }
         return GimmeApplication.TYPE_ERROR;
     }
