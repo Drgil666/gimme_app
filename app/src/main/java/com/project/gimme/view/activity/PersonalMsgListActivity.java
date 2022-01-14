@@ -1,8 +1,10 @@
 package com.project.gimme.view.activity;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.PersonalMsgVO;
@@ -19,6 +21,7 @@ public class PersonalMsgListActivity extends BaseActivity {
     private List<PersonalMsgVO> personalMsgVOList;
     private ListView personalMsgListView;
     private TextView topText;
+    private ImageView leftButton;
     private Integer type;
 
     @Override
@@ -26,16 +29,31 @@ public class PersonalMsgListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_msg_list);
         getType();
+        initTopBar();
+        leftButton = findViewById(R.id.personal_msg_list_top_left_button);
         personalMsgListView = findViewById(R.id.personal_msg_list_list_view);
         initPersonalMsgListView();
     }
 
-    private void getPersonalMsgList() {
+    private void initTopBar() {
+        leftButton.setOnClickListener(v -> {
+            this.finish();
+        });
         if (type.equals(TYPE_PERSONAL)) {
+            setTopText("新朋友");
             getPersonalMsgPersonalList();
-        } else {
+            initPersonalMsgListView();
+        } else if (type.equals(TYPE_OTHER)) {
+            setTopText("群聊/频道消息");
             getPersonalMsgOtherList();
+            initPersonalMsgListView();
+        } else {
+            Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void setTopText(String text) {
+        topText.setText(text);
     }
 
     private void getPersonalMsgPersonalList() {
@@ -68,7 +86,6 @@ public class PersonalMsgListActivity extends BaseActivity {
     }
 
     private void initPersonalMsgListView() {
-        getPersonalMsgList();
         personalMsgListView.setAdapter(new PersonalMsgListAdapter(this, personalMsgVOList));
     }
 }
