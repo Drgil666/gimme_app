@@ -26,7 +26,7 @@
             android:layout_below="@+id/user_avatar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_edit_view"
+            android:background="@drawable/rounded_edit_view_white"
             android:gravity="center"
             android:hint="Gimme账号"
             android:inputType="number"
@@ -43,7 +43,7 @@
             android:textSize="22sp"
             android:inputType="textPassword"
             android:gravity="center"
-            android:background="@drawable/rounded_edit_view"
+            android:background="@drawable/rounded_edit_view_white"
             android:layout_marginTop="20dp"
             android:text="" />
 

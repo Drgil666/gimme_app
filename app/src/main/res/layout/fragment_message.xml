@@ -22,7 +22,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10sp"
                 android:hint="🔍搜索"
-                android:background="@drawable/rounded_edit_view">
+                android:background="@drawable/rounded_edit_view_white">
 
             </EditText>
         </RelativeLayout>

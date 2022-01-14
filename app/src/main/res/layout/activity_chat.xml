@@ -75,6 +75,14 @@
             android:layout_marginBottom="0sp"
             android:background="@color/white">
 
+            <EditText
+                android:layout_width="300sp"
+                android:layout_height="40sp"
+                android:layout_marginStart="20sp"
+                android:minLines="5"
+                android:gravity="top"
+                android:background="@drawable/rounded_edit_view_gimme"
+                android:layout_centerVertical="true" />
         </RelativeLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,6 +38,16 @@ public class ChatMsgVOAdapter extends BaseAdapter {
     }
 
     @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
+    @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
+
+    @Override
     public ChatMsg getItem(int position) {
         return chatMsgVOList.get(position);
     }
