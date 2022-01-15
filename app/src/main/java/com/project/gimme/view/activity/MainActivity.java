@@ -104,26 +104,25 @@ public class MainActivity extends BaseActivity {
     }
 
     private void changeFragment(Integer op) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager.getFragments().clear();
         switch (op) {
             case TYPE_MESSAGE: {
-                transaction.replace(R.id.main_body_fragment, new MessageFragment());
-                transaction.commit();
+                fragmentTransaction.replace(R.id.main_body_fragment, new MessageFragment()).commit();
                 break;
             }
             case TYPE_FRIEND: {
-                transaction.replace(R.id.main_body_fragment, new FriendFragment());
-                transaction.commit();
+                fragmentTransaction.replace(R.id.main_body_fragment, new FriendFragment()).commit();
                 break;
             }
             case TYPE_MY_INFO: {
-                transaction.replace(R.id.main_body_fragment, new MyInfoFragment());
-                transaction.commit();
+                fragmentTransaction.replace(R.id.main_body_fragment, new MyInfoFragment()).commit();
                 break;
             }
             default:
                 break;
         }
+        System.out.println("count:" + getSupportFragmentManager().getFragments().size());
     }
 }

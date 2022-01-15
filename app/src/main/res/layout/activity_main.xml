@@ -48,7 +48,7 @@
             android:layout_below="@+id/main_top_bar"
             android:background="@color/gimme_background_lighter">
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/main_body_fragment"
                 android:name="com.project.gimme.view.fragment.MessageFragment"
                 android:layout_width="match_parent"

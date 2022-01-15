@@ -26,6 +26,7 @@ public class FriendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        System.out.println("friendFragment");
         View view = inflater.inflate(R.layout.fragment_friend, container, false);
         personalMsgListView = view.findViewById(R.id.friend_personal_msg_list_view);
         initListView();
@@ -35,6 +36,7 @@ public class FriendFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        System.out.println("FriendDestroy!");
     }
 
     private void getListItem() {

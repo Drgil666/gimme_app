@@ -17,11 +17,14 @@ public class MyInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my_info, container, false);
+        System.out.println("myInfoFragment");
+        View view = inflater.inflate(R.layout.fragment_my_info, container, false);
+        return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        System.out.println("myInfoDestroy!");
     }
 }

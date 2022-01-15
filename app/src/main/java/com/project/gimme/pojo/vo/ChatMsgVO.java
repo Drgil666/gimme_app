@@ -3,11 +3,13 @@ package com.project.gimme.pojo.vo;
 import com.project.gimme.pojo.ChatMsg;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author DrGilbert
  * @date 2022/1/14 13:50
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ChatMsgVO extends ChatMsg {
     /**

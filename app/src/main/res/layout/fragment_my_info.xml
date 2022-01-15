@@ -66,25 +66,6 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/user_info_info_layout">
 
-            <RelativeLayout
-                android:id="@+id/user_info_item1"
-                android:layout_width="160sp"
-                android:layout_height="80sp"
-                android:layout_marginStart="40sp"
-                android:layout_marginTop="30sp"
-                android:background="@drawable/rounded_edit_view_white">
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="160sp"
-                android:layout_height="80sp"
-                android:layout_marginLeft="10sp"
-                android:layout_marginTop="30sp"
-                android:layout_toRightOf="@+id/user_info_item1"
-                android:background="@drawable/rounded_edit_view_white">
-
-            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

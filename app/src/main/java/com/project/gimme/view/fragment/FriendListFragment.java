@@ -142,4 +142,10 @@ public class FriendListFragment extends Fragment {
         bundle.putInt("type", type);
         return bundle;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        System.out.println("FriendListDestroy!");
+    }
 }

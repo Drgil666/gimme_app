@@ -32,6 +32,7 @@ public class MessageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        System.out.println("messageFragment");
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         listView = view.findViewById(R.id.message_list_view);
         searchLayout = view.findViewById(R.id.message_search_layout);
@@ -42,8 +43,8 @@ public class MessageFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        listView.setAdapter(null);
         super.onDestroyView();
+        System.out.println("MessageDestroy!");
     }
 
     private void initSearchLayout(double size) {
@@ -74,18 +75,19 @@ public class MessageFragment extends Fragment {
         listView.setAdapter(new MessageVoAdapter(getContext(), messageVOList));
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Integer type = ((MessageVoAdapter) listView.getAdapter()).getItem(position).getType();
-            System.out.println("friend");
-            Bundle bundle = getBundle((int) id, type);
+            System.out.println("click");
+            Bundle bundle = createBundle((int) id, type);
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
         });
     }
 
-    private Bundle getBundle(Integer id, Integer type) {
+    private Bundle createBundle(Integer id, Integer type) {
         Bundle bundle = new Bundle();
         bundle.putInt("objectId", id);
         bundle.putInt("type", type);
         return bundle;
     }
+
 }
