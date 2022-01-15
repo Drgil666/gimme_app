@@ -39,8 +39,8 @@
             android:id="@+id/personal_msg_list_list_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:cacheColorHint="@android:color/transparent"
             android:layout_below="@+id/personal_msg_top_bar"
+            android:cacheColorHint="@android:color/transparent"
             android:divider="@null" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

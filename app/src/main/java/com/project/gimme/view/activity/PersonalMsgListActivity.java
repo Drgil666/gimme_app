@@ -10,6 +10,7 @@ import com.project.gimme.R;
 import com.project.gimme.pojo.vo.PersonalMsgVO;
 import com.project.gimme.view.adpter.PersonalMsgListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
 public class PersonalMsgListActivity extends BaseActivity {
     private static final Integer TYPE_PERSONAL = 0;
     private static final Integer TYPE_OTHER = 1;
-    private List<PersonalMsgVO> personalMsgVOList;
+    private List<PersonalMsgVO> personalMsgVOList = new ArrayList<>();
     private ListView personalMsgListView;
     private TextView topText;
     private ImageView leftButton;
@@ -33,7 +34,6 @@ public class PersonalMsgListActivity extends BaseActivity {
         personalMsgListView = findViewById(R.id.personal_msg_list_list_view);
         topText = findViewById(R.id.personal_msg_list_top_nick_text);
         initTopBar();
-        initPersonalMsgListView();
     }
 
     private void initTopBar() {
@@ -60,10 +60,13 @@ public class PersonalMsgListActivity extends BaseActivity {
             PersonalMsgVO personalMsgVO = new PersonalMsgVO();
             personalMsgVO.setId(i);
             personalMsgVO.setObjectId(1);
-            personalMsgVO.setObjectNick("被操作用户");
+            personalMsgVO.setOperatorNick("被操作用户");
             personalMsgVO.setObjectId(1);
+            personalMsgVO.setNote("note" + i);
+            personalMsgVO.setStatus(0);
             personalMsgVO.setObjectNick("群聊/频道" + i);
             personalMsgVO.setType(i - 1);
+            personalMsgVOList.add(personalMsgVO);
         }
     }
 
@@ -72,10 +75,13 @@ public class PersonalMsgListActivity extends BaseActivity {
             PersonalMsgVO personalMsgVO = new PersonalMsgVO();
             personalMsgVO.setId(i);
             personalMsgVO.setObjectId(1);
-            personalMsgVO.setObjectNick("被操作用户");
+            personalMsgVO.setOperatorNick("被操作用户");
             personalMsgVO.setObjectId(1);
+            personalMsgVO.setNote("note" + i);
+            personalMsgVO.setStatus(0);
             personalMsgVO.setObjectNick("群聊/频道" + i);
             personalMsgVO.setType(i - 1);
+            personalMsgVOList.add(personalMsgVO);
         }
     }
 

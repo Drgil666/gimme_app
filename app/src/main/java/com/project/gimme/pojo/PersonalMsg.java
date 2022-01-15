@@ -37,15 +37,25 @@ public class PersonalMsg {
      */
     @Property(nameInDb = "object_id")
     private Integer objectId;
+    /**
+     * 备注
+     */
+    private String note;
+    /**
+     * 处理状态
+     */
+    private Integer status;
 
-    @Generated(hash = 1093439052)
+    @Generated(hash = 179858224)
     public PersonalMsg(Integer id, Integer type, Integer ownerId,
-                       Integer operatorId, Integer objectId) {
+                       Integer operatorId, Integer objectId, String note, Integer status) {
         this.id = id;
         this.type = type;
         this.ownerId = ownerId;
         this.operatorId = operatorId;
         this.objectId = objectId;
+        this.note = note;
+        this.status = status;
     }
 
     @Generated(hash = 1820845707)
@@ -90,5 +100,21 @@ public class PersonalMsg {
 
     public void setObjectId(Integer objectId) {
         this.objectId = objectId;
+    }
+
+    public String getNote() {
+        return this.note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

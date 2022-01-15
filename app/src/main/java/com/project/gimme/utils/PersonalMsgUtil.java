@@ -23,8 +23,8 @@ public class PersonalMsgUtil {
     private static final String INSERT_CHANNEL_MEMBER_ATTRIBUTE = "insert_channel_member";
     private static final String UPDATE_CHANNEL_MEMBER_ATTRIBUTE = "update_channel_member";
     private static final String DELETE_CHANNEL_MEMBER_ATTRIBUTE = "delete_channel_member";
-    private static final String ACCEPT_ATTRIBUTE = "accept";
-    private static final String REJECT_ATTRIBUTE = "reject";
+    private static final String ACCEPT_ATTRIBUTE = "已同意";
+    private static final String REJECT_ATTRIBUTE = "已拒绝";
     private static final String NULL_ATTRIBUTE = "null";
 
     @AllArgsConstructor
