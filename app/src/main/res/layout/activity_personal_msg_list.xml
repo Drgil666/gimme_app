@@ -16,11 +16,10 @@
             android:background="@color/gimme_background_lighter">
             <!--昵称-->
             <TextView
-                android:id="@+id/personal_msg_top_nick_text"
+                android:id="@+id/personal_msg_list_top_nick_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
                 android:text="消息"
                 android:textColor="@color/black"
                 android:textSize="35sp"
@@ -41,6 +40,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:cacheColorHint="@android:color/transparent"
-            android:divider="@null"></ListView>
+            android:layout_below="@+id/personal_msg_top_bar"
+            android:divider="@null" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,18 +21,13 @@ public class MainActivity extends BaseActivity {
     private final int TYPE_MESSAGE = 1;
     private final int TYPE_FRIEND = 2;
     private final int TYPE_MY_INFO = 3;
-    private final double TOP_BAR_SIZE = 0.1;
-    private final double TOP_TEXT_SIZE = 0.2;
-    private final double BOTTOM_BAR_SIZE = 0.1;
-    private final double SEARCH_LAYOUT_SIZE = 0.07;
-    private Integer currentFragment;
+    private Integer currentFragment = 1;
     private final Integer height = GimmeApplication.getHeight();
     private final Integer weight = GimmeApplication.getWeight();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currentFragment = 1;
         setContentView(R.layout.activity_main);
         initTopBar(0.1);
         initTopText(0.2);
@@ -62,7 +57,6 @@ public class MainActivity extends BaseActivity {
                 }
         );
     }
-
 
     private void initBottomBar(double size) {
         RelativeLayout relativeLayout = findViewById(R.id.main_bottom_bar);

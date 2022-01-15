@@ -41,7 +41,6 @@ public class FriendListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getUserList();
         View view = inflater.inflate(R.layout.fragment_friend_list, container, false);
         tabHost = (TabHost) view.findViewById(android.R.id.tabhost);
         userListView = view.findViewById(R.id.friend_list_friend_list);

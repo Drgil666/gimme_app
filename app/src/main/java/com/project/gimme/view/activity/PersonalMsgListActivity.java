@@ -16,8 +16,8 @@ import java.util.List;
  * @author DrGilbert
  */
 public class PersonalMsgListActivity extends BaseActivity {
-    private static final Integer TYPE_PERSONAL = 1;
-    private static final Integer TYPE_OTHER = 2;
+    private static final Integer TYPE_PERSONAL = 0;
+    private static final Integer TYPE_OTHER = 1;
     private List<PersonalMsgVO> personalMsgVOList;
     private ListView personalMsgListView;
     private TextView topText;
@@ -29,16 +29,15 @@ public class PersonalMsgListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_msg_list);
         getType();
-        initTopBar();
         leftButton = findViewById(R.id.personal_msg_list_top_left_button);
         personalMsgListView = findViewById(R.id.personal_msg_list_list_view);
+        topText = findViewById(R.id.personal_msg_list_top_nick_text);
+        initTopBar();
         initPersonalMsgListView();
     }
 
     private void initTopBar() {
-        leftButton.setOnClickListener(v -> {
-            this.finish();
-        });
+        leftButton.setOnClickListener(v -> finish());
         if (type.equals(TYPE_PERSONAL)) {
             setTopText("新朋友");
             getPersonalMsgPersonalList();
@@ -83,6 +82,7 @@ public class PersonalMsgListActivity extends BaseActivity {
     private void getType() {
         Bundle bundle = this.getIntent().getExtras();
         type = bundle.getInt("type");
+        System.out.println("type:" + type);
     }
 
     private void initPersonalMsgListView() {

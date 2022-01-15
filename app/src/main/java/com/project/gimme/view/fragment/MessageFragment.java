@@ -32,20 +32,18 @@ public class MessageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getMessageVOList();
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         listView = view.findViewById(R.id.message_list_view);
         searchLayout = view.findViewById(R.id.message_search_layout);
         initSearchLayout(0.07);
-        listView.setAdapter(new MessageVoAdapter(getContext(), messageVOList));
         initListView();
         return view;
     }
 
     @Override
     public void onDestroyView() {
+        listView.setAdapter(null);
         super.onDestroyView();
-        System.out.println("destroy1!");
     }
 
     private void initSearchLayout(double size) {
@@ -72,6 +70,8 @@ public class MessageFragment extends Fragment {
     }
 
     private void initListView() {
+        getMessageVOList();
+        listView.setAdapter(new MessageVoAdapter(getContext(), messageVOList));
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Integer type = ((MessageVoAdapter) listView.getAdapter()).getItem(position).getType();
             System.out.println("friend");

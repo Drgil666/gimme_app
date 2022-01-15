@@ -51,6 +51,8 @@ public class LoginActivity extends BaseActivity {
     private void initUserAccount(Double size) {
         Integer weight = GimmeApplication.getWeight();
         EditText userAccount = findViewById(R.id.user_account);
+        userAccount.clearFocus();
+        userAccount.setSelected(false);
         userAccount.getLayoutParams().width = (int) Math.floor(weight * size);
     }
 

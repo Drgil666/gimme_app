@@ -39,7 +39,7 @@ public class FriendFragment extends Fragment {
 
     private void getListItem() {
         listItem.add("新朋友");
-        listItem.add("群/频道消息");
+        listItem.add("群聊/频道消息");
     }
 
     private void initListView() {

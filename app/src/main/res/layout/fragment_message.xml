@@ -21,8 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10sp"
-                android:hint="🔍搜索"
-                android:background="@drawable/rounded_edit_view_white">
+                android:background="@drawable/rounded_edit_view_white"
+                android:hint="  搜索">
 
             </EditText>
         </RelativeLayout>
@@ -33,6 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/message_search_layout"
             android:cacheColorHint="@android:color/transparent"
-            android:divider="@null"></ListView>
+            android:divider="@null" />
     </RelativeLayout>
 </FrameLayout>

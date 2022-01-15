@@ -54,13 +54,13 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void getChatMessageList(Integer type, Integer objectId) {
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 10; i++) {
             ChatMsgVO chatMsg = new ChatMsgVO();
             chatMsg.setId(i);
             chatMsg.setOwnerId(1);
             chatMsg.setText("这是一条信息" + i);
             chatMsg.setObjectId(objectId);
-            chatMsg.setIsSelf(i == 2);
+            chatMsg.setIsSelf(i % 2 == 1);
             chatMsg.setType(type);
             chatMsg.setTimeStamp(new Date());
             chatMsgList.add(chatMsg);
@@ -68,9 +68,7 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void initTopBar() {
-        leftButton.setOnClickListener(view -> {
-            this.finish();
-        });
+        leftButton.setOnClickListener(v -> finish());
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
             User user = getUserInfo(objectId);
             setTopNick(user.getNick());
@@ -91,6 +89,7 @@ public class ChatActivity extends BaseActivity {
     private void initChatListView() {
         getChatMessageList(type, objectId);
         chatListView.setAdapter(new ChatMsgVOAdapter(this, chatMsgList));
+        chatListView.setSelection(chatMsgList.size() - 1);
     }
 
     private void setTopNick(String text) {
