@@ -146,6 +146,5 @@ public class FriendListFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("FriendListDestroy!");
     }
 }

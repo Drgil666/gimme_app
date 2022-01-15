@@ -44,7 +44,6 @@ public class MessageFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("MessageDestroy!");
     }
 
     private void initSearchLayout(double size) {

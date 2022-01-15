@@ -66,6 +66,16 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/user_info_info_layout">
 
+            <ListView
+                android:id="@+id/listview_my_info"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="30sp"
+                android:layout_marginStart="30sp"
+                android:layout_marginEnd="30sp"
+                android:layout_marginBottom="30sp">
+
+            </ListView>
         </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

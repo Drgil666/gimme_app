@@ -36,7 +36,6 @@ public class FriendFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        System.out.println("FriendDestroy!");
     }
 
     private void getListItem() {
