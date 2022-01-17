@@ -9,6 +9,7 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
+import com.project.gimme.pojo.vo.MyInfoVO;
 import com.project.gimme.view.adpter.MyInfoAdapter;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author DrGilbert
  */
 public class MyInfoFragment extends Fragment {
-    private List<String> myInfoList = new ArrayList<>();
+    private List<MyInfoVO> myInfoList = new ArrayList<>();
     private ListView myInfoListView;
 
     @Override
@@ -37,8 +38,12 @@ public class MyInfoFragment extends Fragment {
     }
 
     private void getMyInfoList() {
-        for (int i = 1; i <= 6; i++) {
-            myInfoList.add("待定" + i);
+        for (int i = 1; i <= 7; i++) {
+            MyInfoVO myInfoVO = new MyInfoVO();
+            myInfoVO.setText("待定" + i);
+            myInfoVO.setDescription("描述" + i);
+            myInfoVO.setType(i);
+            myInfoList.add(myInfoVO);
         }
     }
 

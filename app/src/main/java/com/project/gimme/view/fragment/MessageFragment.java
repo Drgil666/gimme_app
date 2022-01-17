@@ -79,6 +79,7 @@ public class MessageFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
     }
 

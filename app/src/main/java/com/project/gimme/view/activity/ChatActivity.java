@@ -45,7 +45,6 @@ public class ChatActivity extends BaseActivity {
         initTopBar();
         initChatListView();
     }
-
     private void initBundle() {
         Bundle bundle = this.getIntent().getExtras();
         objectId = bundle.getInt("objectId");
