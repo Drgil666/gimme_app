@@ -53,7 +53,7 @@ public class MyInfoAdapter extends BaseAdapter {
         viewHolder.nick = convertView.findViewById(R.id.listview_my_info_text);
         viewHolder.nick.setText(myInfoVO.getNick());
         viewHolder.description = convertView.findViewById(R.id.listview_my_info_description);
-        viewHolder.nick.setText(myInfoVO.getNick());
+        viewHolder.description.setText(myInfoVO.getDescription());
         return convertView;
     }
 
