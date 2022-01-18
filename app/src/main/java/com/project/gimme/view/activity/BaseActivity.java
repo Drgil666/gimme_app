@@ -19,17 +19,19 @@ public class BaseActivity extends AppCompatActivity {
         //Emoji初始化
         Emojiconize.activity(this).go();
         super.onCreate(savedInstanceState);
+        //强制竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
 
 }

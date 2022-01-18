@@ -24,11 +24,17 @@ public class MainActivity extends BaseActivity {
     private Integer currentFragment = 1;
     private final Integer height = GimmeApplication.getHeight();
     private final Integer weight = GimmeApplication.getWeight();
+    private MessageFragment messageFragment;
+    private FriendFragment friendFragment;
+    private MyInfoFragment myInfoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        messageFragment = new MessageFragment();
+        friendFragment = new FriendFragment();
+        myInfoFragment = new MyInfoFragment();
         initTopBar(0.1);
         initTopText(0.2);
         initBottomBar(0.1);
@@ -53,7 +59,7 @@ public class MainActivity extends BaseActivity {
     private void setTopRightButton(double size) {
         ImageView topRightButton = findViewById(R.id.main_top_right_button);
         topRightButton.setOnClickListener(view -> {
-                    System.out.println("click!");
+//                    System.out.println("click!");
                 }
         );
     }
@@ -123,6 +129,6 @@ public class MainActivity extends BaseActivity {
             default:
                 break;
         }
-        System.out.println("count:" + getSupportFragmentManager().getFragments().size());
+//        System.out.println("count:" + getSupportFragmentManager().getFragments().size());
     }
 }

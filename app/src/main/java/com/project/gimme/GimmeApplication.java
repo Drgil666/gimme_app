@@ -8,6 +8,7 @@ import android.content.ContextWrapper;
 import com.project.gimme.controller.Controller;
 import com.project.gimme.controller.RetrofitClient;
 
+import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -21,6 +22,7 @@ public class GimmeApplication extends Application {
     private static Integer height;
     private static Integer weight;
     public static final Integer TYPE_ERROR = -1;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -29,7 +31,10 @@ public class GimmeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //滑动工具初始化
+        BGASwipeBackHelper.init(this, null);
         controller = RetrofitClient.getInstance().getController();
+        //字体初始化
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/ping_fang_sc.ttf")
                 .setFontAttrId(R.attr.fontPath)

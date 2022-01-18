@@ -67,9 +67,10 @@ public class LoginActivity extends BaseActivity {
         Button loginButton = findViewById(R.id.login_button);
         loginButton.getLayoutParams().width = (int) Math.floor(weight * size);
         loginButton.setOnClickListener(view -> {
-            System.out.println("click!");
+//            System.out.println("click!");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 }

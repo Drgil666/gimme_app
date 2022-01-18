@@ -43,7 +43,6 @@
             android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/listview_my_info_right_area"
         android:layout_width="160sp"

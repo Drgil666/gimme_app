@@ -26,7 +26,7 @@ public class MyInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_info, container, false);
-        System.out.println("myInfoFragment");
+//        System.out.println("myInfoFragment");
         myInfoListView = view.findViewById(R.id.listview_my_info);
         initMyInfoListView();
         return view;

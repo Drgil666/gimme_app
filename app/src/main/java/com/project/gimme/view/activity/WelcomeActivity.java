@@ -41,6 +41,7 @@ public class WelcomeActivity extends BaseActivity {
                     }
                     startActivity(intent);
                     finish();
+                    overridePendingTransition(R.anim.push_bottom_in, R.anim.push_top_out);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

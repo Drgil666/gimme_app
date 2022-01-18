@@ -1,6 +1,7 @@
 package com.project.gimme.view.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * @author DrGilbert
  */
-public class ChatActivity extends BaseActivity {
+public class ChatActivity extends SwipeBackActivity {
     private Integer type;
     private Integer objectId;
     private List<ChatMsgVO> chatMsgList = new ArrayList<>();
@@ -45,6 +46,7 @@ public class ChatActivity extends BaseActivity {
         initTopBar();
         initChatListView();
     }
+
     private void initBundle() {
         Bundle bundle = this.getIntent().getExtras();
         objectId = bundle.getInt("objectId");
@@ -67,7 +69,13 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void initTopBar() {
-        leftButton.setOnClickListener(v -> finish());
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
+            }
+        });
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
             User user = getUserInfo(objectId);
             setTopNick(user.getNick());
@@ -124,5 +132,10 @@ public class ChatActivity extends BaseActivity {
         channelVO.setTotalCount(10);
         channelVO.setCreateTime(new Date());
         return channelVO;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

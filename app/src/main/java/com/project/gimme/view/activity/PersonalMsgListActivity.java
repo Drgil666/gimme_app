@@ -1,6 +1,7 @@
 package com.project.gimme.view.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * @author DrGilbert
  */
-public class PersonalMsgListActivity extends BaseActivity {
+public class PersonalMsgListActivity extends SwipeBackActivity {
     private static final Integer TYPE_PERSONAL = 0;
     private static final Integer TYPE_OTHER = 1;
     private List<PersonalMsgVO> personalMsgVOList = new ArrayList<>();
@@ -37,7 +38,13 @@ public class PersonalMsgListActivity extends BaseActivity {
     }
 
     private void initTopBar() {
-        leftButton.setOnClickListener(v -> finish());
+        leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
+            }
+        });
         if (type.equals(TYPE_PERSONAL)) {
             setTopText("新朋友");
             getPersonalMsgPersonalList();
@@ -93,5 +100,11 @@ public class PersonalMsgListActivity extends BaseActivity {
 
     private void initPersonalMsgListView() {
         personalMsgListView.setAdapter(new PersonalMsgListAdapter(this, personalMsgVOList));
+    }
+
+    @Override
+    protected void onDestroy() {
+        overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
+        super.onDestroy();
     }
 }

@@ -65,4 +65,7 @@ dependencies {
     //Emoji表情支持
     implementation 'io.github.rockerhieu:emojiconize:1.0.0'
     implementation 'io.github.rockerhieu:emojicon:1.4.2'
+    //右滑关闭页面
+//    implementation 'com.jude:swipebackhelper:3.1.2'
+    implementation 'cn.bingoogolapple:bga-swipebacklayout:2.0.1@aar'
 }
