@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
 
@@ -20,15 +21,15 @@ import java.util.List;
  */
 public class MyInfoFragment extends Fragment {
     private List<MyInfoVO> myInfoList = new ArrayList<>();
-    private ListView myInfoListView;
+    private GridView myInfoGridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_info, container, false);
 //        System.out.println("myInfoFragment");
-        myInfoListView = view.findViewById(R.id.listview_my_info);
-        initMyInfoListView();
+        myInfoGridView = view.findViewById(R.id.gridview_my_info);
+        initMyInfoGridView();
         return view;
     }
 
@@ -38,17 +39,23 @@ public class MyInfoFragment extends Fragment {
     }
 
     private void getMyInfoList() {
-        for (int i = 1; i <= 7; i++) {
+        for (int i = 1; i <= 6; i++) {
             MyInfoVO myInfoVO = new MyInfoVO();
-            myInfoVO.setText("待定" + i);
+            myInfoVO.setNick("待定" + i);
             myInfoVO.setDescription("描述" + i);
             myInfoVO.setType(i);
             myInfoList.add(myInfoVO);
         }
     }
 
-    private void initMyInfoListView() {
+    private void initMyInfoGridView() {
         getMyInfoList();
-        myInfoListView.setAdapter(new MyInfoAdapter(getContext(), myInfoList));
+        myInfoGridView.setAdapter(new MyInfoAdapter(getContext(), myInfoList));
+        myInfoGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                System.out.println(myInfoGridView.getAdapter().getItemId(i));
+            }
+        });
     }
 }

@@ -10,6 +10,7 @@
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/drawable/rounded_edit_view.xml" value="0.1" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/drawable/rounded_edit_view_gimme.xml" value="0.24055158324821246" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/drawable/rounded_edit_view_white.xml" value="0.24055158324821246" />
+        <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/drawable/rounded_edit_view_white_list_item.xml" value="0.15493421052631579" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/drawable/shape_0111_10dp_corners.xml" value="0.24055158324821246" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/22.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/activity_chat.xml" value="0.225" />
@@ -30,7 +31,7 @@
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_friend_list_friend_list.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_friend_list_group_list.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_message_vo.xml" value="0.225" />
-        <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_my_info.xml" value="0.264" />
+        <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_my_info.xml" value="0.152" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_personal_message.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_personal_msg.xml" value="0.225" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/layout/listview_personal_msg_list.xml" value="0.225" />

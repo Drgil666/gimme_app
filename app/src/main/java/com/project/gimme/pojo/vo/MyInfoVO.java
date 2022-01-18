@@ -8,7 +8,16 @@ import lombok.Data;
  */
 @Data
 public class MyInfoVO {
-    private String text;
+    /**
+     * 功能名称
+     */
+    private String nick;
+    /**
+     * 功能描述
+     */
     private String description;
+    /**
+     * 功能类型
+     */
     private Integer type;
 }
