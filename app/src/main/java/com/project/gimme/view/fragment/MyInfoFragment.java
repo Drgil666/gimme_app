@@ -9,7 +9,7 @@ import android.widget.GridView;
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
-import com.project.gimme.pojo.vo.MyInfoVO;
+import com.project.gimme.pojo.vo.MyInfoListVO;
 import com.project.gimme.view.adpter.MyInfoAdapter;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
  * @author DrGilbert
  */
 public class MyInfoFragment extends Fragment {
-    private List<MyInfoVO> myInfoList = new ArrayList<>();
+    private List<MyInfoListVO> myInfoList = new ArrayList<>();
     private GridView myInfoGridView;
 
     @Override
@@ -39,11 +39,11 @@ public class MyInfoFragment extends Fragment {
 
     private void getMyInfoList() {
         for (int i = 1; i <= 6; i++) {
-            MyInfoVO myInfoVO = new MyInfoVO();
-            myInfoVO.setNick("待定" + i);
-            myInfoVO.setDescription("描述" + i);
-            myInfoVO.setType(i);
-            myInfoList.add(myInfoVO);
+            MyInfoListVO myInfoListVO = new MyInfoListVO();
+            myInfoListVO.setNick("待定" + i);
+            myInfoListVO.setDescription("描述" + i);
+            myInfoListVO.setType(i);
+            myInfoList.add(myInfoListVO);
         }
     }
 

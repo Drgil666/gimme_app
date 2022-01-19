@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.gimme.R;
-import com.project.gimme.pojo.vo.MyInfoVO;
+import com.project.gimme.pojo.vo.MyInfoListVO;
 
 import java.util.List;
 
@@ -19,41 +19,41 @@ import java.util.List;
  */
 public class MyInfoAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
-    private List<MyInfoVO> myInfoVOList;
+    private List<MyInfoListVO> myInfoListVOList;
 
-    public MyInfoAdapter(Context context, List<MyInfoVO> myInfoVOList) {
+    public MyInfoAdapter(Context context, List<MyInfoListVO> myInfoListVOList) {
         layoutInflater = LayoutInflater.from(context);
-        this.myInfoVOList = myInfoVOList;
+        this.myInfoListVOList = myInfoListVOList;
     }
 
     @Override
     public int getCount() {
-        if (myInfoVOList == null) {
+        if (myInfoListVOList == null) {
             return 0;
         } else {
-            return myInfoVOList.size();
+            return myInfoListVOList.size();
         }
     }
 
     @Override
-    public MyInfoVO getItem(int position) {
-        return myInfoVOList.get(position);
+    public MyInfoListVO getItem(int position) {
+        return myInfoListVOList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return myInfoVOList.get(position).getType();
+        return myInfoListVOList.get(position).getType();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        MyInfoVO myInfoVO = myInfoVOList.get(position);
+        MyInfoListVO myInfoListVO = myInfoListVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.gridview_my_info, parent, false);
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.nick = convertView.findViewById(R.id.listview_my_info_text);
-        viewHolder.nick.setText(myInfoVO.getNick());
+        viewHolder.nick.setText(myInfoListVO.getNick());
         viewHolder.description = convertView.findViewById(R.id.listview_my_info_description);
-        viewHolder.description.setText(myInfoVO.getDescription());
+        viewHolder.description.setText(myInfoListVO.getDescription());
         return convertView;
     }
 

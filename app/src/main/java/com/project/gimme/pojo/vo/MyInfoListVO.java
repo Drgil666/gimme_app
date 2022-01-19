@@ -7,7 +7,7 @@ import lombok.Data;
  * @date 2022/1/17 17:24
  */
 @Data
-public class MyInfoVO {
+public class MyInfoListVO {
     /**
      * 功能名称
      */

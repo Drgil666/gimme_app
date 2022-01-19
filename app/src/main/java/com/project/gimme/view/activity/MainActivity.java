@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.utils.SessionUtil;
 import com.project.gimme.view.fragment.FriendFragment;
 import com.project.gimme.view.fragment.MessageFragment;
 import com.project.gimme.view.fragment.MyInfoFragment;
@@ -18,9 +20,6 @@ import com.project.gimme.view.fragment.MyInfoFragment;
  * @author DrGilbert
  */
 public class MainActivity extends BaseActivity {
-    private final int TYPE_MESSAGE = 1;
-    private final int TYPE_FRIEND = 2;
-    private final int TYPE_MY_INFO = 3;
     private Integer currentFragment = 1;
     private final Integer height = GimmeApplication.getHeight();
     private final Integer weight = GimmeApplication.getWeight();
@@ -36,7 +35,7 @@ public class MainActivity extends BaseActivity {
         friendFragment = new FriendFragment();
         myInfoFragment = new MyInfoFragment();
         initTopBar(0.1);
-        initTopText(0.2);
+        initTopText();
         initBottomBar(0.1);
     }
 
@@ -45,7 +44,7 @@ public class MainActivity extends BaseActivity {
         relativeLayout.getLayoutParams().height = (int) Math.floor(height * size);
     }
 
-    private void initTopText(double size) {
+    private void initTopText() {
         TextView tabText = findViewById(R.id.main_top_text);
         tabText.setText("消息");
 
@@ -77,10 +76,10 @@ public class MainActivity extends BaseActivity {
         RelativeLayout relativeLayout = findViewById(R.id.main_message_layout);
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
-            if (currentFragment != TYPE_MESSAGE) {
-                currentFragment = TYPE_MESSAGE;
-                setTopText("信息");
-                changeFragment(TYPE_MESSAGE);
+            if (!currentFragment.equals(SessionUtil.Character.TYPE_MESSAGE.getCode())) {
+                currentFragment = SessionUtil.Character.TYPE_MESSAGE.getCode();
+                setTopText(SessionUtil.Character.TYPE_MESSAGE.getName());
+                changeFragment(SessionUtil.Character.TYPE_MESSAGE.getCode());
             }
         });
     }
@@ -89,10 +88,10 @@ public class MainActivity extends BaseActivity {
         RelativeLayout relativeLayout = findViewById(R.id.main_friend_layout);
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
-            if (currentFragment != TYPE_FRIEND) {
-                setTopText("联系人");
-                currentFragment = TYPE_FRIEND;
-                changeFragment(TYPE_FRIEND);
+            if (!currentFragment.equals(SessionUtil.Character.TYPE_FRIEND.getCode())) {
+                currentFragment = SessionUtil.Character.TYPE_FRIEND.getCode();
+                setTopText(SessionUtil.Character.TYPE_FRIEND.getName());
+                changeFragment(SessionUtil.Character.TYPE_FRIEND.getCode());
             }
         });
     }
@@ -101,10 +100,10 @@ public class MainActivity extends BaseActivity {
         RelativeLayout relativeLayout = findViewById(R.id.main_my_info_layout);
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
-            if (currentFragment != TYPE_MY_INFO) {
-                setTopText("我的");
-                currentFragment = TYPE_MY_INFO;
-                changeFragment(TYPE_MY_INFO);
+            if (!currentFragment.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
+                currentFragment = SessionUtil.Character.TYPE_MY_INFO.getCode();
+                setTopText(SessionUtil.Character.TYPE_MY_INFO.getName());
+                changeFragment(SessionUtil.Character.TYPE_MY_INFO.getCode());
             }
         });
     }
@@ -113,21 +112,14 @@ public class MainActivity extends BaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentManager.getFragments().clear();
-        switch (op) {
-            case TYPE_MESSAGE: {
-                fragmentTransaction.replace(R.id.main_body_fragment, new MessageFragment()).commit();
-                break;
-            }
-            case TYPE_FRIEND: {
-                fragmentTransaction.replace(R.id.main_body_fragment, new FriendFragment()).commit();
-                break;
-            }
-            case TYPE_MY_INFO: {
-                fragmentTransaction.replace(R.id.main_body_fragment, new MyInfoFragment()).commit();
-                break;
-            }
-            default:
-                break;
+        if (op.equals(SessionUtil.Character.TYPE_MESSAGE.getCode())) {
+            fragmentTransaction.replace(R.id.main_body_fragment, new MessageFragment()).commit();
+        } else if (op.equals(SessionUtil.Character.TYPE_FRIEND.getCode())) {
+            fragmentTransaction.replace(R.id.main_body_fragment, new FriendFragment()).commit();
+        } else if (op.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
+            fragmentTransaction.replace(R.id.main_body_fragment, new MyInfoFragment()).commit();
+        } else {
+            Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
         }
 //        System.out.println("count:" + getSupportFragmentManager().getFragments().size());
     }

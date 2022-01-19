@@ -1,7 +1,7 @@
 package com.project.gimme.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,12 +69,17 @@ public class ChatActivity extends SwipeBackActivity {
     }
 
     private void initTopBar() {
-        leftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
-            }
+        leftButton.setOnClickListener(view -> {
+            finish();
+            overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
+        });
+        rightButton.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", type);
+            bundle.putInt("object_id", objectId);
+            Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
+            startActivity(intent);
+            overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
             User user = getUserInfo(objectId);

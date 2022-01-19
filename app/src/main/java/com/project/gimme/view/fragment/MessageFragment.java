@@ -55,13 +55,15 @@ public class MessageFragment extends Fragment {
             MessageVO messageVO = new MessageVO();
             messageVO.setText("这是一条消息这是一条消息这是一条消息");
             messageVO.setObjectId(i);
-            messageVO.setNick("nick" + i);
             messageVO.setAvatar("avatar" + i);
             if (i < 3) {
+                messageVO.setNick("好友" + i);
                 messageVO.setType(ChatMsgUtil.Character.TYPE_FRIEND.getCode());
             } else if (i < 6) {
+                messageVO.setNick("群聊" + i);
                 messageVO.setType(ChatMsgUtil.Character.TYPE_GROUP.getCode());
             } else {
+                messageVO.setNick("频道" + i);
                 messageVO.setType(ChatMsgUtil.Character.TYPE_CHANNEL.getCode());
             }
             messageVO.setTimestamp(new Date());
