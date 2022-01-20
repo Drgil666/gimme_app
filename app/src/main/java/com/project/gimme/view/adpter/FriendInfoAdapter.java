@@ -5,39 +5,71 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.project.gimme.pojo.vo.UserVO;
+import com.project.gimme.R;
+import com.project.gimme.pojo.vo.UserVoParamItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author DrGilbert
  * @date 2022/1/13 12:56
  */
 public class FriendInfoAdapter extends BaseAdapter {
-    private UserVO userVO = new UserVO();
+    private List<UserVoParamItem> itemList = new ArrayList<>();
     private LayoutInflater layoutInflater;
 
-    public FriendInfoAdapter(Context context, UserVO userVO) {
+    public FriendInfoAdapter(Context context, List<UserVoParamItem> itemList) {
         layoutInflater = LayoutInflater.from(context);
-        this.userVO = userVO;
+        this.itemList = itemList;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        if (itemList == null) {
+            return 0;
+        }
+        return itemList.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public UserVoParamItem getItem(int i) {
+        return itemList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        convertView = layoutInflater.inflate(R.layout.listview_friend_info_list, parent, false);
+        UserVoParamItem userVoParamItem = itemList.get(position);
+        ViewHolder viewHolder = new ViewHolder();
+        viewHolder.param = convertView.findViewById(R.id.listview_friend_info_list_param);
+        viewHolder.param.setText(userVoParamItem.getParamName());
+        viewHolder.text = convertView.findViewById(R.id.listview_friend_info_list_value);
+        viewHolder.text.setText(userVoParamItem.getParamValue());
+        if (userVoParamItem.getIsArrow()) {
+            viewHolder.icon = convertView.findViewById(R.id.listview_friend_info_list_icon);
+            viewHolder.icon.setVisibility(View.VISIBLE);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("click!");
+                }
+            });
+        }
+        return convertView;
+    }
+
+    private static class ViewHolder {
+        TextView param;
+        TextView text;
+        ImageView icon;
     }
 }

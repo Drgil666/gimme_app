@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/list_item_color_bg"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/listview_friend_info_list_param"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15sp"
+        android:layout_marginTop="5sp"
+        android:text="参数"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/listview_friend_info_list_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="值"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginTop="0sp"
+        android:layout_marginStart="15sp"
+        android:layout_below="@+id/listview_friend_info_list_param" />
+
+    <ImageView
+        android:id="@+id/listview_friend_info_list_icon"
+        android:visibility="invisible"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:layout_marginEnd="10sp"
+        android:layout_marginTop="5sp"
+        android:layout_alignParentEnd="true"
+        android:src="@mipmap/app_icon" />
+</RelativeLayout>

@@ -32,9 +32,10 @@ public class UserDao extends AbstractDao<User, Integer> {
         public final static Property Province = new Property(5, Integer.class, "province", false, "province");
         public final static Property Birthday = new Property(6, java.util.Date.class, "birthday", false, "birthday");
         public final static Property Mail = new Property(7, String.class, "mail", false, "mail");
-        public final static Property Occupation = new Property(8, Integer.class, "occupation", false, "occupation");
-        public final static Property Company = new Property(9, String.class, "company", false, "company");
-        public final static Property Motto = new Property(10, String.class, "motto", false, "motto");
+        public final static Property Gender = new Property(8, Integer.class, "gender", false, "gender");
+        public final static Property Occupation = new Property(9, Integer.class, "occupation", false, "occupation");
+        public final static Property Company = new Property(10, String.class, "company", false, "company");
+        public final static Property Motto = new Property(11, String.class, "motto", false, "motto");
     }
 
 
@@ -60,9 +61,10 @@ public class UserDao extends AbstractDao<User, Integer> {
                 "\"province\" INTEGER," + // 5: province
                 "\"birthday\" INTEGER," + // 6: birthday
                 "\"mail\" TEXT," + // 7: mail
-                "\"occupation\" INTEGER," + // 8: occupation
-                "\"company\" TEXT," + // 9: company
-                "\"motto\" TEXT);"); // 10: motto
+                "\"gender\" INTEGER," + // 8: gender
+                "\"occupation\" INTEGER," + // 9: occupation
+                "\"company\" TEXT," + // 10: company
+                "\"motto\" TEXT);"); // 11: motto
     }
 
     /** Drops the underlying database table. */
@@ -104,30 +106,35 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (province != null) {
             stmt.bindLong(6, province);
         }
- 
+
         java.util.Date birthday = entity.getBirthday();
         if (birthday != null) {
             stmt.bindLong(7, birthday.getTime());
         }
- 
+
         String mail = entity.getMail();
         if (mail != null) {
             stmt.bindString(8, mail);
         }
- 
+
+        Integer gender = entity.getGender();
+        if (gender != null) {
+            stmt.bindLong(9, gender);
+        }
+
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
-            stmt.bindLong(9, occupation);
+            stmt.bindLong(10, occupation);
         }
- 
+
         String company = entity.getCompany();
         if (company != null) {
-            stmt.bindString(10, company);
+            stmt.bindString(11, company);
         }
  
         String motto = entity.getMotto();
         if (motto != null) {
-            stmt.bindString(11, motto);
+            stmt.bindString(12, motto);
         }
     }
 
@@ -164,30 +171,35 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (province != null) {
             stmt.bindLong(6, province);
         }
- 
+
         java.util.Date birthday = entity.getBirthday();
         if (birthday != null) {
             stmt.bindLong(7, birthday.getTime());
         }
- 
+
         String mail = entity.getMail();
         if (mail != null) {
             stmt.bindString(8, mail);
         }
- 
+
+        Integer gender = entity.getGender();
+        if (gender != null) {
+            stmt.bindLong(9, gender);
+        }
+
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
-            stmt.bindLong(9, occupation);
+            stmt.bindLong(10, occupation);
         }
- 
+
         String company = entity.getCompany();
         if (company != null) {
-            stmt.bindString(10, company);
+            stmt.bindString(11, company);
         }
 
         String motto = entity.getMotto();
         if (motto != null) {
-            stmt.bindString(11, motto);
+            stmt.bindString(12, motto);
         }
     }
 
@@ -207,13 +219,14 @@ public class UserDao extends AbstractDao<User, Integer> {
                 cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // province
                 cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)), // birthday
                 cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // mail
-                cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // occupation
-                cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // company
-                cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // motto
+                cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // gender
+                cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9), // occupation
+                cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // company
+                cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // motto
         );
         return entity;
     }
-     
+
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
@@ -224,9 +237,10 @@ public class UserDao extends AbstractDao<User, Integer> {
         entity.setProvince(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
         entity.setBirthday(cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)));
         entity.setMail(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setOccupation(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
-        entity.setCompany(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setMotto(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setGender(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
+        entity.setOccupation(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
+        entity.setCompany(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setMotto(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
     }
 
     @Override

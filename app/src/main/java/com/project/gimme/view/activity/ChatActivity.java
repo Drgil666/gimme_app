@@ -1,5 +1,8 @@
 package com.project.gimme.view.activity;
 
+import static com.project.gimme.utils.BundleUtil.OBJECTID_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.TYPE_ATTRIBUTE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -49,8 +52,8 @@ public class ChatActivity extends SwipeBackActivity {
 
     private void initBundle() {
         Bundle bundle = this.getIntent().getExtras();
-        objectId = bundle.getInt("objectId");
-        type = bundle.getInt("type");
+        objectId = bundle.getInt(OBJECTID_ATTRIBUTE);
+        type = bundle.getInt(TYPE_ATTRIBUTE);
         System.out.println("objectId:" + objectId + ",type:" + type);
     }
 
@@ -75,8 +78,8 @@ public class ChatActivity extends SwipeBackActivity {
         });
         rightButton.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("type", type);
-            bundle.putInt("object_id", objectId);
+            bundle.putInt(TYPE_ATTRIBUTE, type);
+            bundle.putInt(OBJECTID_ATTRIBUTE, objectId);
             Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
             startActivity(intent);
             overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);

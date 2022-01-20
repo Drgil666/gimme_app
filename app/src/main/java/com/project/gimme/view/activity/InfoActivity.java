@@ -1,5 +1,8 @@
 package com.project.gimme.view.activity;
 
+import static com.project.gimme.utils.BundleUtil.OBJECTID_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.TYPE_ATTRIBUTE;
+
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,8 +40,8 @@ public class InfoActivity extends SwipeBackActivity {
 
     private void getType() {
         Bundle bundle = getIntent().getExtras();
-        type = bundle.getInt("type");
-        objectId = bundle.getInt("object_id");
+        type = bundle.getInt(TYPE_ATTRIBUTE);
+        objectId = bundle.getInt(OBJECTID_ATTRIBUTE);
 //        System.out.println("type:" + type + " object_id:" + objectId);
     }
 
@@ -48,8 +51,8 @@ public class InfoActivity extends SwipeBackActivity {
             overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });
         Bundle bundle = new Bundle();
-        bundle.putInt("type", type);
-        bundle.putInt("object_id", objectId);
+        bundle.putInt(TYPE_ATTRIBUTE, type);
+        bundle.putInt(OBJECTID_ATTRIBUTE, objectId);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentManager.getFragments().clear();

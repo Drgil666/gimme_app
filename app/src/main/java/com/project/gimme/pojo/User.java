@@ -55,6 +55,11 @@ public class User {
     @Property(nameInDb = "mail")
     private String mail;
     /**
+     * 性别
+     */
+    @Property(nameInDb = "gender")
+    private Integer gender;
+    /**
      * 用户职业
      */
     @Property(nameInDb = "occupation")
@@ -70,10 +75,10 @@ public class User {
     @Property(nameInDb = "motto")
     private String motto;
 
-    @Generated(hash = 804202015)
+    @Generated(hash = 1840245264)
     public User(Integer id, String nick, String avatar, Integer country,
                 Integer city, Integer province, Date birthday, String mail,
-                Integer occupation, String company, String motto) {
+                Integer gender, Integer occupation, String company, String motto) {
         this.id = id;
         this.nick = nick;
         this.avatar = avatar;
@@ -82,6 +87,7 @@ public class User {
         this.province = province;
         this.birthday = birthday;
         this.mail = mail;
+        this.gender = gender;
         this.occupation = occupation;
         this.company = company;
         this.motto = motto;
@@ -156,7 +162,16 @@ public class User {
     public String getMotto() {
         return this.motto;
     }
+
     public void setMotto(String motto) {
         this.motto = motto;
+    }
+
+    public Integer getGender() {
+        return this.gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 }

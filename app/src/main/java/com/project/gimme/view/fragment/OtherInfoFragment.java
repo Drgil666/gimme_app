@@ -1,5 +1,8 @@
 package com.project.gimme.view.fragment;
 
+import static com.project.gimme.utils.BundleUtil.OBJECTID_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.TYPE_ATTRIBUTE;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +29,8 @@ public class OtherInfoFragment extends Fragment {
 
     private void getType() {
         Bundle bundle = getActivity().getIntent().getExtras();
-        type = bundle.getInt("type");
-        objectId = bundle.getInt("object_id");
+        type = bundle.getInt(TYPE_ATTRIBUTE);
+        objectId = bundle.getInt(OBJECTID_ATTRIBUTE);
     }
 
     @Override

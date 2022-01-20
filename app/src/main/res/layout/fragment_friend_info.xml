@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/gimme_background_lighter"
     tools:context=".view.fragment.FriendInfoFragment">
-
     <RelativeLayout
         android:id="@+id/fragment_friend_info_layout"
         android:layout_width="wrap_content"
@@ -61,12 +60,18 @@
         android:id="@+id/fragment_friend_info_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/fragment_friend_info_layout" />
+        android:layout_below="@+id/fragment_friend_info_layout"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="30sp"
+        android:layout_marginEnd="10sp" />
 
     <Button
-        android:layout_width="50sp"
-        android:layout_height="50sp"
+        android:id="@+id/fragment_friend_info_button"
+        android:layout_width="200sp"
+        android:layout_height="60sp"
         android:layout_centerHorizontal="true"
-        android:text="发信息"
-        android:layout_below="@+id/fragment_friend_info_listview" />
+        android:layout_marginBottom="80sp"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:text="发信息" />
 </RelativeLayout>

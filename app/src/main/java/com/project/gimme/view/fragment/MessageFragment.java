@@ -1,5 +1,8 @@
 package com.project.gimme.view.fragment;
 
+import static com.project.gimme.utils.BundleUtil.OBJECTID_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.TYPE_ATTRIBUTE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -87,8 +90,8 @@ public class MessageFragment extends Fragment {
 
     private Bundle createBundle(Integer id, Integer type) {
         Bundle bundle = new Bundle();
-        bundle.putInt("objectId", id);
-        bundle.putInt("type", type);
+        bundle.putInt(OBJECTID_ATTRIBUTE, id);
+        bundle.putInt(TYPE_ATTRIBUTE, type);
         return bundle;
     }
 
