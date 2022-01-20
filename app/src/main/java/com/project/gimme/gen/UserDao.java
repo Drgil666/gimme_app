@@ -106,27 +106,27 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (province != null) {
             stmt.bindLong(6, province);
         }
-
+ 
         java.util.Date birthday = entity.getBirthday();
         if (birthday != null) {
             stmt.bindLong(7, birthday.getTime());
         }
-
+ 
         String mail = entity.getMail();
         if (mail != null) {
             stmt.bindString(8, mail);
         }
-
+ 
         Integer gender = entity.getGender();
         if (gender != null) {
             stmt.bindLong(9, gender);
         }
-
+ 
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
             stmt.bindLong(10, occupation);
         }
-
+ 
         String company = entity.getCompany();
         if (company != null) {
             stmt.bindString(11, company);
@@ -171,27 +171,27 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (province != null) {
             stmt.bindLong(6, province);
         }
-
+ 
         java.util.Date birthday = entity.getBirthday();
         if (birthday != null) {
             stmt.bindLong(7, birthday.getTime());
         }
-
+ 
         String mail = entity.getMail();
         if (mail != null) {
             stmt.bindString(8, mail);
         }
-
+ 
         Integer gender = entity.getGender();
         if (gender != null) {
             stmt.bindLong(9, gender);
         }
-
+ 
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
             stmt.bindLong(10, occupation);
         }
-
+ 
         String company = entity.getCompany();
         if (company != null) {
             stmt.bindString(11, company);
@@ -226,7 +226,7 @@ public class UserDao extends AbstractDao<User, Integer> {
         );
         return entity;
     }
-
+     
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));

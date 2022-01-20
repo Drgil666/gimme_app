@@ -1,9 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gimme_background_lighter"
     tools:context=".view.fragment.OtherInfoFragment">
+    <!--群聊/频道标题-->
+    <RelativeLayout
+        android:id="@+id/fragment_other_info_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/white">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/fragment_other_info_top_bar_icon"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="5sp"
+            android:src="@mipmap/app_icon" />
+
+        <TextView
+            android:id="@+id/fragment_other_info_top_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="15sp"
+            android:layout_toEndOf="@+id/fragment_other_info_top_bar_icon"
+            android:text="群聊"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/fragment_other_info_top_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_other_info_top_nick"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="5sp"
+            android:layout_toEndOf="@id/fragment_other_info_top_bar_icon"
+            android:text="群介绍"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="35sp"
+            android:layout_height="35sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10sp"
+            android:src="@mipmap/app_icon" />
+    </RelativeLayout>
+    <!--    群聊/频道成员-->
+    <RelativeLayout
+        android:id="@+id/fragment_other_info_member_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_other_info_top_bar"
+        android:layout_marginTop="20sp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/fragment_other_info_member_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30sp"
+            android:layout_marginTop="5sp"
+            android:text="群聊成员"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/fragment_other_info_member_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:layout_marginEnd="5sp"
+            android:text="查看35名群成员"
+            android:layout_toStartOf="@+id/fragment_other_info_member_icon"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/fragment_other_info_member_icon"
+            android:layout_width="35sp"
+            android:layout_height="35sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10sp"
+            android:src="@mipmap/app_icon" />
+
+        <GridView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="30sp"
+            android:layout_marginTop="40sp"
+            android:numColumns="5"></GridView>
+    </RelativeLayout>
+</RelativeLayout>

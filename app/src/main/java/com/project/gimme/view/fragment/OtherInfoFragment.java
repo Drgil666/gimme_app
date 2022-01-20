@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
+import com.project.gimme.utils.ChatMsgUtil;
 
 /**
  * @author DrGilbert
@@ -18,12 +19,11 @@ import com.project.gimme.R;
 public class OtherInfoFragment extends Fragment {
     private Integer type;
     private Integer objectId;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getType();
-//        System.out.println("type:" + type + "object_id:" + objectId);
+        initTopBar();
         return inflater.inflate(R.layout.fragment_other_info, container, false);
     }
 
@@ -31,6 +31,12 @@ public class OtherInfoFragment extends Fragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         type = bundle.getInt(TYPE_ATTRIBUTE);
         objectId = bundle.getInt(OBJECTID_ATTRIBUTE);
+    }
+
+    private void initTopBar() {
+        if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+
+        }
     }
 
     @Override
