@@ -50,11 +50,11 @@
             android:layout_marginEnd="10sp"
             android:src="@mipmap/app_icon" />
     </RelativeLayout>
-    <!--    群聊/频道成员-->
+    <!--群聊/频道成员-->
     <RelativeLayout
         android:id="@+id/fragment_other_info_member_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250sp"
         android:layout_below="@id/fragment_other_info_top_bar"
         android:layout_marginTop="20sp"
         android:background="@color/white">
@@ -63,9 +63,10 @@
             android:id="@+id/fragment_other_info_member_left_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30sp"
+            android:layout_marginStart="25sp"
             android:layout_marginTop="5sp"
             android:text="群聊成员"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
@@ -74,8 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5sp"
             android:layout_marginEnd="5sp"
-            android:text="查看35名群成员"
             android:layout_toStartOf="@+id/fragment_other_info_member_icon"
+            android:text="查看35名群成员"
             android:textSize="20sp" />
 
         <ImageView
@@ -87,11 +88,104 @@
             android:src="@mipmap/app_icon" />
 
         <GridView
-            android:layout_width="fill_parent"
+            android:id="@+id/fragment_other_info_member_gridview"
+            android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="30sp"
             android:layout_marginTop="40sp"
-            android:numColumns="5"></GridView>
+            android:numColumns="5" />
+    </RelativeLayout>
+    <!--群/频道基本信息-->
+    <RelativeLayout
+        android:id="@+id/fragment_other_info_introduction_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_other_info_member_layout"
+        android:layout_marginTop="20sp"
+        android:background="@color/white">
+        <!--群/频道号-->
+        <RelativeLayout
+            android:id="@+id/fragment_other_info_introduction_id"
+            android:layout_width="match_parent"
+            android:layout_height="50sp">
+
+            <TextView
+                android:id="@+id/fragment_other_info_introduction_left_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="25sp"
+                android:text="频道号和二维码"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <ImageView
+                android:id="@+id/fragment_other_info_right_icon"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5sp"
+                android:src="@mipmap/app_icon" />
+
+            <ImageView
+                android:id="@+id/fragment_other_info_right_qr"
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5sp"
+                android:layout_toStartOf="@+id/fragment_other_info_right_icon"
+                android:src="@mipmap/app_icon" />
+
+            <TextView
+                android:id="@+id/fragment_other_info_introduction_right_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5sp"
+                android:layout_toStartOf="@+id/fragment_other_info_right_qr"
+                android:text="1234567890"
+                android:textSize="18sp" />
+        </RelativeLayout>
+        <!--群公告-->
+        <RelativeLayout
+            android:visibility="invisible"
+            android:id="@+id/fragment_other_info_introduction_group_notice_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_below="@+id/fragment_other_info_introduction_id">
+
+            <TextView
+                android:id="@+id/fragment_other_info_introduction_group_notice_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25sp"
+                android:text="群聊公告"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/fragment_other_info_introduction_group_notice_text"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:layout_toStartOf="@+id/fragment_other_info_introduction_group_notice_right_icon"
+                android:text="这是最新的群公告这是最新的群公告这是最新的群公告这是最新的群公告这是最新的群公告"
+                android:layout_marginEnd="5sp"
+                android:layout_marginStart="25sp"
+                android:textSize="18sp"
+                android:ellipsize="end"
+                android:layout_below="@+id/fragment_other_info_introduction_group_notice_nick"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/fragment_other_info_introduction_group_notice_right_icon"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5sp"
+                android:src="@mipmap/app_icon" />
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

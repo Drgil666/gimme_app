@@ -27,6 +27,7 @@ public class GroupDao extends AbstractDao<Group, Integer> {
         public final static Property Id = new Property(0, Integer.class, "id", true, "id");
         public final static Property CreateTime = new Property(1, java.util.Date.class, "createTime", false, "create_time");
         public final static Property Nick = new Property(2, String.class, "nick", false, "nick");
+        public final static Property Description = new Property(3, String.class, "description", false, "description");
     }
 
 
@@ -46,7 +47,8 @@ public class GroupDao extends AbstractDao<Group, Integer> {
         db.execSQL("CREATE TABLE " + constraint + "\"group\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"create_time\" INTEGER," + // 1: createTime
-                "\"nick\" TEXT);"); // 2: nick
+                "\"nick\" TEXT," + // 2: nick
+                "\"description\" TEXT);"); // 3: description
     }
 
     /** Drops the underlying database table. */
@@ -63,15 +65,20 @@ public class GroupDao extends AbstractDao<Group, Integer> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
- 
+
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(2, createTime.getTime());
         }
- 
+
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);
+        }
+
+        String description = entity.getDescription();
+        if (description != null) {
+            stmt.bindString(4, description);
         }
     }
 
@@ -83,7 +90,7 @@ public class GroupDao extends AbstractDao<Group, Integer> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
- 
+
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(2, createTime.getTime());
@@ -92,6 +99,11 @@ public class GroupDao extends AbstractDao<Group, Integer> {
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);
+        }
+
+        String description = entity.getDescription();
+        if (description != null) {
+            stmt.bindString(4, description);
         }
     }
 
@@ -105,7 +117,8 @@ public class GroupDao extends AbstractDao<Group, Integer> {
         Group entity = new Group( //
                 cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0), // id
                 cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // createTime
-                cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // nick
+                cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // nick
+                cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // description
         );
         return entity;
     }
@@ -115,6 +128,7 @@ public class GroupDao extends AbstractDao<Group, Integer> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
         entity.setCreateTime(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
         entity.setNick(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setDescription(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
     }
 
     @Override

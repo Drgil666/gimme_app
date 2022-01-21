@@ -29,12 +29,18 @@ public class Group {
      */
     @Property(nameInDb = "nick")
     private String nick;
+    /**
+     * 群描述
+     */
+    @Property(nameInDb = "description")
+    private String description;
 
-    @Generated(hash = 1156945570)
-    public Group(Integer id, Date createTime, String nick) {
+    @Generated(hash = 1637966632)
+    public Group(Integer id, Date createTime, String nick, String description) {
         this.id = id;
         this.createTime = createTime;
         this.nick = nick;
+        this.description = description;
     }
 
     @Generated(hash = 117982048)
@@ -63,5 +69,13 @@ public class Group {
 
     public void setNick(String nick) {
         this.nick = nick;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

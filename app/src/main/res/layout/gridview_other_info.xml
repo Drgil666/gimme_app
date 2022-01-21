@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/list_item_color_bg"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/gridview_other_info_icon"
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:src="@mipmap/app_icon" />
+
+    <TextView
+        android:id="@+id/gridview_other_info_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gridview_other_info_icon"
+        android:layout_marginStart="6sp"
+        android:layout_marginTop="5sp"
+        android:text="昵称"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</RelativeLayout>

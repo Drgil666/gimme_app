@@ -34,13 +34,20 @@ public class Channel {
      */
     @Property(nameInDb = "create_time")
     private Date createTime;
+    /**
+     * 群介绍
+     */
+    @Property(nameInDb = "description")
+    private String description;
 
-    @Generated(hash = 463022955)
-    public Channel(Integer id, Integer ownerId, String nick, Date createTime) {
+    @Generated(hash = 931615689)
+    public Channel(Integer id, Integer ownerId, String nick, Date createTime,
+                   String description) {
         this.id = id;
         this.ownerId = ownerId;
         this.nick = nick;
         this.createTime = createTime;
+        this.description = description;
     }
 
     @Generated(hash = 459652974)
@@ -77,5 +84,13 @@ public class Channel {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

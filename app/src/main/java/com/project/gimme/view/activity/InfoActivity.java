@@ -61,17 +61,14 @@ public class InfoActivity extends SwipeBackActivity {
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
             setTopText("聊天设置");
             FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
-//            friendInfoFragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
         } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             setTopText("群聊设置");
             OtherInfoFragment otherInfoFragment = new OtherInfoFragment();
-//            otherInfoFragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.info_fragment, otherInfoFragment).commit();
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             setTopText("频道设置");
             OtherInfoFragment otherInfoFragment = new OtherInfoFragment();
-//            otherInfoFragment.setArguments(bundle);
             fragmentTransaction.replace(R.id.info_fragment, otherInfoFragment).commit();
         } else {
             Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
