@@ -1,7 +1,7 @@
 package com.project.gimme.view.activity;
 
-import static com.project.gimme.utils.BundleUtil.OBJECTID_ATTRIBUTE;
-import static com.project.gimme.utils.BundleUtil.TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -40,8 +40,8 @@ public class InfoActivity extends SwipeBackActivity {
 
     private void getType() {
         Bundle bundle = getIntent().getExtras();
-        type = bundle.getInt(TYPE_ATTRIBUTE);
-        objectId = bundle.getInt(OBJECTID_ATTRIBUTE);
+        type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
+        objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
 //        System.out.println("type:" + type + " object_id:" + objectId);
     }
 
@@ -51,8 +51,8 @@ public class InfoActivity extends SwipeBackActivity {
             overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });
         Bundle bundle = new Bundle();
-        bundle.putInt(TYPE_ATTRIBUTE, type);
-        bundle.putInt(OBJECTID_ATTRIBUTE, objectId);
+        bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+        bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentManager.getFragments().clear();

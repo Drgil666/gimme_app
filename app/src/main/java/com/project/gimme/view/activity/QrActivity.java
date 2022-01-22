@@ -46,8 +46,8 @@ public class QrActivity extends SwipeBackActivity {
 
     private void getType() {
         Bundle bundle = getIntent().getExtras();
-        type = bundle.getInt(BundleUtil.TYPE_ATTRIBUTE);
-        objectId = bundle.getInt(BundleUtil.OBJECTID_ATTRIBUTE);
+        type = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
+        objectId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
     }
 
     private void initQrBody() {

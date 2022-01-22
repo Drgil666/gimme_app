@@ -1,7 +1,7 @@
 package com.project.gimme.view.fragment;
 
-import static com.project.gimme.utils.BundleUtil.OBJECTID_ATTRIBUTE;
-import static com.project.gimme.utils.BundleUtil.TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -56,15 +56,15 @@ public class FriendInfoFragment extends Fragment {
 
     private void getType() {
         Bundle bundle = getActivity().getIntent().getExtras();
-        type = bundle.getInt(TYPE_ATTRIBUTE);
-        objectId = bundle.getInt(OBJECTID_ATTRIBUTE);
+        type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
+        objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
     }
 
     private void initButton() {
         button.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
-            bundle.putInt(TYPE_ATTRIBUTE, type);
-            bundle.putInt(OBJECTID_ATTRIBUTE, objectId);
+            bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+            bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
             getActivity().finish();
             getActivity().overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });

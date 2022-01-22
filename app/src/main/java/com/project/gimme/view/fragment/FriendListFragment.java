@@ -15,6 +15,7 @@ import com.project.gimme.R;
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.Group;
 import com.project.gimme.pojo.User;
+import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendChannelAdapter;
@@ -72,8 +73,9 @@ public class FriendListFragment extends Fragment {
         userListView.setAdapter(new FriendUserAdapter(getContext(), userList));
         userListView.setOnItemClickListener((parent, view, position, id) -> {
             System.out.println("friend");
-            Bundle bundle = getBundle((int) id,
-                    ChatMsgUtil.Character.TYPE_FRIEND.getCode());
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
+            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -95,8 +97,9 @@ public class FriendListFragment extends Fragment {
         groupListView.setAdapter(new FriendGroupAdapter(getContext(), groupList));
         groupListView.setOnItemClickListener((parent, view, position, id) -> {
             System.out.println("group");
-            Bundle bundle = getBundle((int) id,
-                    ChatMsgUtil.Character.TYPE_GROUP.getCode());
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
+            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -119,8 +122,9 @@ public class FriendListFragment extends Fragment {
         channelListView.setAdapter(new FriendChannelAdapter(getContext(), channelList));
         channelListView.setOnItemClickListener((parent, view, position, id) -> {
             System.out.println("channel");
-            Bundle bundle = getBundle((int) id,
-                    ChatMsgUtil.Character.TYPE_CHANNEL.getCode());
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
+            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_CHANNEL.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -137,13 +141,6 @@ public class FriendListFragment extends Fragment {
             channel.setOwnerId(1);
             channelList.add(channel);
         }
-    }
-
-    private Bundle getBundle(Integer id, Integer type) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("objectId", id);
-        bundle.putInt("type", type);
-        return bundle;
     }
 
     @Override

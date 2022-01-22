@@ -1,7 +1,7 @@
 package com.project.gimme.view.fragment;
 
-import static com.project.gimme.utils.BundleUtil.OBJECTID_ATTRIBUTE;
-import static com.project.gimme.utils.BundleUtil.TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -88,8 +88,8 @@ public class OtherInfoFragment extends Fragment {
 
     private void getType() {
         Bundle bundle = getActivity().getIntent().getExtras();
-        type = bundle.getInt(TYPE_ATTRIBUTE);
-        objectId = bundle.getInt(OBJECTID_ATTRIBUTE);
+        type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
+        objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
     }
 
     private void initTopBar() {
@@ -125,8 +125,8 @@ public class OtherInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(TYPE_ATTRIBUTE, type);
-                bundle.putInt(OBJECTID_ATTRIBUTE, objectId);
+                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
                 Intent intent = new Intent(getActivity(), QrActivity.class).putExtras(bundle);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);

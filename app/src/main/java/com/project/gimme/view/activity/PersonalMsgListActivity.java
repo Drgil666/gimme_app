@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.PersonalMsgVO;
+import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.view.adpter.PersonalMsgListAdapter;
 
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class PersonalMsgListActivity extends SwipeBackActivity {
 
     private void getType() {
         Bundle bundle = this.getIntent().getExtras();
-        type = bundle.getInt("type");
+        type = bundle.getInt(BundleUtil.PERSONAL_MSG_TYPE_ATTRIBUTE);
         System.out.println("type:" + type);
     }
 

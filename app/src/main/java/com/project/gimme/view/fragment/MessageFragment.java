@@ -1,7 +1,7 @@
 package com.project.gimme.view.fragment;
 
-import static com.project.gimme.utils.BundleUtil.OBJECTID_ATTRIBUTE;
-import static com.project.gimme.utils.BundleUtil.TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -80,19 +80,14 @@ public class MessageFragment extends Fragment {
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Integer type = ((MessageVoAdapter) listView.getAdapter()).getItem(position).getType();
 //            System.out.println("click");
-            Bundle bundle = createBundle((int) id, type);
+            Bundle bundle = new Bundle();
+            bundle.putInt(OBJECT_ID_ATTRIBUTE, (int) id);
+            bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
-    }
-
-    private Bundle createBundle(Integer id, Integer type) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(OBJECTID_ATTRIBUTE, id);
-        bundle.putInt(TYPE_ATTRIBUTE, type);
-        return bundle;
     }
 
 }

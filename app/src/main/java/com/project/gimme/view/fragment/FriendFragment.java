@@ -10,6 +10,7 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
+import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.view.activity.PersonalMsgListActivity;
 import com.project.gimme.view.adpter.PersonalMsgAdapter;
 
@@ -48,7 +49,7 @@ public class FriendFragment extends Fragment {
         personalMsgListView.setAdapter(new PersonalMsgAdapter(getContext(), listItem));
         personalMsgListView.setOnItemClickListener((parent, view, position, id) -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("type", position);
+            bundle.putInt(BundleUtil.PERSONAL_MSG_TYPE_ATTRIBUTE, position);
             Intent intent = new Intent(getActivity(), PersonalMsgListActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
