@@ -46,6 +46,13 @@ public class OtherInfoFragment extends Fragment {
     private TextView introductionGroupNoticeLeftText;
     private RelativeLayout introductionGroupNoticeLayout;
     private ChannelNotice channelNotice = new ChannelNotice();
+    private RelativeLayout introductionGroupFileLayout;
+    private RelativeLayout myLayout;
+    private RelativeLayout myChatMsg;
+    private RelativeLayout myNote;
+    private TextView myNoteRightText;
+    private TextView myNoteLeftText;
+    private UserVO myUserVO = new UserVO();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,10 +68,17 @@ public class OtherInfoFragment extends Fragment {
         introductionGroupNoticeLeftNick = view.findViewById(R.id.fragment_other_info_introduction_group_notice_nick);
         introductionGroupNoticeLeftText = view.findViewById(R.id.fragment_other_info_introduction_group_notice_text);
         introductionGroupNoticeLayout = view.findViewById(R.id.fragment_other_info_introduction_group_notice_layout);
+        introductionGroupFileLayout = view.findViewById(R.id.fragment_other_info_introduction_group_file_layout);
+        myLayout = view.findViewById(R.id.fragment_other_info_my_layout);
+        myChatMsg = view.findViewById(R.id.fragment_other_info_my_chat_msg);
+        myNote = view.findViewById(R.id.fragment_other_info_my_note);
+        myNoteRightText = view.findViewById(R.id.fragment_other_info_introduction_note_right_text);
+        myNoteLeftText = view.findViewById(R.id.fragment_other_info_introduction_note_left_text);
         getType();
         initTopBar();
         initMember();
         initIntroduction();
+        initMyLayout();
         return view;
     }
 
@@ -95,7 +109,7 @@ public class OtherInfoFragment extends Fragment {
             initGridView();
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             memberLeft.setText("频道成员");
-            memberRight.setText("查看" + groupVO.getTotalCount() + "名频道成员");
+            memberRight.setText("查看" + channelVO.getTotalCount() + "名频道成员");
             initGridView();
         } else {
             Toast.makeText(getContext(), "类型错误!", Toast.LENGTH_LONG).show();
@@ -107,13 +121,16 @@ public class OtherInfoFragment extends Fragment {
             introductionIdLeft.setText("群聊号与二维码");
             introductionIdRight.setText(groupVO.getId().toString());
             introductionGroupNoticeLayout.setVisibility(View.VISIBLE);
+            introductionGroupFileLayout.setVisibility(View.VISIBLE);
             introductionGroupNoticeLeftNick.setText("群公告");
             getChannelNotice(groupVO.getId());
             introductionGroupNoticeLeftText.setText(channelNotice.getText());
+            introductionGroupFileLayout.setOnClickListener(view -> System.out.println("click!"));
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             introductionIdLeft.setText("频道号与二维码");
-            introductionIdRight.setText(groupVO.getId());
+            introductionIdRight.setText(channelVO.getId().toString());
             introductionGroupNoticeLayout.setVisibility(View.GONE);
+            introductionGroupFileLayout.setVisibility(View.GONE);
         } else {
             Toast.makeText(getContext(), "类型错误!", Toast.LENGTH_LONG).show();
         }
@@ -167,5 +184,26 @@ public class OtherInfoFragment extends Fragment {
     private void initGridView() {
         getUserVoList(type, objectId);
         gridView.setAdapter(new OtherInfoAdapter(getContext(), userVOList));
+    }
+
+    private void getUserVO(Integer type, Integer objectId) {
+        myUserVO.setId(1);
+        myUserVO.setNick("111");
+        myUserVO.setAvatar(null);
+        myUserVO.setGender(1);
+        myUserVO.setNote("我的备注");
+    }
+
+    private void initMyLayout() {
+        myChatMsg.setOnClickListener(view -> System.out.println("click!"));
+        getUserVO(type, objectId);
+        if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+            myNoteRightText.setText(myUserVO.getNote());
+            myNoteLeftText.setText("我的群昵称");
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+            myNoteRightText.setText(myUserVO.getNote());
+            myNoteLeftText.setText("我的频道昵称");
+        }
+        myNote.setOnClickListener(view -> System.out.println("click!"));
     }
 }

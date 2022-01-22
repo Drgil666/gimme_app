@@ -5,187 +5,315 @@
     android:layout_height="match_parent"
     android:background="@color/gimme_background_lighter"
     tools:context=".view.fragment.OtherInfoFragment">
-    <!--群聊/频道标题-->
-    <RelativeLayout
-        android:id="@+id/fragment_other_info_top_bar"
-        android:layout_width="match_parent"
-        android:layout_height="80sp"
-        android:background="@color/white">
+    <!--可滚动部件-->
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/fragment_other_info_top_bar_icon"
-            android:layout_width="70sp"
-            android:layout_height="70sp"
-            android:layout_marginStart="10sp"
-            android:layout_marginTop="5sp"
-            android:src="@mipmap/app_icon" />
-
-        <TextView
-            android:id="@+id/fragment_other_info_top_nick"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10sp"
-            android:layout_marginTop="15sp"
-            android:layout_toEndOf="@+id/fragment_other_info_top_bar_icon"
-            android:text="群聊"
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/fragment_other_info_top_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_other_info_top_nick"
-            android:layout_marginStart="10sp"
-            android:layout_marginTop="5sp"
-            android:layout_toEndOf="@id/fragment_other_info_top_bar_icon"
-            android:text="群介绍"
-            android:textSize="18sp" />
 
-        <ImageView
-            android:layout_width="35sp"
-            android:layout_height="35sp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10sp"
-            android:src="@mipmap/app_icon" />
-    </RelativeLayout>
-    <!--群聊/频道成员-->
-    <RelativeLayout
-        android:id="@+id/fragment_other_info_member_layout"
-        android:layout_width="match_parent"
-        android:layout_height="250sp"
-        android:layout_below="@id/fragment_other_info_top_bar"
-        android:layout_marginTop="20sp"
-        android:background="@color/white">
-
-        <TextView
-            android:id="@+id/fragment_other_info_member_left_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25sp"
-            android:layout_marginTop="5sp"
-            android:text="群聊成员"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/fragment_other_info_member_right_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5sp"
-            android:layout_marginEnd="5sp"
-            android:layout_toStartOf="@+id/fragment_other_info_member_icon"
-            android:text="查看35名群成员"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/fragment_other_info_member_icon"
-            android:layout_width="35sp"
-            android:layout_height="35sp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10sp"
-            android:src="@mipmap/app_icon" />
-
-        <GridView
-            android:id="@+id/fragment_other_info_member_gridview"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="30sp"
-            android:layout_marginTop="40sp"
-            android:numColumns="5" />
-    </RelativeLayout>
-    <!--群/频道基本信息-->
-    <RelativeLayout
-        android:id="@+id/fragment_other_info_introduction_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_other_info_member_layout"
-        android:layout_marginTop="20sp"
-        android:background="@color/white">
-        <!--群/频道号-->
-        <RelativeLayout
-            android:id="@+id/fragment_other_info_introduction_id"
-            android:layout_width="match_parent"
-            android:layout_height="50sp">
-
-            <TextView
-                android:id="@+id/fragment_other_info_introduction_left_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="25sp"
-                android:text="频道号和二维码"
-                android:textColor="@color/black"
-                android:textSize="22sp" />
-
-            <ImageView
-                android:id="@+id/fragment_other_info_right_icon"
-                android:layout_width="20sp"
-                android:layout_height="20sp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="5sp"
-                android:src="@mipmap/app_icon" />
-
-            <ImageView
-                android:id="@+id/fragment_other_info_right_qr"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="5sp"
-                android:layout_toStartOf="@+id/fragment_other_info_right_icon"
-                android:src="@mipmap/app_icon" />
-
-            <TextView
-                android:id="@+id/fragment_other_info_introduction_right_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="5sp"
-                android:layout_toStartOf="@+id/fragment_other_info_right_qr"
-                android:text="1234567890"
-                android:textSize="18sp" />
-        </RelativeLayout>
-        <!--群公告-->
-        <RelativeLayout
-            android:visibility="invisible"
-            android:id="@+id/fragment_other_info_introduction_group_notice_layout"
-            android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:layout_below="@+id/fragment_other_info_introduction_id">
-
-            <TextView
-                android:id="@+id/fragment_other_info_introduction_group_notice_nick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25sp"
-                android:text="群聊公告"
-                android:textColor="@color/black"
-                android:textSize="22sp" />
-
-            <TextView
-                android:id="@+id/fragment_other_info_introduction_group_notice_text"
+            <!--群聊/频道标题-->
+            <RelativeLayout
+                android:id="@+id/fragment_other_info_top_bar"
                 android:layout_width="match_parent"
-                android:singleLine="true"
-                android:layout_toStartOf="@+id/fragment_other_info_introduction_group_notice_right_icon"
-                android:text="这是最新的群公告这是最新的群公告这是最新的群公告这是最新的群公告这是最新的群公告"
-                android:layout_marginEnd="5sp"
-                android:layout_marginStart="25sp"
-                android:textSize="18sp"
-                android:ellipsize="end"
-                android:layout_below="@+id/fragment_other_info_introduction_group_notice_nick"
-                android:layout_height="wrap_content" />
+                android:layout_height="80sp">
 
-            <ImageView
-                android:id="@+id/fragment_other_info_introduction_group_notice_right_icon"
-                android:layout_width="20sp"
-                android:layout_height="20sp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="5sp"
-                android:src="@mipmap/app_icon" />
-        </RelativeLayout>
-    </RelativeLayout>
+                <ImageView
+                    android:id="@+id/fragment_other_info_top_bar_icon"
+                    android:layout_width="70sp"
+                    android:layout_height="70sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="5sp"
+                    android:src="@mipmap/app_icon" />
+
+                <TextView
+                    android:id="@+id/fragment_other_info_top_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="15sp"
+                    android:layout_toEndOf="@+id/fragment_other_info_top_bar_icon"
+                    android:text="群聊"
+                    android:textColor="@color/black"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/fragment_other_info_top_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fragment_other_info_top_nick"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="5sp"
+                    android:layout_toEndOf="@id/fragment_other_info_top_bar_icon"
+                    android:text="群介绍"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10sp"
+                    android:src="@mipmap/app_icon" />
+            </RelativeLayout>
+            <!--群聊/频道成员-->
+            <RelativeLayout
+                android:id="@+id/fragment_other_info_member_layout"
+                android:layout_width="match_parent"
+                android:layout_height="250sp"
+                android:layout_below="@id/fragment_other_info_top_bar"
+                android:layout_marginTop="20sp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/fragment_other_info_member_left_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25sp"
+                    android:layout_marginTop="5sp"
+                    android:text="群聊成员"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/fragment_other_info_member_right_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginEnd="5sp"
+                    android:layout_toStartOf="@+id/fragment_other_info_member_icon"
+                    android:text="查看35名群成员"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/fragment_other_info_member_icon"
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10sp"
+                    android:src="@mipmap/app_icon" />
+
+                <GridView
+                    android:id="@+id/fragment_other_info_member_gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="30sp"
+                    android:layout_marginTop="40sp"
+                    android:numColumns="5" />
+            </RelativeLayout>
+            <!--群/频道基本信息-->
+            <RelativeLayout
+                android:id="@+id/fragment_other_info_introduction_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_other_info_member_layout"
+                android:layout_marginTop="20sp"
+                android:background="@color/white">
+                <!--群/频道号-->
+                <RelativeLayout
+                    android:id="@+id/fragment_other_info_introduction_id_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp">
+
+                    <TextView
+                        android:id="@+id/fragment_other_info_introduction_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="25sp"
+                        android:text="频道号和二维码"
+                        android:textColor="@color/black"
+                        android:textSize="22sp" />
+
+                    <ImageView
+                        android:id="@+id/fragment_other_info_right_icon"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5sp"
+                        android:src="@mipmap/app_icon" />
+
+                    <ImageView
+                        android:id="@+id/fragment_other_info_right_qr"
+                        android:layout_width="30sp"
+                        android:layout_height="30sp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5sp"
+                        android:layout_toStartOf="@+id/fragment_other_info_right_icon"
+                        android:src="@mipmap/app_icon" />
+
+                    <TextView
+                        android:id="@+id/fragment_other_info_introduction_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5sp"
+                        android:layout_toStartOf="@+id/fragment_other_info_right_qr"
+                        android:text="1234567890"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+                <!--群公告-->
+                <RelativeLayout
+                    android:id="@+id/fragment_other_info_introduction_group_notice_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:layout_below="@+id/fragment_other_info_introduction_id_layout">
+
+                    <TextView
+                        android:id="@+id/fragment_other_info_introduction_group_notice_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25sp"
+                        android:text="群聊公告"
+                        android:textColor="@color/black"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:id="@+id/fragment_other_info_introduction_group_notice_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/fragment_other_info_introduction_group_notice_nick"
+                        android:layout_marginStart="25sp"
+                        android:layout_marginEnd="5sp"
+                        android:layout_toStartOf="@+id/fragment_other_info_introduction_group_notice_right_icon"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="这是最新的群公告这是最新的群公告这是最新的群公告这是最新的群公告这是最新的群公告"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/fragment_other_info_introduction_group_notice_right_icon"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5sp"
+                        android:src="@mipmap/app_icon" />
+                </RelativeLayout>
+                <!--群文件-->
+                <RelativeLayout
+                    android:id="@+id/fragment_other_info_introduction_group_file_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:layout_below="@+id/fragment_other_info_introduction_group_notice_layout">
+
+                    <TextView
+                        android:id="@+id/fragment_other_info_introduction_group_file_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="25sp"
+                        android:text="群文件"
+                        android:textColor="@color/black"
+                        android:textSize="22sp" />
+
+                    <ImageView
+                        android:id="@+id/fragment_other_info_introduction_group_file_right_icon"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5sp"
+                        android:src="@mipmap/app_icon" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <!--我的相关信息-->
+            <RelativeLayout
+                android:id="@+id/fragment_other_info_my_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fragment_other_info_introduction_layout"
+                android:layout_marginTop="20sp"
+                android:background="@color/white">
+                <!--查找聊天记录-->
+                <RelativeLayout
+                    android:id="@+id/fragment_other_info_my_chat_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp">
+
+                    <TextView
+                        android:id="@+id/fragment_other_info_introduction_chat_msg_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="25sp"
+                        android:text="查找聊天记录"
+                        android:textColor="@color/black"
+                        android:textSize="22sp" />
+
+                    <ImageView
+                        android:id="@+id/fragment_other_info_introduction_chat_msg_right_icon"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5sp"
+                        android:src="@mipmap/app_icon" />
+
+                    <TextView
+                        android:id="@+id/fragment_other_info_introduction_chat_msg_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5sp"
+                        android:layout_toStartOf="@+id/fragment_other_info_introduction_chat_msg_right_icon"
+                        android:text="图片、视频、文件"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+                <!--我的昵称-->
+                <RelativeLayout
+                    android:id="@+id/fragment_other_info_my_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:layout_below="@+id/fragment_other_info_my_chat_msg">
+
+                    <TextView
+                        android:id="@+id/fragment_other_info_introduction_note_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="25sp"
+                        android:text="我的昵称"
+                        android:textColor="@color/black"
+                        android:textSize="22sp" />
+
+                    <ImageView
+                        android:id="@+id/fragment_other_info_introduction_note_right_icon"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5sp"
+                        android:src="@mipmap/app_icon" />
+
+                    <TextView
+                        android:id="@+id/fragment_other_info_introduction_note_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="5sp"
+                        android:layout_toStartOf="@+id/fragment_other_info_introduction_note_right_icon"
+                        android:text="XXX"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <!--退出按钮-->
+            <Button
+                android:id="@+id/fragment_other_info_exit_button"
+                android:layout_width="match_parent"
+                android:layout_height="80sp"
+                android:layout_below="@+id/fragment_other_info_my_layout"
+                android:layout_marginTop="20sp"
+                android:text="退出群聊"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
