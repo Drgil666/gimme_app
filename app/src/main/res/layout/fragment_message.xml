@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10sp"
-                android:background="@drawable/rounded_edit_view_white"
+                android:background="@drawable/rounded_edit_view_white_10px"
                 android:hint="  搜索">
 
             </EditText>

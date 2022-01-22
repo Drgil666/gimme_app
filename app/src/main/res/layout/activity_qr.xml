@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gimme_background"
     tools:context=".view.activity.QrActivity">
     <!--顶边栏-->
     <RelativeLayout
@@ -31,8 +32,55 @@
 
     <RelativeLayout
         android:id="@+id/qr_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/qr_top_bar"
+        android:layout_marginTop="100sp">
 
+        <ImageView
+            android:id="@+id/qr_body_background"
+            android:layout_width="300sp"
+            android:layout_height="300sp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="100sp"
+            android:background="@color/white"
+            android:src="@drawable/rounded_edit_view_white_25px" />
+
+        <ImageView
+            android:id="@+id/qr_body_icon"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/app_icon"
+            android:background="@drawable/rounded_edit_view_gimme_dark" />
+
+        <TextView
+            android:id="@+id/qr_body_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/qr_body_icon"
+            android:layout_centerHorizontal="true"
+            android:text="昵称"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/qr_body_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/qr_body_nick"
+            android:layout_centerHorizontal="true"
+            android:text="群号:XXXXXXXX"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/qr_body_qr_code"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:layout_below="@+id/qr_body_id"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15sp"
+            android:src="@mipmap/app_icon" />
     </RelativeLayout>
 </RelativeLayout>

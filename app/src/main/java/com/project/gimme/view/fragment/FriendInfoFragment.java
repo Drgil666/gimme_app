@@ -106,6 +106,8 @@ public class FriendInfoFragment extends Fragment {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item = new UserVoParamItem("备注", userVO.getNote(), true);
         itemList.add(item);
+        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), true);
+        itemList.add(item);
         item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false);
         itemList.add(item);
         item = new UserVoParamItem("昵称", userVO.getNick(), false);
