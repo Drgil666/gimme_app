@@ -3,6 +3,7 @@ package com.project.gimme.view.fragment;
 import static com.project.gimme.utils.BundleUtil.OBJECTID_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.TYPE_ATTRIBUTE;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.view.activity.QrActivity;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class OtherInfoFragment extends Fragment {
     private List<UserVO> userVOList = new ArrayList<>();
     private TextView introductionIdLeft;
     private TextView introductionIdRight;
+    private RelativeLayout introductionIdLayout;
     private TextView introductionGroupNoticeLeftNick;
     private TextView introductionGroupNoticeLeftText;
     private RelativeLayout introductionGroupNoticeLayout;
@@ -65,6 +68,7 @@ public class OtherInfoFragment extends Fragment {
         gridView = view.findViewById(R.id.fragment_other_info_member_gridview);
         introductionIdLeft = view.findViewById(R.id.fragment_other_info_introduction_left_text);
         introductionIdRight = view.findViewById(R.id.fragment_other_info_introduction_right_text);
+        introductionIdLayout = view.findViewById(R.id.fragment_other_info_introduction_id_layout);
         introductionGroupNoticeLeftNick = view.findViewById(R.id.fragment_other_info_introduction_group_notice_nick);
         introductionGroupNoticeLeftText = view.findViewById(R.id.fragment_other_info_introduction_group_notice_text);
         introductionGroupNoticeLayout = view.findViewById(R.id.fragment_other_info_introduction_group_notice_layout);
@@ -117,6 +121,17 @@ public class OtherInfoFragment extends Fragment {
     }
 
     private void initIntroduction() {
+        introductionIdLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(TYPE_ATTRIBUTE, type);
+                bundle.putInt(OBJECTID_ATTRIBUTE, objectId);
+                Intent intent = new Intent(getActivity(), QrActivity.class).putExtras(bundle);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+            }
+        });
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             introductionIdLeft.setText("群聊号与二维码");
             introductionIdRight.setText(groupVO.getId().toString());

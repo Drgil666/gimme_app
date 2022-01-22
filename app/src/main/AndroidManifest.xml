@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
         <activity
+            android:name=".view.activity.QrActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.InfoActivity"
             android:exported="false" />
         <activity
