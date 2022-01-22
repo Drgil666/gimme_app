@@ -20,7 +20,7 @@ import com.project.gimme.view.fragment.MyInfoFragment;
  * @author DrGilbert
  */
 public class MainActivity extends BaseActivity {
-    private Integer currentFragment = 1;
+    private Integer currentFragment = SessionUtil.Character.TYPE_MESSAGE.getCode();
     private final Integer height = GimmeApplication.getHeight();
     private final Integer weight = GimmeApplication.getWeight();
     private MessageFragment messageFragment;
@@ -37,6 +37,10 @@ public class MainActivity extends BaseActivity {
         initTopBar(0.1);
         initTopText();
         initBottomBar(0.1);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager.getFragments().clear();
+        fragmentTransaction.replace(R.id.main_body_fragment, new MessageFragment()).commit();
     }
 
     private void initTopBar(double size) {
