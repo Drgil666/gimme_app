@@ -17,10 +17,11 @@
 
             <!--群聊/频道标题-->
             <RelativeLayout
+                android:clickable="true"
                 android:id="@+id/fragment_other_info_top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="80sp"
-                android:background="@color/white">
+                android:background="@drawable/list_item_color_bg">
 
                 <ImageView
                     android:id="@+id/fragment_other_info_top_bar_icon"
@@ -62,12 +63,12 @@
             </RelativeLayout>
             <!--群聊/频道成员-->
             <RelativeLayout
+                android:clickable="true"
                 android:id="@+id/fragment_other_info_member_layout"
                 android:layout_width="match_parent"
                 android:layout_height="250sp"
-                android:layout_below="@id/fragment_other_info_top_bar"
                 android:layout_marginTop="20sp"
-                android:background="@color/white">
+                android:background="@drawable/list_item_color_bg">
 
                 <TextView
                     android:id="@+id/fragment_other_info_member_left_text"
@@ -104,21 +105,23 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="30sp"
                     android:layout_marginTop="40sp"
-                    android:numColumns="5" />
+                    android:numColumns="5"
+                    tools:ignore="NestedScrolling" />
             </RelativeLayout>
             <!--群/频道基本信息-->
             <RelativeLayout
                 android:id="@+id/fragment_other_info_introduction_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fragment_other_info_member_layout"
                 android:layout_marginTop="20sp"
                 android:background="@color/white">
                 <!--群/频道号-->
                 <RelativeLayout
+                    android:clickable="true"
                     android:id="@+id/fragment_other_info_introduction_id_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="50sp">
+                    android:layout_height="50sp"
+                    android:background="@drawable/list_item_color_bg">
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_left_text"
@@ -159,11 +162,15 @@
                         android:textSize="18sp" />
                 </RelativeLayout>
                 <!--群公告-->
+                <!--群文件-->
                 <RelativeLayout
+                    android:clickable="true"
                     android:id="@+id/fragment_other_info_introduction_group_notice_layout"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
-                    android:layout_below="@+id/fragment_other_info_introduction_id_layout">
+                    android:layout_below="@+id/fragment_other_info_introduction_id_layout"
+                    android:layout_marginTop="0dp"
+                    android:background="@drawable/list_item_color_bg">
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_group_notice_nick"
@@ -196,12 +203,14 @@
                         android:layout_marginEnd="5sp"
                         android:src="@mipmap/app_icon" />
                 </RelativeLayout>
-                <!--群文件-->
+
                 <RelativeLayout
+                    android:clickable="true"
                     android:id="@+id/fragment_other_info_introduction_group_file_layout"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
-                    android:layout_below="@+id/fragment_other_info_introduction_group_notice_layout">
+                    android:layout_below="@+id/fragment_other_info_introduction_group_notice_layout"
+                    android:background="@drawable/list_item_color_bg">
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_group_file_left_text"
@@ -228,14 +237,15 @@
                 android:id="@+id/fragment_other_info_my_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/fragment_other_info_introduction_layout"
                 android:layout_marginTop="20sp"
                 android:background="@color/white">
                 <!--查找聊天记录-->
                 <RelativeLayout
+                    android:clickable="true"
                     android:id="@+id/fragment_other_info_my_chat_msg"
                     android:layout_width="match_parent"
-                    android:layout_height="50sp">
+                    android:layout_height="50sp"
+                    android:background="@drawable/list_item_color_bg">
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_chat_msg_left_text"
@@ -268,10 +278,12 @@
                 </RelativeLayout>
                 <!--我的昵称-->
                 <RelativeLayout
+                    android:clickable="true"
                     android:id="@+id/fragment_other_info_my_note"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
-                    android:layout_below="@+id/fragment_other_info_my_chat_msg">
+                    android:layout_below="@+id/fragment_other_info_my_chat_msg"
+                    android:background="@drawable/list_item_color_bg">
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_note_left_text"
@@ -308,7 +320,6 @@
                 android:id="@+id/fragment_other_info_exit_button"
                 android:layout_width="match_parent"
                 android:layout_height="80sp"
-                android:layout_below="@+id/fragment_other_info_my_layout"
                 android:layout_marginTop="20sp"
                 android:text="退出群聊"
                 android:textSize="22sp"

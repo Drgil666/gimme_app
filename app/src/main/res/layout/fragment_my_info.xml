@@ -70,13 +70,13 @@
                 android:id="@+id/gridview_my_info"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:horizontalSpacing="20sp"
-                android:verticalSpacing="10sp"
                 android:layout_marginStart="30sp"
                 android:layout_marginTop="30sp"
                 android:layout_marginEnd="30sp"
                 android:layout_marginBottom="30sp"
-                android:numColumns="2" />
+                android:horizontalSpacing="20sp"
+                android:numColumns="2"
+                android:verticalSpacing="10sp" />
         </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>
