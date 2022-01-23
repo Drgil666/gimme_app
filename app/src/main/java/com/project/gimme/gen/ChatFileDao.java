@@ -16,12 +16,12 @@ import org.greenrobot.greendao.internal.DaoConfig;
 /**
  * DAO for table "group_file".
  */
-public class GroupFileDao extends AbstractDao<ChatFile, Integer> {
+public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
 
     public static final String TABLENAME = "group_file";
 
     /**
-     * Properties of entity GroupFile.<br/>
+     * Properties of entity ChatFile.<br/>
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
@@ -33,11 +33,11 @@ public class GroupFileDao extends AbstractDao<ChatFile, Integer> {
     }
 
 
-    public GroupFileDao(DaoConfig config) {
+    public ChatFileDao(DaoConfig config) {
         super(config);
     }
 
-    public GroupFileDao(DaoConfig config, DaoSession daoSession) {
+    public ChatFileDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
     }
 
@@ -45,7 +45,7 @@ public class GroupFileDao extends AbstractDao<ChatFile, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
+        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "\"group_file\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"owner_id\" INTEGER," + // 1: ownerId
@@ -54,7 +54,9 @@ public class GroupFileDao extends AbstractDao<ChatFile, Integer> {
                 "\"filename\" TEXT);"); // 4: filename
     }
 
-    /** Drops the underlying database table. */
+    /**
+     * Drops the underlying database table.
+     */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"group_file\"";
         db.execSQL(sql);
@@ -73,17 +75,17 @@ public class GroupFileDao extends AbstractDao<ChatFile, Integer> {
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
- 
+
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(3, groupId);
         }
- 
+
         String mongoId = entity.getMongoId();
         if (mongoId != null) {
             stmt.bindString(4, mongoId);
         }
- 
+
         String filename = entity.getFilename();
         if (filename != null) {
             stmt.bindString(5, filename);
@@ -103,12 +105,12 @@ public class GroupFileDao extends AbstractDao<ChatFile, Integer> {
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
- 
+
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(3, groupId);
         }
- 
+
         String mongoId = entity.getMongoId();
         if (mongoId != null) {
             stmt.bindString(4, mongoId);
@@ -169,5 +171,5 @@ public class GroupFileDao extends AbstractDao<ChatFile, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-    
+
 }

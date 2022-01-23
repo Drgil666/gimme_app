@@ -10,7 +10,7 @@ import org.greenrobot.greendao.annotation.Property;
  * @date 2022/1/4 16:56
  */
 @Entity(nameInDb = "group_file")
-public class GroupFile {
+public class ChatFile {
     /**
      * 群文件id
      */
@@ -38,9 +38,9 @@ public class GroupFile {
     @Property(nameInDb = "filename")
     private String filename;
 
-    @Generated(hash = 1859552118)
-    public GroupFile(Integer id, Integer ownerId, Integer groupId, String mongoId,
-                     String filename) {
+    @Generated(hash = 723486968)
+    public ChatFile(Integer id, Integer ownerId, Integer groupId, String mongoId,
+                    String filename) {
         this.id = id;
         this.ownerId = ownerId;
         this.groupId = groupId;
@@ -48,8 +48,8 @@ public class GroupFile {
         this.filename = filename;
     }
 
-    @Generated(hash = 892659331)
-    public GroupFile() {
+    @Generated(hash = 1330691015)
+    public ChatFile() {
     }
 
     public Integer getId() {
@@ -63,31 +63,24 @@ public class GroupFile {
     public Integer getOwnerId() {
         return this.ownerId;
     }
-
     public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
     }
-
     public Integer getGroupId() {
         return this.groupId;
     }
-
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
-
     public String getMongoId() {
         return this.mongoId;
     }
-
     public void setMongoId(String mongoId) {
         this.mongoId = mongoId;
     }
-
     public String getFilename() {
         return this.filename;
     }
-
     public void setFilename(String filename) {
         this.filename = filename;
     }

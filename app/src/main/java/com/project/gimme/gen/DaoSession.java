@@ -3,11 +3,11 @@ package com.project.gimme.gen;
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.ChannelNotice;
 import com.project.gimme.pojo.ChannelUser;
+import com.project.gimme.pojo.ChatFile;
 import com.project.gimme.pojo.ChatMsg;
 import com.project.gimme.pojo.CheckIn;
 import com.project.gimme.pojo.CheckInUser;
 import com.project.gimme.pojo.Group;
-import com.project.gimme.pojo.GroupFile;
 import com.project.gimme.pojo.GroupNotice;
 import com.project.gimme.pojo.GroupUser;
 import com.project.gimme.pojo.MsgBot;
@@ -36,11 +36,11 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig channelDaoConfig;
     private final DaoConfig channelNoticeDaoConfig;
     private final DaoConfig channelUserDaoConfig;
+    private final DaoConfig chatFileDaoConfig;
     private final DaoConfig chatMsgDaoConfig;
     private final DaoConfig checkInDaoConfig;
     private final DaoConfig checkInUserDaoConfig;
     private final DaoConfig groupDaoConfig;
-    private final DaoConfig groupFileDaoConfig;
     private final DaoConfig groupNoticeDaoConfig;
     private final DaoConfig groupUserDaoConfig;
     private final DaoConfig msgBotDaoConfig;
@@ -52,11 +52,11 @@ public class DaoSession extends AbstractDaoSession {
     private final ChannelDao channelDao;
     private final ChannelNoticeDao channelNoticeDao;
     private final ChannelUserDao channelUserDao;
+    private final ChatFileDao chatFileDao;
     private final ChatMsgDao chatMsgDao;
     private final CheckInDao checkInDao;
     private final CheckInUserDao checkInUserDao;
     private final GroupDao groupDao;
-    private final GroupFileDao groupFileDao;
     private final GroupNoticeDao groupNoticeDao;
     private final GroupUserDao groupUserDao;
     private final MsgBotDao msgBotDao;
@@ -78,6 +78,9 @@ public class DaoSession extends AbstractDaoSession {
         channelUserDaoConfig = daoConfigMap.get(ChannelUserDao.class).clone();
         channelUserDaoConfig.initIdentityScope(type);
 
+        chatFileDaoConfig = daoConfigMap.get(ChatFileDao.class).clone();
+        chatFileDaoConfig.initIdentityScope(type);
+
         chatMsgDaoConfig = daoConfigMap.get(ChatMsgDao.class).clone();
         chatMsgDaoConfig.initIdentityScope(type);
 
@@ -89,9 +92,6 @@ public class DaoSession extends AbstractDaoSession {
 
         groupDaoConfig = daoConfigMap.get(GroupDao.class).clone();
         groupDaoConfig.initIdentityScope(type);
-
-        groupFileDaoConfig = daoConfigMap.get(GroupFileDao.class).clone();
-        groupFileDaoConfig.initIdentityScope(type);
 
         groupNoticeDaoConfig = daoConfigMap.get(GroupNoticeDao.class).clone();
         groupNoticeDaoConfig.initIdentityScope(type);
@@ -117,11 +117,11 @@ public class DaoSession extends AbstractDaoSession {
         channelDao = new ChannelDao(channelDaoConfig, this);
         channelNoticeDao = new ChannelNoticeDao(channelNoticeDaoConfig, this);
         channelUserDao = new ChannelUserDao(channelUserDaoConfig, this);
+        chatFileDao = new ChatFileDao(chatFileDaoConfig, this);
         chatMsgDao = new ChatMsgDao(chatMsgDaoConfig, this);
         checkInDao = new CheckInDao(checkInDaoConfig, this);
         checkInUserDao = new CheckInUserDao(checkInUserDaoConfig, this);
         groupDao = new GroupDao(groupDaoConfig, this);
-        groupFileDao = new GroupFileDao(groupFileDaoConfig, this);
         groupNoticeDao = new GroupNoticeDao(groupNoticeDaoConfig, this);
         groupUserDao = new GroupUserDao(groupUserDaoConfig, this);
         msgBotDao = new MsgBotDao(msgBotDaoConfig, this);
@@ -133,11 +133,11 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(Channel.class, channelDao);
         registerDao(ChannelNotice.class, channelNoticeDao);
         registerDao(ChannelUser.class, channelUserDao);
+        registerDao(ChatFile.class, chatFileDao);
         registerDao(ChatMsg.class, chatMsgDao);
         registerDao(CheckIn.class, checkInDao);
         registerDao(CheckInUser.class, checkInUserDao);
         registerDao(Group.class, groupDao);
-        registerDao(GroupFile.class, groupFileDao);
         registerDao(GroupNotice.class, groupNoticeDao);
         registerDao(GroupUser.class, groupUserDao);
         registerDao(MsgBot.class, msgBotDao);
@@ -151,11 +151,11 @@ public class DaoSession extends AbstractDaoSession {
         channelDaoConfig.clearIdentityScope();
         channelNoticeDaoConfig.clearIdentityScope();
         channelUserDaoConfig.clearIdentityScope();
+        chatFileDaoConfig.clearIdentityScope();
         chatMsgDaoConfig.clearIdentityScope();
         checkInDaoConfig.clearIdentityScope();
         checkInUserDaoConfig.clearIdentityScope();
         groupDaoConfig.clearIdentityScope();
-        groupFileDaoConfig.clearIdentityScope();
         groupNoticeDaoConfig.clearIdentityScope();
         groupUserDaoConfig.clearIdentityScope();
         msgBotDaoConfig.clearIdentityScope();
@@ -177,6 +177,10 @@ public class DaoSession extends AbstractDaoSession {
         return channelUserDao;
     }
 
+    public ChatFileDao getChatFileDao() {
+        return chatFileDao;
+    }
+
     public ChatMsgDao getChatMsgDao() {
         return chatMsgDao;
     }
@@ -191,10 +195,6 @@ public class DaoSession extends AbstractDaoSession {
 
     public GroupDao getGroupDao() {
         return groupDao;
-    }
-
-    public GroupFileDao getGroupFileDao() {
-        return groupFileDao;
     }
 
     public GroupNoticeDao getGroupNoticeDao() {

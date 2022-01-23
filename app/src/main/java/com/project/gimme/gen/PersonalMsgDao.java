@@ -77,15 +77,25 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         if (ownerId != null) {
             stmt.bindLong(3, ownerId);
         }
- 
+
         Integer operatorId = entity.getOperatorId();
         if (operatorId != null) {
             stmt.bindLong(4, operatorId);
         }
- 
+
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(5, objectId);
+        }
+
+        String note = entity.getNote();
+        if (note != null) {
+            stmt.bindString(6, note);
+        }
+
+        Integer status = entity.getStatus();
+        if (status != null) {
+            stmt.bindLong(7, status);
         }
     }
 
@@ -107,7 +117,7 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         if (ownerId != null) {
             stmt.bindLong(3, ownerId);
         }
- 
+
         Integer operatorId = entity.getOperatorId();
         if (operatorId != null) {
             stmt.bindLong(4, operatorId);
@@ -116,6 +126,16 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(5, objectId);
+        }
+
+        String note = entity.getNote();
+        if (note != null) {
+            stmt.bindString(6, note);
+        }
+
+        Integer status = entity.getStatus();
+        if (status != null) {
+            stmt.bindLong(7, status);
         }
     }
 
@@ -131,7 +151,9 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
                 cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // type
                 cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // ownerId
                 cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // operatorId
-                cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4) // objectId
+                cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // objectId
+                cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // note
+                cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6) // status
         );
         return entity;
     }
@@ -143,6 +165,8 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         entity.setOwnerId(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
         entity.setOperatorId(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
         entity.setObjectId(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
+        entity.setNote(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setStatus(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
     }
 
     @Override

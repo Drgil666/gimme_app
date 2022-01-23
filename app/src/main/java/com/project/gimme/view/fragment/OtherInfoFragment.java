@@ -21,6 +21,7 @@ import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.view.activity.GroupFileActivity;
 import com.project.gimme.view.activity.QrActivity;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
 
@@ -140,7 +141,16 @@ public class OtherInfoFragment extends Fragment {
             introductionGroupNoticeLeftNick.setText("群公告");
             getChannelNotice(groupVO.getId());
             introductionGroupNoticeLeftText.setText(channelNotice.getText());
-            introductionGroupFileLayout.setOnClickListener(view -> System.out.println("click!"));
+            introductionGroupFileLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                    Intent intent = new Intent(getActivity(), GroupFileActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+                }
+            });
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             introductionIdLeft.setText("频道号与二维码");
             introductionIdRight.setText(channelVO.getId().toString());

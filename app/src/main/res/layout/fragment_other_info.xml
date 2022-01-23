@@ -164,15 +164,16 @@
                 <!--群公告-->
                 <!--群文件-->
                 <RelativeLayout
-                    android:clickable="true"
                     android:id="@+id/fragment_other_info_introduction_group_notice_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="50sp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/fragment_other_info_introduction_id_layout"
                     android:layout_marginTop="0dp"
-                    android:background="@drawable/list_item_color_bg">
+                    android:background="@drawable/list_item_color_bg"
+                    android:clickable="true">
 
                     <TextView
+                        android:layout_marginTop="5sp"
                         android:id="@+id/fragment_other_info_introduction_group_notice_nick"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -188,6 +189,8 @@
                         android:layout_below="@+id/fragment_other_info_introduction_group_notice_nick"
                         android:layout_marginStart="25sp"
                         android:layout_marginEnd="5sp"
+                        android:layout_marginTop="5sp"
+                        android:layout_marginBottom="5sp"
                         android:layout_toStartOf="@+id/fragment_other_info_introduction_group_notice_right_icon"
                         android:ellipsize="end"
                         android:singleLine="true"
@@ -205,12 +208,12 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:clickable="true"
                     android:id="@+id/fragment_other_info_introduction_group_file_layout"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
                     android:layout_below="@+id/fragment_other_info_introduction_group_notice_layout"
-                    android:background="@drawable/list_item_color_bg">
+                    android:background="@drawable/list_item_color_bg"
+                    android:clickable="true">
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_group_file_left_text"
