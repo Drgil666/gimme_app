@@ -29,6 +29,8 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         public final static Property OwnerId = new Property(2, Integer.class, "ownerId", false, "owner_id");
         public final static Property OperatorId = new Property(3, Integer.class, "operatorId", false, "operator_id");
         public final static Property ObjectId = new Property(4, Integer.class, "objectId", false, "object_id");
+        public final static Property Note = new Property(5, String.class, "note", false, "NOTE");
+        public final static Property Status = new Property(6, Integer.class, "status", false, "STATUS");
     }
 
 
@@ -50,7 +52,9 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
                 "\"type\" INTEGER," + // 1: type
                 "\"owner_id\" INTEGER," + // 2: ownerId
                 "\"operator_id\" INTEGER," + // 3: operatorId
-                "\"object_id\" INTEGER);"); // 4: objectId
+                "\"object_id\" INTEGER," + // 4: objectId
+                "\"NOTE\" TEXT," + // 5: note
+                "\"STATUS\" INTEGER);"); // 6: status
     }
 
     /** Drops the underlying database table. */

@@ -26,11 +26,11 @@ public class DaoMaster extends AbstractDaoMaster {
         ChannelDao.createTable(db, ifNotExists);
         ChannelNoticeDao.createTable(db, ifNotExists);
         ChannelUserDao.createTable(db, ifNotExists);
+        ChatFileDao.createTable(db, ifNotExists);
         ChatMsgDao.createTable(db, ifNotExists);
         CheckInDao.createTable(db, ifNotExists);
         CheckInUserDao.createTable(db, ifNotExists);
         GroupDao.createTable(db, ifNotExists);
-        GroupFileDao.createTable(db, ifNotExists);
         GroupNoticeDao.createTable(db, ifNotExists);
         GroupUserDao.createTable(db, ifNotExists);
         MsgBotDao.createTable(db, ifNotExists);
@@ -45,11 +45,11 @@ public class DaoMaster extends AbstractDaoMaster {
         ChannelDao.dropTable(db, ifExists);
         ChannelNoticeDao.dropTable(db, ifExists);
         ChannelUserDao.dropTable(db, ifExists);
+        ChatFileDao.dropTable(db, ifExists);
         ChatMsgDao.dropTable(db, ifExists);
         CheckInDao.dropTable(db, ifExists);
         CheckInUserDao.dropTable(db, ifExists);
         GroupDao.dropTable(db, ifExists);
-        GroupFileDao.dropTable(db, ifExists);
         GroupNoticeDao.dropTable(db, ifExists);
         GroupUserDao.dropTable(db, ifExists);
         MsgBotDao.dropTable(db, ifExists);
@@ -78,11 +78,11 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(ChannelDao.class);
         registerDaoClass(ChannelNoticeDao.class);
         registerDaoClass(ChannelUserDao.class);
+        registerDaoClass(ChatFileDao.class);
         registerDaoClass(ChatMsgDao.class);
         registerDaoClass(CheckInDao.class);
         registerDaoClass(CheckInUserDao.class);
         registerDaoClass(GroupDao.class);
-        registerDaoClass(GroupFileDao.class);
         registerDaoClass(GroupNoticeDao.class);
         registerDaoClass(GroupUserDao.class);
         registerDaoClass(MsgBotDao.class);
