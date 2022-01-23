@@ -1,16 +1,19 @@
 package com.project.gimme.view.activity;
 
+import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
+
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.project.gimme.R;
-import com.project.gimme.utils.BundleUtil;
 
 /**
  * @author DrGilbert
  */
 public class GroupFileActivity extends SwipeBackActivity {
     private Integer groupId;
+    private Integer type;
     private ImageView topLeftButton;
 
     @Override
@@ -24,7 +27,8 @@ public class GroupFileActivity extends SwipeBackActivity {
 
     private void getGroupId() {
         Bundle bundle = getIntent().getExtras();
-        groupId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
+        type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
+        groupId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
     }
 
     private void initTopBar() {

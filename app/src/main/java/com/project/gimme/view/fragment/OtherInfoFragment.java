@@ -145,6 +145,7 @@ public class OtherInfoFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
+                    bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
                     bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
                     Intent intent = new Intent(getActivity(), GroupFileActivity.class).putExtras(bundle);
                     startActivity(intent);
