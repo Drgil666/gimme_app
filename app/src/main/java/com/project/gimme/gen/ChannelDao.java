@@ -72,17 +72,17 @@ public class ChannelDao extends AbstractDao<Channel, Integer> {
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);
         }
-
+ 
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(4, createTime.getTime());
         }
-
+ 
         String description = entity.getDescription();
         if (description != null) {
             stmt.bindString(5, description);
@@ -102,12 +102,12 @@ public class ChannelDao extends AbstractDao<Channel, Integer> {
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);
         }
-
+ 
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(4, createTime.getTime());

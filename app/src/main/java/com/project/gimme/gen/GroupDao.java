@@ -65,17 +65,17 @@ public class GroupDao extends AbstractDao<Group, Integer> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(2, createTime.getTime());
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);
         }
-
+ 
         String description = entity.getDescription();
         if (description != null) {
             stmt.bindString(4, description);
@@ -90,12 +90,12 @@ public class GroupDao extends AbstractDao<Group, Integer> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(2, createTime.getTime());
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);

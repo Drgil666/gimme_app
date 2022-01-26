@@ -81,22 +81,22 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         if (ownerId != null) {
             stmt.bindLong(3, ownerId);
         }
-
+ 
         Integer operatorId = entity.getOperatorId();
         if (operatorId != null) {
             stmt.bindLong(4, operatorId);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(5, objectId);
         }
-
+ 
         String note = entity.getNote();
         if (note != null) {
             stmt.bindString(6, note);
         }
-
+ 
         Integer status = entity.getStatus();
         if (status != null) {
             stmt.bindLong(7, status);
@@ -121,17 +121,17 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         if (ownerId != null) {
             stmt.bindLong(3, ownerId);
         }
-
+ 
         Integer operatorId = entity.getOperatorId();
         if (operatorId != null) {
             stmt.bindLong(4, operatorId);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(5, objectId);
         }
-
+ 
         String note = entity.getNote();
         if (note != null) {
             stmt.bindString(6, note);
