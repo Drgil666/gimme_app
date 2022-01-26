@@ -21,7 +21,7 @@ import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.ChatMsgUtil;
-import com.project.gimme.view.activity.GroupFileActivity;
+import com.project.gimme.view.activity.ChatFileActivity;
 import com.project.gimme.view.activity.QrActivity;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
 
@@ -147,7 +147,7 @@ public class OtherInfoFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
                     bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
-                    Intent intent = new Intent(getActivity(), GroupFileActivity.class).putExtras(bundle);
+                    Intent intent = new Intent(getActivity(), ChatFileActivity.class).putExtras(bundle);
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
                 }

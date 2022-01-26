@@ -54,7 +54,7 @@ public class PersonalMsgListAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.nick = convertView.findViewById(R.id.listview_personal_msg_list_nick);
         viewHolder.nick.setText(personalMsgVO.getOperatorNick());
-        viewHolder.note = convertView.findViewById(R.id.listview_personal_msg_list_note);
+        viewHolder.note = convertView.findViewById(R.id.listview_chat_file_owner_nick);
         viewHolder.note.setText("留言:" + personalMsgVO.getNote());
         viewHolder.object = convertView.findViewById(R.id.listview_personal_msg_list_object);
         viewHolder.object.setText("来源:" + personalMsgVO.getObjectNick());

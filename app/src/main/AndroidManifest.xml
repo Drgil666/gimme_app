@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
         <activity
-            android:name=".view.activity.GroupFileActivity"
+            android:name=".view.activity.ChatFileActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.QrActivity"

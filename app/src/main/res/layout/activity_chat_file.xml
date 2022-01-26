@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.ChatFileActivity">
+    <!--顶边栏-->
+    <RelativeLayout
+        android:id="@+id/chat_file_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/gimme_background_lighter">
+
+        <TextView
+            android:id="@+id/chat_file_top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="10sp"
+            android:text="群文件"
+            android:textColor="@color/black"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/chat_file_top_left_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:src="@mipmap/app_icon" />
+    </RelativeLayout>
+    <!--搜索框-->
+    <RelativeLayout
+        android:id="@+id/chat_file_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_below="@id/chat_file_top_bar"
+        android:background="@color/gimme_background_lighter">
+
+        <EditText
+            android:id="@+id/chat_file_search_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginEnd="10sp"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/rounded_edit_view_white_10px"
+            android:ellipsize="end"
+            android:hint="  搜索"
+            android:singleLine="true">
+
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/chat_file_total_file_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chat_file_search_layout"
+        android:background="@drawable/padding_5px">
+
+        <TextView
+            android:id="@+id/chat_file_total_file_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:text="共X个文件"
+            android:textColor="@color/gimme_font1"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/chat_file_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/chat_file_total_file_layout" />
+</RelativeLayout>

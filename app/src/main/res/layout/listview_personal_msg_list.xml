@@ -25,7 +25,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/listview_personal_msg_list_note"
+        android:id="@+id/listview_chat_file_owner_nick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="留言:"
@@ -39,7 +39,7 @@
         android:id="@+id/listview_personal_msg_list_object"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/listview_personal_msg_list_note"
+        android:layout_below="@+id/listview_chat_file_owner_nick"
         android:layout_marginStart="15sp"
         android:layout_marginTop="0sp"
         android:layout_toEndOf="@id/listview_personal_msg_list_icon"

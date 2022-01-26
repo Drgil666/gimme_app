@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.MessageVO;
-import com.project.gimme.utils.TimeUtil;
+import com.project.gimme.utils.NumberUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class MessageVoAdapter extends BaseAdapter {
 //        viewHolder.avatar
         viewHolder.nick.setText(messageVO.getNick());
         viewHolder.text.setText(messageVO.getText());
-        viewHolder.timestamp.setText(TimeUtil.changeToHourAndMinute(messageVO.getTimestamp()));
+        viewHolder.timestamp.setText(NumberUtil.changeToHourAndMinute(messageVO.getTimestamp()));
         return convertView;
     }
 
