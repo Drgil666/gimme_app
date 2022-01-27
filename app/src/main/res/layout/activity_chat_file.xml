@@ -6,13 +6,13 @@
     tools:context=".view.activity.ChatFileActivity">
     <!--顶边栏-->
     <RelativeLayout
-        android:id="@+id/chat_file_top_bar"
+        android:id="@+id/chat_file_info_top_bar"
         android:layout_width="match_parent"
         android:layout_height="80sp"
         android:background="@color/gimme_background_lighter">
 
         <TextView
-            android:id="@+id/chat_file_top_text"
+            android:id="@+id/chat_file_info_top_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -25,7 +25,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/chat_file_top_left_button"
+            android:id="@+id/chat_file_info_top_left_button"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_centerVertical="true"
@@ -37,7 +37,7 @@
         android:id="@+id/chat_file_search_layout"
         android:layout_width="match_parent"
         android:layout_height="60sp"
-        android:layout_below="@id/chat_file_top_bar"
+        android:layout_below="@id/chat_file_info_top_bar"
         android:background="@color/gimme_background_lighter">
 
         <EditText

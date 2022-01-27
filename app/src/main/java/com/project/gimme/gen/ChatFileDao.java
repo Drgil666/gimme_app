@@ -47,7 +47,7 @@ public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"chat_file\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"owner_id\" INTEGER," + // 1: ownerId
@@ -68,42 +68,42 @@ public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, ChatFile entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(3, objectId);
         }
-
+ 
         String mongoId = entity.getMongoId();
         if (mongoId != null) {
             stmt.bindString(4, mongoId);
         }
-
+ 
         String filename = entity.getFilename();
         if (filename != null) {
             stmt.bindString(5, filename);
         }
-
+ 
         Integer type = entity.getType();
         if (type != null) {
             stmt.bindLong(6, type);
         }
-
+ 
         Long size = entity.getSize();
         if (size != null) {
             stmt.bindLong(7, size);
         }
-
+ 
         java.util.Date timestamp = entity.getTimestamp();
         if (timestamp != null) {
             stmt.bindLong(8, timestamp.getTime());
@@ -113,37 +113,37 @@ public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, ChatFile entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(3, objectId);
         }
-
+ 
         String mongoId = entity.getMongoId();
         if (mongoId != null) {
             stmt.bindString(4, mongoId);
         }
-
+ 
         String filename = entity.getFilename();
         if (filename != null) {
             stmt.bindString(5, filename);
         }
-
+ 
         Integer type = entity.getType();
         if (type != null) {
             stmt.bindLong(6, type);
         }
-
+ 
         Long size = entity.getSize();
         if (size != null) {
             stmt.bindLong(7, size);

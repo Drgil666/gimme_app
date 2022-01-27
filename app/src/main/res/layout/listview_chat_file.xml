@@ -6,10 +6,10 @@
 
     <ImageView
         android:id="@+id/listview_chat_file_icon"
-        android:layout_width="80sp"
-        android:layout_height="80sp"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
         android:layout_marginStart="10sp"
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="5sp"
         android:src="@mipmap/app_icon" />
 
     <TextView
@@ -17,11 +17,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15sp"
-        android:layout_marginTop="15sp"
+        android:layout_marginTop="5sp"
         android:layout_toEndOf="@id/listview_chat_file_icon"
         android:text="昵称"
         android:textColor="@color/black"
-        android:textSize="28sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/listview_chat_file_owner_timestamp"
@@ -29,10 +29,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/listview_chat_file_nick"
         android:layout_marginStart="15sp"
-        android:layout_marginTop="15sp"
+        android:layout_marginTop="5sp"
         android:layout_toEndOf="@id/listview_chat_file_icon"
         android:text="21-11-20"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/listview_chat_file_owner"
@@ -40,10 +40,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/listview_chat_file_nick"
         android:layout_marginStart="15sp"
-        android:layout_marginTop="15sp"
+        android:layout_marginTop="5sp"
         android:layout_toEndOf="@id/listview_chat_file_owner_timestamp"
         android:text="来自XXX"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/listview_chat_file_size"
@@ -51,8 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/listview_chat_file_nick"
         android:layout_marginStart="15sp"
-        android:layout_marginTop="15sp"
+        android:layout_marginTop="5sp"
         android:layout_toEndOf="@id/listview_chat_file_owner"
         android:text="1.6KB"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 </RelativeLayout>

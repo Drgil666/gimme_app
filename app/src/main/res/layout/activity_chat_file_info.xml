@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gimme_background"
+    tools:context=".view.activity.ChatFileInfoActivity">
+    <!--顶边栏-->
+    <RelativeLayout
+        android:id="@+id/chat_file_info_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/gimme_background_lighter">
+
+        <TextView
+            android:id="@+id/chat_file_info_top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="10sp"
+            android:text="文件名称"
+            android:textColor="@color/black"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/chat_file_info_top_left_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:src="@mipmap/app_icon" />
+    </RelativeLayout>
+    <!--文件描述-->
+    <RelativeLayout
+        android:id="@+id/chat_file_info_file_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chat_file_info_top_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100sp">
+
+        <ImageView
+            android:id="@+id/chat_file_info_file_icon"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:src="@mipmap/app_icon" />
+
+        <TextView
+            android:id="@+id/chat_file_info_file_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chat_file_info_file_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15sp"
+            android:text="文件名称"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/chat_file_info_file_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/chat_file_info_file_nick"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15sp"
+            android:text="456B"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/chat_file_info_download_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/chat_file_info_file_layout">
+
+        <Button
+            android:id="@+id/chat_file_info_download_button"
+            android:layout_width="160sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35sp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="下载" />
+    </RelativeLayout>
+</RelativeLayout>

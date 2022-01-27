@@ -45,7 +45,7 @@ public class ChatFile {
     @Property(nameInDb = "type")
     private Integer type;
     /**
-     * 文件大小(B为单位)
+     * 文件大小(bit为单位)
      */
     @Property(nameInDb = "size")
     private Long size;
