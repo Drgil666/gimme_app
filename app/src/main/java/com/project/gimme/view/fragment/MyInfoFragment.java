@@ -1,6 +1,5 @@
 package com.project.gimme.view.fragment;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -22,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author DrGilbert
@@ -32,12 +32,13 @@ public class MyInfoFragment extends Fragment {
     ImageView userInfoIcon;
     @BindView(R.id.gridview_my_info)
     GridView myInfoGridView;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_info, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         initUserInfoLayout();
         initMyInfoGridView();
         return view;
@@ -46,6 +47,7 @@ public class MyInfoFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void getMyInfoList() {
@@ -58,7 +60,6 @@ public class MyInfoFragment extends Fragment {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private void initUserInfoLayout() {
         userInfoIcon.setImageResource(R.mipmap.app_icon);
         userInfoIcon.setOnClickListener(view -> System.out.println("click!"));

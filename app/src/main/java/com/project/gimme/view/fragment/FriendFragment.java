@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author DrGilbert
@@ -27,13 +28,13 @@ public class FriendFragment extends Fragment {
     private List<String> listItem = new ArrayList<>();
     @BindView(R.id.friend_personal_msg_list_view)
     ListView personalMsgListView;
-
+    private Unbinder unbinder;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //        System.out.println("friendFragment");
         View view = inflater.inflate(R.layout.fragment_friend, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         initListView();
         return view;
     }
@@ -41,6 +42,7 @@ public class FriendFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void getListItem() {

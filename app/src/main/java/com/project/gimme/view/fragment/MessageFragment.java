@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author DrGilbert
@@ -36,12 +37,12 @@ public class MessageFragment extends Fragment {
     ListView listView;
     @BindView(R.id.message_search_layout)
     RelativeLayout searchLayout;
-
+    private Unbinder unbinder;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         initSearchLayout(0.07);
         initListView();
         return view;
@@ -50,6 +51,7 @@ public class MessageFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void initSearchLayout(double size) {

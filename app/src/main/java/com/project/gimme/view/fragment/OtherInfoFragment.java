@@ -31,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author DrGilbert
@@ -77,12 +78,13 @@ public class OtherInfoFragment extends Fragment {
     @BindView(R.id.fragment_other_info_introduction_note_left_text)
     TextView myNoteLeftText;
     private UserVO myUserVO = new UserVO();
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_other_info, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         getType();
         initTopBar();
         initMember();
@@ -169,6 +171,7 @@ public class OtherInfoFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void getChannelNotice(Integer objectId) {
