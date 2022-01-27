@@ -17,6 +17,7 @@ import com.project.gimme.pojo.Group;
 import com.project.gimme.pojo.User;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendChannelAdapter;
 import com.project.gimme.view.adpter.FriendGroupAdapter;
 import com.project.gimme.view.adpter.FriendUserAdapter;
@@ -27,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  * @date 2022/1/13 11:04

@@ -71,6 +71,7 @@ public class ChatFile {
     @Generated(hash = 1330691015)
     public ChatFile() {
     }
+
     public Integer getId() {
         return this.id;
     }

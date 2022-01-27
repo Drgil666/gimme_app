@@ -92,57 +92,75 @@ public class User {
         this.company = company;
         this.motto = motto;
     }
+
     @Generated(hash = 586692638)
     public User() {
     }
+
     public Integer getId() {
         return this.id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getNick() {
         return this.nick;
     }
+
     public void setNick(String nick) {
         this.nick = nick;
     }
+
     public String getAvatar() {
         return this.avatar;
     }
+
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
     public Integer getCountry() {
         return this.country;
     }
+
     public void setCountry(Integer country) {
         this.country = country;
     }
+
     public Integer getCity() {
         return this.city;
     }
+
     public void setCity(Integer city) {
         this.city = city;
     }
+
     public Integer getProvince() {
         return this.province;
     }
+
     public void setProvince(Integer province) {
         this.province = province;
     }
+
     public Date getBirthday() {
         return this.birthday;
     }
+
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+
     public String getMail() {
         return this.mail;
     }
+
     public void setMail(String mail) {
         this.mail = mail;
     }
+
     public Integer getOccupation() {
         return this.occupation;
     }
