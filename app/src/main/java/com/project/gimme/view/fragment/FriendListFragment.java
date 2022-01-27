@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
  * @author DrGilbert
  * @date 2022/1/13 11:04
  */
+//TODO:应用包的bug被莫名其妙的修复了。
 public class FriendListFragment extends Fragment {
     @BindView(android.R.id.tabhost)
     TabHost tabHost;
