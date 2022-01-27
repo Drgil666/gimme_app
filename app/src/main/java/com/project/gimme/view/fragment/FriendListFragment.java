@@ -27,7 +27,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 /**
  * @author DrGilbert
  * @date 2022/1/13 11:04
