@@ -17,19 +17,23 @@ import com.project.gimme.view.adpter.PersonalMsgAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
 public class FriendFragment extends Fragment {
     private List<String> listItem = new ArrayList<>();
-    private ListView personalMsgListView;
+    @BindView(R.id.friend_personal_msg_list_view)
+    ListView personalMsgListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 //        System.out.println("friendFragment");
         View view = inflater.inflate(R.layout.fragment_friend, container, false);
-        personalMsgListView = view.findViewById(R.id.friend_personal_msg_list_view);
+        ButterKnife.bind(this, view);
         initListView();
         return view;
     }

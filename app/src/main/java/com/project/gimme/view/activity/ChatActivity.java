@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
@@ -29,22 +32,22 @@ public class ChatActivity extends SwipeBackActivity {
     private Integer type;
     private Integer objectId;
     private List<ChatMsgVO> chatMsgList = new ArrayList<>();
-    private ListView chatListView;
-    private ImageView leftButton;
-    private ImageView rightButton;
-    private TextView topNick;
-    private TextView topDescription;
+    @BindView(R.id.chat_list_view)
+    ListView chatListView;
+    @BindView(R.id.chat_top_left_button)
+    ImageView leftButton;
+    @BindView(R.id.chat_top_right_button)
+    ImageView rightButton;
+    @BindView(R.id.chat_top_nick_text)
+    TextView topNick;
+    @BindView(R.id.chat_top_description_text)
+    TextView topDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        chatListView = findViewById(R.id.chat_list_view);
-        leftButton = findViewById(R.id.chat_top_left_button);
-        rightButton = findViewById(R.id.chat_top_right_button);
-        topNick = findViewById(R.id.chat_top_nick_text);
-        topDescription = findViewById(R.id.chat_top_description_text);
-        chatListView = findViewById(R.id.chat_list_view);
+        ButterKnife.bind(this);
         initBundle();
         initTopBar();
         initChatListView();

@@ -22,28 +22,32 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
 public class ChatFileActivity extends SwipeBackActivity {
     private Integer groupId;
     private Integer type;
-    private ImageView topLeftButton;
-    private TextView searchText;
+    @BindView(R.id.chat_file_info_top_left_button)
+    ImageView topLeftButton;
+    @BindView(R.id.chat_file_search_text)
+    TextView searchText;
     private String searchKeyword = "";
     private List<ChatFileVO> chatFileVOList = new ArrayList<>();
-    private TextView totalFileText;
-    private ListView chatFileListView;
+    @BindView(R.id.chat_file_total_file_text)
+    TextView totalFileText;
+    @BindView(R.id.chat_file_listview)
+    ListView chatFileListView;
     private ChatFileAdapter chatFileAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_file);
-        topLeftButton = findViewById(R.id.chat_file_info_top_left_button);
-        searchText = findViewById(R.id.chat_file_search_text);
-        totalFileText = findViewById(R.id.chat_file_total_file_text);
-        chatFileListView = findViewById(R.id.chat_file_listview);
+        ButterKnife.bind(this);
         chatFileAdapter = new ChatFileAdapter(this, chatFileVOList);
         getType();
         getChatFileList();

@@ -23,29 +23,33 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
 public class FriendInfoFragment extends Fragment {
     private Integer type;
     private Integer objectId;
-    private TextView nick;
-    private TextView company;
-    private TextView motto;
+    @BindView(R.id.fragment_friend_info_nick)
+    TextView nick;
+    @BindView(R.id.fragment_friend_info_company)
+    TextView company;
+    @BindView(R.id.fragment_friend_info_motto)
+    TextView motto;
     private UserVO userVO = new UserVO();
-    private ListView listView;
-    private Button button;
+    @BindView(R.id.fragment_friend_info_listview)
+    ListView listView;
+    @BindView(R.id.fragment_friend_info_button)
+    Button button;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_friend_info, container, false);
-        nick = view.findViewById(R.id.fragment_friend_info_nick);
-        company = view.findViewById(R.id.fragment_friend_info_company);
-        motto = view.findViewById(R.id.fragment_friend_info_motto);
-        listView = view.findViewById(R.id.fragment_friend_info_listview);
-        button = view.findViewById(R.id.fragment_friend_info_button);
+        ButterKnife.bind(this, view);
         getType();
         getUserVO();
         initTopBar();

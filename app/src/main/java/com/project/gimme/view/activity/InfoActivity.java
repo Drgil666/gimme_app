@@ -18,6 +18,9 @@ import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.view.fragment.FriendInfoFragment;
 import com.project.gimme.view.fragment.OtherInfoFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
@@ -25,15 +28,16 @@ public class InfoActivity extends SwipeBackActivity {
     private final Integer height = GimmeApplication.getHeight();
     private Integer type;
     private Integer objectId;
-    private TextView tabText;
-    private ImageView leftButton;
+    @BindView(R.id.info_top_text)
+    TextView tabText;
+    @BindView(R.id.info_top_left_button)
+    ImageView leftButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-        tabText = findViewById(R.id.info_top_text);
-        leftButton = findViewById(R.id.info_top_left_button);
+        ButterKnife.bind(this);
         getType();
         init(0.1);
     }

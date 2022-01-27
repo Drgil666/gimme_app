@@ -24,21 +24,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
 public class MessageFragment extends Fragment {
     private List<MessageVO> messageVOList = new ArrayList<>();
-    private ListView listView;
-    private RelativeLayout searchLayout;
+    @BindView(R.id.message_list_view)
+    ListView listView;
+    @BindView(R.id.message_search_layout)
+    RelativeLayout searchLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        System.out.println("messageFragment");
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-        listView = view.findViewById(R.id.message_list_view);
-        searchLayout = view.findViewById(R.id.message_search_layout);
+        ButterKnife.bind(this, view);
         initSearchLayout(0.07);
         initListView();
         return view;

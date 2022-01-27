@@ -20,20 +20,24 @@ import com.project.gimme.view.adpter.MyInfoAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
 public class MyInfoFragment extends Fragment {
     private List<MyInfoListVO> myInfoList = new ArrayList<>();
-    private ImageView userInfoIcon;
-    private GridView myInfoGridView;
+    @BindView(R.id.user_info_icon)
+    ImageView userInfoIcon;
+    @BindView(R.id.gridview_my_info)
+    GridView myInfoGridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_info, container, false);
-        userInfoIcon = view.findViewById(R.id.user_info_icon);
-        myInfoGridView = view.findViewById(R.id.gridview_my_info);
+        ButterKnife.bind(this, view);
         initUserInfoLayout();
         initMyInfoGridView();
         return view;

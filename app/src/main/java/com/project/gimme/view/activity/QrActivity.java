@@ -12,15 +12,23 @@ import com.project.gimme.pojo.User;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
 public class QrActivity extends SwipeBackActivity {
-    private ImageView topLeftButton;
-    private TextView bodyNick;
-    private TextView bodyId;
-    private ImageView bodyQrCode;
-    private ImageView bodyIcon;
+    @BindView(R.id.qr_top_left_button)
+    ImageView topLeftButton;
+    @BindView(R.id.qr_body_nick)
+    TextView bodyNick;
+    @BindView(R.id.qr_body_id)
+    TextView bodyId;
+    @BindView(R.id.qr_body_qr_code)
+    ImageView bodyQrCode;
+    @BindView(R.id.qr_body_icon)
+    ImageView bodyIcon;
     private Integer type;
     private Integer objectId;
 
@@ -28,10 +36,7 @@ public class QrActivity extends SwipeBackActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
-        topLeftButton = findViewById(R.id.qr_top_left_button);
-        bodyNick = findViewById(R.id.qr_body_nick);
-        bodyId = findViewById(R.id.qr_body_id);
-        bodyQrCode = findViewById(R.id.qr_body_qr_code);
+        ButterKnife.bind(this);
         getType();
         initTopBar();
         initQrBody();

@@ -70,4 +70,6 @@ dependencies {
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    //OkHttpPlus(接口POST/GET/文件传输等)
+    implementation 'com.github.zhaokaiqiang.okhttpplus:library:1.0.0'
 }

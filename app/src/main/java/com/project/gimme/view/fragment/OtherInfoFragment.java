@@ -29,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
@@ -37,48 +40,49 @@ public class OtherInfoFragment extends Fragment {
     private Integer objectId;
     private GroupVO groupVO = new GroupVO();
     private ChannelVO channelVO = new ChannelVO();
-    private TextView topBarNick;
-    private TextView topBarDescription;
-    private TextView memberLeft;
-    private TextView memberRight;
-    private GridView gridView;
+    @BindView(R.id.fragment_other_info_top_nick)
+    TextView topBarNick;
+    @BindView(R.id.fragment_other_info_top_description)
+    TextView topBarDescription;
+    @BindView(R.id.fragment_other_info_member_left_text)
+    TextView memberLeft;
+    @BindView(R.id.fragment_other_info_member_right_text)
+    TextView memberRight;
+    @BindView(R.id.fragment_other_info_member_gridview)
+    GridView gridView;
     private List<UserVO> userVOList = new ArrayList<>();
-    private TextView introductionIdLeft;
-    private TextView introductionIdRight;
-    private RelativeLayout introductionIdLayout;
-    private TextView introductionGroupNoticeLeftNick;
-    private TextView introductionGroupNoticeLeftText;
-    private RelativeLayout introductionGroupNoticeLayout;
+    @BindView(R.id.fragment_other_info_introduction_left_text)
+    TextView introductionIdLeft;
+    @BindView(R.id.fragment_other_info_introduction_right_text)
+    TextView introductionIdRight;
+    @BindView(R.id.fragment_other_info_introduction_id_layout)
+    RelativeLayout introductionIdLayout;
+    @BindView(R.id.fragment_other_info_introduction_group_notice_nick)
+    TextView introductionGroupNoticeLeftNick;
+    @BindView(R.id.fragment_other_info_introduction_group_notice_text)
+    TextView introductionGroupNoticeLeftText;
+    @BindView(R.id.fragment_other_info_introduction_group_notice_layout)
+    RelativeLayout introductionGroupNoticeLayout;
     private ChannelNotice channelNotice = new ChannelNotice();
-    private RelativeLayout introductionGroupFileLayout;
-    private RelativeLayout myLayout;
-    private RelativeLayout myChatMsg;
-    private RelativeLayout myNote;
-    private TextView myNoteRightText;
-    private TextView myNoteLeftText;
+    @BindView(R.id.fragment_other_info_introduction_group_file_layout)
+    RelativeLayout introductionGroupFileLayout;
+    @BindView(R.id.fragment_other_info_my_layout)
+    RelativeLayout myLayout;
+    @BindView(R.id.fragment_other_info_my_chat_msg)
+    RelativeLayout myChatMsg;
+    @BindView(R.id.fragment_other_info_my_note)
+    RelativeLayout myNote;
+    @BindView(R.id.fragment_other_info_introduction_note_right_text)
+    TextView myNoteRightText;
+    @BindView(R.id.fragment_other_info_introduction_note_left_text)
+    TextView myNoteLeftText;
     private UserVO myUserVO = new UserVO();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_other_info, container, false);
-        topBarNick = view.findViewById(R.id.fragment_other_info_top_nick);
-        topBarDescription = view.findViewById(R.id.fragment_other_info_top_description);
-        memberLeft = view.findViewById(R.id.fragment_other_info_member_left_text);
-        memberRight = view.findViewById(R.id.fragment_other_info_member_right_text);
-        gridView = view.findViewById(R.id.fragment_other_info_member_gridview);
-        introductionIdLeft = view.findViewById(R.id.fragment_other_info_introduction_left_text);
-        introductionIdRight = view.findViewById(R.id.fragment_other_info_introduction_right_text);
-        introductionIdLayout = view.findViewById(R.id.fragment_other_info_introduction_id_layout);
-        introductionGroupNoticeLeftNick = view.findViewById(R.id.fragment_other_info_introduction_group_notice_nick);
-        introductionGroupNoticeLeftText = view.findViewById(R.id.fragment_other_info_introduction_group_notice_text);
-        introductionGroupNoticeLayout = view.findViewById(R.id.fragment_other_info_introduction_group_notice_layout);
-        introductionGroupFileLayout = view.findViewById(R.id.fragment_other_info_introduction_group_file_layout);
-        myLayout = view.findViewById(R.id.fragment_other_info_my_layout);
-        myChatMsg = view.findViewById(R.id.fragment_other_info_my_chat_msg);
-        myNote = view.findViewById(R.id.fragment_other_info_my_note);
-        myNoteRightText = view.findViewById(R.id.fragment_other_info_introduction_note_right_text);
-        myNoteLeftText = view.findViewById(R.id.fragment_other_info_introduction_note_left_text);
+        ButterKnife.bind(this, view);
         getType();
         initTopBar();
         initMember();

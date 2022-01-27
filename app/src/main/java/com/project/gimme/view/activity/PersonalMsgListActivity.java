@@ -15,6 +15,9 @@ import com.project.gimme.view.adpter.PersonalMsgListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
@@ -22,19 +25,20 @@ public class PersonalMsgListActivity extends SwipeBackActivity {
     private static final Integer TYPE_PERSONAL = 0;
     private static final Integer TYPE_OTHER = 1;
     private List<PersonalMsgVO> personalMsgVOList = new ArrayList<>();
-    private ListView personalMsgListView;
-    private TextView topText;
-    private ImageView leftButton;
+    @BindView(R.id.personal_msg_list_list_view)
+    ListView personalMsgListView;
+    @BindView(R.id.personal_msg_list_top_nick_text)
+    TextView topText;
+    @BindView(R.id.personal_msg_list_top_left_button)
+    ImageView leftButton;
     private Integer type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_msg_list);
+        ButterKnife.bind(this);
         getType();
-        leftButton = findViewById(R.id.personal_msg_list_top_left_button);
-        personalMsgListView = findViewById(R.id.personal_msg_list_list_view);
-        topText = findViewById(R.id.personal_msg_list_top_nick_text);
         initTopBar();
     }
 

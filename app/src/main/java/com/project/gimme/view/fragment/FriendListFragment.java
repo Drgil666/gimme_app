@@ -17,7 +17,6 @@ import com.project.gimme.pojo.Group;
 import com.project.gimme.pojo.User;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
-import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendChannelAdapter;
 import com.project.gimme.view.adpter.FriendGroupAdapter;
 import com.project.gimme.view.adpter.FriendUserAdapter;
@@ -26,27 +25,31 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  * @date 2022/1/13 11:04
  */
 public class FriendListFragment extends Fragment {
-    private TabHost tabHost;
+    @BindView(android.R.id.tabhost)
+    TabHost tabHost;
     private List<User> userList = new ArrayList<>();
     private List<Group> groupList = new ArrayList<>();
     private List<Channel> channelList = new ArrayList<>();
-    private ListView userListView;
-    private ListView groupListView;
-    private ListView channelListView;
+    @BindView(R.id.friend_list_friend_list)
+    ListView userListView;
+    @BindView(R.id.friend_list_group_list)
+    ListView groupListView;
+    @BindView(R.id.friend_list_channel_list)
+    ListView channelListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friend_list, container, false);
-        tabHost = (TabHost) view.findViewById(android.R.id.tabhost);
-        userListView = view.findViewById(R.id.friend_list_friend_list);
-        groupListView = view.findViewById(R.id.friend_list_group_list);
-        channelListView = view.findViewById(R.id.friend_list_channel_list);
+        ButterKnife.bind(this, view);
         initUserListView();
         initGroupListView();
         initChannelListView();
