@@ -66,15 +66,15 @@ public class PersonalMsgListAdapter extends BaseAdapter {
     @SuppressLint("NonConstantResourceId")
     static class ViewHolder {
         @BindView(R.id.listview_personal_msg_list_icon)
-        private ImageView imageView;
+        ImageView imageView;
         @BindView(R.id.listview_personal_msg_list_nick)
-        private TextView nick;
+        TextView nick;
         @BindView(R.id.listview_chat_file_owner_nick)
-        private TextView note;
+        TextView note;
         @BindView(R.id.listview_personal_msg_list_object)
-        private TextView object;
+        TextView object;
         @BindView(R.id.listview_personal_msg_list_status)
-        private TextView status;
+        TextView status;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
