@@ -1,5 +1,6 @@
 package com.project.gimme.view.adpter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,7 @@ public class FriendGroupAdapter extends BaseAdapter {
         return convertView;
     }
 
+    @SuppressLint("NonConstantResourceId")
     static class ViewHolder {
         @BindView(R.id.listview_friend_list_group_list_nick)
         TextView text;

@@ -71,7 +71,7 @@ public class OtherInfoAdapter extends BaseAdapter {
     }
 
     @SuppressLint("NonConstantResourceId")
-    private static class ViewHolder {
+    static class ViewHolder {
         @BindView(R.id.gridview_other_info_icon)
         ImageView icon;
         @BindView(R.id.gridview_other_info_nick)

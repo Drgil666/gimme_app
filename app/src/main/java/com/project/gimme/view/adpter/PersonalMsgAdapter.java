@@ -58,7 +58,7 @@ public class PersonalMsgAdapter extends BaseAdapter {
     }
 
     @SuppressLint("NonConstantResourceId")
-    private static class ViewHolder {
+    static class ViewHolder {
         @BindView(R.id.listview_personal_message_text)
         TextView text;
         @BindView(R.id.listview_personal_message_icon)

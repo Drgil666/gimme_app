@@ -60,7 +60,7 @@ public class MyInfoAdapter extends BaseAdapter {
     }
 
     @SuppressLint("NonConstantResourceId")
-    private static class ViewHolder {
+    static class ViewHolder {
         @BindView(R.id.listview_my_info_icon)
         ImageView icon;
         @BindView(R.id.listview_my_info_text)

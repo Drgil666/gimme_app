@@ -1,5 +1,6 @@
 package com.project.gimme.view.adpter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,8 @@ public class PersonalMsgListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private static class ViewHolder {
+    @SuppressLint("NonConstantResourceId")
+    static class ViewHolder {
         @BindView(R.id.listview_personal_msg_list_icon)
         private ImageView imageView;
         @BindView(R.id.listview_personal_msg_list_nick)
