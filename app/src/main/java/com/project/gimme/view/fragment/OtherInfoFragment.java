@@ -20,8 +20,10 @@ import com.project.gimme.pojo.ChannelNotice;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.UserVO;
+import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.view.activity.ChatFileActivity;
+import com.project.gimme.view.activity.ParamActivity;
 import com.project.gimme.view.activity.QrActivity;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
 
@@ -77,7 +79,6 @@ public class OtherInfoFragment extends Fragment {
     TextView myNoteRightText;
     @BindView(R.id.fragment_other_info_introduction_note_left_text)
     TextView myNoteLeftText;
-    private UserVO myUserVO = new UserVO();
     private Unbinder unbinder;
 
     @Override
@@ -187,9 +188,11 @@ public class OtherInfoFragment extends Fragment {
         groupVO.setNick("群聊" + objectId);
         groupVO.setTotalCount(20);
         groupVO.setDescription("群介绍" + objectId);
+        groupVO.setMyNote("我的群昵称" + objectId);
     }
 
     private void getChannelVO(Integer objectId) {
+        channelVO.setMyNote("我的频道昵称" + objectId);
         channelVO.setCreateTime(new Date());
         channelVO.setOwnerId(1);
         channelVO.setNick("频道" + objectId);
@@ -219,24 +222,29 @@ public class OtherInfoFragment extends Fragment {
         gridView.setAdapter(new OtherInfoAdapter(getContext(), userVOList));
     }
 
-    private void getUserVO(Integer type, Integer objectId) {
-        myUserVO.setId(1);
-        myUserVO.setNick("111");
-        myUserVO.setAvatar(null);
-        myUserVO.setGender(1);
-        myUserVO.setNote("我的备注");
-    }
-
     private void initMyLayout() {
         myChatMsg.setOnClickListener(view -> System.out.println("click!"));
-        getUserVO(type, objectId);
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-            myNoteRightText.setText(myUserVO.getNote());
+            myNoteRightText.setText(groupVO.getMyNote());
             myNoteLeftText.setText("我的群昵称");
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-            myNoteRightText.setText(myUserVO.getNote());
+            myNoteRightText.setText(channelVO.getMyNote());
             myNoteLeftText.setText("我的频道昵称");
         }
-        myNote.setOnClickListener(view -> System.out.println("click!"));
+        myNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+                    bundle.putString(BundleUtil.PARAM_NAME_ATTRIBUTE, "群昵称");
+                    bundle.putString(BundleUtil.PARAM_VALUE_ATTRIBUTE, groupVO.getMyNote());
+                } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+                    bundle.putString(BundleUtil.PARAM_NAME_ATTRIBUTE, channelVO.getMyNote());
+                }
+                Intent intent = new Intent(getContext(), ParamActivity.class).putExtras(bundle);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+            }
+        });
     }
 }
