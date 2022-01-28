@@ -16,8 +16,4 @@ public class GroupVO extends Group {
      * 总群人数
      */
     private Integer totalCount;
-    /**
-     * 群昵称
-     */
-    private String myNote;
 }

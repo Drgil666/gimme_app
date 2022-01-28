@@ -12,7 +12,6 @@
         android:theme="@style/Theme.Gimme">
         <activity
             android:name=".view.activity.ParamActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
             android:exported="false" />
         <activity
             android:name=".view.activity.ChatFileInfoActivity"

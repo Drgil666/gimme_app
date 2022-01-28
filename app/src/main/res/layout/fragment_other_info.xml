@@ -281,12 +281,12 @@
                 </RelativeLayout>
                 <!--我的昵称-->
                 <RelativeLayout
+                    android:clickable="true"
                     android:id="@+id/fragment_other_info_my_note"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
                     android:layout_below="@+id/fragment_other_info_my_chat_msg"
-                    android:background="@drawable/list_item_color_bg"
-                    android:clickable="true">
+                    android:background="@drawable/list_item_color_bg">
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_note_left_text"

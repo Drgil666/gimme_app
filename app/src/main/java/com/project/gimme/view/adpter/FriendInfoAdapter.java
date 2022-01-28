@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.UserVoParamItem;
-import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.view.activity.ParamActivity;
 
 import java.util.ArrayList;
@@ -68,8 +67,6 @@ public class FriendInfoAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
-                    bundle.putString(BundleUtil.PARAM_NAME_ATTRIBUTE, userVoParamItem.getParamName());
-                    bundle.putString(BundleUtil.PARAM_VALUE_ATTRIBUTE, userVoParamItem.getParamValue());
                     Intent intent = new Intent(context, ParamActivity.class).putExtras(bundle);
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);

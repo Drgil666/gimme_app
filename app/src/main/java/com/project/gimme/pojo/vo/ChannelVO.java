@@ -16,8 +16,4 @@ public class ChannelVO extends Channel {
      * 总群人数
      */
     private Integer totalCount;
-    /**
-     * 群昵称
-     */
-    private String myNote;
 }
