@@ -16,4 +16,8 @@ public class ChatMsgVO extends ChatMsg {
      * 是否是自己
      */
     private Boolean isSelf;
+    /**
+     * 消息发送者昵称
+     */
+    private String ownerNick;
 }

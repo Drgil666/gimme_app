@@ -1,5 +1,6 @@
 package com.project.gimme.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -60,17 +61,17 @@ public class MyInfoFragment extends Fragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initUserInfoLayout() {
         userInfoIcon.setImageResource(R.mipmap.app_icon);
         userInfoIcon.setOnClickListener(view -> System.out.println("click!"));
         userInfoIcon.setOnTouchListener((view, motionEvent) -> {
-            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
-            } else if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果
-                //如果return true的话,onClick的事件就不会触发!
+            } else {
+                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
             }
-            return false;
+            return false;//如果return true的话,onClick的事件就不会触发!
         });
     }
 

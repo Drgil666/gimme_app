@@ -120,7 +120,7 @@ public class ChatFileActivity extends SwipeBackActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(BundleUtil.CHAT_FILE_INFO_ID_ATTRIBUTE, (int) l);
-                Intent intent = new Intent(ChatFileActivity.this, ChatFileInfoActivity.class).putExtras(bundle);
+                Intent intent = new Intent(getApplicationContext(), ChatFileInfoActivity.class).putExtras(bundle);
                 startActivity(intent);
                 overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
             }

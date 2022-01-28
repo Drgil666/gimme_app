@@ -1,7 +1,10 @@
 package com.project.gimme.view.adpter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.UserVoParamItem;
+import com.project.gimme.view.activity.ParamActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +29,9 @@ import butterknife.ButterKnife;
 public class FriendInfoAdapter extends BaseAdapter {
     private List<UserVoParamItem> itemList = new ArrayList<>();
     private LayoutInflater layoutInflater;
-
+    private Context context;
     public FriendInfoAdapter(Context context, List<UserVoParamItem> itemList) {
+        this.context = context;
         layoutInflater = LayoutInflater.from(context);
         this.itemList = itemList;
     }
@@ -58,7 +63,15 @@ public class FriendInfoAdapter extends BaseAdapter {
         viewHolder.text.setText(userVoParamItem.getParamValue());
         if (userVoParamItem.getIsArrow()) {
             viewHolder.icon.setVisibility(View.VISIBLE);
-            convertView.setOnClickListener(view -> System.out.println("click!"));
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(context, ParamActivity.class).putExtras(bundle);
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+                }
+            });
         }
         return convertView;
     }

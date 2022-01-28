@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
         <activity
+            android:name=".view.activity.ParamActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.ChatFileInfoActivity"
             android:exported="false" />
         <activity

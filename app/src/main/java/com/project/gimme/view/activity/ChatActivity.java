@@ -17,7 +17,7 @@ import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.utils.ChatMsgUtil;
-import com.project.gimme.view.adpter.ChatMsgVOAdapter;
+import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,15 +64,16 @@ public class ChatActivity extends SwipeBackActivity {
 
     private void getChatMessageList(Integer type, Integer objectId) {
         for (int i = 1; i <= 10; i++) {
-            ChatMsgVO chatMsg = new ChatMsgVO();
-            chatMsg.setId(i);
-            chatMsg.setOwnerId(1);
-            chatMsg.setText("这是一条信息" + i);
-            chatMsg.setObjectId(objectId);
-            chatMsg.setIsSelf(i % 2 == 1);
-            chatMsg.setType(type);
-            chatMsg.setTimeStamp(new Date());
-            chatMsgList.add(chatMsg);
+            ChatMsgVO chatMsgVO = new ChatMsgVO();
+            chatMsgVO.setId(i);
+            chatMsgVO.setOwnerId(1);
+            chatMsgVO.setText("这是一条信息" + i);
+            chatMsgVO.setObjectId(objectId);
+            chatMsgVO.setIsSelf(i % 2 == 1);
+            chatMsgVO.setType(type);
+            chatMsgVO.setOwnerNick("这是一个昵称" + chatMsgVO.getId());
+            chatMsgVO.setTimeStamp(new Date());
+            chatMsgList.add(chatMsgVO);
         }
     }
 
@@ -108,7 +109,7 @@ public class ChatActivity extends SwipeBackActivity {
 
     private void initChatListView() {
         getChatMessageList(type, objectId);
-        chatListView.setAdapter(new ChatMsgVOAdapter(this, chatMsgList));
+        chatListView.setAdapter(new ChatMsgVoAdapter(this, chatMsgList));
         chatListView.setSelection(chatMsgList.size() - 1);
     }
 

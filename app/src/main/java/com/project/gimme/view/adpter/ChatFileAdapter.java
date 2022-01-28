@@ -26,8 +26,9 @@ import butterknife.ButterKnife;
 public class ChatFileAdapter extends BaseAdapter {
     private List<ChatFileVO> chatFileVOList = new ArrayList<>();
     private LayoutInflater layoutInflater;
-
+    private Context context;
     public ChatFileAdapter(Context context, List<ChatFileVO> chatFileVOList) {
+        this.context = context;
         this.chatFileVOList = chatFileVOList;
         layoutInflater = LayoutInflater.from(context);
     }
