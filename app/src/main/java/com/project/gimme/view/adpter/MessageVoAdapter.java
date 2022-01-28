@@ -16,6 +16,9 @@ import com.project.gimme.utils.NumberUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  * @date 2022/1/11 14:58
@@ -57,13 +60,7 @@ public class MessageVoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         MessageVO messageVO = messageVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_message_vo, parent, false);
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.avatar = convertView.findViewById(R.id.listview_message_vo_image);
-        viewHolder.nick = convertView.findViewById(R.id.listview_message_vo_nick);
-        viewHolder.text = convertView.findViewById(R.id.listview_message_vo_text);
-        viewHolder.timestamp = convertView.findViewById(R.id.listview_message_vo_timestamp);
-
-//        viewHolder.avatar
+        ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.nick.setText(messageVO.getNick());
         viewHolder.text.setText(messageVO.getText());
         viewHolder.timestamp.setText(NumberUtil.changeToHourAndMinute(messageVO.getTimestamp()));
@@ -71,9 +68,17 @@ public class MessageVoAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
+        @BindView(R.id.listview_message_vo_image)
         ImageView avatar;
+        @BindView(R.id.listview_message_vo_nick)
         TextView nick;
+        @BindView(R.id.listview_message_vo_text)
         TextView text;
+        @BindView(R.id.listview_message_vo_timestamp)
         TextView timestamp;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

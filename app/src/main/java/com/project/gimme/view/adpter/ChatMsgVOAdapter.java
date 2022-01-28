@@ -62,7 +62,7 @@ public class ChatMsgVOAdapter extends BaseAdapter {
         ChatMsgVO chatMsgVO = chatMsgVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_chat, parent, false);
         LinearLayout linearLayout;
-        ViewHolder viewHolder = new ViewHolder();
+        ViewHolder viewHolder = new ViewHolder(convertView);
         if (!chatMsgVO.getIsSelf()) {
             linearLayout = convertView.findViewById(R.id.right_bubble);
             linearLayout.setVisibility(View.GONE);
@@ -85,9 +85,12 @@ public class ChatMsgVOAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private static class ViewHolder {
+    static class ViewHolder {
         ImageView icon;
         TextView nick;
         TextView text;
+
+        ViewHolder(View view) {
+        }
     }
 }

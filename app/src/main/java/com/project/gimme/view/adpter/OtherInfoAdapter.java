@@ -1,5 +1,6 @@
 package com.project.gimme.view.adpter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import com.project.gimme.pojo.vo.UserVO;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author DrGilbert
@@ -49,8 +53,7 @@ public class OtherInfoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         UserVO userVO = userVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.gridview_other_info, parent, false);
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.nick = convertView.findViewById(R.id.gridview_other_info_nick);
+        ViewHolder viewHolder = new ViewHolder(convertView);
         if (userVO.getNote() != null) {
             viewHolder.nick.setText(userVO.getNote());
         } else {
@@ -67,8 +70,16 @@ public class OtherInfoAdapter extends BaseAdapter {
         return convertView;
     }
 
+    @SuppressLint("NonConstantResourceId")
     private static class ViewHolder {
+        @BindView(R.id.gridview_other_info_icon)
         ImageView icon;
+        @BindView(R.id.gridview_other_info_nick)
         TextView nick;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+
     }
 }

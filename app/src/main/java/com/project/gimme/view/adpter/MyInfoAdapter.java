@@ -1,5 +1,6 @@
 package com.project.gimme.view.adpter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,9 @@ import com.project.gimme.R;
 import com.project.gimme.pojo.vo.MyInfoListVO;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author DrGilbert
@@ -49,17 +53,24 @@ public class MyInfoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         MyInfoListVO myInfoListVO = myInfoListVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.gridview_my_info, parent, false);
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.nick = convertView.findViewById(R.id.listview_my_info_text);
+        ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.nick.setText(myInfoListVO.getNick());
-        viewHolder.description = convertView.findViewById(R.id.listview_my_info_description);
         viewHolder.description.setText(myInfoListVO.getDescription());
         return convertView;
     }
 
+    @SuppressLint("NonConstantResourceId")
     private static class ViewHolder {
+        @BindView(R.id.listview_my_info_icon)
         ImageView icon;
+        @BindView(R.id.listview_my_info_text)
         TextView nick;
+        @BindView(R.id.listview_my_info_description)
         TextView description;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+
     }
 }

@@ -3,6 +3,7 @@ package com.project.gimme.view.activity;
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class InfoActivity extends SwipeBackActivity {
     private final Integer height = GimmeApplication.getHeight();
     private Integer type;

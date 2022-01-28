@@ -14,6 +14,9 @@ import com.project.gimme.pojo.Group;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  * @date 2022/1/13 12:43
@@ -49,16 +52,20 @@ public class FriendGroupAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Group group = groupList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_friend_list_group_list, parent, false);
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.text = convertView.findViewById(R.id.listview_friend_list_group_list_nick);
+        ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.text.setText(group.getNick());
-        viewHolder.icon = convertView.findViewById(R.id.listview_friend_list_group_list_image);
         viewHolder.icon.setImageResource(R.mipmap.app_icon);
         return convertView;
     }
 
-    private static class ViewHolder {
+    static class ViewHolder {
+        @BindView(R.id.listview_friend_list_group_list_nick)
         TextView text;
+        @BindView(R.id.listview_friend_list_group_list_image)
         ImageView icon;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

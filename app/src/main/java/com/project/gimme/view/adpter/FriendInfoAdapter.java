@@ -1,5 +1,6 @@
 package com.project.gimme.view.adpter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import com.project.gimme.pojo.vo.UserVoParamItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @author DrGilbert
@@ -49,27 +53,27 @@ public class FriendInfoAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = layoutInflater.inflate(R.layout.listview_friend_info_list, parent, false);
         UserVoParamItem userVoParamItem = itemList.get(position);
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.param = convertView.findViewById(R.id.listview_friend_info_list_param);
+        ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.param.setText(userVoParamItem.getParamName());
-        viewHolder.text = convertView.findViewById(R.id.listview_friend_info_list_value);
         viewHolder.text.setText(userVoParamItem.getParamValue());
         if (userVoParamItem.getIsArrow()) {
-            viewHolder.icon = convertView.findViewById(R.id.listview_friend_info_list_icon);
             viewHolder.icon.setVisibility(View.VISIBLE);
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("click!");
-                }
-            });
+            convertView.setOnClickListener(view -> System.out.println("click!"));
         }
         return convertView;
     }
 
-    private static class ViewHolder {
+    @SuppressLint("NonConstantResourceId")
+    static class ViewHolder {
+        @BindView(R.id.listview_friend_info_list_param)
         TextView param;
+        @BindView(R.id.listview_friend_info_list_value)
         TextView text;
+        @BindView(R.id.listview_friend_info_list_icon)
         ImageView icon;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

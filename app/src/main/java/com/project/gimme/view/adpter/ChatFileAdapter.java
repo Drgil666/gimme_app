@@ -16,6 +16,9 @@ import com.project.gimme.utils.NumberUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  * @date 2022/1/11 14:58
@@ -62,23 +65,28 @@ public class ChatFileAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ChatFileVO chatFileVO = chatFileVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_chat_file, parent, false);
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.nick = convertView.findViewById(R.id.listview_chat_file_nick);
+        ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.nick.setText(chatFileVO.getFilename());
-        viewHolder.ownerNick = convertView.findViewById(R.id.listview_chat_file_owner);
         viewHolder.ownerNick.setText("来自" + chatFileVO.getOwnerNick());
-        viewHolder.timestamp = convertView.findViewById(R.id.listview_chat_file_owner_timestamp);
         viewHolder.timestamp.setText(NumberUtil.changeToYearAndMonthAndDay(chatFileVO.getTimestamp()));
-        viewHolder.size = convertView.findViewById(R.id.listview_chat_file_size);
         viewHolder.size.setText(NumberUtil.changeToFileSize(chatFileVO.getSize()));
         return convertView;
     }
 
-    private static class ViewHolder {
+    static class ViewHolder {
+        @BindView(R.id.listview_chat_file_icon)
         ImageView icon;
+        @BindView(R.id.listview_chat_file_nick)
         TextView nick;
+        @BindView(R.id.listview_chat_file_owner)
         TextView ownerNick;
+        @BindView(R.id.listview_chat_file_owner_timestamp)
         TextView timestamp;
+        @BindView(R.id.listview_chat_file_size)
         TextView size;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

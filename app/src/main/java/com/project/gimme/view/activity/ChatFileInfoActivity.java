@@ -1,5 +1,6 @@
 package com.project.gimme.view.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class ChatFileInfoActivity extends SwipeBackActivity {
 
     private Integer id;

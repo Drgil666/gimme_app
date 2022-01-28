@@ -1,5 +1,6 @@
 package com.project.gimme.view.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import butterknife.ButterKnife;
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class QrActivity extends SwipeBackActivity {
     @BindView(R.id.qr_top_left_button)
     ImageView topLeftButton;

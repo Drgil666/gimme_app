@@ -1,5 +1,6 @@
 package com.project.gimme.view.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class PersonalMsgListActivity extends SwipeBackActivity {
     private static final Integer TYPE_PERSONAL = 0;
     private static final Integer TYPE_OTHER = 1;

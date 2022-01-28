@@ -3,6 +3,7 @@ package com.project.gimme.view.activity;
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import butterknife.ButterKnife;
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class ChatActivity extends SwipeBackActivity {
     private Integer type;
     private Integer objectId;

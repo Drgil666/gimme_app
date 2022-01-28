@@ -15,6 +15,9 @@ import com.project.gimme.utils.PersonalMsgUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  * @date 2022/1/14 16:34
@@ -51,23 +54,29 @@ public class PersonalMsgListAdapter extends BaseAdapter {
         PersonalMsgVO personalMsgVO = itemList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_personal_msg_list, parent, false);
         //TODO:待完成
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.nick = convertView.findViewById(R.id.listview_personal_msg_list_nick);
+        ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.nick.setText(personalMsgVO.getOperatorNick());
-        viewHolder.note = convertView.findViewById(R.id.listview_chat_file_owner_nick);
         viewHolder.note.setText("留言:" + personalMsgVO.getNote());
-        viewHolder.object = convertView.findViewById(R.id.listview_personal_msg_list_object);
         viewHolder.object.setText("来源:" + personalMsgVO.getObjectNick());
-        viewHolder.status = convertView.findViewById(R.id.listview_personal_msg_list_status);
         viewHolder.status.setText(PersonalMsgUtil.STATUS_LIST[personalMsgVO.getStatus()].getName());
         return convertView;
     }
 
     private static class ViewHolder {
+        @BindView(R.id.listview_personal_msg_list_icon)
         private ImageView imageView;
+        @BindView(R.id.listview_personal_msg_list_nick)
         private TextView nick;
+        @BindView(R.id.listview_chat_file_owner_nick)
         private TextView note;
+        @BindView(R.id.listview_personal_msg_list_object)
         private TextView object;
+        @BindView(R.id.listview_personal_msg_list_status)
         private TextView status;
+
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
+
     }
 }
