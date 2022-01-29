@@ -16,4 +16,20 @@ public class UserVO extends User {
      * 好友备注
      */
     private String note;
+    /**
+     * 国家名
+     */
+    private String countryNick;
+    /**
+     * 省份名
+     */
+    private String provinceNick;
+    /**
+     * 城市名
+     */
+    private String cityNick;
+    /**
+     * 职业名
+     */
+    private String occupationNick;
 }

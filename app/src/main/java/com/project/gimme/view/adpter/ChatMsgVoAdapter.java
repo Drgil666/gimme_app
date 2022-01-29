@@ -34,11 +34,13 @@ public class ChatMsgVoAdapter extends BaseAdapter {
     private List<ChatMsgVO> chatMsgVOList = new ArrayList<>();
     private LayoutInflater layoutInflater;
     private Context context;
+    private Integer type;
 
-    public ChatMsgVoAdapter(Context context, List<ChatMsgVO> chatMsgVOList) {
+    public ChatMsgVoAdapter(Context context, List<ChatMsgVO> chatMsgVOList, Integer type) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
         this.chatMsgVOList = chatMsgVOList;
+        this.type = type;
     }
 
     @Override
@@ -85,6 +87,23 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.text.setText(chatMsgVO.getText());
             viewHolder.nick = convertView.findViewById(R.id.left_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
+            viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
+                    } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP_MEMBER.getCode());
+                    } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_CHANNEL_MEMBER.getCode());
+                    }
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
+                    Intent intent = new Intent(context, InfoActivity.class).putExtras(bundle);
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+                }
+            });
         } else {
             linearLayout = convertView.findViewById(R.id.left_bubble);
             linearLayout.setVisibility(View.GONE);
@@ -94,18 +113,24 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.text.setText(chatMsgVO.getText());
             viewHolder.nick = convertView.findViewById(R.id.right_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
+            viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_SELF.getCode());
+                    } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode());
+                    } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode());
+                    }
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
+                    Intent intent = new Intent(context, InfoActivity.class).putExtras(bundle);
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+                }
+            });
         }
-        viewHolder.icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
-                bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
-                Intent intent = new Intent(context, InfoActivity.class).putExtras(bundle);
-                context.startActivity(intent);
-                ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-            }
-        });
         viewHolder.icon.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果

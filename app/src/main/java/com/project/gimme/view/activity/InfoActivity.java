@@ -34,6 +34,8 @@ public class InfoActivity extends SwipeBackActivity {
     TextView tabText;
     @BindView(R.id.info_top_left_button)
     ImageView leftButton;
+    @BindView(R.id.info_top_bar)
+    RelativeLayout topBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class InfoActivity extends SwipeBackActivity {
         setContentView(R.layout.activity_info);
         ButterKnife.bind(this);
         getType();
-        init(0.1);
+        initTopBar(0.1);
     }
 
     private void getType() {
@@ -51,21 +53,25 @@ public class InfoActivity extends SwipeBackActivity {
 //        System.out.println("type:" + type + " object_id:" + objectId);
     }
 
-    private void init(double size) {
+    private void initTopBar(double size) {
         leftButton.setOnClickListener(view -> {
             finish();
             overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });
-        Bundle bundle = new Bundle();
-        bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
-        bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+        topBar.getLayoutParams().height = (int) Math.floor(height * size);
+        initFragment();
+    }
+
+    private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentManager.getFragments().clear();
-        RelativeLayout relativeLayout = findViewById(R.id.info_top_bar);
-        relativeLayout.getLayoutParams().height = (int) Math.floor(height * size);
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
             setTopText("聊天设置");
+            FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
+            fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_SELF.getCode())) {
+            setTopText("个人信息");
             FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
             fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
         } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
@@ -76,6 +82,16 @@ public class InfoActivity extends SwipeBackActivity {
             setTopText("频道设置");
             OtherInfoFragment otherInfoFragment = new OtherInfoFragment();
             fragmentTransaction.replace(R.id.info_fragment, otherInfoFragment).commit();
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP_MEMBER.getCode())
+                || type.equals(ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode())) {
+            setTopText("群聊成员设置");
+            FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
+            fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_MEMBER.getCode())
+                || type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
+            setTopText("频道成员设置");
+            FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
+            fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
         } else {
             Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
         }

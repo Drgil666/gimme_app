@@ -18,7 +18,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class GimmeApplication extends Application {
     private static Controller controller;
-    private static String token;
+    private static String token = "test_token";
     private static Integer height;
     private static Integer weight;
     public static final Integer TYPE_ERROR = -1;

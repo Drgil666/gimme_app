@@ -109,7 +109,7 @@ public class ChatActivity extends SwipeBackActivity {
 
     private void initChatListView() {
         getChatMessageList(type, objectId);
-        chatListView.setAdapter(new ChatMsgVoAdapter(this, chatMsgList));
+        chatListView.setAdapter(new ChatMsgVoAdapter(this, chatMsgList, type));
         chatListView.setSelection(chatMsgList.size() - 1);
     }
 

@@ -17,6 +17,7 @@ public class UserUtil {
     public static final String USER_ATTRIBUTE = "user";
     public static final String MALE_ATTRIBUTE = "男";
     public static final String FEMALE_ATTRIBUTE = "女";
+    public static final String OTHER_GENDER_ATTRIBUTE = "其他";
 
     @AllArgsConstructor
     @Getter
@@ -49,13 +50,17 @@ public class UserUtil {
     @Getter
     public enum Gender {
         /**
-         * 超级用户
+         * 男性
          */
         TYPE_MALE(0, MALE_ATTRIBUTE),
         /**
-         * 群聊群主
+         * 女性
          */
-        TYPE_FEMALE(1, FEMALE_ATTRIBUTE);
+        TYPE_FEMALE(1, FEMALE_ATTRIBUTE),
+        /**
+         * 其他性别
+         */
+        TYPE_OTHER(2, OTHER_GENDER_ATTRIBUTE);
         private final Integer code;
         private final String name;
     }

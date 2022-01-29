@@ -10,14 +10,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.pojo.vo.UserVoParamItem;
+import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.view.adpter.FriendInfoAdapter;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,6 +50,7 @@ public class FriendInfoFragment extends Fragment {
     @BindView(R.id.fragment_friend_info_button)
     Button button;
     private Unbinder unbinder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,16 +69,23 @@ public class FriendInfoFragment extends Fragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
+        System.out.println("type:" + type + " id:" + objectId);
     }
 
     private void initButton() {
-        button.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
-            bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
-            getActivity().finish();
-            getActivity().overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
-        });
+        if (!(type.equals(ChatMsgUtil.Character.TYPE_SELF.getCode())
+                || type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode())
+                || type.equals(ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode()))) {
+            button.setOnClickListener(view -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
+            });
+        } else {
+            button.setVisibility(View.GONE);
+        }
     }
 
     private void initTopBar() {
@@ -88,7 +101,7 @@ public class FriendInfoFragment extends Fragment {
     }
 
     private void initListView() {
-        List<UserVoParamItem> itemList = getUserVParamItemList();
+        List<UserVoParamItem> itemList = getItemList();
         listView.setAdapter(new FriendInfoAdapter(getActivity(), itemList));
     }
 
@@ -106,9 +119,13 @@ public class FriendInfoFragment extends Fragment {
         userVO.setMail("xxx@qq.com");
         userVO.setOccupation(1);
         userVO.setNote("备注" + objectId);
+        userVO.setCountryNick("中国");
+        userVO.setProvinceNick("浙江");
+        userVO.setCityNick("杭州");
+        userVO.setOccupationNick("程序员");
     }
 
-    private List<UserVoParamItem> getUserVParamItemList() {
+    private List<UserVoParamItem> getFriendItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item = new UserVoParamItem("备注", userVO.getNote(), true);
         itemList.add(item);
@@ -121,5 +138,84 @@ public class FriendInfoFragment extends Fragment {
         item = new UserVoParamItem("邮箱", userVO.getMail(), false);
         itemList.add(item);
         return itemList;
+    }
+
+    private List<UserVoParamItem> getOwnerItemList() {
+        List<UserVoParamItem> itemList = new ArrayList<>();
+        UserVoParamItem item = new UserVoParamItem("昵称", userVO.getNick(), true);
+        itemList.add(item);
+        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
+        itemList.add(item);
+        if (type.equals(ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode())) {
+            item = new UserVoParamItem("群昵称", userVO.getNote(), false);
+            itemList.add(item);
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
+            item = new UserVoParamItem("频道昵称", userVO.getNote(), false);
+            itemList.add(item);
+        }
+        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), true);
+        itemList.add(item);
+        item = new UserVoParamItem("邮箱", userVO.getMail(), true);
+        itemList.add(item);
+        item = new UserVoParamItem("生日", NumberUtil.changeToYearAndMonthAndDay(userVO.getBirthday()), true);
+        itemList.add(item);
+        item = new UserVoParamItem("所在地", userVO.getCountryNick() + "-" + userVO.getProvinceNick() + "-" + userVO.getCityNick(), true);
+        itemList.add(item);
+        item = new UserVoParamItem("职业", userVO.getOccupationNick(), true);
+        itemList.add(item);
+        return itemList;
+    }
+
+    private List<UserVoParamItem> getGroupItemList() {
+        List<UserVoParamItem> itemList = new ArrayList<>();
+        UserVoParamItem item;
+        if (StringUtils.isEmpty(userVO.getNote())) {
+            item = new UserVoParamItem("备注", userVO.getNote(), true);
+            itemList.add(item);
+        }
+        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
+        itemList.add(item);
+        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false);
+        itemList.add(item);
+        item = new UserVoParamItem("群昵称", userVO.getNick(), false);
+        itemList.add(item);
+        item = new UserVoParamItem("邮箱", userVO.getMail(), false);
+        itemList.add(item);
+        return itemList;
+    }
+
+    private List<UserVoParamItem> getChannelItemList() {
+        List<UserVoParamItem> itemList = new ArrayList<>();
+        UserVoParamItem item;
+        if (StringUtils.isEmpty(userVO.getNote())) {
+            item = new UserVoParamItem("备注", userVO.getNote(), true);
+            itemList.add(item);
+        }
+        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
+        itemList.add(item);
+        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false);
+        itemList.add(item);
+        item = new UserVoParamItem("频道昵称", userVO.getNick(), false);
+        itemList.add(item);
+        item = new UserVoParamItem("邮箱", userVO.getMail(), false);
+        itemList.add(item);
+        return itemList;
+    }
+
+    private List<UserVoParamItem> getItemList() {
+        if (type.equals(ChatMsgUtil.Character.TYPE_SELF.getCode())
+                || type.equals(ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode())
+                || type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
+            return getOwnerItemList();
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
+            return getFriendItemList();
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP_MEMBER.getCode())) {
+            return getGroupItemList();
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_MEMBER.getCode())) {
+            return getChannelItemList();
+        } else {
+            Toast.makeText(getActivity(), "类型错误!", Toast.LENGTH_SHORT).show();
+        }
+        return null;
     }
 }

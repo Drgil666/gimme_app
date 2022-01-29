@@ -68,8 +68,8 @@ dependencies {
     //右滑关闭页面
     implementation 'cn.bingoogolapple:bga-swipebacklayout:2.0.1@aar'
     //ButterKnife
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     //OkHttpPlus(接口POST/GET/文件传输等)
     implementation 'com.github.zhaokaiqiang.okhttpplus:library:1.0.0'
 }

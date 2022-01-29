@@ -1,6 +1,7 @@
 package com.project.gimme.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -15,6 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.MyInfoListVO;
+import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.view.activity.InfoActivity;
 import com.project.gimme.view.adpter.MyInfoAdapter;
 
 import java.util.ArrayList;
@@ -64,7 +68,16 @@ public class MyInfoFragment extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void initUserInfoLayout() {
         userInfoIcon.setImageResource(R.mipmap.app_icon);
-        userInfoIcon.setOnClickListener(view -> System.out.println("click!"));
+        userInfoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_SELF.getCode());
+                Intent intent = new Intent(getContext(), InfoActivity.class).putExtras(bundle);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+            }
+        });
         userInfoIcon.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果

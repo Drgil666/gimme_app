@@ -84,7 +84,6 @@ public class MessageFragment extends Fragment {
         listView.setAdapter(new MessageVoAdapter(getContext(), messageVOList));
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Integer type = ((MessageVoAdapter) listView.getAdapter()).getItem(position).getType();
-//            System.out.println("click");
             Bundle bundle = new Bundle();
             bundle.putInt(OBJECT_ID_ATTRIBUTE, (int) id);
             bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
