@@ -35,5 +35,5 @@ public class UserVO extends User {
     /**
      * 群/频道昵称
      */
-    private String otherNote;
+    private String otherNick;
 }

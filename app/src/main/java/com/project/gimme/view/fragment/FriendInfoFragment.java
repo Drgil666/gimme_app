@@ -123,6 +123,7 @@ public class FriendInfoFragment extends Fragment {
         userVO.setProvinceNick("浙江");
         userVO.setCityNick("杭州");
         userVO.setOccupationNick("程序员");
+        userVO.setOtherNick("其他昵称");
     }
 
     private List<UserVoParamItem> getFriendItemList() {
@@ -169,15 +170,17 @@ public class FriendInfoFragment extends Fragment {
     private List<UserVoParamItem> getGroupItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item;
-        if (StringUtils.isEmpty(userVO.getNote())) {
+        if (!StringUtils.isEmpty(userVO.getNote())) {
             item = new UserVoParamItem("备注", userVO.getNote(), true);
             itemList.add(item);
         }
+        item = new UserVoParamItem("昵称", userVO.getNick(), false);
+        itemList.add(item);
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
         itemList.add(item);
         item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false);
         itemList.add(item);
-        item = new UserVoParamItem("群昵称", userVO.getNick(), false);
+        item = new UserVoParamItem("群昵称", userVO.getOtherNick(), false);
         itemList.add(item);
         item = new UserVoParamItem("邮箱", userVO.getMail(), false);
         itemList.add(item);
@@ -187,15 +190,17 @@ public class FriendInfoFragment extends Fragment {
     private List<UserVoParamItem> getChannelItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item;
-        if (StringUtils.isEmpty(userVO.getNote())) {
+        if (!StringUtils.isEmpty(userVO.getNote())) {
             item = new UserVoParamItem("备注", userVO.getNote(), true);
             itemList.add(item);
         }
+        item = new UserVoParamItem("昵称", userVO.getNick(), false);
+        itemList.add(item);
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
         itemList.add(item);
         item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false);
         itemList.add(item);
-        item = new UserVoParamItem("频道昵称", userVO.getNick(), false);
+        item = new UserVoParamItem("频道昵称", userVO.getOtherNick(), false);
         itemList.add(item);
         item = new UserVoParamItem("邮箱", userVO.getMail(), false);
         itemList.add(item);
