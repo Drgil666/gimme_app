@@ -32,4 +32,8 @@ public class UserVO extends User {
      * 职业名
      */
     private String occupationNick;
+    /**
+     * 群/频道昵称
+     */
+    private String otherNote;
 }
