@@ -28,12 +28,19 @@ public class ChannelUser {
      */
     @Property(nameInDb = "channel_nick")
     private String channelNick;
+    /**
+     * 用户权限类型
+     */
+    @Property(nameInDb = "type")
+    private Integer type;
 
-    @Generated(hash = 778503692)
-    public ChannelUser(Integer channelId, Integer userId, String channelNick) {
+    @Generated(hash = 431780839)
+    public ChannelUser(Integer channelId, Integer userId, String channelNick,
+                       Integer type) {
         this.channelId = channelId;
         this.userId = userId;
         this.channelNick = channelNick;
+        this.type = type;
     }
 
     @Generated(hash = 765616289)
@@ -62,5 +69,13 @@ public class ChannelUser {
 
     public void setChannelNick(String channelNick) {
         this.channelNick = channelNick;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

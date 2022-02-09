@@ -28,6 +28,7 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
         public final static Property ChannelId = new Property(0, Integer.class, "channelId", false, "channel_id");
         public final static Property UserId = new Property(1, Integer.class, "userId", false, "user_id");
         public final static Property ChannelNick = new Property(2, String.class, "channelNick", false, "channel_nick");
+        public final static Property Type = new Property(3, Integer.class, "type", false, "type");
     }
 
 
@@ -47,7 +48,8 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
         db.execSQL("CREATE TABLE " + constraint + "\"channel_user\" (" + //
                 "\"channel_id\" INTEGER," + // 0: channelId
                 "\"user_id\" INTEGER," + // 1: userId
-                "\"channel_nick\" TEXT);"); // 2: channelNick
+                "\"channel_nick\" TEXT," + // 2: channelNick
+                "\"type\" INTEGER);"); // 3: type
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_channel_user_channel_id_user_id ON \"channel_user\"" +
                 " (\"channel_id\" ASC,\"user_id\" ASC);");
@@ -79,6 +81,11 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
         if (channelNick != null) {
             stmt.bindString(3, channelNick);
         }
+
+        Integer type = entity.getType();
+        if (type != null) {
+            stmt.bindLong(4, type);
+        }
     }
 
     @Override
@@ -99,6 +106,11 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
         if (channelNick != null) {
             stmt.bindString(3, channelNick);
         }
+
+        Integer type = entity.getType();
+        if (type != null) {
+            stmt.bindLong(4, type);
+        }
     }
 
     @Override
@@ -111,7 +123,8 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
         ChannelUser entity = new ChannelUser( //
                 cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0), // channelId
                 cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // userId
-                cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // channelNick
+                cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // channelNick
+                cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3) // type
         );
         return entity;
     }
@@ -121,6 +134,7 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
         entity.setChannelId(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
         entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
         entity.setChannelNick(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setType(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
     }
 
     @Override
