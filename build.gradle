@@ -5,6 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        classpath 'com.hovans.netty:library:+'
         classpath "com.android.tools.build:gradle:7.0.2"
         // GreenDao
         classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0'

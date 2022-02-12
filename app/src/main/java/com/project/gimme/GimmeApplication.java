@@ -9,6 +9,7 @@ import com.project.gimme.controller.Controller;
 import com.project.gimme.controller.RetrofitClient;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
+import lombok.SneakyThrows;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -18,16 +19,20 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class GimmeApplication extends Application {
     private static Controller controller;
-    private static String token = "test_token";
+    private static String token = null;
     private static Integer height;
     private static Integer weight;
     public static final Integer TYPE_ERROR = -1;
+    public static final String REMOTE_IP = "127.0.0.1";
+    public static final Integer REMOTE_PORT = 8888;
+    public static final Integer LOCAL_PORT = 8089;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    @SneakyThrows
     @Override
     public void onCreate() {
         super.onCreate();
