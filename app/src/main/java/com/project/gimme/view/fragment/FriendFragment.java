@@ -32,7 +32,6 @@ public class FriendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        System.out.println("friendFragment");
         View view = inflater.inflate(R.layout.fragment_friend, container, false);
         unbinder = ButterKnife.bind(this, view);
         initListView();

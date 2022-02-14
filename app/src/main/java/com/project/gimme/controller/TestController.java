@@ -1,5 +1,7 @@
 package com.project.gimme.controller;
 
+import com.project.gimme.utils.LogUtil;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -29,7 +31,7 @@ public class TestController {
                     //通过execute()方法获得请求响应的Response对象
                     Response response = call.execute();
                     if (response.isSuccessful()) {
-                        System.out.println(response.body().string());
+                        LogUtil.log(this.toString(), response.body().string());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

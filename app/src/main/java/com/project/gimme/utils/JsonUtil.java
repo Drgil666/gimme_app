@@ -1,8 +1,11 @@
 package com.project.gimme.utils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.project.gimme.pojo.vo.Response;
+
+import java.util.List;
 
 /**
  * @author DrGilbert
@@ -13,11 +16,11 @@ public class JsonUtil {
         return JSON.toJSONString(object);
     }
 
-    public static Object jsonStringToObject(String json, Class<?> cls) {
-        return JSON.parseObject(json, cls);
+    public static <T> T jsonStringToObject(String json, Class<?> cls) {
+        return (T) JSON.parseObject(json, cls);
     }
 
-    public static <T> Response<T> getResponseBody(String json, Class<T> cls) {
+    public static <T> Response<T> getResponseObjectBody(String json, Class<T> cls) {
         JSONObject jsonObject = JSON.parseObject(json);
         Response<T> response = Response.createSuc(null);
         response.setCode(Integer.parseInt(jsonObject.get("code").toString()));
@@ -28,6 +31,17 @@ public class JsonUtil {
         } else {
             response.setData(JSON.parseObject(data, cls));
         }
+        return response;
+    }
+
+    public static <T> Response<List<T>> getResponseListBody(String json, Class<T> cls) {
+        JSONObject jsonObject = JSON.parseObject(json);
+        Response<List<T>> response = Response.createSuc(null);
+        response.setCode(Integer.parseInt(jsonObject.get("code").toString()));
+        response.setMsg((String) jsonObject.get("msg"));
+        String data = jsonObject.get("data").toString();
+        List<T> array = JSONArray.parseArray(data, cls);
+        response.setData(array);
         return response;
     }
 }

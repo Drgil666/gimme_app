@@ -8,6 +8,7 @@ import com.project.gimme.pojo.vo.LoginVO;
 import com.project.gimme.utils.JsonUtil;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -34,7 +35,7 @@ public class UserController {
                 if (response.isSuccessful()) {
                     String result = response.body().string();
                     com.project.gimme.pojo.vo.Response<String> userResponse =
-                            JsonUtil.getResponseBody(result, String.class);
+                            JsonUtil.getResponseObjectBody(result, String.class);
                     return userResponse;
                 }
             }
@@ -42,18 +43,35 @@ public class UserController {
         return null;
     }
 
-    public static com.project.gimme.pojo.vo.Response<User> getUser() throws IOException {
+    public static com.project.gimme.pojo.vo.Response<User> getUser(String id) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .header("token", GimmeApplication.getToken())
-                .url(REMOTE_URL + "/api/user").get().build();
+                .url(REMOTE_URL + "/api/user?id=" + id).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
             com.project.gimme.pojo.vo.Response<User> userResponse =
-                    JsonUtil.getResponseBody(result, User.class);
+                    JsonUtil.getResponseObjectBody(result, User.class);
+            return userResponse;
+        }
+        return null;
+    }
+
+    public static com.project.gimme.pojo.vo.Response<List<User>> getFriendList(String keyword) throws IOException {
+        //创建OkHttpClient对象
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header("token", GimmeApplication.getToken())
+                .url(REMOTE_URL + "/api/user/friendList?keyword=" + keyword).get().build();
+        Call call = client.newCall(request);
+        Response response = call.execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            com.project.gimme.pojo.vo.Response<List<User>> userResponse =
+                    JsonUtil.getResponseListBody(result, User.class);
             return userResponse;
         }
         return null;

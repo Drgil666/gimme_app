@@ -1,11 +1,13 @@
 package com.project.gimme.view.activity;
 
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.INFO_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,11 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.gimme.R;
+import com.project.gimme.controller.GroupController;
+import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 
 import java.util.ArrayList;
@@ -27,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lombok.SneakyThrows;
 
 /**
  * @author DrGilbert
@@ -48,6 +54,7 @@ public class ChatActivity extends SwipeBackActivity {
     TextView topDescription;
     @BindView(R.id.chat_bottom_edittext)
     EditText chatBottomEditText;
+    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,13 +103,49 @@ public class ChatActivity extends SwipeBackActivity {
             overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
-            User user = getUserInfo(objectId);
+            User user = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), User.class);
             setTopNick(user.getNick());
             setTopDescription(user.getMotto());
+            new Thread(new Runnable() {
+                @SneakyThrows
+                @Override
+                public void run() {
+                    com.project.gimme.pojo.vo.Response<User> response =
+                            UserController.getUser(objectId.toString());
+                    if (response != null && response.isSuccess()) {
+                        User user = response.getData();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                setTopNick(user.getNick());
+                                setTopDescription(user.getMotto());
+                            }
+                        });
+                    }
+                }
+            }).start();
         } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-            GroupVO groupVO = getGroupInfo(objectId);
+            GroupVO groupVO = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), GroupVO.class);
             setTopNick(groupVO.getNick());
-            setTopDescription("共" + groupVO.getTotalCount() + "人");
+            setTopDescription("共10人");
+            new Thread(new Runnable() {
+                @SneakyThrows
+                @Override
+                public void run() {
+                    com.project.gimme.pojo.vo.Response<GroupVO> response =
+                            GroupController.getGroupInfo(objectId);
+                    if (response != null && response.isSuccess()) {
+                        GroupVO groupVO = response.getData();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                setTopNick(groupVO.getNick());
+                                setTopDescription("共" + groupVO.getTotalCount() + "人");
+                            }
+                        });
+                    }
+                }
+            }).start();
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             ChannelVO channelVO = getChannelInfo(objectId);
             setTopNick(channelVO.getNick());

@@ -1,7 +1,10 @@
 package com.project.gimme.view.fragment;
 
+import static com.project.gimme.utils.BundleUtil.INFO_ATTRIBUTE;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +15,14 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
+import com.project.gimme.controller.GroupController;
+import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.Group;
 import com.project.gimme.pojo.User;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendChannelAdapter;
 import com.project.gimme.view.adpter.FriendGroupAdapter;
@@ -29,12 +35,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import lombok.SneakyThrows;
 
 /**
  * @author DrGilbert
  * @date 2022/1/13 11:04
  */
-//TODO:应用包的bug被莫名其妙的修复了。
 public class FriendListFragment extends Fragment {
     @BindView(android.R.id.tabhost)
     TabHost tabHost;
@@ -48,6 +54,8 @@ public class FriendListFragment extends Fragment {
     @BindView(R.id.friend_list_channel_list)
     ListView channelListView;
     private Unbinder unbinder;
+    Handler handler = new Handler();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,12 +83,27 @@ public class FriendListFragment extends Fragment {
     }
 
     private void initUserListView() {
-        getUserList();
-        userListView.setAdapter(new FriendUserAdapter(getContext(), userList));
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                com.project.gimme.pojo.vo.Response<List<User>> response =
+                        UserController.getFriendList("");
+                if (response != null && response.isSuccess()) {
+                    userList = response.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            userListView.setAdapter(new FriendUserAdapter(getContext(), userList));
+                        }
+                    });
+                }
+            }
+        }).start();
         userListView.setOnItemClickListener((parent, view, position, id) -> {
-            System.out.println("friend");
             Bundle bundle = new Bundle();
             bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
+            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(userListView.getAdapter().getItem(position)));
             bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
@@ -90,6 +113,7 @@ public class FriendListFragment extends Fragment {
     }
 
     private void getUserList() {
+
         for (int i = 1; i <= 10; i++) {
             User user = new User();
             user.setId(i);
@@ -99,12 +123,28 @@ public class FriendListFragment extends Fragment {
     }
 
     private void initGroupListView() {
-        getGroupList();
-        groupListView.setAdapter(new FriendGroupAdapter(getContext(), groupList));
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                com.project.gimme.pojo.vo.Response<List<Group>> response =
+                        GroupController.getGroupList("");
+                if (response != null && response.isSuccess()) {
+                    groupList = response.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            groupListView.setAdapter(new FriendGroupAdapter(getContext(), groupList));
+                        }
+                    });
+                }
+            }
+        }).start();
         groupListView.setOnItemClickListener((parent, view, position, id) -> {
             System.out.println("group");
             Bundle bundle = new Bundle();
             bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
+            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(groupListView.getAdapter().getItem(position)));
             bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.utils.LogUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -33,7 +34,7 @@ public class WelcomeActivity extends BaseActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(TOKEN_CACHE, Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         GimmeApplication.setToken(token);
-        System.out.println(token);
+        LogUtil.log(this.toString(), token);
         setWelcomeIcon(0.5, 0.4);
         setWelcomeText(0.6);
         Thread thread = new Thread() {

@@ -3,11 +3,16 @@ package com.project.gimme.view.fragment;
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +43,8 @@ import butterknife.Unbinder;
 public class FriendInfoFragment extends Fragment {
     private Integer type;
     private Integer objectId;
+    @BindView(R.id.fragment_friend_info_icon)
+    ImageView icon;
     @BindView(R.id.fragment_friend_info_nick)
     TextView nick;
     @BindView(R.id.fragment_friend_info_company)
@@ -88,7 +95,16 @@ public class FriendInfoFragment extends Fragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initTopBar() {
+        icon.setOnTouchListener((view, motionEvent) -> {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果
+            } else {
+                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
+            }
+            return false;//如果return true的话,onClick的事件就不会触发!
+        });
         nick.setText(userVO.getNick());
         company.setText(userVO.getCompany());
         motto.setText(userVO.getMotto());

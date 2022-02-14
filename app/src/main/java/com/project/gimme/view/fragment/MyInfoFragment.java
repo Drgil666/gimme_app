@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -51,23 +50,23 @@ public class MyInfoFragment extends Fragment {
     @BindView(R.id.user_info_motto)
     TextView userInfoMotto;
     private Unbinder unbinder;
-    private static com.project.gimme.pojo.vo.Response<User> userResponse;
     private User user;
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == GET_USER) {
-                userInfoNick.setText(user.getNick());
-                userInfoCompany.setText(user.getCompany());
-                userInfoMotto.setText(user.getMotto());
-                userInfoIcon.setImageResource(R.mipmap.app_icon);
-            } else {
-
-            }
-        }
-    };
+    Handler handler = new Handler();
+//    = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            if (msg.what == GET_USER) {
+//                userInfoNick.setText(user.getNick());
+//                userInfoCompany.setText(user.getCompany());
+//                userInfoMotto.setText(user.getMotto());
+//                userInfoIcon.setImageResource(R.mipmap.app_icon);
+//            } else {
+//
+//            }
+//        }
+//    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,13 +90,18 @@ public class MyInfoFragment extends Fragment {
             @SneakyThrows
             @Override
             public void run() {
-                userResponse = UserController.getUser();
+                com.project.gimme.pojo.vo.Response<User> userResponse = UserController.getUser(null);
                 if (userResponse != null && userResponse.isSuccess()) {
                     user = userResponse.getData();
-                    Message message = Message.obtain();
-                    message.what = 1;
-                    message.obj = user;
-                    handler.handleMessage(message);
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            userInfoNick.setText(user.getNick());
+                            userInfoCompany.setText(user.getCompany());
+                            userInfoMotto.setText(user.getMotto());
+                            userInfoIcon.setImageResource(R.mipmap.app_icon);
+                        }
+                    });
                 }
             }
         }).start();
