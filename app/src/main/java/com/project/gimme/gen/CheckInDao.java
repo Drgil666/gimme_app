@@ -43,7 +43,7 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"checkin\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"group_id\" INTEGER," + // 1: groupId
@@ -51,9 +51,7 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
                 "\"type\" INTEGER);"); // 3: type
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"checkin\"";
         db.execSQL(sql);
@@ -62,22 +60,22 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, CheckIn entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(2, groupId);
         }
-
+ 
         String address = entity.getAddress();
         if (address != null) {
             stmt.bindString(3, address);
         }
-
+ 
         Integer type = entity.getType();
         if (type != null) {
             stmt.bindLong(4, type);
@@ -87,17 +85,17 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, CheckIn entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(2, groupId);
         }
-
+ 
         String address = entity.getAddress();
         if (address != null) {
             stmt.bindString(3, address);
@@ -156,5 +154,5 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

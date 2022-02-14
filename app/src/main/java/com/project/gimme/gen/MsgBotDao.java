@@ -43,7 +43,7 @@ public class MsgBotDao extends AbstractDao<MsgBot, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"msg_bot\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"text\" TEXT," + // 1: text
@@ -51,9 +51,7 @@ public class MsgBotDao extends AbstractDao<MsgBot, Integer> {
                 "\"cron\" TEXT);"); // 3: cron
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"msg_bot\"";
         db.execSQL(sql);
@@ -62,22 +60,22 @@ public class MsgBotDao extends AbstractDao<MsgBot, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, MsgBot entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         String text = entity.getText();
         if (text != null) {
             stmt.bindString(2, text);
         }
-
+ 
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(3, groupId);
         }
-
+ 
         String cron = entity.getCron();
         if (cron != null) {
             stmt.bindString(4, cron);
@@ -87,17 +85,17 @@ public class MsgBotDao extends AbstractDao<MsgBot, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, MsgBot entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         String text = entity.getText();
         if (text != null) {
             stmt.bindString(2, text);
         }
-
+ 
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(3, groupId);
@@ -156,5 +154,5 @@ public class MsgBotDao extends AbstractDao<MsgBot, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

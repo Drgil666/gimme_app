@@ -42,7 +42,7 @@ public class CheckInUserDao extends AbstractDao<CheckInUser, Void> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"checkin_user\" (" + //
                 "\"user_id\" INTEGER," + // 0: userId
                 "\"checkin_id\" INTEGER," + // 1: checkInId
@@ -52,9 +52,7 @@ public class CheckInUserDao extends AbstractDao<CheckInUser, Void> {
                 " (\"user_id\" ASC,\"checkin_id\" ASC);");
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"checkin_user\"";
         db.execSQL(sql);
@@ -63,17 +61,17 @@ public class CheckInUserDao extends AbstractDao<CheckInUser, Void> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, CheckInUser entity) {
         stmt.clearBindings();
-
+ 
         Integer userId = entity.getUserId();
         if (userId != null) {
             stmt.bindLong(1, userId);
         }
-
+ 
         Integer checkInId = entity.getCheckInId();
         if (checkInId != null) {
             stmt.bindLong(2, checkInId);
         }
-
+ 
         java.util.Date timestamp = entity.getTimestamp();
         if (timestamp != null) {
             stmt.bindLong(3, timestamp.getTime());
@@ -83,12 +81,12 @@ public class CheckInUserDao extends AbstractDao<CheckInUser, Void> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, CheckInUser entity) {
         stmt.clearBindings();
-
+ 
         Integer userId = entity.getUserId();
         if (userId != null) {
             stmt.bindLong(1, userId);
         }
-
+ 
         Integer checkInId = entity.getCheckInId();
         if (checkInId != null) {
             stmt.bindLong(2, checkInId);
@@ -143,5 +141,5 @@ public class CheckInUserDao extends AbstractDao<CheckInUser, Void> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

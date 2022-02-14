@@ -43,7 +43,7 @@ public class GroupDao extends AbstractDao<Group, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"group\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"create_time\" INTEGER," + // 1: createTime
@@ -51,9 +51,7 @@ public class GroupDao extends AbstractDao<Group, Integer> {
                 "\"description\" TEXT);"); // 3: description
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"group\"";
         db.execSQL(sql);
@@ -62,22 +60,22 @@ public class GroupDao extends AbstractDao<Group, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Group entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(2, createTime.getTime());
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);
         }
-
+ 
         String description = entity.getDescription();
         if (description != null) {
             stmt.bindString(4, description);
@@ -87,17 +85,17 @@ public class GroupDao extends AbstractDao<Group, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, Group entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(2, createTime.getTime());
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);
@@ -156,5 +154,5 @@ public class GroupDao extends AbstractDao<Group, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

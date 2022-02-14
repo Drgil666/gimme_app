@@ -45,7 +45,7 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"chat_msg\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"text\" TEXT," + // 1: text
@@ -55,9 +55,7 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
                 "\"owner_id\" INTEGER);"); // 5: ownerId
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"chat_msg\"";
         db.execSQL(sql);
@@ -66,32 +64,32 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, ChatMsg entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         String text = entity.getText();
         if (text != null) {
             stmt.bindString(2, text);
         }
-
+ 
         Integer type = entity.getType();
         if (type != null) {
             stmt.bindLong(3, type);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(4, objectId);
         }
-
+ 
         java.util.Date timeStamp = entity.getTimeStamp();
         if (timeStamp != null) {
             stmt.bindLong(5, timeStamp.getTime());
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(6, ownerId);
@@ -101,27 +99,27 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, ChatMsg entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         String text = entity.getText();
         if (text != null) {
             stmt.bindString(2, text);
         }
-
+ 
         Integer type = entity.getType();
         if (type != null) {
             stmt.bindLong(3, type);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(4, objectId);
         }
-
+ 
         java.util.Date timeStamp = entity.getTimeStamp();
         if (timeStamp != null) {
             stmt.bindLong(5, timeStamp.getTime());
@@ -184,5 +182,5 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

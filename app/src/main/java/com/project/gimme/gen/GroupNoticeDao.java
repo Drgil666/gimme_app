@@ -43,7 +43,7 @@ public class GroupNoticeDao extends AbstractDao<GroupNotice, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"group_notice\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"owner_id\" INTEGER," + // 1: ownerId
@@ -51,9 +51,7 @@ public class GroupNoticeDao extends AbstractDao<GroupNotice, Integer> {
                 "\"text\" TEXT);"); // 3: text
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"group_notice\"";
         db.execSQL(sql);
@@ -62,22 +60,22 @@ public class GroupNoticeDao extends AbstractDao<GroupNotice, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, GroupNotice entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(3, groupId);
         }
-
+ 
         String text = entity.getText();
         if (text != null) {
             stmt.bindString(4, text);
@@ -87,17 +85,17 @@ public class GroupNoticeDao extends AbstractDao<GroupNotice, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, GroupNotice entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(3, groupId);
@@ -156,5 +154,5 @@ public class GroupNoticeDao extends AbstractDao<GroupNotice, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

@@ -12,6 +12,7 @@ import com.project.gimme.pojo.GroupNotice;
 import com.project.gimme.pojo.GroupUser;
 import com.project.gimme.pojo.MsgBot;
 import com.project.gimme.pojo.PersonalMsg;
+import com.project.gimme.pojo.PersonalMsgUser;
 import com.project.gimme.pojo.ToDoList;
 import com.project.gimme.pojo.ToDoUser;
 import com.project.gimme.pojo.User;
@@ -45,6 +46,7 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig groupUserDaoConfig;
     private final DaoConfig msgBotDaoConfig;
     private final DaoConfig personalMsgDaoConfig;
+    private final DaoConfig personalMsgUserDaoConfig;
     private final DaoConfig toDoListDaoConfig;
     private final DaoConfig toDoUserDaoConfig;
     private final DaoConfig userDaoConfig;
@@ -61,6 +63,7 @@ public class DaoSession extends AbstractDaoSession {
     private final GroupUserDao groupUserDao;
     private final MsgBotDao msgBotDao;
     private final PersonalMsgDao personalMsgDao;
+    private final PersonalMsgUserDao personalMsgUserDao;
     private final ToDoListDao toDoListDao;
     private final ToDoUserDao toDoUserDao;
     private final UserDao userDao;
@@ -105,6 +108,9 @@ public class DaoSession extends AbstractDaoSession {
         personalMsgDaoConfig = daoConfigMap.get(PersonalMsgDao.class).clone();
         personalMsgDaoConfig.initIdentityScope(type);
 
+        personalMsgUserDaoConfig = daoConfigMap.get(PersonalMsgUserDao.class).clone();
+        personalMsgUserDaoConfig.initIdentityScope(type);
+
         toDoListDaoConfig = daoConfigMap.get(ToDoListDao.class).clone();
         toDoListDaoConfig.initIdentityScope(type);
 
@@ -126,6 +132,7 @@ public class DaoSession extends AbstractDaoSession {
         groupUserDao = new GroupUserDao(groupUserDaoConfig, this);
         msgBotDao = new MsgBotDao(msgBotDaoConfig, this);
         personalMsgDao = new PersonalMsgDao(personalMsgDaoConfig, this);
+        personalMsgUserDao = new PersonalMsgUserDao(personalMsgUserDaoConfig, this);
         toDoListDao = new ToDoListDao(toDoListDaoConfig, this);
         toDoUserDao = new ToDoUserDao(toDoUserDaoConfig, this);
         userDao = new UserDao(userDaoConfig, this);
@@ -142,6 +149,7 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(GroupUser.class, groupUserDao);
         registerDao(MsgBot.class, msgBotDao);
         registerDao(PersonalMsg.class, personalMsgDao);
+        registerDao(PersonalMsgUser.class, personalMsgUserDao);
         registerDao(ToDoList.class, toDoListDao);
         registerDao(ToDoUser.class, toDoUserDao);
         registerDao(User.class, userDao);
@@ -160,6 +168,7 @@ public class DaoSession extends AbstractDaoSession {
         groupUserDaoConfig.clearIdentityScope();
         msgBotDaoConfig.clearIdentityScope();
         personalMsgDaoConfig.clearIdentityScope();
+        personalMsgUserDaoConfig.clearIdentityScope();
         toDoListDaoConfig.clearIdentityScope();
         toDoUserDaoConfig.clearIdentityScope();
         userDaoConfig.clearIdentityScope();
@@ -211,6 +220,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public PersonalMsgDao getPersonalMsgDao() {
         return personalMsgDao;
+    }
+
+    public PersonalMsgUserDao getPersonalMsgUserDao() {
+        return personalMsgUserDao;
     }
 
     public ToDoListDao getToDoListDao() {

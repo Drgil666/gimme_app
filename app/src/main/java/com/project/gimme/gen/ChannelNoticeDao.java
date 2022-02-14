@@ -43,7 +43,7 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"channel_notice\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"type\" INTEGER," + // 1: type
@@ -54,9 +54,7 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
                 " (\"id\" DESC);");
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"channel_notice\"";
         db.execSQL(sql);
@@ -65,22 +63,22 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, ChannelNotice entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer type = entity.getType();
         if (type != null) {
             stmt.bindLong(2, type);
         }
-
+ 
         Integer channelId = entity.getChannelId();
         if (channelId != null) {
             stmt.bindLong(3, channelId);
         }
-
+ 
         String text = entity.getText();
         if (text != null) {
             stmt.bindString(4, text);
@@ -90,17 +88,17 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, ChannelNotice entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer type = entity.getType();
         if (type != null) {
             stmt.bindLong(2, type);
         }
-
+ 
         Integer channelId = entity.getChannelId();
         if (channelId != null) {
             stmt.bindLong(3, channelId);
@@ -159,5 +157,5 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

@@ -44,7 +44,7 @@ public class ChannelDao extends AbstractDao<Channel, Integer> {
      * Creates the underlying database table.
      */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        String constraint = ifNotExists ? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"channel\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"owner_id\" INTEGER," + // 1: ownerId
@@ -53,9 +53,7 @@ public class ChannelDao extends AbstractDao<Channel, Integer> {
                 "\"description\" TEXT);"); // 4: description
     }
 
-    /**
-     * Drops the underlying database table.
-     */
+    /** Drops the underlying database table. */
     public static void dropTable(Database db, boolean ifExists) {
         String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"channel\"";
         db.execSQL(sql);
@@ -64,27 +62,27 @@ public class ChannelDao extends AbstractDao<Channel, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Channel entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);
         }
-
+ 
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(4, createTime.getTime());
         }
-
+ 
         String description = entity.getDescription();
         if (description != null) {
             stmt.bindString(5, description);
@@ -94,22 +92,22 @@ public class ChannelDao extends AbstractDao<Channel, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, Channel entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(3, nick);
         }
-
+ 
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
             stmt.bindLong(4, createTime.getTime());
@@ -170,5 +168,5 @@ public class ChannelDao extends AbstractDao<Channel, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

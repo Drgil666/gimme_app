@@ -80,52 +80,52 @@ public class UserDao extends AbstractDao<User, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, User entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(2, nick);
         }
-
+ 
         String avatar = entity.getAvatar();
         if (avatar != null) {
             stmt.bindString(3, avatar);
         }
-
+ 
         Integer country = entity.getCountry();
         if (country != null) {
             stmt.bindLong(4, country);
         }
-
+ 
         Integer city = entity.getCity();
         if (city != null) {
             stmt.bindLong(5, city);
         }
-
+ 
         Integer province = entity.getProvince();
         if (province != null) {
             stmt.bindLong(6, province);
         }
-
+ 
         java.util.Date birthday = entity.getBirthday();
         if (birthday != null) {
             stmt.bindLong(7, birthday.getTime());
         }
-
+ 
         String mail = entity.getMail();
         if (mail != null) {
             stmt.bindString(8, mail);
         }
-
+ 
         Integer gender = entity.getGender();
         if (gender != null) {
             stmt.bindLong(9, gender);
         }
-
+ 
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
             stmt.bindLong(10, occupation);
@@ -150,52 +150,52 @@ public class UserDao extends AbstractDao<User, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, User entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         String nick = entity.getNick();
         if (nick != null) {
             stmt.bindString(2, nick);
         }
-
+ 
         String avatar = entity.getAvatar();
         if (avatar != null) {
             stmt.bindString(3, avatar);
         }
-
+ 
         Integer country = entity.getCountry();
         if (country != null) {
             stmt.bindLong(4, country);
         }
-
+ 
         Integer city = entity.getCity();
         if (city != null) {
             stmt.bindLong(5, city);
         }
-
+ 
         Integer province = entity.getProvince();
         if (province != null) {
             stmt.bindLong(6, province);
         }
-
+ 
         java.util.Date birthday = entity.getBirthday();
         if (birthday != null) {
             stmt.bindLong(7, birthday.getTime());
         }
-
+ 
         String mail = entity.getMail();
         if (mail != null) {
             stmt.bindString(8, mail);
         }
-
+ 
         Integer gender = entity.getGender();
         if (gender != null) {
             stmt.bindLong(9, gender);
         }
-
+ 
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
             stmt.bindLong(10, occupation);
@@ -241,7 +241,7 @@ public class UserDao extends AbstractDao<User, Integer> {
         );
         return entity;
     }
-
+     
     @Override
     public void readEntity(Cursor cursor, User entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
@@ -282,5 +282,5 @@ public class UserDao extends AbstractDao<User, Integer> {
     protected final boolean isEntityUpdateable() {
         return true;
     }
-
+    
 }

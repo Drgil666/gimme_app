@@ -35,14 +35,13 @@ public class DaoMaster extends AbstractDaoMaster {
         GroupUserDao.createTable(db, ifNotExists);
         MsgBotDao.createTable(db, ifNotExists);
         PersonalMsgDao.createTable(db, ifNotExists);
+        PersonalMsgUserDao.createTable(db, ifNotExists);
         ToDoListDao.createTable(db, ifNotExists);
         ToDoUserDao.createTable(db, ifNotExists);
         UserDao.createTable(db, ifNotExists);
     }
 
-    /**
-     * Drops underlying database table using DAOs.
-     */
+    /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         ChannelDao.dropTable(db, ifExists);
         ChannelNoticeDao.dropTable(db, ifExists);
@@ -56,6 +55,7 @@ public class DaoMaster extends AbstractDaoMaster {
         GroupUserDao.dropTable(db, ifExists);
         MsgBotDao.dropTable(db, ifExists);
         PersonalMsgDao.dropTable(db, ifExists);
+        PersonalMsgUserDao.dropTable(db, ifExists);
         ToDoListDao.dropTable(db, ifExists);
         ToDoUserDao.dropTable(db, ifExists);
         UserDao.dropTable(db, ifExists);
@@ -89,6 +89,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(GroupUserDao.class);
         registerDaoClass(MsgBotDao.class);
         registerDaoClass(PersonalMsgDao.class);
+        registerDaoClass(PersonalMsgUserDao.class);
         registerDaoClass(ToDoListDao.class);
         registerDaoClass(ToDoUserDao.class);
         registerDaoClass(UserDao.class);
@@ -121,9 +122,7 @@ public class DaoMaster extends AbstractDaoMaster {
         }
     }
 
-    /**
-     * WARNING: Drops all table on Upgrade! Use only during development.
-     */
+    /** WARNING: Drops all table on Upgrade! Use only during development. */
     public static class DevOpenHelper extends OpenHelper {
         public DevOpenHelper(Context context, String name) {
             super(context, name);
