@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
+import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.Channel;
@@ -29,7 +30,6 @@ import com.project.gimme.view.adpter.FriendGroupAdapter;
 import com.project.gimme.view.adpter.FriendUserAdapter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -83,6 +83,20 @@ public class FriendListFragment extends Fragment {
     }
 
     private void initUserListView() {
+        getUserList();
+        userListView.setOnItemClickListener((parent, view, position, id) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
+            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(userListView.getAdapter().getItem(position)));
+            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
+            Intent intent = new Intent(getActivity(), ChatActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+        });
+    }
+
+    private void getUserList() {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
@@ -100,11 +114,16 @@ public class FriendListFragment extends Fragment {
                 }
             }
         }).start();
-        userListView.setOnItemClickListener((parent, view, position, id) -> {
+    }
+
+    private void initGroupListView() {
+        getGroupList();
+        groupListView.setOnItemClickListener((parent, view, position, id) -> {
+            System.out.println("group");
             Bundle bundle = new Bundle();
             bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
-            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(userListView.getAdapter().getItem(position)));
-            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
+            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(groupListView.getAdapter().getItem(position)));
+            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -112,17 +131,7 @@ public class FriendListFragment extends Fragment {
         });
     }
 
-    private void getUserList() {
-
-        for (int i = 1; i <= 10; i++) {
-            User user = new User();
-            user.setId(i);
-            user.setNick("好友" + i);
-            userList.add(user);
-        }
-    }
-
-    private void initGroupListView() {
+    private void getGroupList() {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
@@ -140,36 +149,15 @@ public class FriendListFragment extends Fragment {
                 }
             }
         }).start();
-        groupListView.setOnItemClickListener((parent, view, position, id) -> {
-            System.out.println("group");
-            Bundle bundle = new Bundle();
-            bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
-            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(groupListView.getAdapter().getItem(position)));
-            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP.getCode());
-            Intent intent = new Intent(getActivity(), ChatActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
-        });
-    }
-
-    private void getGroupList() {
-        for (int i = 1; i <= 10; i++) {
-            Group group = new Group();
-            group.setId(i);
-            group.setNick("群聊" + i);
-            group.setCreateTime(new Date());
-            groupList.add(group);
-        }
     }
 
     private void initChannelListView() {
         getChannelList();
-        channelListView.setAdapter(new FriendChannelAdapter(getContext(), channelList));
         channelListView.setOnItemClickListener((parent, view, position, id) -> {
             System.out.println("channel");
             Bundle bundle = new Bundle();
             bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
+            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(channelListView.getAdapter().getItem(position)));
             bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_CHANNEL.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
@@ -179,14 +167,23 @@ public class FriendListFragment extends Fragment {
     }
 
     private void getChannelList() {
-        for (int i = 1; i <= 10; i++) {
-            Channel channel = new Channel();
-            channel.setId(i);
-            channel.setCreateTime(new Date());
-            channel.setNick("频道" + i);
-            channel.setOwnerId(1);
-            channelList.add(channel);
-        }
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                com.project.gimme.pojo.vo.Response<List<Channel>> response =
+                        ChannelController.getChannelList("");
+                if (response != null && response.isSuccess()) {
+                    channelList = response.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            channelListView.setAdapter(new FriendChannelAdapter(getContext(), channelList));
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     @Override

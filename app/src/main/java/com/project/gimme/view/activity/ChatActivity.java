@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.gimme.R;
+import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.User;
@@ -113,9 +114,10 @@ public class ChatActivity extends SwipeBackActivity {
             setTopDescription("共10人");
             getGroupInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-            ChannelVO channelVO = getChannelInfo(objectId);
+            ChannelVO channelVO = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), ChannelVO.class);
             setTopNick(channelVO.getNick());
-            setTopDescription("共" + channelVO.getTotalCount() + "人");
+            setTopDescription("共10人");
+            getChannelInfo(objectId);
         } else {
             Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
         }
@@ -155,7 +157,7 @@ public class ChatActivity extends SwipeBackActivity {
             @Override
             public void run() {
                 com.project.gimme.pojo.vo.Response<User> response =
-                        UserController.getUser(objectId.toString());
+                        UserController.getUser(id.toString());
                 if (response != null && response.isSuccess()) {
                     User user = response.getData();
                     handler.post(new Runnable() {
@@ -176,7 +178,7 @@ public class ChatActivity extends SwipeBackActivity {
             @Override
             public void run() {
                 com.project.gimme.pojo.vo.Response<GroupVO> response =
-                        GroupController.getGroupInfo(objectId);
+                        GroupController.getGroupInfo(id.toString());
                 if (response != null && response.isSuccess()) {
                     GroupVO groupVO = response.getData();
                     handler.post(new Runnable() {
@@ -191,14 +193,25 @@ public class ChatActivity extends SwipeBackActivity {
         }).start();
     }
 
-    private ChannelVO getChannelInfo(Integer id) {
-        ChannelVO channelVO = new ChannelVO();
-        channelVO.setId(id);
-        channelVO.setNick("频道" + id);
-        channelVO.setOwnerId(1);
-        channelVO.setTotalCount(10);
-        channelVO.setCreateTime(new Date());
-        return channelVO;
+    private void getChannelInfo(Integer id) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                com.project.gimme.pojo.vo.Response<ChannelVO> response =
+                        ChannelController.getChannelInfo(id.toString());
+                if (response != null && response.isSuccess()) {
+                    ChannelVO channelVO = response.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setTopNick(channelVO.getNick());
+                            setTopDescription("共" + channelVO.getTotalCount() + "人");
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     @Override
