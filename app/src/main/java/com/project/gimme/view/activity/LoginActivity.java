@@ -91,34 +91,38 @@ public class LoginActivity extends BaseActivity {
         loginButton.getLayoutParams().width = (int) Math.floor(weight * size);
         loginButton.setOnClickListener(view -> {
             GimmeApplication.setToken(null);
-            LoginVO loginVO = new LoginVO();
-            loginVO.setUserId(Integer.parseInt(userAccount.getText().toString()));
-            loginVO.setPassword(userPassword.getText().toString());
-            new Thread(new Runnable() {
-                @SneakyThrows
-                @Override
-                public void run() {
-                    Response<String> userResponse = UserController.login(loginVO);
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (userResponse != null && userResponse.isSuccess()) {
-                                GimmeApplication.setToken(userResponse.getData());
-                                SharedPreferences sharedPreferences = getSharedPreferences(TOKEN_CACHE, Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("token", userResponse.getData());
-                                editor.apply();
-                                LogUtil.log(this.toString(), userResponse.getData());
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "登录失败!", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                }
-            }).start();
+            login();
         });
+    }
+
+    private void login() {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                LoginVO loginVO = new LoginVO();
+                loginVO.setUserId(Integer.parseInt(userAccount.getText().toString()));
+                loginVO.setPassword(userPassword.getText().toString());
+                Response<String> userResponse = UserController.login(loginVO);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (userResponse != null && userResponse.isSuccess()) {
+                            GimmeApplication.setToken(userResponse.getData());
+                            SharedPreferences sharedPreferences = getSharedPreferences(TOKEN_CACHE, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("token", userResponse.getData());
+                            editor.apply();
+                            LogUtil.log(this.toString(), userResponse.getData());
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "登录失败!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 }

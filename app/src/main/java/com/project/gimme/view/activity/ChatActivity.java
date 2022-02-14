@@ -106,46 +106,12 @@ public class ChatActivity extends SwipeBackActivity {
             User user = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), User.class);
             setTopNick(user.getNick());
             setTopDescription(user.getMotto());
-            new Thread(new Runnable() {
-                @SneakyThrows
-                @Override
-                public void run() {
-                    com.project.gimme.pojo.vo.Response<User> response =
-                            UserController.getUser(objectId.toString());
-                    if (response != null && response.isSuccess()) {
-                        User user = response.getData();
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                setTopNick(user.getNick());
-                                setTopDescription(user.getMotto());
-                            }
-                        });
-                    }
-                }
-            }).start();
+            getUserInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             GroupVO groupVO = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), GroupVO.class);
             setTopNick(groupVO.getNick());
             setTopDescription("共10人");
-            new Thread(new Runnable() {
-                @SneakyThrows
-                @Override
-                public void run() {
-                    com.project.gimme.pojo.vo.Response<GroupVO> response =
-                            GroupController.getGroupInfo(objectId);
-                    if (response != null && response.isSuccess()) {
-                        GroupVO groupVO = response.getData();
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                setTopNick(groupVO.getNick());
-                                setTopDescription("共" + groupVO.getTotalCount() + "人");
-                            }
-                        });
-                    }
-                }
-            }).start();
+            getGroupInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             ChannelVO channelVO = getChannelInfo(objectId);
             setTopNick(channelVO.getNick());
@@ -183,21 +149,46 @@ public class ChatActivity extends SwipeBackActivity {
         topDescription.setText(text);
     }
 
-    private User getUserInfo(Integer id) {
-        User user = new User();
-        user.setId(id);
-        user.setNick("好友" + id);
-        user.setMotto("好友个性签名");
-        return user;
+    private void getUserInfo(Integer id) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                com.project.gimme.pojo.vo.Response<User> response =
+                        UserController.getUser(objectId.toString());
+                if (response != null && response.isSuccess()) {
+                    User user = response.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setTopNick(user.getNick());
+                            setTopDescription(user.getMotto());
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
-    private GroupVO getGroupInfo(Integer id) {
-        GroupVO groupVO = new GroupVO();
-        groupVO.setId(id);
-        groupVO.setNick("群聊" + id);
-        groupVO.setCreateTime(new Date());
-        groupVO.setTotalCount(10);
-        return groupVO;
+    private void getGroupInfo(Integer id) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                com.project.gimme.pojo.vo.Response<GroupVO> response =
+                        GroupController.getGroupInfo(objectId);
+                if (response != null && response.isSuccess()) {
+                    GroupVO groupVO = response.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setTopNick(groupVO.getNick());
+                            setTopDescription("共" + groupVO.getTotalCount() + "人");
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private ChannelVO getChannelInfo(Integer id) {
