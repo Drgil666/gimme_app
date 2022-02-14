@@ -5,16 +5,21 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
+import com.project.gimme.controller.UserController;
+import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.MyInfoListVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
@@ -27,23 +32,49 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import lombok.SneakyThrows;
 
 /**
  * @author DrGilbert
  */
 public class MyInfoFragment extends Fragment {
+    private static final Integer GET_USER = 1;
     private List<MyInfoListVO> myInfoList = new ArrayList<>();
     @BindView(R.id.user_info_icon)
     ImageView userInfoIcon;
     @BindView(R.id.gridview_my_info)
     GridView myInfoGridView;
+    @BindView(R.id.user_info_nick)
+    TextView userInfoNick;
+    @BindView(R.id.user_info_company)
+    TextView userInfoCompany;
+    @BindView(R.id.user_info_motto)
+    TextView userInfoMotto;
     private Unbinder unbinder;
+    private static com.project.gimme.pojo.vo.Response<User> userResponse;
+    private User user;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == GET_USER) {
+                userInfoNick.setText(user.getNick());
+                userInfoCompany.setText(user.getCompany());
+                userInfoMotto.setText(user.getMotto());
+                userInfoIcon.setImageResource(R.mipmap.app_icon);
+            } else {
+
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_info, container, false);
         unbinder = ButterKnife.bind(this, view);
+        getUser();
         initUserInfoLayout();
         initMyInfoGridView();
         return view;
@@ -53,6 +84,23 @@ public class MyInfoFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void getUser() {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                userResponse = UserController.getUser();
+                if (userResponse != null && userResponse.isSuccess()) {
+                    user = userResponse.getData();
+                    Message message = Message.obtain();
+                    message.what = 1;
+                    message.obj = user;
+                    handler.handleMessage(message);
+                }
+            }
+        }).start();
     }
 
     private void getMyInfoList() {
@@ -67,7 +115,6 @@ public class MyInfoFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void initUserInfoLayout() {
-        userInfoIcon.setImageResource(R.mipmap.app_icon);
         userInfoIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -5,11 +5,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
 
-import com.project.gimme.controller.Controller;
-import com.project.gimme.controller.RetrofitClient;
+import com.project.gimme.controller.TestController;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
-import lombok.SneakyThrows;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -18,33 +16,36 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * @date 2022/1/5 17:05
  */
 public class GimmeApplication extends Application {
-    private static Controller controller;
-    private static String token = null;
+    private static String token = "";
     private static Integer height;
     private static Integer weight;
     public static final Integer TYPE_ERROR = -1;
-    public static final String REMOTE_IP = "127.0.0.1";
-    public static final Integer REMOTE_PORT = 8888;
-    public static final Integer LOCAL_PORT = 8089;
+    public static final String REMOTE_URL = "http://169.254.247.129:8080";
+    public static final String APP_KEY = "pvxdm17jpdthr";
+    public static final String TOKEN_CACHE = "gimme_token";
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    @SneakyThrows
     @Override
     public void onCreate() {
         super.onCreate();
+//        RongIMClient.init(getApplicationContext(), APP_KEY);
         //滑动工具初始化
         BGASwipeBackHelper.init(this, null);
-        controller = RetrofitClient.getInstance().getController();
         //字体初始化
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/ping_fang_sc.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
+        TestController.test(REMOTE_URL + "/api/user/check");
+//        SharedPreferences sharedPreferences = getSharedPreferences(TOKEN_CACHE, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString("token", null);
+//        editor.apply();
     }
 
     /**

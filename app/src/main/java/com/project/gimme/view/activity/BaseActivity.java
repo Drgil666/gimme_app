@@ -14,6 +14,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * @date 2022/1/8 16:48
  */
 public class BaseActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Emoji初始化
@@ -32,6 +33,4 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-
 }

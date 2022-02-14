@@ -6,6 +6,8 @@ import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +46,8 @@ public class ChatActivity extends SwipeBackActivity {
     TextView topNick;
     @BindView(R.id.chat_top_description_text)
     TextView topDescription;
+    @BindView(R.id.chat_bottom_edittext)
+    EditText chatBottomEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class ChatActivity extends SwipeBackActivity {
         initBundle();
         initTopBar();
         initChatListView();
+        initChatBottom();
     }
 
     private void initBundle() {
@@ -111,6 +116,20 @@ public class ChatActivity extends SwipeBackActivity {
         getChatMessageList(type, objectId);
         chatListView.setAdapter(new ChatMsgVoAdapter(this, chatMsgList, type));
         chatListView.setSelection(chatMsgList.size() - 1);
+    }
+
+    private void initChatBottom() {
+        chatBottomEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER
+                        && v.getText() != null
+                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    System.out.println("这里是监听回车事件");
+                }
+                return true;
+            }
+        });
     }
 
     private void setTopNick(String text) {

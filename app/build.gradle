@@ -51,9 +51,6 @@ dependencies {
     // lombok
     implementation 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
-    // 后端链接用retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     // 常用工具库
     implementation 'org.apache.commons:commons-lang3:3.7'
     // 管理本地数据库greendao
@@ -70,8 +67,11 @@ dependencies {
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
-    //OkHttpPlus(接口POST/GET/文件传输等)
-    implementation 'com.github.zhaokaiqiang.okhttpplus:library:1.0.0'
-    //Netty
-    implementation group: 'io.netty', name: 'netty-all', version: '4.1.31.Final'
+    //OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'com.squareup.okio:okio:2.8.0'
+    //fastjson
+    implementation 'com.alibaba:fastjson:1.1.70.android'
+    //融云sdk
+    api 'cn.rongcloud.sdk:im_lib:5.1.3'
 }

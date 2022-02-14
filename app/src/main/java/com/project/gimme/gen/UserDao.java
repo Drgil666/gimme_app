@@ -36,6 +36,7 @@ public class UserDao extends AbstractDao<User, Integer> {
         public final static Property Occupation = new Property(9, Integer.class, "occupation", false, "occupation");
         public final static Property Company = new Property(10, String.class, "company", false, "company");
         public final static Property Motto = new Property(11, String.class, "motto", false, "motto");
+        public final static Property Password = new Property(12, String.class, "password", false, "password");
     }
 
 
@@ -64,7 +65,8 @@ public class UserDao extends AbstractDao<User, Integer> {
                 "\"gender\" INTEGER," + // 8: gender
                 "\"occupation\" INTEGER," + // 9: occupation
                 "\"company\" TEXT," + // 10: company
-                "\"motto\" TEXT);"); // 11: motto
+                "\"motto\" TEXT," + // 11: motto
+                "\"password\" TEXT);"); // 12: password
     }
 
     /**
@@ -138,6 +140,11 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (motto != null) {
             stmt.bindString(12, motto);
         }
+
+        String password = entity.getPassword();
+        if (password != null) {
+            stmt.bindString(13, password);
+        }
     }
 
     @Override
@@ -203,6 +210,11 @@ public class UserDao extends AbstractDao<User, Integer> {
         if (motto != null) {
             stmt.bindString(12, motto);
         }
+
+        String password = entity.getPassword();
+        if (password != null) {
+            stmt.bindString(13, password);
+        }
     }
 
     @Override
@@ -224,7 +236,8 @@ public class UserDao extends AbstractDao<User, Integer> {
                 cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // gender
                 cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9), // occupation
                 cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // company
-                cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // motto
+                cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // motto
+                cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // password
         );
         return entity;
     }
@@ -243,6 +256,7 @@ public class UserDao extends AbstractDao<User, Integer> {
         entity.setOccupation(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));
         entity.setCompany(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setMotto(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setPassword(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
     }
 
     @Override

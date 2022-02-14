@@ -9,7 +9,6 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-
 public class Response<T> {
     /**
      * 错误码
@@ -25,7 +24,7 @@ public class Response<T> {
     private T data;
 
     public static <T> Response<T> createSuc(T o) {
-        return new Response<T>(200, null, o);
+        return new Response<T>(0, null, o);
     }
 
     public static <T> Response<T> createErr(String msg) {
@@ -38,5 +37,9 @@ public class Response<T> {
 
     public static <T> Response<T> createTokenAuthorizedErr() {
         return new Response<>(5, "Token失效或不存在!", null);
+    }
+
+    public boolean isSuccess() {
+        return code.equals(0);
     }
 }

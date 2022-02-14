@@ -1,6 +1,10 @@
 package com.project.gimme.view.activity;
 
+import static com.project.gimme.GimmeApplication.TOKEN_CACHE;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -26,6 +30,10 @@ public class WelcomeActivity extends BaseActivity {
         //全屏，隐藏状态栏。
         setContentView(R.layout.activity_welcome);
         initScreenSize();
+        SharedPreferences sharedPreferences = getSharedPreferences(TOKEN_CACHE, Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        GimmeApplication.setToken(token);
+        System.out.println(token);
         setWelcomeIcon(0.5, 0.4);
         setWelcomeText(0.6);
         Thread thread = new Thread() {

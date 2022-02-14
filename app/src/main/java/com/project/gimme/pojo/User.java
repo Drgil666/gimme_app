@@ -74,11 +74,17 @@ public class User {
      */
     @Property(nameInDb = "motto")
     private String motto;
+    /**
+     * 密码
+     */
+    @Property(nameInDb = "password")
+    private String password;
 
-    @Generated(hash = 1840245264)
+    @Generated(hash = 1349429673)
     public User(Integer id, String nick, String avatar, Integer country,
                 Integer city, Integer province, Date birthday, String mail,
-                Integer gender, Integer occupation, String company, String motto) {
+                Integer gender, Integer occupation, String company, String motto,
+                String password) {
         this.id = id;
         this.nick = nick;
         this.avatar = avatar;
@@ -91,6 +97,7 @@ public class User {
         this.occupation = occupation;
         this.company = company;
         this.motto = motto;
+        this.password = password;
     }
 
     @Generated(hash = 586692638)
@@ -191,5 +198,13 @@ public class User {
 
     public void setGender(Integer gender) {
         this.gender = gender;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
