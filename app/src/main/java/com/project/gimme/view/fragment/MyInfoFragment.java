@@ -90,7 +90,7 @@ public class MyInfoFragment extends Fragment {
             @SneakyThrows
             @Override
             public void run() {
-                com.project.gimme.pojo.vo.Response<User> userResponse = UserController.getUser(null);
+                com.project.gimme.pojo.vo.Response<User> userResponse = UserController.getUser("");
                 if (userResponse != null && userResponse.isSuccess()) {
                     user = userResponse.getData();
                     handler.post(new Runnable() {

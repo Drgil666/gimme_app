@@ -48,7 +48,7 @@ public class UserController {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .header("token", GimmeApplication.getToken())
-                .url(REMOTE_URL + "/api/user?id=" + id).get().build();
+                .url(REMOTE_URL + "/api/user?userId=" + id).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {

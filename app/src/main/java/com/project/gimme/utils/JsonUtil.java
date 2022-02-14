@@ -25,11 +25,15 @@ public class JsonUtil {
         Response<T> response = Response.createSuc(null);
         response.setCode(Integer.parseInt(jsonObject.get("code").toString()));
         response.setMsg((String) jsonObject.get("msg"));
-        String data = jsonObject.get("data").toString();
-        if (cls.equals(String.class)) {
-            response.setData((T) data);
+        if (jsonObject.get("data") != null) {
+            String data = jsonObject.get("data").toString();
+            if (cls.equals(String.class)) {
+                response.setData((T) data);
+            } else {
+                response.setData(JSON.parseObject(data, cls));
+            }
         } else {
-            response.setData(JSON.parseObject(data, cls));
+            response.setData(null);
         }
         return response;
     }
@@ -39,9 +43,13 @@ public class JsonUtil {
         Response<List<T>> response = Response.createSuc(null);
         response.setCode(Integer.parseInt(jsonObject.get("code").toString()));
         response.setMsg((String) jsonObject.get("msg"));
-        String data = jsonObject.get("data").toString();
-        List<T> array = JSONArray.parseArray(data, cls);
-        response.setData(array);
+        if (jsonObject.get("data") != null) {
+            String data = jsonObject.get("data").toString();
+            List<T> array = JSONArray.parseArray(data, cls);
+            response.setData(array);
+        } else {
+            response.setData(null);
+        }
         return response;
     }
 }

@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -105,18 +106,24 @@ public class ChatActivity extends SwipeBackActivity {
         });
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
             User user = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), User.class);
-            setTopNick(user.getNick());
-            setTopDescription(user.getMotto());
+            if (user != null) {
+                setTopNick(user.getNick());
+                setTopDescription(user.getMotto());
+            }
             getUserInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             GroupVO groupVO = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), GroupVO.class);
-            setTopNick(groupVO.getNick());
-            setTopDescription("共10人");
+            if (groupVO != null) {
+                setTopNick(groupVO.getNick());
+                setTopDescription("共10人");
+            }
             getGroupInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             ChannelVO channelVO = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), ChannelVO.class);
-            setTopNick(channelVO.getNick());
-            setTopDescription("共10人");
+            if (channelVO != null) {
+                setTopNick(channelVO.getNick());
+                setTopDescription("共10人");
+            }
             getChannelInfo(objectId);
         } else {
             Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
@@ -167,6 +174,12 @@ public class ChatActivity extends SwipeBackActivity {
                             setTopDescription(user.getMotto());
                         }
                     });
+                } else {
+                    finish();
+                    overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
+                    Looper.prepare();
+                    Toast.makeText(ChatActivity.this, "该用户不存在!", Toast.LENGTH_LONG).show();
+                    Looper.loop();
                 }
             }
         }).start();
@@ -188,6 +201,12 @@ public class ChatActivity extends SwipeBackActivity {
                             setTopDescription("共" + groupVO.getTotalCount() + "人");
                         }
                     });
+                } else {
+                    finish();
+                    overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
+                    Looper.prepare();
+                    Toast.makeText(ChatActivity.this, "该群组不存在!", Toast.LENGTH_LONG).show();
+                    Looper.loop();
                 }
             }
         }).start();
@@ -209,6 +228,12 @@ public class ChatActivity extends SwipeBackActivity {
                             setTopDescription("共" + channelVO.getTotalCount() + "人");
                         }
                     });
+                } else {
+                    finish();
+                    overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
+                    Looper.prepare();
+                    Toast.makeText(ChatActivity.this, "该频道不存在!", Toast.LENGTH_LONG).show();
+                    Looper.loop();
                 }
             }
         }).start();
