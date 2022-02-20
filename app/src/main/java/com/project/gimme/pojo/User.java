@@ -1,5 +1,7 @@
 package com.project.gimme.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -48,6 +50,7 @@ public class User {
      * 用户生日
      */
     @Property(nameInDb = "birthday")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date birthday;
     /**
      * 用户邮箱

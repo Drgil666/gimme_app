@@ -20,10 +20,10 @@ public class GimmeApplication extends Application {
     private static Integer height;
     private static Integer weight;
     public static final Integer TYPE_ERROR = -1;
-    public static final String REMOTE_URL = "http://169.254.247.129:8080";
+    public static final String REMOTE_URL = "http://10.21.234.24:8080";
     public static final String APP_KEY = "pvxdm17jpdthr";
     public static final String TOKEN_CACHE = "gimme_token";
-
+    public static final String TOKEN="token";
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));

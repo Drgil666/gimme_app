@@ -1,10 +1,14 @@
 package com.project.gimme.controller;
 
 import static com.project.gimme.GimmeApplication.REMOTE_URL;
+import static com.project.gimme.GimmeApplication.TOKEN;
 
+import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
+import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.Group;
 import com.project.gimme.pojo.vo.GroupVO;
+import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.JsonUtil;
 
 import java.io.IOException;
@@ -20,36 +24,36 @@ import okhttp3.Response;
  * @date 2022/2/13 20:52
  */
 public class GroupController {
-    public static com.project.gimme.pojo.vo.Response<List<Group>> getGroupList(String keyword) throws IOException {
+    public static ResponseData<List<Group>> getGroupList(String keyword) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .header("token", GimmeApplication.getToken())
+                .header(TOKEN, GimmeApplication.getToken())
                 .url(REMOTE_URL + "/api/group/list?keyword=" + keyword).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            com.project.gimme.pojo.vo.Response<List<Group>> userResponse =
-                    JsonUtil.getResponseListBody(result, Group.class);
-            return userResponse;
+            ResponseData<List<Group>> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<Group>>>(){}.getType());
+            return userResponseData;
         }
         return null;
     }
 
-    public static com.project.gimme.pojo.vo.Response<GroupVO> getGroupInfo(String groupId) throws IOException {
+    public static ResponseData<GroupVO> getGroupInfo(String groupId) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .header("token", GimmeApplication.getToken())
+                .header(TOKEN, GimmeApplication.getToken())
                 .url(REMOTE_URL + "/api/group/info?groupId=" + groupId).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            com.project.gimme.pojo.vo.Response<GroupVO> userResponse =
-                    JsonUtil.getResponseObjectBody(result, GroupVO.class);
-            return userResponse;
+            ResponseData<GroupVO> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<GroupVO>>(){}.getType());
+            return userResponseData;
         }
         return null;
     }

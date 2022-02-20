@@ -1,5 +1,7 @@
 package com.project.gimme.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -23,6 +25,7 @@ public class Group {
      * 创建时间
      */
     @Property(nameInDb = "create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     /**
      * 群聊昵称

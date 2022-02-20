@@ -2,6 +2,7 @@ package com.project.gimme.view.fragment;
 
 import static com.project.gimme.utils.BundleUtil.INFO_ATTRIBUTE;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.Group;
 import com.project.gimme.pojo.User;
+import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
@@ -29,6 +31,7 @@ import com.project.gimme.view.adpter.FriendChannelAdapter;
 import com.project.gimme.view.adpter.FriendGroupAdapter;
 import com.project.gimme.view.adpter.FriendUserAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,7 @@ import lombok.SneakyThrows;
  * @author DrGilbert
  * @date 2022/1/13 11:04
  */
+@SuppressLint("NonConstantResourceId")
 public class FriendListFragment extends Fragment {
     @BindView(android.R.id.tabhost)
     TabHost tabHost;
@@ -101,10 +105,10 @@ public class FriendListFragment extends Fragment {
             @SneakyThrows
             @Override
             public void run() {
-                com.project.gimme.pojo.vo.Response<List<User>> response =
+                ResponseData<List<User>> responseData =
                         UserController.getFriendList("");
-                if (response != null && response.isSuccess()) {
-                    userList = response.getData();
+                if (responseData != null && responseData.isSuccess()) {
+                    userList = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -136,10 +140,10 @@ public class FriendListFragment extends Fragment {
             @SneakyThrows
             @Override
             public void run() {
-                com.project.gimme.pojo.vo.Response<List<Group>> response =
+                ResponseData<List<Group>> responseData =
                         GroupController.getGroupList("");
-                if (response != null && response.isSuccess()) {
-                    groupList = response.getData();
+                if (responseData != null && responseData.isSuccess()) {
+                    groupList = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -171,10 +175,17 @@ public class FriendListFragment extends Fragment {
             @SneakyThrows
             @Override
             public void run() {
-                com.project.gimme.pojo.vo.Response<List<Channel>> response =
-                        ChannelController.getChannelList("");
-                if (response != null && response.isSuccess()) {
-                    channelList = response.getData();
+                ResponseData<List<Channel>> responseData =
+                        null;
+                try
+                {
+                    responseData = ChannelController.getChannelList("");
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                if (responseData != null && responseData.isSuccess()) {
+                    channelList = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {

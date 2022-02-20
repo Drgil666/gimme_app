@@ -20,6 +20,7 @@ import com.project.gimme.R;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.MyInfoListVO;
+import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.view.activity.InfoActivity;
@@ -36,6 +37,7 @@ import lombok.SneakyThrows;
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class MyInfoFragment extends Fragment {
     private static final Integer GET_USER = 1;
     private List<MyInfoListVO> myInfoList = new ArrayList<>();
@@ -90,9 +92,9 @@ public class MyInfoFragment extends Fragment {
             @SneakyThrows
             @Override
             public void run() {
-                com.project.gimme.pojo.vo.Response<User> userResponse = UserController.getUser("");
-                if (userResponse != null && userResponse.isSuccess()) {
-                    user = userResponse.getData();
+                ResponseData<User> userResponseData = UserController.getUser("");
+                if (userResponseData != null && userResponseData.isSuccess()) {
+                    user = userResponseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {

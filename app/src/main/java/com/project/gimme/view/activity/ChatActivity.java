@@ -24,10 +24,12 @@ import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.GroupVO;
+import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -91,7 +93,7 @@ public class ChatActivity extends SwipeBackActivity {
         }
     }
 
-    private void initTopBar() {
+    private void initTopBar(){
         leftButton.setOnClickListener(view -> {
             finish();
             overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
@@ -105,21 +107,21 @@ public class ChatActivity extends SwipeBackActivity {
             overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
-            User user = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), User.class);
+            User user = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), User.class);
             if (user != null) {
                 setTopNick(user.getNick());
                 setTopDescription(user.getMotto());
             }
             getUserInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-            GroupVO groupVO = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), GroupVO.class);
+            GroupVO groupVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), GroupVO.class);
             if (groupVO != null) {
                 setTopNick(groupVO.getNick());
                 setTopDescription("共10人");
             }
             getGroupInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-            ChannelVO channelVO = JsonUtil.jsonStringToObject(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), ChannelVO.class);
+            ChannelVO channelVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), ChannelVO.class);
             if (channelVO != null) {
                 setTopNick(channelVO.getNick());
                 setTopDescription("共10人");
@@ -137,16 +139,13 @@ public class ChatActivity extends SwipeBackActivity {
     }
 
     private void initChatBottom() {
-        chatBottomEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER
-                        && v.getText() != null
-                        && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    System.out.println("这里是监听回车事件");
-                }
-                return true;
+        chatBottomEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER
+                    && v.getText() != null
+                    && event.getAction() == KeyEvent.ACTION_DOWN) {
+                System.out.println("这里是监听回车事件");
             }
+            return true;
         });
     }
 
@@ -158,15 +157,17 @@ public class ChatActivity extends SwipeBackActivity {
         topDescription.setText(text);
     }
 
-    private void getUserInfo(Integer id) {
+    private void getUserInfo(Integer id)
+    {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
-            public void run() {
-                com.project.gimme.pojo.vo.Response<User> response =
+            public void run()
+            {
+                ResponseData<User> responseData =
                         UserController.getUser(id.toString());
-                if (response != null && response.isSuccess()) {
-                    User user = response.getData();
+                if (responseData != null && responseData.isSuccess()) {
+                    User user = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -190,10 +191,10 @@ public class ChatActivity extends SwipeBackActivity {
             @SneakyThrows
             @Override
             public void run() {
-                com.project.gimme.pojo.vo.Response<GroupVO> response =
+                ResponseData<GroupVO> responseData =
                         GroupController.getGroupInfo(id.toString());
-                if (response != null && response.isSuccess()) {
-                    GroupVO groupVO = response.getData();
+                if (responseData != null && responseData.isSuccess()) {
+                    GroupVO groupVO = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -217,10 +218,10 @@ public class ChatActivity extends SwipeBackActivity {
             @SneakyThrows
             @Override
             public void run() {
-                com.project.gimme.pojo.vo.Response<ChannelVO> response =
+                ResponseData<ChannelVO> responseData =
                         ChannelController.getChannelInfo(id.toString());
-                if (response != null && response.isSuccess()) {
-                    ChannelVO channelVO = response.getData();
+                if (responseData != null && responseData.isSuccess()) {
+                    ChannelVO channelVO = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {

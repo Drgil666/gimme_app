@@ -1,5 +1,7 @@
 package com.project.gimme.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -33,11 +35,13 @@ public class ToDoList {
      * 开始时间
      */
     @Property(nameInDb = "start_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date startTime;
     /**
      * 结束时间
      */
     @Property(nameInDb = "end_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date endTime;
 
     @Generated(hash = 1512001051)

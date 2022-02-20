@@ -1,6 +1,8 @@
 package com.project.gimme.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -39,6 +41,7 @@ public class ChatMsg {
      * 时间戳
      */
     @Property(nameInDb = "timestamp")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date timeStamp;
     /**
      * 消息发起者

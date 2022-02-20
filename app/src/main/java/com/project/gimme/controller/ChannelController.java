@@ -1,10 +1,13 @@
 package com.project.gimme.controller;
 
 import static com.project.gimme.GimmeApplication.REMOTE_URL;
+import static com.project.gimme.GimmeApplication.TOKEN;
 
+import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.vo.ChannelVO;
+import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.JsonUtil;
 
 import java.io.IOException;
@@ -20,36 +23,36 @@ import okhttp3.Response;
  * @date 2022/2/13 20:52
  */
 public class ChannelController {
-    public static com.project.gimme.pojo.vo.Response<List<Channel>> getChannelList(String keyword) throws IOException {
+    public static ResponseData<List<Channel>> getChannelList(String keyword) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .header("token", GimmeApplication.getToken())
+                .header(TOKEN, GimmeApplication.getToken())
                 .url(REMOTE_URL + "/api/channel/list?keyword=" + keyword).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            com.project.gimme.pojo.vo.Response<List<Channel>> userResponse =
-                    JsonUtil.getResponseListBody(result, Channel.class);
-            return userResponse;
+            ResponseData<List<Channel>> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<Channel>>>(){}.getType());
+            return userResponseData;
         }
         return null;
     }
 
-    public static com.project.gimme.pojo.vo.Response<ChannelVO> getChannelInfo(String channelId) throws IOException {
+    public static ResponseData<ChannelVO> getChannelInfo(String channelId) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .header("token", GimmeApplication.getToken())
+                .header(TOKEN, GimmeApplication.getToken())
                 .url(REMOTE_URL + "/api/channel/info?channelId=" + channelId).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            com.project.gimme.pojo.vo.Response<ChannelVO> userResponse =
-                    JsonUtil.getResponseObjectBody(result, ChannelVO.class);
-            return userResponse;
+            ResponseData<ChannelVO> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<ChannelVO>>(){}.getType());
+            return userResponseData;
         }
         return null;
     }

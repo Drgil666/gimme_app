@@ -1,10 +1,13 @@
 package com.project.gimme.controller;
 
 import static com.project.gimme.GimmeApplication.REMOTE_URL;
+import static com.project.gimme.GimmeApplication.TOKEN;
 
+import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.LoginVO;
+import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.JsonUtil;
 
 import java.io.IOException;
@@ -22,7 +25,7 @@ import okhttp3.Response;
  * @date 2022/2/13 20:52
  */
 public class UserController {
-    public static com.project.gimme.pojo.vo.Response<String> login(LoginVO loginVO) throws IOException {
+    public static ResponseData<String> login(LoginVO loginVO) throws IOException {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         {
@@ -34,45 +37,44 @@ public class UserController {
             try (Response response = client.newCall(request).execute()) {
                 if (response.isSuccessful()) {
                     String result = response.body().string();
-                    com.project.gimme.pojo.vo.Response<String> userResponse =
-                            JsonUtil.getResponseObjectBody(result, String.class);
-                    return userResponse;
+                    return JsonUtil.fromJson(result, new TypeToken<ResponseData<String>>(){}.getType());
                 }
             }
         }
         return null;
     }
 
-    public static com.project.gimme.pojo.vo.Response<User> getUser(String id) throws IOException {
+    public static ResponseData<User> getUser(String id) throws IOException
+    {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .header("token", GimmeApplication.getToken())
+                .header(TOKEN, GimmeApplication.getToken())
                 .url(REMOTE_URL + "/api/user?userId=" + id).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            com.project.gimme.pojo.vo.Response<User> userResponse =
-                    JsonUtil.getResponseObjectBody(result, User.class);
-            return userResponse;
+            ResponseData<User> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<User>>(){}.getType());
+            return userResponseData;
         }
         return null;
     }
 
-    public static com.project.gimme.pojo.vo.Response<List<User>> getFriendList(String keyword) throws IOException {
+    public static ResponseData<List<User>> getFriendList(String keyword) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .header("token", GimmeApplication.getToken())
+                .header(TOKEN, GimmeApplication.getToken())
                 .url(REMOTE_URL + "/api/user/friendList?keyword=" + keyword).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            com.project.gimme.pojo.vo.Response<List<User>> userResponse =
-                    JsonUtil.getResponseListBody(result, User.class);
-            return userResponse;
+            ResponseData<List<User>> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<User>>>(){}.getType());
+            return userResponseData;
         }
         return null;
     }

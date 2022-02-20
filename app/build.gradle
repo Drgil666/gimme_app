@@ -49,8 +49,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // lombok
-    implementation 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
     // 常用工具库
     implementation 'org.apache.commons:commons-lang3:3.7'
     // 管理本地数据库greendao
@@ -70,8 +70,8 @@ dependencies {
     //OkHttp
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.squareup.okio:okio:2.8.0'
-    //fastjson
-    implementation 'com.alibaba:fastjson:1.1.70.android'
+    //jackson-annotations
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.2.1'
     //融云sdk
     api 'cn.rongcloud.sdk:im_lib:5.1.3'
 }
