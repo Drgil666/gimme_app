@@ -1,5 +1,5 @@
 package com.project.gimme.view.activity;
-import static com.project.gimme.GimmeApplication.TOKEN_CACHE;
+import static com.project.gimme.GimmeApplication.LOCAL_STORAGE;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -50,12 +50,6 @@ public class LoginActivity extends BaseActivity
         initUserAccount(0.45);
         initUserPassword(0.45);
         initLoginButton(0.45);
-    }
-    private Boolean tokenValidate()
-    {
-        String token = GimmeApplication.getToken();
-        //TODO:等待后端服务器接口实现
-        return true;
     }
     private void initUserAvatar(Double size, Double top)
     {
@@ -123,7 +117,7 @@ public class LoginActivity extends BaseActivity
                         if (userResponseData != null && userResponseData.isSuccess())
                         {
                             GimmeApplication.setToken(userResponseData.getData());
-                            SharedPreferences sharedPreferences = getSharedPreferences(TOKEN_CACHE, Context.MODE_PRIVATE);
+                            SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("token", userResponseData.getData());
                             editor.apply();

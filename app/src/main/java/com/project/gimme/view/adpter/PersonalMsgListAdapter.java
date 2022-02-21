@@ -54,7 +54,7 @@ public class PersonalMsgListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         PersonalMsgVO personalMsgVO = itemList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_personal_msg_list, parent, false);
-        //TODO:待完成
+        //TODO:待完成:消息对应
         ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.nick.setText(personalMsgVO.getOperatorNick());
         viewHolder.note.setText("留言:" + personalMsgVO.getNote());

@@ -14,7 +14,6 @@ import com.project.gimme.R;
 import com.project.gimme.pojo.vo.MessageVO;
 import com.project.gimme.utils.NumberUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,12 +24,12 @@ import butterknife.ButterKnife;
  * @date 2022/1/11 14:58
  */
 public class MessageVoAdapter extends BaseAdapter {
-    private List<MessageVO> messageVOList = new ArrayList<>();
+    private List<MessageVO> messageVOList;
     private LayoutInflater layoutInflater;
 
     public MessageVoAdapter(Context context, List<MessageVO> messageVOList) {
-        this.messageVOList = messageVOList;
         layoutInflater = LayoutInflater.from(context);
+        this.messageVOList = messageVOList;
     }
 
     @Override
@@ -57,6 +56,7 @@ public class MessageVoAdapter extends BaseAdapter {
         return GimmeApplication.TYPE_ERROR;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MessageVO messageVO = messageVOList.get(position);
@@ -65,6 +65,12 @@ public class MessageVoAdapter extends BaseAdapter {
         viewHolder.nick.setText(messageVO.getNick());
         viewHolder.text.setText(messageVO.getText());
         viewHolder.timestamp.setText(NumberUtil.changeToHourAndMinute(messageVO.getTimestamp()));
+        if (messageVO.getNewMessageCount() != 0) {
+            viewHolder.newMessageCount.setVisibility(View.VISIBLE);
+            viewHolder.newMessageCount.setText(messageVO.getNewMessageCount().toString());
+        } else {
+            viewHolder.newMessageCount.setVisibility(View.INVISIBLE);
+        }
         return convertView;
     }
 
@@ -78,6 +84,8 @@ public class MessageVoAdapter extends BaseAdapter {
         TextView text;
         @BindView(R.id.listview_message_vo_timestamp)
         TextView timestamp;
+        @BindView(R.id.listview_message_vo_new_message_count)
+        TextView newMessageCount;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

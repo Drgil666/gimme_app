@@ -1,6 +1,6 @@
 package com.project.gimme.view.activity;
 
-import static com.project.gimme.GimmeApplication.TOKEN_CACHE;
+import static com.project.gimme.GimmeApplication.LOCAL_STORAGE;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,7 +31,7 @@ public class WelcomeActivity extends BaseActivity {
         //全屏，隐藏状态栏。
         setContentView(R.layout.activity_welcome);
         initScreenSize();
-        SharedPreferences sharedPreferences = getSharedPreferences(TOKEN_CACHE, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
         GimmeApplication.setToken(token);
         LogUtil.log(this.toString(), token);

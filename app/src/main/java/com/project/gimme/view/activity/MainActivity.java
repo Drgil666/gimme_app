@@ -37,10 +37,6 @@ public class MainActivity extends BaseActivity {
         initTopBar(0.1);
         initTopText();
         initBottomBar(0.1);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentManager.getFragments().clear();
-        fragmentTransaction.replace(R.id.main_body_fragment, new MessageFragment()).commit();
     }
 
     private void initTopBar(double size) {

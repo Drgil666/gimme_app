@@ -1,8 +1,11 @@
 package com.project.gimme.utils;
 
+import android.annotation.SuppressLint;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @author DrGilbert
@@ -11,6 +14,7 @@ import java.util.Date;
 public class NumberUtil {
     private static final String HOUR_AND_MINUTE = "HH:mm";
     private static final String YEAR_AND_MONTH_DAY = "yy-MM-dd";
+    private static final String STANDARD_TIMESTAMP = "yyyy/MM/dd HH:mm:ss";
     private static final Long B_SIZE = 8L;
     private static final Long KB_SIZE = 1024 * 8L;
     private static final Long MB_SIZE = 1024 * 1024 * 8L;
@@ -22,13 +26,21 @@ public class NumberUtil {
      * @param date 要转化的时间
      * @return 转化好的时间
      */
+    @SuppressLint("SimpleDateFormat")
     public static String changeToHourAndMinute(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat(HOUR_AND_MINUTE);
+        SimpleDateFormat format = new SimpleDateFormat(HOUR_AND_MINUTE, Locale.CHINA);
         return format.format(date);
     }
 
+    @SuppressLint("SimpleDateFormat")
     public static String changeToYearAndMonthAndDay(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat(YEAR_AND_MONTH_DAY);
+        SimpleDateFormat format = new SimpleDateFormat(YEAR_AND_MONTH_DAY, Locale.CHINA);
+        return format.format(date);
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    public static String changeToStandardTimestamp(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat(STANDARD_TIMESTAMP, Locale.CHINA);
         return format.format(date);
     }
 
