@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -81,9 +81,9 @@ public class MainActivity extends BaseActivity {
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
             if (!currentFragment.equals(SessionUtil.Character.TYPE_MESSAGE.getCode())) {
-                currentFragment = SessionUtil.Character.TYPE_MESSAGE.getCode();
                 setTopText(SessionUtil.Character.TYPE_MESSAGE.getName());
                 changeFragment(SessionUtil.Character.TYPE_MESSAGE.getCode());
+                currentFragment = SessionUtil.Character.TYPE_MESSAGE.getCode();
             }
         });
     }
@@ -93,9 +93,9 @@ public class MainActivity extends BaseActivity {
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
             if (!currentFragment.equals(SessionUtil.Character.TYPE_FRIEND.getCode())) {
-                currentFragment = SessionUtil.Character.TYPE_FRIEND.getCode();
                 setTopText(SessionUtil.Character.TYPE_FRIEND.getName());
                 changeFragment(SessionUtil.Character.TYPE_FRIEND.getCode());
+                currentFragment = SessionUtil.Character.TYPE_FRIEND.getCode();
             }
         });
     }
@@ -105,9 +105,9 @@ public class MainActivity extends BaseActivity {
         relativeLayout.getLayoutParams().width = (int) size;
         relativeLayout.setOnClickListener(view -> {
             if (!currentFragment.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
-                currentFragment = SessionUtil.Character.TYPE_MY_INFO.getCode();
                 setTopText(SessionUtil.Character.TYPE_MY_INFO.getName());
                 changeFragment(SessionUtil.Character.TYPE_MY_INFO.getCode());
+                currentFragment = SessionUtil.Character.TYPE_MY_INFO.getCode();
             }
         });
     }
@@ -115,16 +115,24 @@ public class MainActivity extends BaseActivity {
     private void changeFragment(Integer op) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentManager.getFragments().clear();
-        if (op.equals(SessionUtil.Character.TYPE_MESSAGE.getCode())) {
-            fragmentTransaction.replace(R.id.main_body_fragment, new MessageFragment()).commit();
-        } else if (op.equals(SessionUtil.Character.TYPE_FRIEND.getCode())) {
-            fragmentTransaction.replace(R.id.main_body_fragment, new FriendFragment()).commit();
-        } else if (op.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
-            fragmentTransaction.replace(R.id.main_body_fragment, new MyInfoFragment()).commit();
-        } else {
-            Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
+        Fragment to = getFragment(op);
+        Fragment from = getFragment(currentFragment);
+        if (!to.isAdded()) {//未被add
+            fragmentTransaction.hide(from).add(R.id.main_body_fragment, to).commit();
+        } else {//已经被add
+            fragmentTransaction.hide(from).show(to).commit();
         }
-//        System.out.println("count:" + getSupportFragmentManager().getFragments().size());
+    }
+
+    private Fragment getFragment(Integer op) {
+        if (op.equals(SessionUtil.Character.TYPE_MESSAGE.getCode())) {
+            return messageFragment;
+        } else if (op.equals(SessionUtil.Character.TYPE_FRIEND.getCode())) {
+            return friendFragment;
+        } else if (op.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
+            return myInfoFragment;
+        } else {
+            return null;
+        }
     }
 }
