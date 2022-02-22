@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -27,6 +28,7 @@ import butterknife.ButterKnife;
  */
 @SuppressLint("NonConstantResourceId")
 public class InfoActivity extends SwipeBackActivity {
+    private Integer currentFragment = InfoTypeUtil.Character.TYPE_FRIEND.getCode();
     private final Integer height = GimmeApplication.getHeight();
     private Integer type;
     private Integer objectId;
@@ -36,12 +38,16 @@ public class InfoActivity extends SwipeBackActivity {
     ImageView leftButton;
     @BindView(R.id.info_top_bar)
     RelativeLayout topBar;
+    private FriendInfoFragment friendInfoFragment;
+    private OtherInfoFragment otherInfoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
         ButterKnife.bind(this);
+        friendInfoFragment = new FriendInfoFragment();
+        otherInfoFragment = new OtherInfoFragment();
         getType();
         initTopBar(0.1);
     }
@@ -65,35 +71,49 @@ public class InfoActivity extends SwipeBackActivity {
     private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentManager.getFragments().clear();
+        Fragment from = getFragment(currentFragment);
+        Fragment to = getFragment(type);
         if (type.equals(InfoTypeUtil.Character.TYPE_FRIEND.getCode())) {
             setTopText("聊天设置");
-            FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
-            fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
         } else if (type.equals(InfoTypeUtil.Character.TYPE_SELF.getCode())) {
             setTopText("个人信息");
-            FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
-            fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
         } else if (type.equals(InfoTypeUtil.Character.TYPE_GROUP.getCode())) {
             setTopText("群聊设置");
-            OtherInfoFragment otherInfoFragment = new OtherInfoFragment();
-            fragmentTransaction.replace(R.id.info_fragment, otherInfoFragment).commit();
         } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL.getCode())) {
             setTopText("频道设置");
-            OtherInfoFragment otherInfoFragment = new OtherInfoFragment();
-            fragmentTransaction.replace(R.id.info_fragment, otherInfoFragment).commit();
         } else if (type.equals(InfoTypeUtil.Character.TYPE_GROUP_MEMBER.getCode())
                 || type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode())) {
             setTopText("群聊成员设置");
-            FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
-            fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
         } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode())
                 || type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
             setTopText("频道成员设置");
-            FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
-            fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
         } else {
             Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
+        }
+        if (!to.isAdded()) {//未被add
+            fragmentTransaction.hide(from).add(R.id.info_fragment, to).commit();
+        } else {//已经被add
+            fragmentTransaction.hide(from).show(to).commit();
+        }
+    }
+
+    private Fragment getFragment(Integer type) {
+        if (type.equals(InfoTypeUtil.Character.TYPE_FRIEND.getCode())) {
+            return friendInfoFragment;
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_SELF.getCode())) {
+            return friendInfoFragment;
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_GROUP.getCode())) {
+            return otherInfoFragment;
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL.getCode())) {
+            return otherInfoFragment;
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_GROUP_MEMBER.getCode())
+                || type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode())) {
+            return friendInfoFragment;
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode())
+                || type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
+            return friendInfoFragment;
+        } else {
+            return null;
         }
     }
 

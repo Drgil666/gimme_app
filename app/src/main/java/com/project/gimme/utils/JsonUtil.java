@@ -9,13 +9,12 @@ import java.lang.reflect.Type;
  */
 public class JsonUtil
 {
-    public static String objectToJsonString(Object object)
-    {
+    public static String toJson(Object object) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         return gson.toJson(object);
     }
-    public static <T> T fromJson(String json, Class<T> type)
-    {
+
+    public static <T> T fromJson(String json, Class<T> type) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         return gson.fromJson(json, type);
     }

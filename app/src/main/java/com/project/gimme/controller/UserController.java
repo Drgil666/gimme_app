@@ -30,7 +30,7 @@ public class UserController {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         {
-            RequestBody body = RequestBody.create(JsonUtil.objectToJsonString(loginVO), mediaType);
+            RequestBody body = RequestBody.create(JsonUtil.toJson(loginVO), mediaType);
             Request request = new Request.Builder()
                     .url(REMOTE_URL + "/api/user/login")
                     .post(body)
@@ -87,13 +87,31 @@ public class UserController {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .header(TOKEN, GimmeApplication.getToken())
-                .url(REMOTE_URL + "/api/user/friendList?keyword=" + keyword).get().build();
+                .url(REMOTE_URL + "/api/user/friend/list?keyword=" + keyword).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
             ResponseData<List<User>> userResponseData =
                     JsonUtil.fromJson(result, new TypeToken<ResponseData<List<User>>>() {
+                    }.getType());
+            return userResponseData;
+        }
+        return null;
+    }
+
+    public static ResponseData<List<UserVO>> getFriendListInfo(String keyword) throws IOException {
+        //创建OkHttpClient对象
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header(TOKEN, GimmeApplication.getToken())
+                .url(REMOTE_URL + "/api/user/friend/list/info?keyword=" + keyword).get().build();
+        Call call = client.newCall(request);
+        Response response = call.execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            ResponseData<List<UserVO>> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<UserVO>>>() {
                     }.getType());
             return userResponseData;
         }

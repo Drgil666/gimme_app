@@ -6,6 +6,7 @@ import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,13 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
-import com.project.gimme.pojo.ChannelNotice;
+import com.project.gimme.controller.ChannelController;
+import com.project.gimme.controller.GroupController;
+import com.project.gimme.controller.GroupNoticeController;
+import com.project.gimme.pojo.GroupNotice;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.GroupVO;
+import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
@@ -29,12 +34,12 @@ import com.project.gimme.view.activity.QrActivity;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import lombok.SneakyThrows;
 
 /**
  * @author DrGilbert
@@ -68,7 +73,7 @@ public class OtherInfoFragment extends Fragment {
     TextView introductionGroupNoticeLeftText;
     @BindView(R.id.fragment_other_info_introduction_group_notice_layout)
     RelativeLayout introductionGroupNoticeLayout;
-    private ChannelNotice channelNotice = new ChannelNotice();
+    Handler handler = new Handler();
     @BindView(R.id.fragment_other_info_introduction_group_file_layout)
     RelativeLayout introductionGroupFileLayout;
     @BindView(R.id.fragment_other_info_my_layout)
@@ -82,6 +87,7 @@ public class OtherInfoFragment extends Fragment {
     @BindView(R.id.fragment_other_info_introduction_note_left_text)
     TextView myNoteLeftText;
     private Unbinder unbinder;
+    private GroupNotice groupNotice = new GroupNotice();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,12 +111,8 @@ public class OtherInfoFragment extends Fragment {
     private void initTopBar() {
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             getGroupVO(objectId);
-            topBarNick.setText(groupVO.getNick());
-            topBarDescription.setText(groupVO.getDescription());
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             getChannelVO(objectId);
-            topBarNick.setText(channelVO.getNick());
-            topBarDescription.setText(channelVO.getDescription());
         } else {
             Toast.makeText(getContext(), "类型错误!", Toast.LENGTH_LONG).show();
         }
@@ -119,11 +121,9 @@ public class OtherInfoFragment extends Fragment {
     private void initMember() {
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             memberLeft.setText("群聊成员");
-            memberRight.setText("查看" + groupVO.getTotalCount() + "名群成员");
             initGridView();
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             memberLeft.setText("频道成员");
-            memberRight.setText("查看" + channelVO.getTotalCount() + "名频道成员");
             initGridView();
         } else {
             Toast.makeText(getContext(), "类型错误!", Toast.LENGTH_LONG).show();
@@ -144,12 +144,11 @@ public class OtherInfoFragment extends Fragment {
         });
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             introductionIdLeft.setText("群聊号与二维码");
-            introductionIdRight.setText(groupVO.getId().toString());
             introductionGroupNoticeLayout.setVisibility(View.VISIBLE);
             introductionGroupFileLayout.setVisibility(View.VISIBLE);
             introductionGroupNoticeLeftNick.setText("群公告");
-            getChannelNotice(groupVO.getId());
-            introductionGroupNoticeLeftText.setText(channelNotice.getText());
+            introductionGroupNoticeLeftText.setText(groupNotice.getText());
+            getGroupNotice(objectId);
             introductionGroupFileLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -163,7 +162,6 @@ public class OtherInfoFragment extends Fragment {
             });
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             introductionIdLeft.setText("频道号与二维码");
-            introductionIdRight.setText(channelVO.getId().toString());
             introductionGroupNoticeLayout.setVisibility(View.GONE);
             introductionGroupFileLayout.setVisibility(View.GONE);
         } else {
@@ -177,29 +175,72 @@ public class OtherInfoFragment extends Fragment {
         unbinder.unbind();
     }
 
-    private void getChannelNotice(Integer objectId) {
-        channelNotice.setId(1);
-        channelNotice.setChannelId(objectId);
-        channelNotice.setType(1);
-        channelNotice.setText("这是一条消息这是一条消息这是一条消息这是一条消息这是一条消息这是一条消息");
+    private void getGroupNotice(Integer objectId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<GroupNotice> responseData =
+                        GroupNoticeController.getGroupNotice(objectId.toString(), "");
+                if (responseData != null && responseData.isSuccess()) {
+                    groupNotice = responseData.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            introductionGroupNoticeLeftText.setText(groupNotice.getText());
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void getGroupVO(Integer objectId) {
-        groupVO.setId(objectId);
-        groupVO.setCreateTime(new Date());
-        groupVO.setNick("群聊" + objectId);
-        groupVO.setTotalCount(20);
-        groupVO.setDescription("群介绍" + objectId);
-        groupVO.setMyNote("我的群昵称" + objectId);
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<GroupVO> responseData =
+                        GroupController.getGroupInfo(objectId.toString());
+                if (responseData != null && responseData.isSuccess()) {
+                    groupVO = responseData.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            introductionIdRight.setText(groupVO.getId().toString());
+                            memberRight.setText("查看" + groupVO.getTotalCount() + "名群成员");
+                            topBarNick.setText(groupVO.getNick());
+                            topBarDescription.setText(groupVO.getDescription());
+                            myNoteRightText.setText(groupVO.getMyNote());
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void getChannelVO(Integer objectId) {
-        channelVO.setMyNote("我的频道昵称" + objectId);
-        channelVO.setCreateTime(new Date());
-        channelVO.setOwnerId(1);
-        channelVO.setNick("频道" + objectId);
-        channelVO.setTotalCount(20);
-        channelVO.setId(objectId);
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<ChannelVO> responseData =
+                        ChannelController.getChannelInfo(objectId.toString());
+                if (responseData != null && responseData.isSuccess()) {
+                    channelVO = responseData.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            introductionIdRight.setText(channelVO.getId().toString());
+                            memberRight.setText("查看" + channelVO.getTotalCount() + "名频道成员");
+                            topBarNick.setText(channelVO.getNick());
+                            topBarDescription.setText(channelVO.getDescription());
+                            myNoteRightText.setText(channelVO.getMyNote());
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void getUserVoList(Integer type, Integer objectId) {
@@ -227,10 +268,8 @@ public class OtherInfoFragment extends Fragment {
     private void initMyLayout() {
         myChatMsg.setOnClickListener(view -> System.out.println("click!"));
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-            myNoteRightText.setText(groupVO.getMyNote());
             myNoteLeftText.setText("我的群昵称");
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-            myNoteRightText.setText(channelVO.getMyNote());
             myNoteLeftText.setText("我的频道昵称");
         }
         myNote.setOnClickListener(new View.OnClickListener() {

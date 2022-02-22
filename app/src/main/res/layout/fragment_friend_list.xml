@@ -34,7 +34,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
 
-                    <ListView
+                    <com.project.gimme.view.listview.PullRefreshListView
                         android:id="@+id/friend_list_friend_list"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -46,7 +46,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
 
-                    <ListView
+                    <com.project.gimme.view.listview.PullRefreshListView
                         android:id="@+id/friend_list_group_list"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -58,7 +58,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
 
-                    <ListView
+                    <com.project.gimme.view.listview.PullRefreshListView
                         android:id="@+id/friend_list_channel_list"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"

@@ -36,4 +36,8 @@ public class UserVO extends User {
      * 群/频道昵称
      */
     private String otherNick;
+    /**
+     * 群权限/频道权限
+     */
+    private String otherType;
 }

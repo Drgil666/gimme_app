@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.gimme.R;
-import com.project.gimme.pojo.User;
+import com.project.gimme.pojo.vo.UserVO;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +25,10 @@ import butterknife.ButterKnife;
  * @date 2022/1/13 12:17
  */
 public class FriendUserAdapter extends BaseAdapter {
-    private List<User> userList = new ArrayList<>();
+    private List<UserVO> userList = new ArrayList<>();
     private LayoutInflater layoutInflater;
 
-    public FriendUserAdapter(Context context, List<User> userList) {
+    public FriendUserAdapter(Context context, List<UserVO> userList) {
         layoutInflater = LayoutInflater.from(context);
         this.userList = userList;
     }
@@ -40,7 +42,7 @@ public class FriendUserAdapter extends BaseAdapter {
     }
 
     @Override
-    public User getItem(int position) {
+    public UserVO getItem(int position) {
         return userList.get(position);
     }
 
@@ -51,10 +53,14 @@ public class FriendUserAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        User user = userList.get(position);
+        UserVO userVO = userList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_friend_list_friend_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
-        viewHolder.text.setText(user.getNick());
+        if (StringUtils.isEmpty(userVO.getNote())) {
+            viewHolder.text.setText(userVO.getNick());
+        } else {
+            viewHolder.text.setText(userVO.getNote());
+        }
         viewHolder.icon.setImageResource(R.mipmap.app_icon);
         return convertView;
     }

@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -21,8 +20,8 @@ import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.Group;
-import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.ResponseData;
+import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
@@ -30,6 +29,7 @@ import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendChannelAdapter;
 import com.project.gimme.view.adpter.FriendGroupAdapter;
 import com.project.gimme.view.adpter.FriendUserAdapter;
+import com.project.gimme.view.listview.PullRefreshListView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,17 +48,20 @@ import lombok.SneakyThrows;
 public class FriendListFragment extends Fragment {
     @BindView(android.R.id.tabhost)
     TabHost tabHost;
-    private List<User> userList = new ArrayList<>();
+    @BindView(R.id.friend_list_friend_list)
+    PullRefreshListView userListView;
     private List<Group> groupList = new ArrayList<>();
     private List<Channel> channelList = new ArrayList<>();
-    @BindView(R.id.friend_list_friend_list)
-    ListView userListView;
     @BindView(R.id.friend_list_group_list)
-    ListView groupListView;
+    PullRefreshListView groupListView;
     @BindView(R.id.friend_list_channel_list)
-    ListView channelListView;
+    PullRefreshListView channelListView;
+    private List<UserVO> userList = new ArrayList<>();
     private Unbinder unbinder;
     Handler handler = new Handler();
+    private FriendUserAdapter friendUserAdapter;
+    private FriendGroupAdapter friendGroupAdapter;
+    private FriendChannelAdapter friendChannelAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,12 +94,29 @@ public class FriendListFragment extends Fragment {
         userListView.setOnItemClickListener((parent, view, position, id) -> {
             Bundle bundle = new Bundle();
             bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
-            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(userListView.getAdapter().getItem(position)));
+            bundle.putString(INFO_ATTRIBUTE, JsonUtil.toJson(userListView.getAdapter().getItem(position)));
             bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+        });
+        userListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
+            @Override
+            public void onPullRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getUserList();
+                        friendUserAdapter.notifyDataSetChanged();
+                        userListView.onRefreshComplete();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onLoadMore() {
+            }
         });
     }
 
@@ -105,14 +125,15 @@ public class FriendListFragment extends Fragment {
             @SneakyThrows
             @Override
             public void run() {
-                ResponseData<List<User>> responseData =
-                        UserController.getFriendList("");
+                ResponseData<List<UserVO>> responseData =
+                        UserController.getFriendListInfo("");
                 if (responseData != null && responseData.isSuccess()) {
                     userList = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            userListView.setAdapter(new FriendUserAdapter(getContext(), userList));
+                            friendUserAdapter = new FriendUserAdapter(getContext(), userList);
+                            userListView.setAdapter(friendUserAdapter);
                         }
                     });
                 }
@@ -126,12 +147,29 @@ public class FriendListFragment extends Fragment {
             System.out.println("group");
             Bundle bundle = new Bundle();
             bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
-            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(groupListView.getAdapter().getItem(position)));
+            bundle.putString(INFO_ATTRIBUTE, JsonUtil.toJson(groupListView.getAdapter().getItem(position)));
             bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+        });
+        groupListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
+            @Override
+            public void onPullRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getGroupList();
+                        friendGroupAdapter.notifyDataSetChanged();
+                        groupListView.onRefreshComplete();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onLoadMore() {
+            }
         });
     }
 
@@ -147,7 +185,8 @@ public class FriendListFragment extends Fragment {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            groupListView.setAdapter(new FriendGroupAdapter(getContext(), groupList));
+                            friendGroupAdapter = new FriendGroupAdapter(getContext(), groupList);
+                            groupListView.setAdapter(friendGroupAdapter);
                         }
                     });
                 }
@@ -161,12 +200,29 @@ public class FriendListFragment extends Fragment {
             System.out.println("channel");
             Bundle bundle = new Bundle();
             bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, (int) id);
-            bundle.putString(INFO_ATTRIBUTE, JsonUtil.objectToJsonString(channelListView.getAdapter().getItem(position)));
+            bundle.putString(INFO_ATTRIBUTE, JsonUtil.toJson(channelListView.getAdapter().getItem(position)));
             bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_CHANNEL.getCode());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+        });
+        channelListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
+            @Override
+            public void onPullRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getChannelList();
+                        friendChannelAdapter.notifyDataSetChanged();
+                        channelListView.onRefreshComplete();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onLoadMore() {
+            }
         });
     }
 
@@ -177,11 +233,9 @@ public class FriendListFragment extends Fragment {
             public void run() {
                 ResponseData<List<Channel>> responseData =
                         null;
-                try
-                {
+                try {
                     responseData = ChannelController.getChannelList("");
-                } catch (IOException e)
-                {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
                 if (responseData != null && responseData.isSuccess()) {
@@ -189,7 +243,8 @@ public class FriendListFragment extends Fragment {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            channelListView.setAdapter(new FriendChannelAdapter(getContext(), channelList));
+                            friendChannelAdapter = new FriendChannelAdapter(getContext(), channelList);
+                            channelListView.setAdapter(friendChannelAdapter);
                         }
                     });
                 }

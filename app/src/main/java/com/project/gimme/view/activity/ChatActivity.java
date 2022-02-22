@@ -20,7 +20,6 @@ import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.UserController;
-import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.GroupVO;
@@ -109,10 +108,14 @@ public class ChatActivity extends SwipeBackActivity {
             overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
-            User user = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), User.class);
-            if (user != null) {
-                setTopNick(user.getNick());
-                setTopDescription(user.getMotto());
+            UserVO userVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), UserVO.class);
+            if (userVO != null) {
+                if (StringUtils.isEmpty(userVO.getNote())) {
+                    setTopNick(userVO.getNick());
+                } else {
+                    setTopNick(userVO.getNote());
+                }
+                setTopDescription(userVO.getMotto());
             }
             getUserInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
