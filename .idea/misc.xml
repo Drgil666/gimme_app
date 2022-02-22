@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/25741/AndroidStudioProjects/gimme_app/app/src/main/res/layout/activity_info.xml" value="0.1796875" />
         <entry key="..\:/Users/25741/AndroidStudioProjects/gimme_app/app/src/main/res/layout/activity_main.xml" value="0.27853260869565216" />
+        <entry key="..\:/Users/25741/AndroidStudioProjects/gimme_app/app/src/main/res/layout/fragment_friend_info.xml" value="0.18385416666666668" />
+        <entry key="..\:/Users/25741/AndroidStudioProjects/gimme_app/app/src/main/res/layout/fragment_message.xml" value="0.33645833333333336" />
+        <entry key="..\:/Users/25741/AndroidStudioProjects/gimme_app/app/src/main/res/layout/layout_pull_footer.xml" value="0.33645833333333336" />
+        <entry key="..\:/Users/25741/AndroidStudioProjects/gimme_app/app/src/main/res/layout/layout_pull_header.xml" value="0.31927083333333334" />
         <entry key="..\:/Users/25741/AndroidStudioProjects/gimme_app/app/src/main/res/layout/listview_message_vo.xml" value="0.33645833333333336" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/drawable-v24/list_item_color_bg.xml" value="0.1787037037037037" />
         <entry key="..\:/Users/DrGilbert/AndroidStudioProjects/Gimme/app/src/main/res/drawable-v24/rounded_edit_view.xml" value="0.10052083333333334" />

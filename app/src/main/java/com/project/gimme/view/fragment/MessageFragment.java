@@ -3,13 +3,13 @@ package com.project.gimme.view.fragment;
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
@@ -22,9 +22,9 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.MessageVoAdapter;
+import com.project.gimme.view.listview.PullRefreshListView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,20 +35,20 @@ import lombok.SneakyThrows;
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class MessageFragment extends Fragment {
     private List<MessageVO> messageVOList = new ArrayList<>();
     @BindView(R.id.message_list_view)
-    ListView listView;
+    PullRefreshListView listView;
     @BindView(R.id.message_search_layout)
     RelativeLayout searchLayout;
     private Unbinder unbinder;
     Handler handler = new Handler();
-    private Date lastFreshTimestamp;//最后一次刷新的时间
+    private MessageVoAdapter messageVoAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        lastFreshTimestamp = new Date();
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         unbinder = ButterKnife.bind(this, view);
         initSearchLayout(0.07);
@@ -71,13 +71,14 @@ public class MessageFragment extends Fragment {
             @SneakyThrows
             @Override
             public void run() {
-                ResponseData<List<MessageVO>> responseData = ChatMsgController.getMessageVoList(lastFreshTimestamp);
+                ResponseData<List<MessageVO>> responseData = ChatMsgController.getMessageVoList();
                 if (responseData != null && responseData.isSuccess()) {
                     messageVOList = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            listView.setAdapter(new MessageVoAdapter(getContext(), messageVOList));
+                            messageVoAdapter = new MessageVoAdapter(getContext(), messageVOList);
+                            listView.setAdapter(messageVoAdapter);
                         }
                     });
                 }
@@ -89,7 +90,8 @@ public class MessageFragment extends Fragment {
         getMessageVOList();
         listView.setAdapter(new MessageVoAdapter(getContext(), messageVOList));
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            String type = ((MessageVoAdapter) listView.getAdapter()).getItem(position).getType();
+            MessageVO messageVO = messageVoAdapter.getItem(position - 1);//因为多了个请求开头,所以要减去1            String type = messageVO.getType();
+            String type = messageVO.getType();
             Integer chatType = ChatMsgUtil.getCharacterByName(type);
             Bundle bundle = new Bundle();
             bundle.putInt(OBJECT_ID_ATTRIBUTE, (int) id);
@@ -99,6 +101,31 @@ public class MessageFragment extends Fragment {
             startActivity(intent);
             getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
-    }
+        listView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
+            @Override
+            public void onPullRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getMessageVOList();
+                        messageVoAdapter.notifyDataSetChanged();
+                        listView.onRefreshComplete();
+                    }
+                }, 2000);
+            }
 
+            @Override
+            public void onLoadMore() {
+//                下拉方法
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        getMessageVOList();
+//                        messageVoAdapter.notifyDataSetChanged();
+//                        listView.onRefreshComplete();
+//                    }
+//                }, 2000);
+            }
+        });
+    }
 }

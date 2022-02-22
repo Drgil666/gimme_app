@@ -8,10 +8,8 @@ import com.project.gimme.GimmeApplication;
 import com.project.gimme.pojo.vo.MessageVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.JsonUtil;
-import com.project.gimme.utils.NumberUtil;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -25,13 +23,12 @@ import okhttp3.Response;
  */
 public class ChatMsgController {
 
-    public static ResponseData<List<MessageVO>> getMessageVoList(Date date) throws IOException {
-        String timestamp = NumberUtil.changeToStandardTimestamp(date);
+    public static ResponseData<List<MessageVO>> getMessageVoList() throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .header(TOKEN, GimmeApplication.getToken())
-                .url(REMOTE_URL + "/api/chatMsg/list/info?timestamp=" + timestamp).get().build();
+                .url(REMOTE_URL + "/api/chatMsg/list/info").get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {

@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.pojo.vo.UserVoParamItem;
-import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.view.adpter.FriendInfoAdapter;
@@ -40,6 +40,7 @@ import butterknife.Unbinder;
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class FriendInfoFragment extends Fragment {
     private Integer type;
     private Integer objectId;
@@ -80,9 +81,9 @@ public class FriendInfoFragment extends Fragment {
     }
 
     private void initButton() {
-        if (!(type.equals(ChatMsgUtil.Character.TYPE_SELF.getCode())
-                || type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode())
-                || type.equals(ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode()))) {
+        if (!(type.equals(InfoTypeUtil.Character.TYPE_SELF.getCode())
+                || type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())
+                || type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode()))) {
             button.setOnClickListener(view -> {
                 Bundle bundle = new Bundle();
                 bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
@@ -163,10 +164,10 @@ public class FriendInfoFragment extends Fragment {
         itemList.add(item);
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
         itemList.add(item);
-        if (type.equals(ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode())) {
+        if (type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode())) {
             item = new UserVoParamItem("群昵称", userVO.getNote(), false);
             itemList.add(item);
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
             item = new UserVoParamItem("频道昵称", userVO.getNote(), false);
             itemList.add(item);
         }
@@ -224,15 +225,15 @@ public class FriendInfoFragment extends Fragment {
     }
 
     private List<UserVoParamItem> getItemList() {
-        if (type.equals(ChatMsgUtil.Character.TYPE_SELF.getCode())
-                || type.equals(ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode())
-                || type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
+        if (type.equals(InfoTypeUtil.Character.TYPE_SELF.getCode())
+                || type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode())
+                || type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
             return getOwnerItemList();
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_FRIEND.getCode())) {
             return getFriendItemList();
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP_MEMBER.getCode())) {
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_GROUP_MEMBER.getCode())) {
             return getGroupItemList();
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_MEMBER.getCode())) {
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode())) {
             return getChannelItemList();
         } else {
             Toast.makeText(getActivity(), "类型错误!", Toast.LENGTH_SHORT).show();

@@ -25,11 +25,13 @@ import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.ResponseData;
+import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 
-import java.io.IOException;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -93,7 +95,7 @@ public class ChatActivity extends SwipeBackActivity {
         }
     }
 
-    private void initTopBar(){
+    private void initTopBar() {
         leftButton.setOnClickListener(view -> {
             finish();
             overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
@@ -157,22 +159,24 @@ public class ChatActivity extends SwipeBackActivity {
         topDescription.setText(text);
     }
 
-    private void getUserInfo(Integer id)
-    {
+    private void getUserInfo(Integer id) {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
-            public void run()
-            {
-                ResponseData<User> responseData =
-                        UserController.getUser(id.toString());
+            public void run() {
+                ResponseData<UserVO> responseData =
+                        UserController.getUserVO(id.toString(), ChatMsgUtil.Character.TYPE_FRIEND.getName(), "");
                 if (responseData != null && responseData.isSuccess()) {
-                    User user = responseData.getData();
+                    UserVO userVO = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            setTopNick(user.getNick());
-                            setTopDescription(user.getMotto());
+                            if (StringUtils.isEmpty(userVO.getNote()))
+                                setTopNick(userVO.getNick());
+                            else {
+                                setTopNick(userVO.getNote());
+                            }
+                            setTopDescription(userVO.getMotto());
                         }
                     });
                 } else {

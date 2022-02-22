@@ -8,6 +8,7 @@ import com.project.gimme.GimmeApplication;
 import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.LoginVO;
 import com.project.gimme.pojo.vo.ResponseData;
+import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.JsonUtil;
 
 import java.io.IOException;
@@ -37,15 +38,15 @@ public class UserController {
             try (Response response = client.newCall(request).execute()) {
                 if (response.isSuccessful()) {
                     String result = response.body().string();
-                    return JsonUtil.fromJson(result, new TypeToken<ResponseData<String>>(){}.getType());
+                    return JsonUtil.fromJson(result, new TypeToken<ResponseData<String>>() {
+                    }.getType());
                 }
             }
         }
         return null;
     }
 
-    public static ResponseData<User> getUser(String id) throws IOException
-    {
+    public static ResponseData<User> getUser(String id) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -56,7 +57,26 @@ public class UserController {
         if (response.isSuccessful()) {
             String result = response.body().string();
             ResponseData<User> userResponseData =
-                    JsonUtil.fromJson(result, new TypeToken<ResponseData<User>>(){}.getType());
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<User>>() {
+                    }.getType());
+            return userResponseData;
+        }
+        return null;
+    }
+
+    public static ResponseData<UserVO> getUserVO(String id, String type, String objectId) throws IOException {
+        //创建OkHttpClient对象
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header(TOKEN, GimmeApplication.getToken())
+                .url(REMOTE_URL + "/api/user/" + id + "?type=" + type + "&objectId=" + objectId).get().build();
+        Call call = client.newCall(request);
+        Response response = call.execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            ResponseData<UserVO> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<UserVO>>() {
+                    }.getType());
             return userResponseData;
         }
         return null;
@@ -73,7 +93,8 @@ public class UserController {
         if (response.isSuccessful()) {
             String result = response.body().string();
             ResponseData<List<User>> userResponseData =
-                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<User>>>(){}.getType());
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<User>>>() {
+                    }.getType());
             return userResponseData;
         }
         return null;

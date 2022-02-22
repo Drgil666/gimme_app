@@ -21,6 +21,7 @@ import com.project.gimme.pojo.ChatMsg;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.view.activity.InfoActivity;
 
 import java.util.ArrayList;
@@ -92,11 +93,11 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
                     if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
-                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_FRIEND.getCode());
                     } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP_MEMBER.getCode());
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP_MEMBER.getCode());
                     } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_CHANNEL_MEMBER.getCode());
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode());
                     }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
                     Intent intent = new Intent(context, InfoActivity.class).putExtras(bundle);
@@ -118,11 +119,11 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
                     if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
-                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_SELF.getCode());
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_SELF.getCode());
                     } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode());
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode());
                     } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode());
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode());
                     }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
                     Intent intent = new Intent(context, InfoActivity.class).putExtras(bundle);

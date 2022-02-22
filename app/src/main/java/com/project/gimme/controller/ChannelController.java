@@ -34,7 +34,8 @@ public class ChannelController {
         if (response.isSuccessful()) {
             String result = response.body().string();
             ResponseData<List<Channel>> userResponseData =
-                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<Channel>>>(){}.getType());
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<Channel>>>() {
+                    }.getType());
             return userResponseData;
         }
         return null;
@@ -51,7 +52,8 @@ public class ChannelController {
         if (response.isSuccessful()) {
             String result = response.body().string();
             ResponseData<ChannelVO> userResponseData =
-                    JsonUtil.fromJson(result, new TypeToken<ResponseData<ChannelVO>>(){}.getType());
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<ChannelVO>>() {
+                    }.getType());
             return userResponseData;
         }
         return null;

@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
-import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.view.fragment.FriendInfoFragment;
 import com.project.gimme.view.fragment.OtherInfoFragment;
 
@@ -50,7 +50,7 @@ public class InfoActivity extends SwipeBackActivity {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
-//        System.out.println("type:" + type + " object_id:" + objectId);
+        System.out.println("type:" + type + " object_id:" + objectId);
     }
 
     private void initTopBar(double size) {
@@ -66,29 +66,29 @@ public class InfoActivity extends SwipeBackActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentManager.getFragments().clear();
-        if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
+        if (type.equals(InfoTypeUtil.Character.TYPE_FRIEND.getCode())) {
             setTopText("聊天设置");
             FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
             fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_SELF.getCode())) {
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_SELF.getCode())) {
             setTopText("个人信息");
             FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
             fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_GROUP.getCode())) {
             setTopText("群聊设置");
             OtherInfoFragment otherInfoFragment = new OtherInfoFragment();
             fragmentTransaction.replace(R.id.info_fragment, otherInfoFragment).commit();
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL.getCode())) {
             setTopText("频道设置");
             OtherInfoFragment otherInfoFragment = new OtherInfoFragment();
             fragmentTransaction.replace(R.id.info_fragment, otherInfoFragment).commit();
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP_MEMBER.getCode())
-                || type.equals(ChatMsgUtil.Character.TYPE_GROUP_SELF.getCode())) {
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_GROUP_MEMBER.getCode())
+                || type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode())) {
             setTopText("群聊成员设置");
             FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
             fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_MEMBER.getCode())
-                || type.equals(ChatMsgUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
+        } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode())
+                || type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
             setTopText("频道成员设置");
             FriendInfoFragment friendInfoFragment = new FriendInfoFragment();
             fragmentTransaction.replace(R.id.info_fragment, friendInfoFragment).commit();

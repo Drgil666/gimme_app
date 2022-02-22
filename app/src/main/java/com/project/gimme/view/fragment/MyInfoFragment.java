@@ -22,7 +22,7 @@ import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.MyInfoListVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
-import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.view.activity.InfoActivity;
 import com.project.gimme.view.adpter.MyInfoAdapter;
 
@@ -125,7 +125,7 @@ public class MyInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_SELF.getCode());
+                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_SELF.getCode());
                 Intent intent = new Intent(getContext(), InfoActivity.class).putExtras(bundle);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);

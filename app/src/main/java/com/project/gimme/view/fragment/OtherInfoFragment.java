@@ -3,6 +3,7 @@ package com.project.gimme.view.fragment;
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ import butterknife.Unbinder;
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class OtherInfoFragment extends Fragment {
     private Integer type;
     private Integer objectId;

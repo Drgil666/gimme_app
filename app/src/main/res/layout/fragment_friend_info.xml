@@ -59,7 +59,7 @@
     <ListView
         android:id="@+id/fragment_friend_info_listview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="400sp"
         android:layout_below="@+id/fragment_friend_info_layout"
         android:layout_marginStart="20sp"
         android:layout_marginTop="30sp"
@@ -69,9 +69,10 @@
         android:id="@+id/fragment_friend_info_button"
         android:layout_width="200sp"
         android:layout_height="60sp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/fragment_friend_info_listview"
+        android:layout_marginTop="30sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80sp"
+        android:textColor="@color/white"
         android:text="发信息"
         android:textSize="18sp" />
 </RelativeLayout>
