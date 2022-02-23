@@ -19,5 +19,5 @@ public class MyInfoListVO {
     /**
      * 功能类型
      */
-    private Integer type;
+    private String type;
 }

@@ -31,7 +31,7 @@ public class ChatMsg {
      * 聊天消息类型
      */
     @Property(nameInDb = "type")
-    private Integer type;
+    private String type;
     /**
      * 接受者id/群聊id/频道公告id
      */
@@ -49,8 +49,8 @@ public class ChatMsg {
     @Property(nameInDb = "owner_id")
     private Integer ownerId;
 
-    @Generated(hash = 1952304784)
-    public ChatMsg(Integer id, String text, Integer type, Integer objectId,
+    @Generated(hash = 811432883)
+    public ChatMsg(Integer id, String text, String type, Integer objectId,
                    Date timeStamp, Integer ownerId) {
         this.id = id;
         this.text = text;
@@ -63,15 +63,12 @@ public class ChatMsg {
     @Generated(hash = 1355502543)
     public ChatMsg() {
     }
-
     public Integer getId() {
         return this.id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
-
     public String getText() {
         return this.text;
     }
@@ -80,35 +77,31 @@ public class ChatMsg {
         this.text = text;
     }
 
-    public Integer getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
     public Integer getObjectId() {
         return this.objectId;
     }
-
     public void setObjectId(Integer objectId) {
         this.objectId = objectId;
     }
-
     public Date getTimeStamp() {
         return this.timeStamp;
     }
-
     public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
     }
-
     public Integer getOwnerId() {
         return this.ownerId;
     }
-
     public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
     }
+
 }

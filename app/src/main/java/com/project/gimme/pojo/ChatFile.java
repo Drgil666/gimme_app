@@ -45,7 +45,7 @@ public class ChatFile {
      * 好友/群聊/频道id
      */
     @Property(nameInDb = "type")
-    private Integer type;
+    private String type;
     /**
      * 文件大小(bit为单位)
      */
@@ -58,9 +58,9 @@ public class ChatFile {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date timestamp;
 
-    @Generated(hash = 1103144845)
+    @Generated(hash = 1822780623)
     public ChatFile(Integer id, Integer ownerId, Integer objectId, String mongoId,
-                    String filename, Integer type, Long size, Date timestamp) {
+                    String filename, String type, Long size, Date timestamp) {
         this.id = id;
         this.ownerId = ownerId;
         this.objectId = objectId;
@@ -115,11 +115,11 @@ public class ChatFile {
         this.filename = filename;
     }
 
-    public Integer getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -138,4 +138,5 @@ public class ChatFile {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
+
 }

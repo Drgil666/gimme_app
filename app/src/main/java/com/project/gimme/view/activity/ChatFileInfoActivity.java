@@ -2,18 +2,22 @@ package com.project.gimme.view.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.gimme.R;
+import com.project.gimme.controller.ChatFileController;
 import com.project.gimme.pojo.ChatFile;
+import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.NumberUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lombok.SneakyThrows;
 
 /**
  * @author DrGilbert
@@ -22,6 +26,7 @@ import butterknife.ButterKnife;
 public class ChatFileInfoActivity extends SwipeBackActivity {
 
     private Integer id;
+    Handler handler = new Handler();
     private ChatFile chatFile = new ChatFile();
     @BindView(R.id.chat_file_info_top_text)
     TextView topText;
@@ -33,6 +38,7 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
     TextView fileSize;
     @BindView(R.id.chat_file_info_download_button)
     Button downloadButton;
+    private String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +48,36 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         getId();
         getFile();
         initTopBar();
-        initFileLayout();
         initDownLoad();
     }
 
     private void getId() {
         Bundle bundle = this.getIntent().getExtras();
         id = bundle.getInt(BundleUtil.CHAT_FILE_INFO_ID_ATTRIBUTE);
-        System.out.println("id: " + id);
+        fileName = bundle.getString(BundleUtil.FILE_NAME_ATTRIBUTE);
+        System.out.println("id: " + id + " fileName:" + fileName);
     }
 
     private void getFile() {
-        chatFile.setId(id);
-        chatFile.setMongoId("111");
-        chatFile.setFilename("文件.txt");
-        chatFile.setSize(1512123123L);
-        chatFile.setType(1);
-        chatFile.setOwnerId(1);
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<ChatFile> responseData =
+                        ChatFileController.getChatFile(id.toString());
+                if (responseData != null && responseData.isSuccess()) {
+                    chatFile = responseData.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            fileNick.setText(chatFile.getFilename());
+                            fileSize.setText(NumberUtil.changeToFileSize(chatFile.getSize()));
+                            topText.setText(chatFile.getFilename());
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void initTopBar() {
@@ -66,12 +85,6 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
             finish();
             overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });
-        topText.setText(chatFile.getFilename());
-    }
-
-    private void initFileLayout() {
-        fileNick.setText(chatFile.getFilename());
-        fileSize.setText(NumberUtil.changeToFileSize(chatFile.getSize()));
     }
 
     private void initDownLoad() {

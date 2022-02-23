@@ -46,7 +46,8 @@ public class MyInfoAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return myInfoListVOList.get(position).getType();
+        return position;
+        //TODO:待调整
     }
 
     @Override

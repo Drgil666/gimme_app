@@ -87,7 +87,7 @@ public class ChatActivity extends SwipeBackActivity {
             chatMsgVO.setText("这是一条信息" + i);
             chatMsgVO.setObjectId(objectId);
             chatMsgVO.setIsSelf(i % 2 == 1);
-            chatMsgVO.setType(type);
+            chatMsgVO.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
             chatMsgVO.setOwnerNick("这是一个昵称" + chatMsgVO.getId());
             chatMsgVO.setTimeStamp(new Date());
             chatMsgList.add(chatMsgVO);

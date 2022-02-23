@@ -24,7 +24,7 @@ public class ChannelNotice {
      * 频道公告类型
      */
     @Property(nameInDb = "type")
-    private Integer type;
+    private String type;
     /**
      * 频道id
      */
@@ -36,8 +36,8 @@ public class ChannelNotice {
     @Property(nameInDb = "text")
     private String text;
 
-    @Generated(hash = 2103308173)
-    public ChannelNotice(Integer id, Integer type, Integer channelId, String text) {
+    @Generated(hash = 701826718)
+    public ChannelNotice(Integer id, String type, Integer channelId, String text) {
         this.id = id;
         this.type = type;
         this.channelId = channelId;
@@ -56,11 +56,11 @@ public class ChannelNotice {
         this.id = id;
     }
 
-    public Integer getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -79,4 +79,5 @@ public class ChannelNotice {
     public void setText(String text) {
         this.text = text;
     }
+
 }

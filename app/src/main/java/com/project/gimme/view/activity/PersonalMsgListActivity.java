@@ -79,7 +79,7 @@ public class PersonalMsgListActivity extends SwipeBackActivity {
             personalMsgVO.setNote("note" + i);
             personalMsgVO.setStatus(0);
             personalMsgVO.setObjectNick("群聊/频道" + i);
-            personalMsgVO.setType(i - 1);
+            personalMsgVO.setType((i - 1) + "");
             personalMsgVOList.add(personalMsgVO);
         }
     }
@@ -94,7 +94,7 @@ public class PersonalMsgListActivity extends SwipeBackActivity {
             personalMsgVO.setNote("note" + i);
             personalMsgVO.setStatus(0);
             personalMsgVO.setObjectNick("群聊/频道" + i);
-            personalMsgVO.setType(i - 1);
+            personalMsgVO.setType((i - 1) + "");
             personalMsgVOList.add(personalMsgVO);
         }
     }

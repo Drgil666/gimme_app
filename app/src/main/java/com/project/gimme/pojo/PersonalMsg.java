@@ -21,7 +21,7 @@ public class PersonalMsg {
      * 消息通知类型
      */
     @Property(nameInDb = "type")
-    private Integer type;
+    private String type;
     /**
      * 消息创建者id
      */
@@ -46,9 +46,9 @@ public class PersonalMsg {
      */
     private Integer status;
 
-    @Generated(hash = 179858224)
-    public PersonalMsg(Integer id, Integer type, Integer ownerId,
-                       Integer operatorId, Integer objectId, String note, Integer status) {
+    @Generated(hash = 1705211617)
+    public PersonalMsg(Integer id, String type, Integer ownerId, Integer operatorId,
+                       Integer objectId, String note, Integer status) {
         this.id = id;
         this.type = type;
         this.ownerId = ownerId;
@@ -61,7 +61,6 @@ public class PersonalMsg {
     @Generated(hash = 1820845707)
     public PersonalMsg() {
     }
-
     public Integer getId() {
         return this.id;
     }
@@ -70,51 +69,43 @@ public class PersonalMsg {
         this.id = id;
     }
 
-    public Integer getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
     public Integer getOwnerId() {
         return this.ownerId;
     }
-
     public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
     }
-
     public Integer getOperatorId() {
         return this.operatorId;
     }
-
     public void setOperatorId(Integer operatorId) {
         this.operatorId = operatorId;
     }
-
     public Integer getObjectId() {
         return this.objectId;
     }
-
     public void setObjectId(Integer objectId) {
         this.objectId = objectId;
     }
-
     public String getNote() {
         return this.note;
     }
-
     public void setNote(String note) {
         this.note = note;
     }
-
     public Integer getStatus() {
         return this.status;
     }
-
     public void setStatus(Integer status) {
         this.status = status;
     }
+
 }

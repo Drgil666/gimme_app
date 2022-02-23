@@ -114,7 +114,7 @@ public class MyInfoFragment extends Fragment {
             MyInfoListVO myInfoListVO = new MyInfoListVO();
             myInfoListVO.setNick("待定" + i);
             myInfoListVO.setDescription("描述" + i);
-            myInfoListVO.setType(i);
+            myInfoListVO.setType(i + "");
             myInfoList.add(myInfoListVO);
         }
     }

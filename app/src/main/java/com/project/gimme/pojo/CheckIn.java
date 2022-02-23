@@ -31,10 +31,10 @@ public class CheckIn {
      * 签到类型
      */
     @Property(nameInDb = "type")
-    private Integer type;
+    private String type;
 
-    @Generated(hash = 1969079022)
-    public CheckIn(Integer id, Integer groupId, String address, Integer type) {
+    @Generated(hash = 803089045)
+    public CheckIn(Integer id, Integer groupId, String address, String type) {
         this.id = id;
         this.groupId = groupId;
         this.address = address;
@@ -48,19 +48,15 @@ public class CheckIn {
     public Integer getId() {
         return this.id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
-
     public Integer getGroupId() {
         return this.groupId;
     }
-
     public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
-
     public String getAddress() {
         return this.address;
     }
@@ -69,11 +65,12 @@ public class CheckIn {
         this.address = address;
     }
 
-    public Integer getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
+
 }

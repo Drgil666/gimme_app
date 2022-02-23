@@ -27,15 +27,15 @@ public class GroupUser {
      * 用户权限类型
      */
     @Property(nameInDb = "type")
-    private Integer type;
+    private String type;
     /**
      * 群聊昵称
      */
     @Property(nameInDb = "group_nick")
     private String groupNick;
 
-    @Generated(hash = 283657958)
-    public GroupUser(Integer groupId, Integer userId, Integer type,
+    @Generated(hash = 908127232)
+    public GroupUser(Integer groupId, Integer userId, String type,
                      String groupNick) {
         this.groupId = groupId;
         this.userId = userId;
@@ -63,11 +63,11 @@ public class GroupUser {
         this.userId = userId;
     }
 
-    public Integer getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -78,4 +78,5 @@ public class GroupUser {
     public void setGroupNick(String groupNick) {
         this.groupNick = groupNick;
     }
+
 }

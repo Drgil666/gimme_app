@@ -121,10 +121,10 @@ public class OtherInfoFragment extends Fragment {
     private void initMember() {
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             memberLeft.setText("群聊成员");
-            initGridView();
+            getUserVoList(type, objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             memberLeft.setText("频道成员");
-            initGridView();
+            getUserVoList(type, objectId);
         } else {
             Toast.makeText(getContext(), "类型错误!", Toast.LENGTH_LONG).show();
         }
@@ -244,25 +244,45 @@ public class OtherInfoFragment extends Fragment {
     }
 
     private void getUserVoList(Integer type, Integer objectId) {
-        for (int i = 1; i <= 9; i++) {
-            UserVO userVO = new UserVO();
-            userVO.setId(i);
-            if (i % 3 == 1) {
-                userVO.setNote("备注" + i);
+        if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+            new Thread(new Runnable() {
+                @SneakyThrows
+                @Override
+                public void run() {
+                    ResponseData<List<UserVO>> responseData =
+                            GroupController.getGroupMemberList(objectId.toString(), 9);
+                    if (responseData != null && responseData.isSuccess()) {
+                        userVOList = responseData.getData();
+                        UserVO userVO = new UserVO();
+                        userVO.setNick("邀请");
+                        userVO.setId(-1);
+                        userVOList.add(userVO);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                gridView.setAdapter(new OtherInfoAdapter(getContext(), userVOList));
+                            }
+                        });
+                    }
+                }
+            }).start();
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+            for (int i = 1; i <= 9; i++) {
+                UserVO userVO = new UserVO();
+                userVO.setId(i);
+                if (i % 3 == 1) {
+                    userVO.setNote("备注" + i);
+                }
+                userVO.setNick("用户" + i);
+                userVO.setAvatar("null");
+                userVOList.add(userVO);
             }
-            userVO.setNick("用户" + i);
-            userVO.setAvatar("null");
+            UserVO userVO = new UserVO();
+            userVO.setNick("邀请");
+            userVO.setId(-1);
             userVOList.add(userVO);
+            gridView.setAdapter(new OtherInfoAdapter(getContext(), userVOList));
         }
-        UserVO userVO = new UserVO();
-        userVO.setNick("邀请");
-        userVO.setId(-1);
-        userVOList.add(userVO);
-    }
-
-    private void initGridView() {
-        getUserVoList(type, objectId);
-        gridView.setAdapter(new OtherInfoAdapter(getContext(), userVOList));
     }
 
     private void initMyLayout() {

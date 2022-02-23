@@ -32,11 +32,11 @@ public class ChannelUser {
      * 用户权限类型
      */
     @Property(nameInDb = "type")
-    private Integer type;
+    private String type;
 
-    @Generated(hash = 431780839)
+    @Generated(hash = 71820825)
     public ChannelUser(Integer channelId, Integer userId, String channelNick,
-                       Integer type) {
+                       String type) {
         this.channelId = channelId;
         this.userId = userId;
         this.channelNick = channelNick;
@@ -71,11 +71,11 @@ public class ChannelUser {
         this.channelNick = channelNick;
     }
 
-    public Integer getType() {
+    public String getType() {
         return this.type;
     }
 
-    public void setType(Integer type) {
+    public void setType(String type) {
         this.type = type;
     }
 }
