@@ -73,6 +73,16 @@
             android:textSize="18sp" />
     </RelativeLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/chat_file_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="40sp"
+        android:contentDescription="添加"
+        android:src="@mipmap/app_icon" />
+
     <ListView
         android:id="@+id/chat_file_listview"
         android:layout_width="fill_parent"

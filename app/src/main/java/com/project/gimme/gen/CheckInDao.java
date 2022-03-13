@@ -19,15 +19,6 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
 
     public static final String TABLENAME = "checkin";
 
-    public CheckInDao(DaoConfig config) {
-        super(config);
-    }
-
-
-    public CheckInDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
-    }
-
     /**
      * Creates the underlying database table.
      */
@@ -38,6 +29,15 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
                 "\"group_id\" INTEGER," + // 1: groupId
                 "\"address\" TEXT," + // 2: address
                 "\"type\" TEXT);"); // 3: type
+    }
+
+
+    public CheckInDao(DaoConfig config) {
+        super(config);
+    }
+
+    public CheckInDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
     }
 
     /**
@@ -99,6 +99,11 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
     }
 
     @Override
+    public Integer readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0);
+    }
+
+    @Override
     public CheckIn readEntity(Cursor cursor, int offset) {
         CheckIn entity = new CheckIn( //
                 cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0), // id
@@ -110,16 +115,16 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
     }
 
     @Override
-    public Integer readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0);
-    }
-
-    @Override
     public void readEntity(Cursor cursor, CheckIn entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
         entity.setGroupId(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
         entity.setAddress(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setType(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+    }
+
+    @Override
+    protected final Integer updateKeyAfterInsert(CheckIn entity, long rowId) {
+        return entity.getId();
     }
 
     @Override
@@ -130,12 +135,7 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
             return null;
         }
     }
-
-    @Override
-    protected final Integer updateKeyAfterInsert(CheckIn entity, long rowId) {
-        return entity.getId();
-    }
-
+    
     /**
      * Properties of entity CheckIn.<br/>
      * Can be used for QueryBuilder and for referencing column names.

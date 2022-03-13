@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChatFileController;
 import com.project.gimme.pojo.vo.ChatFileVO;
@@ -47,6 +48,8 @@ public class ChatFileActivity extends SwipeBackActivity {
     ListView chatFileListView;
     private ChatFileAdapter chatFileAdapter;
     private Integer objectId;
+    @BindView(R.id.chat_file_add_button)
+    FloatingActionButton chatFileAddButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +60,17 @@ public class ChatFileActivity extends SwipeBackActivity {
         getChatFileList();
         initTopBar();
         initChatFileListView();
+        initChatFileAddButton();
     }
 
     private void getType() {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
+    }
+
+    private void initChatFileAddButton() {
+        //TODO:添加上传文件
     }
 
     private void initTopBar() {

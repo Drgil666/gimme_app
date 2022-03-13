@@ -19,15 +19,6 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
 
     public static final String TABLENAME = "chat_msg";
 
-    public ChatMsgDao(DaoConfig config) {
-        super(config);
-    }
-
-
-    public ChatMsgDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
-    }
-
     /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
@@ -38,6 +29,15 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
                 "\"object_id\" INTEGER," + // 3: objectId
                 "\"timestamp\" INTEGER," + // 4: timeStamp
                 "\"owner_id\" INTEGER);"); // 5: ownerId
+    }
+
+
+    public ChatMsgDao(DaoConfig config) {
+        super(config);
+    }
+
+    public ChatMsgDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
     }
 
     /**
@@ -119,6 +119,11 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
     }
 
     @Override
+    public Integer readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0);
+    }
+
+    @Override
     public ChatMsg readEntity(Cursor cursor, int offset) {
         ChatMsg entity = new ChatMsg( //
                 cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0), // id
@@ -132,11 +137,6 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
     }
 
     @Override
-    public Integer readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0);
-    }
-
-    @Override
     public void readEntity(Cursor cursor, ChatMsg entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
         entity.setText(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
@@ -147,17 +147,17 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
     }
 
     @Override
+    protected final Integer updateKeyAfterInsert(ChatMsg entity, long rowId) {
+        return entity.getId();
+    }
+
+    @Override
     public Integer getKey(ChatMsg entity) {
         if (entity != null) {
             return entity.getId();
         } else {
             return null;
         }
-    }
-
-    @Override
-    protected final Integer updateKeyAfterInsert(ChatMsg entity, long rowId) {
-        return entity.getId();
     }
 
     /**
