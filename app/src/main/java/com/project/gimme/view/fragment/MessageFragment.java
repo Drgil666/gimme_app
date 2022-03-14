@@ -90,8 +90,11 @@ public class MessageFragment extends Fragment {
         getMessageVOList();
         listView.setAdapter(new MessageVoAdapter(getContext(), messageVOList));
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            MessageVO messageVO = messageVoAdapter.getItem(position - 1);//因为多了个请求开头,所以要减去1            String type = messageVO.getType();
+            MessageVO messageVO = messageVoAdapter.getItem(position - 1);
+            //因为多了个请求开头,所以要减去1
             String type = messageVO.getType();
+            messageVOList.get(position - 1).setNewMessageCount(0);
+            messageVoAdapter.notifyDataSetChanged();
             Integer chatType = ChatMsgUtil.getCharacterByName(type);
             Bundle bundle = new Bundle();
             bundle.putInt(OBJECT_ID_ATTRIBUTE, (int) id);

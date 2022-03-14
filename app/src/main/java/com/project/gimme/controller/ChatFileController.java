@@ -10,7 +10,9 @@ import com.project.gimme.pojo.vo.ChatFileVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.JsonUtil;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import okhttp3.Call;
@@ -57,5 +59,27 @@ public class ChatFileController {
             return userResponseData;
         }
         return null;
+    }
+
+    public static void downloadFile(Integer chatFileId) throws IOException {
+        //创建OkHttpClient对象
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header(TOKEN, GimmeApplication.getToken())
+                .url(REMOTE_URL + "/api/chat/file/download?chatFileId=" + chatFileId).get().build();
+        Call call = client.newCall(request);
+        Response response = call.execute();
+        if (response.isSuccessful()) {
+            InputStream inputStream = response.body().byteStream();
+            FileOutputStream fileOutputStream = null;
+            System.out.println(response.headers().get("content-disposition"));
+//            fileOutputStream = new FileOutputStream(new File();
+//            byte[] buffer = new byte[1024];
+//            int len = 0;
+//            while ((len = inputStream.read(buffer)) != -1) {
+//                fileOutputStream.write(buffer, 0, len);
+//            }
+//            fileOutputStream.flush();
+        }
     }
 }

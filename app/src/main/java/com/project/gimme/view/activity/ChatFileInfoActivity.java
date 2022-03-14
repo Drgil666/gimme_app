@@ -91,7 +91,13 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO:下载
+                new Thread(new Runnable() {
+                    @SneakyThrows
+                    @Override
+                    public void run() {
+                        ChatFileController.downloadFile(id);
+                    }
+                }).start();
             }
         });
     }

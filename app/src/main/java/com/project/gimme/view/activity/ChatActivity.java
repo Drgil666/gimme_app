@@ -18,11 +18,13 @@ import android.widget.Toast;
 
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
+import com.project.gimme.controller.ChatMsgController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.GroupVO;
+import com.project.gimme.pojo.vo.RefreshVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.ChatMsgUtil;
@@ -67,6 +69,7 @@ public class ChatActivity extends SwipeBackActivity {
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
         initBundle();
+        refresh();
         initTopBar();
         initChatListView();
         initChatBottom();
@@ -77,6 +80,19 @@ public class ChatActivity extends SwipeBackActivity {
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         System.out.println("objectId:" + objectId + ",type:" + type);
+    }
+
+    private void refresh() {
+        RefreshVO refreshVO = new RefreshVO();
+        refreshVO.setChatType(ChatMsgUtil.CHARACTER_LIST[type].getName());
+        refreshVO.setObjectId(objectId);
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ChatMsgController.refresh(refreshVO);
+            }
+        }).start();
     }
 
     private void getChatMessageList(Integer type, Integer objectId) {

@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,6 +20,7 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.view.adpter.ChatFileAdapter;
+import com.project.gimme.view.listview.PullRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class ChatFileActivity extends SwipeBackActivity {
     @BindView(R.id.chat_file_total_file_text)
     TextView totalFileText;
     @BindView(R.id.chat_file_listview)
-    ListView chatFileListView;
+    PullRefreshListView chatFileListView;
     private ChatFileAdapter chatFileAdapter;
     private Integer objectId;
     @BindView(R.id.chat_file_add_button)
@@ -128,6 +128,32 @@ public class ChatFileActivity extends SwipeBackActivity {
             Intent intent = new Intent(getApplicationContext(), ChatFileInfoActivity.class).putExtras(bundle);
             startActivity(intent);
             overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
+        });
+        chatFileListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
+            @Override
+            public void onPullRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getChatFileList();
+                        chatFileAdapter.notifyDataSetChanged();
+                        chatFileListView.onRefreshComplete();
+                    }
+                }, 2000);
+            }
+
+            @Override
+            public void onLoadMore() {
+//                下拉方法
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        getMessageVOList();
+//                        messageVoAdapter.notifyDataSetChanged();
+//                        listView.onRefreshComplete();
+//                    }
+//                }, 2000);
+            }
         });
     }
 }

@@ -83,7 +83,7 @@
         android:contentDescription="添加"
         android:src="@mipmap/app_icon" />
 
-    <ListView
+    <com.project.gimme.view.listview.PullRefreshListView
         android:id="@+id/chat_file_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
