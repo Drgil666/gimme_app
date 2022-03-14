@@ -10,6 +10,7 @@ import com.project.gimme.pojo.vo.ChatFileVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.JsonUtil;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,7 +62,7 @@ public class ChatFileController {
         return null;
     }
 
-    public static void downloadFile(Integer chatFileId) throws IOException {
+    public static void downloadFile(String filePath, Integer chatFileId) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -70,16 +71,22 @@ public class ChatFileController {
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {
+            System.out.println(filePath);
             InputStream inputStream = response.body().byteStream();
-            FileOutputStream fileOutputStream = null;
-            System.out.println(response.headers().get("content-disposition"));
-//            fileOutputStream = new FileOutputStream(new File();
-//            byte[] buffer = new byte[1024];
-//            int len = 0;
-//            while ((len = inputStream.read(buffer)) != -1) {
-//                fileOutputStream.write(buffer, 0, len);
-//            }
-//            fileOutputStream.flush();
+            String fileName = response.headers().get("file-name");
+            System.out.println(fileName);
+            File file = new File(filePath, fileName);
+            if (!file.exists()) {
+                file.mkdirs();
+                //创建用户对应文件夹
+            }
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = inputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, len);
+            }
+            fileOutputStream.flush();
         }
     }
 }

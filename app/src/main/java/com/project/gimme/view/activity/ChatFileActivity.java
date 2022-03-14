@@ -122,9 +122,10 @@ public class ChatFileActivity extends SwipeBackActivity {
     }
 
     private void initChatFileListView() {
-        chatFileListView.setOnItemClickListener((adapterView, view, i, l) -> {
+        chatFileListView.setOnItemClickListener((adapterView, view, position, id) -> {
             Bundle bundle = new Bundle();
-            bundle.putInt(BundleUtil.CHAT_FILE_INFO_ID_ATTRIBUTE, (int) l);
+            bundle.putInt(BundleUtil.CHAT_FILE_INFO_ID_ATTRIBUTE, (int) id);
+            bundle.putString(BundleUtil.FILE_NAME_ATTRIBUTE, chatFileAdapter.getItem(position - 1).getFilename());
             Intent intent = new Intent(getApplicationContext(), ChatFileInfoActivity.class).putExtras(bundle);
             startActivity(intent);
             overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);

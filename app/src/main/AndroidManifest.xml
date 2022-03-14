@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
-        <activity
+
+    <activity
             android:name=".view.activity.ParamActivity"
             android:exported="false"
             android:windowSoftInputMode="stateVisible|adjustResize" />

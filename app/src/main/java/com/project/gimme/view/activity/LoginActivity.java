@@ -1,4 +1,5 @@
 package com.project.gimme.view.activity;
+
 import static com.project.gimme.GimmeApplication.LOCAL_STORAGE;
 
 import android.annotation.SuppressLint;
@@ -22,15 +23,17 @@ import com.project.gimme.utils.LogUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import lombok.SneakyThrows;
+
 /**
  * @author DrGilbert
  */
 @SuppressLint("NonConstantResourceId")
-public class LoginActivity extends BaseActivity
-{
+public class LoginActivity extends BaseActivity {
     @BindView(R.id.user_avatar)
     ImageView welcomeIcon;
     @BindView(R.id.user_password)
@@ -40,9 +43,9 @@ public class LoginActivity extends BaseActivity
     @BindView(R.id.login_button)
     Button loginButton;
     private Handler handler = new Handler();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
@@ -51,8 +54,8 @@ public class LoginActivity extends BaseActivity
         initUserPassword(0.45);
         initLoginButton(0.45);
     }
-    private void initUserAvatar(Double size, Double top)
-    {
+
+    private void initUserAvatar(Double size, Double top) {
         Integer height = GimmeApplication.getHeight();
         Integer weight = GimmeApplication.getWeight();
         int imageSize = (int) Math.floor((Math.min(height, weight) * size));
@@ -68,65 +71,65 @@ public class LoginActivity extends BaseActivity
                 marginParams.bottomMargin);
         //动态设置icon居中位置
     }
-    private void initUserAccount(Double size)
-    {
+
+    private void initUserAccount(Double size) {
         Integer weight = GimmeApplication.getWeight();
         userAccount.clearFocus();
         userAccount.setSelected(false);
         userAccount.getLayoutParams().width = (int) Math.floor(weight * size);
     }
-    private void initUserPassword(Double size)
-    {
+
+    private void initUserPassword(Double size) {
         Integer weight = GimmeApplication.getWeight();
         userPassword.getLayoutParams().width = (int) Math.floor(weight * size);
     }
-    private void initLoginButton(Double size)
-    {
+
+    private void initLoginButton(Double size) {
         Integer weight = GimmeApplication.getWeight();
         loginButton.getLayoutParams().width = (int) Math.floor(weight * size);
         loginButton.setOnClickListener(view ->
         {
             if (StringUtils.isEmpty(userAccount.getText().toString())
-                    || StringUtils.isEmpty(userPassword.getText().toString()))
-            {
+                    || StringUtils.isEmpty(userPassword.getText().toString())) {
                 Toast.makeText(this, "用户名或密码不可为空!", Toast.LENGTH_LONG).show();
-            } else
-            {
+            } else {
                 GimmeApplication.setToken(null);
                 login();
             }
         });
     }
-    private void login()
-    {
-        new Thread(new Runnable()
-        {
+
+    private void login() {
+        new Thread(new Runnable() {
             @SneakyThrows
             @Override
-            public void run()
-            {
+            public void run() {
                 LoginVO loginVO = new LoginVO();
                 loginVO.setUserId(Integer.parseInt(userAccount.getText().toString()));
                 loginVO.setPassword(userPassword.getText().toString());
                 ResponseData<String> userResponseData = UserController.login(loginVO);
-                handler.post(new Runnable()
-                {
+                handler.post(new Runnable() {
                     @Override
-                    public void run()
-                    {
-                        if (userResponseData != null && userResponseData.isSuccess())
-                        {
+                    public void run() {
+                        if (userResponseData != null && userResponseData.isSuccess()) {
+                            GimmeApplication.setUserId(Integer.parseInt(userAccount.getText().toString()));
                             GimmeApplication.setToken(userResponseData.getData());
                             SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("token", userResponseData.getData());
+                            editor.putInt("userId", Integer.parseInt(userAccount.getText().toString()));
                             editor.apply();
+                            File file = new File(getApplicationContext().getFilesDir().getAbsolutePath() + "/" + GimmeApplication.getUserId() + "/");
+                            if (!file.exists()) {
+                                file.mkdirs();
+                                //创建用户对应文件夹
+                            }
+
                             LogUtil.log(this.toString(), userResponseData.getData());
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
-                        } else
-                        {
+                        } else {
                             Toast.makeText(LoginActivity.this, "登录失败!", Toast.LENGTH_LONG).show();
                         }
                     }

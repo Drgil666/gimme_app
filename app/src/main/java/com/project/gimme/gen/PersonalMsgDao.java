@@ -158,17 +158,17 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
     }
 
     @Override
+    protected final Integer updateKeyAfterInsert(PersonalMsg entity, long rowId) {
+        return entity.getId();
+    }
+
+    @Override
     public Integer getKey(PersonalMsg entity) {
         if (entity != null) {
             return entity.getId();
         } else {
             return null;
         }
-    }
-
-    @Override
-    protected final Integer updateKeyAfterInsert(PersonalMsg entity, long rowId) {
-        return entity.getId();
     }
 
     /**

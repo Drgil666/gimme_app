@@ -19,6 +19,7 @@ public class GimmeApplication extends Application {
     private static String token = "";
     private static Integer height;
     private static Integer weight;
+    private static Integer userId = 2;
     public static final Integer TYPE_ERROR = -1;
     public static final String REMOTE_URL = "http://10.21.234.24:8080";
     public static final String APP_KEY = "pvxdm17jpdthr";
@@ -30,23 +31,8 @@ public class GimmeApplication extends Application {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-//        RongIMClient.init(getApplicationContext(), APP_KEY);
-        //滑动工具初始化
-        BGASwipeBackHelper.init(this, null);
-        //字体初始化
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/ping_fang_sc.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
-        TestController.test(REMOTE_URL + "/api/user/check");
-//        SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString("token", null);
-//        editor.apply();
+    public static Integer getUserId() {
+        return userId;
     }
 
     /**
@@ -89,6 +75,29 @@ public class GimmeApplication extends Application {
 
     public static void setToken(String token) {
         GimmeApplication.token = token;
+    }
+
+    public static void setUserId(Integer userId) {
+        GimmeApplication.userId = userId;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+//        RongIMClient.init(getApplicationContext(), APP_KEY);
+        //滑动工具初始化
+        BGASwipeBackHelper.init(this, null);
+        //字体初始化
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/ping_fang_sc.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
+        TestController.test(REMOTE_URL + "/api/user/check");
+//        SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putInt("userId", 2);
+//        editor.apply();
     }
 }
 
