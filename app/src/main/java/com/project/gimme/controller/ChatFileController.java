@@ -62,7 +62,7 @@ public class ChatFileController {
         return null;
     }
 
-    public static void downloadFile(String filePath, Integer chatFileId) throws IOException {
+    public static void downloadFile(String filePath, Integer chatFileId, String fileName) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -73,7 +73,6 @@ public class ChatFileController {
         if (response.isSuccessful()) {
             System.out.println(filePath);
             InputStream inputStream = response.body().byteStream();
-            String fileName = response.headers().get("file-name");
             System.out.println(fileName);
             File file = new File(filePath);
             if (!file.exists()) {

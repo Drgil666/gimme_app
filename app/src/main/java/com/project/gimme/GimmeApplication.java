@@ -102,7 +102,8 @@ public class GimmeApplication extends Application {
         }
 //        SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putInt("userId", 2);
+//        editor.clear();
+//        editor.putInt(TOKEN, null);
 //        editor.apply();
     }
 }

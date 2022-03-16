@@ -171,17 +171,17 @@ public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
     }
 
     @Override
+    protected final Integer updateKeyAfterInsert(ChatFile entity, long rowId) {
+        return entity.getId();
+    }
+
+    @Override
     public Integer getKey(ChatFile entity) {
         if (entity != null) {
             return entity.getId();
         } else {
             return null;
         }
-    }
-
-    @Override
-    protected final Integer updateKeyAfterInsert(ChatFile entity, long rowId) {
-        return entity.getId();
     }
 
     /**

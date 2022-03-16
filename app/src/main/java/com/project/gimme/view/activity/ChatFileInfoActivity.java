@@ -1,10 +1,9 @@
 package com.project.gimme.view.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -12,7 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.FileProvider;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
@@ -20,9 +20,8 @@ import com.project.gimme.controller.ChatFileController;
 import com.project.gimme.pojo.ChatFile;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.FileOpenUtil;
 import com.project.gimme.utils.NumberUtil;
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,12 +54,14 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_file_info);
         ButterKnife.bind(this);
-        filePath = getFilesDir().getAbsolutePath()
-                + "/" + GimmeApplication.getUserId();
+//        String path = getFilesDir().getAbsolutePath();
+        String path = getExternalFilesDir(null).getPath();
+//        String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+        filePath = path + "/" + GimmeApplication.getUserId();
         getId();
         getFile();
         initTopBar();
-        initDownLoad();
+        downLoad();
     }
 
     private void getId() {
@@ -99,7 +100,23 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         });
     }
 
-    private void initDownLoad() {
+    private void authorize() {
+        //判断是否已经赋予权限
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //如果应用之前请求过此权限但用户拒绝了请求，此方法将返回 true。
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {//这里可以写个对话框之类的项向用户解释为什么要申请权限，并在对话框的确认键后续再次申请权限.它在用户选择"不再询问"的情况下返回false
+            } else {
+                //申请权限，字符串数组内是一个或多个要申请的权限，1是申请权限结果的返回参数，在onRequestPermissionsResult可以得知申请结果
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,}, 1);
+            }
+        }
+    }
+
+    private void downLoad() {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             Context mContext = getApplicationContext();
 
@@ -109,29 +126,14 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                     @SneakyThrows
                     @Override
                     public void run() {
-                        ChatFileController.downloadFile(filePath, id);
+                        ChatFileController.downloadFile(filePath, id, fileName);
                         //TODO:优化文件目录
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
+                                authorize();
                                 String name = filePath + "/" + fileName;
-                                Intent intent = new Intent(Intent.ACTION_SEND);
-                                Uri uri;
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    //判读版本是否在7.0以上
-                                    //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
-                                    uri = FileProvider.getUriForFile(mContext, getPackageName() + ".fileprovider", new File(name));
-                                    //添加这一句表示对目标应用临时授权该Uri所代表的文件
-                                } else {
-                                    uri = Uri.fromFile(new File(name));
-                                }
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                                mContext.grantUriPermission(getPackageName(), uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                                        | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.putExtra(Intent.EXTRA_STREAM, uri);
-                                intent.setType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-                                startActivity(Intent.createChooser(intent, "分享"));
+                                FileOpenUtil.openFile(mContext, name);
                                 //TODO:待修复
                             }
                         });
