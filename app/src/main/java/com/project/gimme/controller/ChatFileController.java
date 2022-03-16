@@ -75,11 +75,12 @@ public class ChatFileController {
             InputStream inputStream = response.body().byteStream();
             String fileName = response.headers().get("file-name");
             System.out.println(fileName);
-            File file = new File(filePath, fileName);
+            File file = new File(filePath);
             if (!file.exists()) {
                 file.mkdirs();
                 //创建用户对应文件夹
             }
+            file = new File(filePath, fileName);
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             byte[] buffer = new byte[1024];
             int len = 0;

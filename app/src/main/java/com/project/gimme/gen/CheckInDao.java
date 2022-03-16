@@ -19,9 +19,16 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
 
     public static final String TABLENAME = "checkin";
 
-    /**
-     * Creates the underlying database table.
-     */
+    public CheckInDao(DaoConfig config) {
+        super(config);
+    }
+
+
+    public CheckInDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
+    }
+
+    /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "\"checkin\" (" + //
@@ -31,13 +38,10 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
                 "\"type\" TEXT);"); // 3: type
     }
 
-
-    public CheckInDao(DaoConfig config) {
-        super(config);
-    }
-
-    public CheckInDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
+    /** Drops the underlying database table. */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"checkin\"";
+        db.execSQL(sql);
     }
 
     @Override
@@ -63,14 +67,6 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
         if (type != null) {
             stmt.bindString(4, type);
         }
-    }
-
-    /**
-     * Drops the underlying database table.
-     */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"checkin\"";
-        db.execSQL(sql);
     }
 
     @Override
@@ -123,11 +119,6 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
     }
 
     @Override
-    protected final Integer updateKeyAfterInsert(CheckIn entity, long rowId) {
-        return entity.getId();
-    }
-
-    @Override
     public Integer getKey(CheckIn entity) {
         if (entity != null) {
             return entity.getId();
@@ -135,7 +126,12 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
             return null;
         }
     }
-    
+
+    @Override
+    protected final Integer updateKeyAfterInsert(CheckIn entity, long rowId) {
+        return entity.getId();
+    }
+
     /**
      * Properties of entity CheckIn.<br/>
      * Can be used for QueryBuilder and for referencing column names.

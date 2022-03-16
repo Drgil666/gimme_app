@@ -88,7 +88,6 @@ public class MessageFragment extends Fragment {
 
     private void initListView() {
         getMessageVOList();
-        listView.setAdapter(new MessageVoAdapter(getContext(), messageVOList));
         listView.setOnItemClickListener((parent, view, position, id) -> {
             MessageVO messageVO = messageVoAdapter.getItem(position - 1);
             //因为多了个请求开头,所以要减去1

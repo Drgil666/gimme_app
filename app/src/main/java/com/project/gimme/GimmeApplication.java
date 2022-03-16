@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.os.Build;
+import android.os.StrictMode;
 
 import com.project.gimme.controller.TestController;
 
@@ -84,7 +86,7 @@ public class GimmeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        RongIMClient.init(getApplicationContext(), APP_KEY);
+        //RongIMClient.init(getApplicationContext(), APP_KEY);
         //滑动工具初始化
         BGASwipeBackHelper.init(this, null);
         //字体初始化
@@ -94,6 +96,10 @@ public class GimmeApplication extends Application {
                 .build()
         );
         TestController.test(REMOTE_URL + "/api/user/check");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+        }
 //        SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
 //        editor.putInt("userId", 2);

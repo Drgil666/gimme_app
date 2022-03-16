@@ -122,17 +122,17 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
     }
 
     @Override
-    protected final Integer updateKeyAfterInsert(ChannelNotice entity, long rowId) {
-        return entity.getId();
-    }
-
-    @Override
     public Integer getKey(ChannelNotice entity) {
         if (entity != null) {
             return entity.getId();
         } else {
             return null;
         }
+    }
+
+    @Override
+    protected final Integer updateKeyAfterInsert(ChannelNotice entity, long rowId) {
+        return entity.getId();
     }
 
     /**

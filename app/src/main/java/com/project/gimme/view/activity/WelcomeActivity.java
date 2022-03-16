@@ -64,7 +64,7 @@ public class WelcomeActivity extends BaseActivity {
         display.getSize(outSize);
         Integer x = outSize.x;
         Integer y = outSize.y;
-//        Toast.makeText(this, "手机像素为：X:" + x + "  Y:" + y, Toast.LENGTH_LONG).show();
+        System.out.println("手机像素为：X:" + x + "  Y:" + y);
         GimmeApplication.setHeight(y);
         GimmeApplication.setWeight(x);
     }

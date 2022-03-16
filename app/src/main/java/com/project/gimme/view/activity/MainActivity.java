@@ -1,5 +1,6 @@
 package com.project.gimme.view.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,9 +17,13 @@ import com.project.gimme.view.fragment.FriendFragment;
 import com.project.gimme.view.fragment.MessageFragment;
 import com.project.gimme.view.fragment.MyInfoFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * @author DrGilbert
  */
+@SuppressLint("NonConstantResourceId")
 public class MainActivity extends BaseActivity {
     private Integer currentFragment = SessionUtil.Character.TYPE_MESSAGE.getCode();
     private final Integer height = GimmeApplication.getHeight();
@@ -26,14 +31,23 @@ public class MainActivity extends BaseActivity {
     private MessageFragment messageFragment;
     private FriendFragment friendFragment;
     private MyInfoFragment myInfoFragment;
+    @BindView(R.id.main_top_text)
+    TextView topText;
+    @BindView(R.id.main_top_right_button)
+    ImageView topRightButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         messageFragment = new MessageFragment();
         friendFragment = new FriendFragment();
         myInfoFragment = new MyInfoFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager.getFragments().clear();
+        fragmentTransaction.add(R.id.main_body_fragment, messageFragment).commit();
         initTopBar(0.1);
         initTopText();
         initBottomBar(0.1);
@@ -45,18 +59,14 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initTopText() {
-        TextView tabText = findViewById(R.id.main_top_text);
-        tabText.setText("消息");
-
+        topText.setText("消息");
     }
 
     private void setTopText(String text) {
-        TextView tabText = findViewById(R.id.main_top_text);
-        tabText.setText(text);
+        topText.setText(text);
     }
 
     private void setTopRightButton(double size) {
-        ImageView topRightButton = findViewById(R.id.main_top_right_button);
         topRightButton.setOnClickListener(view -> {
 //                    System.out.println("click!");
                 }
