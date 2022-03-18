@@ -49,17 +49,18 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
     Button downloadButton;
     private String fileName;
     private String filePath;
+    private Integer type;
+    private Integer objectId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_file_info);
         ButterKnife.bind(this);
-//        String path = getFilesDir().getAbsolutePath();
         String path = getExternalFilesDir(null).getPath();
-//        String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-        filePath = path + "/" + GimmeApplication.getUserId();
         getId();
+        filePath = path + "/" + GimmeApplication.getUserId() + "/" + id;
+        //TODO:本地数据库采用id/文件名->uuid映射，文件存储采用uuid。
         getFile();
         initTopBar();
         downLoad();
@@ -69,6 +70,8 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         Bundle bundle = this.getIntent().getExtras();
         id = bundle.getInt(BundleUtil.CHAT_FILE_INFO_ID_ATTRIBUTE);
         fileName = bundle.getString(BundleUtil.FILE_NAME_ATTRIBUTE);
+        type = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
+        objectId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
 //        System.out.println("id: " + id + " fileName:" + fileName);
     }
 

@@ -175,6 +175,8 @@ public class ChatFileActivity extends SwipeBackActivity {
             Bundle bundle = new Bundle();
             bundle.putInt(BundleUtil.CHAT_FILE_INFO_ID_ATTRIBUTE, (int) id);
             bundle.putString(BundleUtil.FILE_NAME_ATTRIBUTE, chatFileAdapter.getItem(position - 1).getFilename());
+            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+            bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
             Intent intent = new Intent(getApplicationContext(), ChatFileInfoActivity.class).putExtras(bundle);
             startActivity(intent);
             overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
