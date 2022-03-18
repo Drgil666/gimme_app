@@ -5,23 +5,29 @@ import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChatFileController;
+import com.project.gimme.controller.ChatFileInfoController;
 import com.project.gimme.pojo.vo.ChatFileVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.FileUtil;
 import com.project.gimme.view.adpter.ChatFileAdapter;
 import com.project.gimme.view.listview.PullRefreshListView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +76,50 @@ public class ChatFileActivity extends SwipeBackActivity {
     }
 
     private void initChatFileAddButton() {
-        //TODO:添加上传文件
+        chatFileAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                //intent.setType("image/*");//选择图片
+                //intent.setType("audio/*"); //选择音频
+                //intent.setType("video/*"); //选择视频 （mp4 3gp 是android支持的视频格式）
+                //intent.setType("video/*;image/*");//同时选择视频和图片
+                intent.setType("*/*");//无类型限制
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(intent, 1);
+            }
+        });
+    }
+
+    @SneakyThrows
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri uri = data.getData();//得到uri，后面就是将uri转化成file的过程。
+        if (FileUtil.getRealPathFromUri(this, uri) != null) {
+            //从uri得到绝对路径，并获取到file文件
+            File file = new File(FileUtil.getRealPathFromUri(this, uri));
+            uploadFile(file, ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId);
+        }
+    }
+
+    private void uploadFile(File file, String chatType, Integer objectId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<String> responseData = ChatFileInfoController.upLoadFile(file, chatType, objectId);
+                if (responseData != null && responseData.isSuccess()) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_LONG).show();
+                            getChatFileList();
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void initTopBar() {
@@ -105,7 +154,7 @@ public class ChatFileActivity extends SwipeBackActivity {
             public void run() {
                 String chatType = ChatMsgUtil.CHARACTER_LIST[type].getName();
                 ResponseData<List<ChatFileVO>> responseData =
-                        ChatFileController.getChatFileVoByObjectId(chatType, objectId, searchKeyword);
+                        ChatFileController.getChatFileVoListByObjectId(chatType, objectId, searchKeyword);
                 if (responseData != null && responseData.isSuccess()) {
                     chatFileVOList = responseData.getData();
                     handler.post(new Runnable() {

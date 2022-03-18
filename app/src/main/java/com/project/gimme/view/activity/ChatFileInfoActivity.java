@@ -17,10 +17,11 @@ import androidx.core.content.ContextCompat;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChatFileController;
+import com.project.gimme.controller.ChatFileInfoController;
 import com.project.gimme.pojo.ChatFile;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
-import com.project.gimme.utils.FileOpenUtil;
+import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.NumberUtil;
 
 import butterknife.BindView;
@@ -126,15 +127,14 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                     @SneakyThrows
                     @Override
                     public void run() {
-                        ChatFileController.downloadFile(filePath, id, fileName);
+                        ChatFileInfoController.downloadFile(filePath, id, fileName);
                         //TODO:优化文件目录
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 authorize();
                                 String name = filePath + "/" + fileName;
-                                FileOpenUtil.openFile(mContext, name);
-                                //TODO:待修复
+                                FileUtil.openFile(mContext, name);
                             }
                         });
                     }
