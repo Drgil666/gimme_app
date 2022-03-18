@@ -64,12 +64,12 @@ public class UserController {
         return null;
     }
 
-    public static ResponseData<UserVO> getUserVO(String id, String type, String objectId) throws IOException {
+    public static ResponseData<UserVO> getUserVO(String friendId, String type, String objectId) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .header(TOKEN, GimmeApplication.getToken())
-                .url(REMOTE_URL + "/api/user/" + id + "?type=" + type + "&objectId=" + objectId).get().build();
+                .url(REMOTE_URL + "/api/user/userVo?friendId=" + friendId + "&type=" + type + "&objectId=" + objectId).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {

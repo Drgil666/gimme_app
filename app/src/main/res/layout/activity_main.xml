@@ -52,13 +52,7 @@
                 android:id="@+id/main_body_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
             </FrameLayout>
-            <!--            <androidx.fragment.app.FragmentContainerView-->
-            <!--                android:id="@+id/main_body_fragment"-->
-            <!--                android:name="com.project.gimme.view.fragment.MessageFragment"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="match_parent" />-->
         </RelativeLayout>
         <!--底边栏-->
         <RelativeLayout

@@ -5,6 +5,7 @@ import static com.project.gimme.utils.BundleUtil.INFO_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +35,6 @@ import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,7 +62,7 @@ public class ChatActivity extends SwipeBackActivity {
     @BindView(R.id.chat_bottom_edittext)
     EditText chatBottomEditText;
     Handler handler = new Handler();
-
+    final Context mContext = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,18 +96,37 @@ public class ChatActivity extends SwipeBackActivity {
     }
 
     private void getChatMessageList(Integer type, Integer objectId) {
-        for (int i = 1; i <= 10; i++) {
-            ChatMsgVO chatMsgVO = new ChatMsgVO();
-            chatMsgVO.setId(i);
-            chatMsgVO.setOwnerId(1);
-            chatMsgVO.setText("这是一条信息" + i);
-            chatMsgVO.setObjectId(objectId);
-            chatMsgVO.setIsSelf(i % 2 == 1);
-            chatMsgVO.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
-            chatMsgVO.setOwnerNick("这是一个昵称" + chatMsgVO.getId());
-            chatMsgVO.setTimeStamp(new Date());
-            chatMsgList.add(chatMsgVO);
-        }
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<List<ChatMsgVO>> responseData =
+                        ChatMsgController.getChatMsgVoList(ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId, "");
+                if (responseData != null && responseData.isSuccess()) {
+                    List<ChatMsgVO> chatMsgList = responseData.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            chatListView.setAdapter(new ChatMsgVoAdapter(mContext, chatMsgList, type));
+                            //chatListView.setSelection(chatMsgList.size() - 1);
+                        }
+                    });
+                }
+            }
+        }).start();
+
+//        for (int i = 1; i <= 10; i++) {
+//            ChatMsgVO chatMsgVO = new ChatMsgVO();
+//            chatMsgVO.setId(i);
+//            chatMsgVO.setOwnerId(1);
+//            chatMsgVO.setText("这是一条信息" + i);
+//            chatMsgVO.setObjectId(objectId);
+//            chatMsgVO.setIsSelf(i % 2 == 1);
+//            chatMsgVO.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
+//            chatMsgVO.setOwnerNick("这是一个昵称" + chatMsgVO.getId());
+//            chatMsgVO.setTimeStamp(new Date());
+//            chatMsgList.add(chatMsgVO);
+//        }
     }
 
     private void initTopBar() {
@@ -155,8 +174,6 @@ public class ChatActivity extends SwipeBackActivity {
 
     private void initChatListView() {
         getChatMessageList(type, objectId);
-        chatListView.setAdapter(new ChatMsgVoAdapter(this, chatMsgList, type));
-        chatListView.setSelection(chatMsgList.size() - 1);
     }
 
     private void initChatBottom() {

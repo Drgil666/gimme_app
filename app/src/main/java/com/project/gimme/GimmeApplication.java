@@ -10,6 +10,7 @@ import android.os.StrictMode;
 import com.project.gimme.controller.TestController;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
+import io.rong.imlib.RongIMClient;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -86,7 +87,7 @@ public class GimmeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //RongIMClient.init(getApplicationContext(), APP_KEY);
+        RongIMClient.init(getApplicationContext(), APP_KEY);
         //滑动工具初始化
         BGASwipeBackHelper.init(this, null);
         //字体初始化

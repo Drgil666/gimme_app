@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,10 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.NumberUtil;
+import com.project.gimme.utils.PicassoTransformation;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +56,9 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
     private String filePath;
     private Integer type;
     private Integer objectId;
+    final Context mContext = this;
+    @BindView(R.id.chat_file_info_img)
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +69,26 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         getId();
         filePath = path + "/" + GimmeApplication.getUserId() + "/" + id;
         //TODO:本地数据库采用id/文件名->uuid映射，文件存储采用uuid。
+        initImageView();
         getFile();
         initTopBar();
         downLoad();
+    }
+
+    private void initImageView() {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha1to0));
+                imageView.setVisibility(View.GONE);
+            }
+        });
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
     }
 
     private void getId() {
@@ -122,8 +147,6 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
 
     private void downLoad() {
         downloadButton.setOnClickListener(new View.OnClickListener() {
-            Context mContext = getApplicationContext();
-
             @Override
             public void onClick(View view) {
                 new Thread(new Runnable() {
@@ -131,13 +154,25 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                     @Override
                     public void run() {
                         ChatFileInfoController.downloadFile(filePath, id, fileName);
+                        String name = filePath + "/" + fileName;
                         //TODO:优化文件目录
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 authorize();
-                                String name = filePath + "/" + fileName;
-                                FileUtil.openFile(mContext, name);
+                                if (fileName.endsWith(".jpg")
+                                        || fileName.endsWith(".gif")
+                                        || fileName.endsWith(".png")
+                                        || fileName.endsWith(".jpeg")
+                                        || fileName.endsWith(".bmp")) {
+                                    Picasso.with(mContext)
+                                            .load(new File(name))
+                                            .transform(new PicassoTransformation())
+                                            .into(imageView);
+                                    imageView.setVisibility(View.VISIBLE);
+                                } else {
+                                    FileUtil.openFile(mContext, name);
+                                }
                             }
                         });
                     }

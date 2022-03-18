@@ -5,6 +5,7 @@ import static com.project.gimme.GimmeApplication.TOKEN;
 
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
+import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.MessageVO;
 import com.project.gimme.pojo.vo.RefreshVO;
 import com.project.gimme.pojo.vo.ResponseData;
@@ -56,9 +57,27 @@ public class ChatMsgController {
                     .build();
             try (Response response = client.newCall(request).execute()) {
                 if (response.isSuccessful()) {
-                    System.out.println("更新成功!");
+//                    System.out.println("更新成功!");
                 }
             }
         }
+    }
+
+    public static ResponseData<List<ChatMsgVO>> getChatMsgVoList(String type, Integer objectId, String keyword) throws IOException {
+        //创建OkHttpClient对象
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header(TOKEN, GimmeApplication.getToken())
+                .url(REMOTE_URL + "/api/chatMsg/listVo?type=" + type + "&objectId=" + objectId + "&keyword=" + keyword).get().build();
+        Call call = client.newCall(request);
+        Response response = call.execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            ResponseData<List<ChatMsgVO>> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<ChatMsgVO>>>() {
+                    }.getType());
+            return userResponseData;
+        }
+        return null;
     }
 }

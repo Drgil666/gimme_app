@@ -56,7 +56,7 @@ dependencies {
     // 管理本地数据库greendao
     implementation 'org.greenrobot:greendao:3.3.0'
     // Picasso
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     //calligraphy(全局自定义支持)
     implementation 'uk.co.chrisjenx:calligraphy:2.1.0'
     //Emoji表情支持

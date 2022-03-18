@@ -145,24 +145,6 @@ public class FriendInfoFragment extends Fragment {
                 }
             }
         }).start();
-//        userVO.setId(objectId);
-//        userVO.setNick("用户昵称" + objectId);
-//        userVO.setMotto("用户个性签名" + objectId);
-//        userVO.setBirthday(new Date());
-//        userVO.setCompany("公司" + objectId);
-//        userVO.setAvatar("test1");
-//        userVO.setGender(0);
-//        userVO.setProvince(1);
-//        userVO.setCity(1);
-//        userVO.setCountry(1);
-//        userVO.setMail("xxx@qq.com");
-//        userVO.setOccupation(1);
-//        userVO.setNote("备注" + objectId);
-//        userVO.setCountryNick("中国");
-//        userVO.setProvinceNick("浙江");
-//        userVO.setCityNick("杭州");
-//        userVO.setOccupationNick("程序员");
-//        userVO.setOtherNick("其他昵称");
     }
 
     private List<UserVoParamItem> getFriendItemList() {
