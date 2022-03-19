@@ -1,5 +1,6 @@
 package com.project.gimme.view.adpter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ public class ChatFileAdapter extends BaseAdapter {
     private List<ChatFileVO> chatFileVOList = new ArrayList<>();
     private LayoutInflater layoutInflater;
     private Context context;
+
     public ChatFileAdapter(Context context, List<ChatFileVO> chatFileVOList) {
         this.context = context;
         this.chatFileVOList = chatFileVOList;
@@ -74,6 +76,7 @@ public class ChatFileAdapter extends BaseAdapter {
         return convertView;
     }
 
+    @SuppressLint("NonConstantResourceId")
     static class ViewHolder {
         @BindView(R.id.listview_chat_file_icon)
         ImageView icon;

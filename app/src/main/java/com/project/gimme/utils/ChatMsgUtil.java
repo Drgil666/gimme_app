@@ -13,7 +13,7 @@ public class ChatMsgUtil {
     private static final String FRIEND_ATTRIBUTE = "friend";
     private static final String GROUP_ATTRIBUTE = "group";
     private static final String CHANNEL_ATTRIBUTE = "channel";
-
+    private static final String CHANNEL_NOTICE_ATTRIBUTE = "channel_notice";
     @AllArgsConstructor
     @Getter
     public enum Character {
@@ -28,7 +28,11 @@ public class ChatMsgUtil {
         /**
          * 频道类型
          */
-        TYPE_CHANNEL(2, CHANNEL_ATTRIBUTE);
+        TYPE_CHANNEL(2, CHANNEL_ATTRIBUTE),
+        /**
+         * 频道公告类型
+         */
+        TYPE_CHANNEL_NOTICE(3, CHANNEL_NOTICE_ATTRIBUTE);
         private final Integer code;
         private final String name;
     }

@@ -106,6 +106,14 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                     ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
                 }
             });
+            viewHolder.channelNoticeCount = convertView.findViewById(R.id.left_channel_count);
+            if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+                viewHolder.channelNoticeCount.setText("共" + chatMsgVO.getChannelNoticeCount() + "条回复");
+                viewHolder.channelNoticeCount.setVisibility(View.VISIBLE);
+                //TODO:做频道公告内activity的跳转逻辑
+            } else {
+                viewHolder.channelNoticeCount.setVisibility(View.GONE);
+            }
         } else {
             linearLayout = convertView.findViewById(R.id.left_bubble);
             linearLayout.setVisibility(View.GONE);
@@ -132,6 +140,13 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                     ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
                 }
             });
+            viewHolder.channelNoticeCount = convertView.findViewById(R.id.right_channel_count);
+            if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+                viewHolder.channelNoticeCount.setText("共" + chatMsgVO.getChannelNoticeCount() + "条回复");
+                viewHolder.channelNoticeCount.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.channelNoticeCount.setVisibility(View.GONE);
+            }
         }
         viewHolder.icon.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -148,6 +163,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
         ImageView icon;
         TextView nick;
         TextView text;
+        TextView channelNoticeCount;
 
         ViewHolder(View view) {
         }
