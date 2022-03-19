@@ -29,18 +29,16 @@ public class UserController {
     public static ResponseData<String> login(LoginVO loginVO) throws IOException {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
-        {
-            RequestBody body = RequestBody.create(JsonUtil.toJson(loginVO), mediaType);
-            Request request = new Request.Builder()
-                    .url(REMOTE_URL + "/api/user/login")
-                    .post(body)
-                    .build();
-            try (Response response = client.newCall(request).execute()) {
-                if (response.isSuccessful()) {
-                    String result = response.body().string();
-                    return JsonUtil.fromJson(result, new TypeToken<ResponseData<String>>() {
-                    }.getType());
-                }
+        RequestBody body = RequestBody.create(JsonUtil.toJson(loginVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/user/login")
+                .post(body)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                String result = response.body().string();
+                return JsonUtil.fromJson(result, new TypeToken<ResponseData<String>>() {
+                }.getType());
             }
         }
         return null;

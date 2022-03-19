@@ -1,6 +1,7 @@
 package com.project.gimme.view.activity;
 
 import static com.project.gimme.GimmeApplication.LOCAL_STORAGE;
+import static com.project.gimme.GimmeApplication.TOKEN;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -116,7 +117,7 @@ public class LoginActivity extends BaseActivity {
                             GimmeApplication.setToken(userResponseData.getData());
                             SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("token", userResponseData.getData());
+                            editor.putString(TOKEN, userResponseData.getData());
                             editor.putInt("userId", Integer.parseInt(userAccount.getText().toString()));
                             editor.apply();
                             File file = new File(getApplicationContext().getFilesDir().getAbsolutePath() + "/" + GimmeApplication.getUserId() + "/");

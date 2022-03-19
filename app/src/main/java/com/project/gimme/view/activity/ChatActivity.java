@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +24,7 @@ import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.ChatMsgController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.UserController;
+import com.project.gimme.pojo.ChatMsg;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.GroupVO;
@@ -48,7 +51,8 @@ import lombok.SneakyThrows;
 public class ChatActivity extends SwipeBackActivity {
     private Integer type;
     private Integer objectId;
-    private List<ChatMsgVO> chatMsgList = new ArrayList<>();
+    @BindView(R.id.chat_bottom_edit_text)
+    EditText chatBottomEditText;
     @BindView(R.id.chat_list_view)
     ListView chatListView;
     @BindView(R.id.chat_top_left_button)
@@ -59,10 +63,11 @@ public class ChatActivity extends SwipeBackActivity {
     TextView topNick;
     @BindView(R.id.chat_top_description_text)
     TextView topDescription;
-    @BindView(R.id.chat_bottom_edittext)
-    EditText chatBottomEditText;
+    private List<ChatMsgVO> chatMsgVOList = new ArrayList<>();
+    private ChatMsgVoAdapter chatMsgVoAdapter;
     Handler handler = new Handler();
     final Context mContext = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,12 +108,12 @@ public class ChatActivity extends SwipeBackActivity {
                 ResponseData<List<ChatMsgVO>> responseData =
                         ChatMsgController.getChatMsgVoList(ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId, "");
                 if (responseData != null && responseData.isSuccess()) {
-                    List<ChatMsgVO> chatMsgList = responseData.getData();
+                    chatMsgVOList = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            chatListView.setAdapter(new ChatMsgVoAdapter(mContext, chatMsgList, type));
-                            //chatListView.setSelection(chatMsgList.size() - 1);
+                            chatMsgVoAdapter = new ChatMsgVoAdapter(mContext, chatMsgVOList, type);
+                            chatListView.setAdapter(chatMsgVoAdapter);
                         }
                     });
                 }
@@ -177,14 +182,56 @@ public class ChatActivity extends SwipeBackActivity {
     }
 
     private void initChatBottom() {
+        chatBottomEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                System.out.println(chatBottomEditText.getText());
+            }
+        });
         chatBottomEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER
                     && v.getText() != null
                     && event.getAction() == KeyEvent.ACTION_DOWN) {
-                System.out.println("这里是监听回车事件");
+                System.out.println("这里是监听回车事件->" + chatBottomEditText.getText().toString());
+                chatBottomEditText.setText(null);
+                createChatMsg(chatBottomEditText.getText().toString());
             }
             return true;
         });
+    }
+
+    private void createChatMsg(String text) {
+        ChatMsg chatMsg = new ChatMsg();
+        chatMsg.setText(text);
+        chatMsg.setObjectId(objectId);
+        chatMsg.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<ChatMsgVO> responseData = ChatMsgController.createChatMsg(chatMsg);
+                if (responseData != null && responseData.isSuccess()) {
+                    ChatMsgVO chatMsgVO = responseData.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            chatMsgVOList.add(chatMsgVO);
+                            chatMsgVoAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void setTopNick(String text) {

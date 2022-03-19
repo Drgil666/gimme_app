@@ -79,12 +79,14 @@
             android:background="@color/white">
 
             <EditText
-                android:id="@+id/chat_bottom_edittext"
+                android:id="@+id/chat_bottom_edit_text"
                 android:layout_width="300sp"
-                android:layout_height="40sp"
+                android:layout_height="30sp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20sp"
-                android:background="@drawable/rounded_edit_view_gimme" />
+                android:background="@drawable/rounded_edit_view_gimme"
+                android:text="1111111"
+                android:textSize="20sp" />
         </RelativeLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

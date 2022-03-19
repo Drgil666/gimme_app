@@ -114,6 +114,11 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             } else {
                 viewHolder.channelNoticeCount.setVisibility(View.GONE);
             }
+            if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
+                viewHolder.nick.setVisibility(View.GONE);
+            } else {
+                viewHolder.nick.setVisibility(View.VISIBLE);
+            }
         } else {
             linearLayout = convertView.findViewById(R.id.left_bubble);
             linearLayout.setVisibility(View.GONE);
@@ -146,6 +151,11 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                 viewHolder.channelNoticeCount.setVisibility(View.VISIBLE);
             } else {
                 viewHolder.channelNoticeCount.setVisibility(View.GONE);
+            }
+            if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
+                viewHolder.nick.setVisibility(View.GONE);
+            } else {
+                viewHolder.nick.setVisibility(View.VISIBLE);
             }
         }
         viewHolder.icon.setOnTouchListener((view, motionEvent) -> {

@@ -5,7 +5,9 @@ import static com.project.gimme.GimmeApplication.TOKEN;
 
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
+import com.project.gimme.pojo.ChatMsg;
 import com.project.gimme.pojo.vo.ChatMsgVO;
+import com.project.gimme.pojo.vo.CudRequestVO;
 import com.project.gimme.pojo.vo.MessageVO;
 import com.project.gimme.pojo.vo.RefreshVO;
 import com.project.gimme.pojo.vo.ResponseData;
@@ -48,17 +50,15 @@ public class ChatMsgController {
     public static void refresh(RefreshVO refreshVO) throws IOException {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
-        {
-            RequestBody body = RequestBody.create(JsonUtil.toJson(refreshVO), mediaType);
-            Request request = new Request.Builder()
-                    .url(REMOTE_URL + "/api/chatMsg/refresh")
-                    .header(TOKEN, GimmeApplication.getToken())
-                    .post(body)
-                    .build();
-            try (Response response = client.newCall(request).execute()) {
-                if (response.isSuccessful()) {
+        RequestBody body = RequestBody.create(JsonUtil.toJson(refreshVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/chatMsg/refresh")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
 //                    System.out.println("更新成功!");
-                }
             }
         }
     }
@@ -77,6 +77,28 @@ public class ChatMsgController {
                     JsonUtil.fromJson(result, new TypeToken<ResponseData<List<ChatMsgVO>>>() {
                     }.getType());
             return userResponseData;
+        }
+        return null;
+    }
+
+    public static ResponseData<ChatMsgVO> createChatMsg(ChatMsg chatMsg) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        CudRequestVO<ChatMsg, Integer> requestVO = new CudRequestVO<ChatMsg, Integer>();
+        requestVO.setData(chatMsg);
+        requestVO.setMethod(CudRequestVO.CREATE_METHOD);
+        requestVO.setKey(null);
+        RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/chatMsg")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            return JsonUtil.fromJson(result, new TypeToken<ResponseData<ChatMsgVO>>() {
+            }.getType());
         }
         return null;
     }

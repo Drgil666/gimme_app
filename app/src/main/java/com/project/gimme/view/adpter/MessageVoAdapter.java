@@ -13,6 +13,7 @@ import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.MessageVO;
 import com.project.gimme.utils.NumberUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class MessageVoAdapter extends BaseAdapter {
         MessageVO messageVO = messageVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_message_vo, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
+        Picasso.with(convertView.getContext()).load(R.mipmap.app_icon).into(viewHolder.avatar);
         viewHolder.nick.setText(messageVO.getNick());
         viewHolder.text.setText(messageVO.getText());
         viewHolder.timestamp.setText(NumberUtil.changeToHourAndMinute(messageVO.getTimestamp()));
