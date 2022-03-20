@@ -52,8 +52,13 @@ public class MessageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         unbinder = ButterKnife.bind(this, view);
         initSearchLayout(0.07);
-        initListView();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initListView();
     }
 
     @Override

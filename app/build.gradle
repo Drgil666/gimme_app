@@ -57,7 +57,7 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.3.0'
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    //calligraphy(全局自定义支持)
+    //calligraphy(全局字体自定义支持)
     implementation 'uk.co.chrisjenx:calligraphy:2.1.0'
     //Emoji表情支持
     implementation 'io.github.rockerhieu:emojiconize:1.0.0'
@@ -75,5 +75,5 @@ dependencies {
     //融云sdk
     api 'cn.rongcloud.sdk:im_lib:5.1.3'
     //转场动画
-    implementation 'com.github.jaychou2012:SwitchLayout:1.0.0.0'
+    implementation files('libs\\SwitchLayout1.0.jar')
 }

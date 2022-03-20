@@ -85,7 +85,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20sp"
                 android:background="@drawable/rounded_edit_view_gimme"
-                android:text="1111111"
+                android:text=""
                 android:textSize="20sp" />
         </RelativeLayout>
     </RelativeLayout>

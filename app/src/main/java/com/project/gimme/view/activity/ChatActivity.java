@@ -114,6 +114,7 @@ public class ChatActivity extends SwipeBackActivity {
                         public void run() {
                             chatMsgVoAdapter = new ChatMsgVoAdapter(mContext, chatMsgVOList, type);
                             chatListView.setAdapter(chatMsgVoAdapter);
+                            chatListView.setSelection(chatMsgVOList.size() - 1);
                         }
                     });
                 }
@@ -203,8 +204,12 @@ public class ChatActivity extends SwipeBackActivity {
                     && v.getText() != null
                     && event.getAction() == KeyEvent.ACTION_DOWN) {
                 System.out.println("这里是监听回车事件->" + chatBottomEditText.getText().toString());
-                chatBottomEditText.setText(null);
-                createChatMsg(chatBottomEditText.getText().toString());
+                if (!StringUtils.isEmpty(chatBottomEditText.getText().toString())) {
+                    refresh();
+                    createChatMsg(chatBottomEditText.getText().toString());
+                    chatBottomEditText.setText(null);
+
+                }
             }
             return true;
         });
@@ -227,6 +232,7 @@ public class ChatActivity extends SwipeBackActivity {
                         public void run() {
                             chatMsgVOList.add(chatMsgVO);
                             chatMsgVoAdapter.notifyDataSetChanged();
+                            chatListView.setSelection(chatMsgVOList.size() - 1);
                         }
                     });
                 }
