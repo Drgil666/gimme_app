@@ -9,6 +9,7 @@ import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.CudRequestVO;
 import com.project.gimme.pojo.vo.ResponseData;
+import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.JsonUtil;
 
 import java.io.IOException;
@@ -80,6 +81,24 @@ public class ChannelController {
             String result = response.body().string();
             return JsonUtil.fromJson(result, new TypeToken<ResponseData<Channel>>() {
             }.getType());
+        }
+        return null;
+    }
+
+    public static ResponseData<List<UserVO>> getChannelMemberList(String channelId, Integer limit) throws IOException {
+        //创建OkHttpClient对象
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .header(TOKEN, GimmeApplication.getToken())
+                .url(REMOTE_URL + "/api/channel/member/list?channelId=" + channelId + "&limit=" + limit).get().build();
+        Call call = client.newCall(request);
+        Response response = call.execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            ResponseData<List<UserVO>> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<UserVO>>>() {
+                    }.getType());
+            return userResponseData;
         }
         return null;
     }

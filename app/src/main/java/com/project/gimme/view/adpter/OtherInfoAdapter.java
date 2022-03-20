@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.UserVO;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,9 @@ import butterknife.ButterKnife;
 public class OtherInfoAdapter extends BaseAdapter {
     private List<UserVO> userVOList = new ArrayList<>();
     private LayoutInflater layoutInflater;
-
+    private Context context;
     public OtherInfoAdapter(Context context, List<UserVO> userVOList) {
+        this.context = context;
         layoutInflater = LayoutInflater.from(context);
         this.userVOList = userVOList;
     }
@@ -60,6 +62,7 @@ public class OtherInfoAdapter extends BaseAdapter {
             viewHolder.nick.setText(userVO.getNick());
         }
         if (userVO.getId() == -1) {
+            Picasso.with(context).load(R.mipmap.add_plus).into(viewHolder.icon);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

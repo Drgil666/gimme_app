@@ -266,22 +266,28 @@ public class OtherInfoFragment extends Fragment {
                     }
                 }
             }).start();
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-            for (int i = 1; i <= 9; i++) {
-                UserVO userVO = new UserVO();
-                userVO.setId(i);
-                if (i % 3 == 1) {
-                    userVO.setNote("备注" + i);
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+            new Thread(new Runnable() {
+                @SneakyThrows
+                @Override
+                public void run() {
+                    ResponseData<List<UserVO>> responseData =
+                            ChannelController.getChannelMemberList(objectId.toString(), 9);
+                    if (responseData != null && responseData.isSuccess()) {
+                        userVOList = responseData.getData();
+                        UserVO userVO = new UserVO();
+                        userVO.setNick("邀请");
+                        userVO.setId(-1);
+                        userVOList.add(userVO);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                gridView.setAdapter(new OtherInfoAdapter(getContext(), userVOList));
+                            }
+                        });
+                    }
                 }
-                userVO.setNick("用户" + i);
-                userVO.setAvatar("null");
-                userVOList.add(userVO);
-            }
-            UserVO userVO = new UserVO();
-            userVO.setNick("邀请");
-            userVO.setId(-1);
-            userVOList.add(userVO);
-            gridView.setAdapter(new OtherInfoAdapter(getContext(), userVOList));
+            }).start();
         }
     }
 
