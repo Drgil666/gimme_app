@@ -63,6 +63,9 @@ public class UserController {
     }
 
     public static ResponseData<UserVO> getUserVO(String friendId, String type, String objectId) throws IOException {
+        if (friendId.equals("-1")) {
+            friendId = GimmeApplication.getUserId().toString();
+        }
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()

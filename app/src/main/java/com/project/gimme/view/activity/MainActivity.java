@@ -16,6 +16,7 @@ import com.project.gimme.utils.SessionUtil;
 import com.project.gimme.view.fragment.FriendFragment;
 import com.project.gimme.view.fragment.MessageFragment;
 import com.project.gimme.view.fragment.MyInfoFragment;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +36,18 @@ public class MainActivity extends BaseActivity {
     TextView topText;
     @BindView(R.id.main_top_right_button)
     ImageView topRightButton;
+    @BindView(R.id.main_message_layout_icon)
+    ImageView messageIcon;
+    @BindView(R.id.main_message_layout_text)
+    TextView messageText;
+    @BindView(R.id.main_friend_layout_icon)
+    ImageView friendIcon;
+    @BindView(R.id.main_friend_layout_text)
+    TextView friendText;
+    @BindView(R.id.main_my_info_layout_icon)
+    ImageView myInfoIcon;
+    @BindView(R.id.main_my_info_layout_text)
+    TextView myInfoText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +140,26 @@ public class MainActivity extends BaseActivity {
             fragmentTransaction.hide(from).add(R.id.main_body_fragment, to).commit();
         } else {//已经被add
             fragmentTransaction.hide(from).show(to).commit();
+        }
+        changeUIColor(op);
+    }
+
+    private void changeUIColor(Integer op) {
+        Picasso.with(this).load(R.mipmap.message).into(messageIcon);
+        Picasso.with(this).load(R.mipmap.contacts).into(friendIcon);
+        Picasso.with(this).load(R.mipmap.my_info).into(myInfoIcon);
+        messageText.setTextColor(R.color.black);
+        friendText.setTextColor(R.color.black);
+        myInfoText.setTextColor(R.color.black);
+        if (op.equals(SessionUtil.Character.TYPE_MESSAGE.getCode())) {
+            Picasso.with(this).load(R.mipmap.message_select).into(messageIcon);
+            messageText.setTextColor(R.color.gimme_color);
+        } else if (op.equals(SessionUtil.Character.TYPE_FRIEND.getCode())) {
+            Picasso.with(this).load(R.mipmap.contacts_select).into(friendIcon);
+            friendText.setTextColor(R.color.gimme_color);
+        } else if (op.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
+            Picasso.with(this).load(R.mipmap.my_info_select).into(myInfoIcon);
+            myInfoText.setTextColor(R.color.gimme_color);
         }
     }
 

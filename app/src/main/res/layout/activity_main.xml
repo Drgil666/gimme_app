@@ -52,6 +52,7 @@
                 android:id="@+id/main_body_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
             </FrameLayout>
         </RelativeLayout>
         <!--底边栏-->
@@ -71,20 +72,77 @@
                 <RelativeLayout
                     android:id="@+id/main_message_layout"
                     android:layout_width="135dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/purple_200" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/main_message_layout_icon"
+                        android:layout_width="45sp"
+                        android:layout_height="45sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5sp"
+                        android:src="@mipmap/message_select" />
+
+                    <TextView
+                        android:id="@+id/main_message_layout_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/main_message_layout_icon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5sp"
+                        android:text="消息"
+                        android:textColor="@color/gimme_color"
+                        android:textSize="18sp" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/main_friend_layout"
                     android:layout_width="135dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/purple_500" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/main_friend_layout_icon"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="2sp"
+                        android:src="@mipmap/contacts" />
+
+                    <TextView
+                        android:id="@+id/main_friend_layout_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/main_friend_layout_icon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="2sp"
+                        android:text="联系人"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/main_my_info_layout"
                     android:layout_width="141dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/purple_700" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/main_my_info_layout_icon"
+                        android:layout_width="45sp"
+                        android:layout_height="45sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5sp"
+                        android:src="@mipmap/my_info" />
+
+                    <TextView
+                        android:id="@+id/main_my_info_layout_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/main_my_info_layout_icon"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5sp"
+                        android:text="我的"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

@@ -6,6 +6,7 @@ import static com.project.gimme.GimmeApplication.TOKEN;
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.pojo.Channel;
+import com.project.gimme.pojo.ChannelNotice;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.CudRequestVO;
 import com.project.gimme.pojo.vo.ResponseData;
@@ -25,7 +26,7 @@ import okhttp3.Response;
  * @author DrGilbert
  * @date 2022/2/13 20:52
  */
-public class ChannelController {
+public class ChannelNoticeController {
     public static ResponseData<List<Channel>> getChannelList(String keyword) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
@@ -62,11 +63,11 @@ public class ChannelController {
         return null;
     }
 
-    public static ResponseData<Channel> createChannel(Channel channel) throws IOException {
+    public static ResponseData<ChannelNotice> createChannelNotice(ChannelNotice channelNotice) throws IOException {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
-        CudRequestVO<Channel, Integer> requestVO = new CudRequestVO<Channel, Integer>();
-        requestVO.setData(channel);
+        CudRequestVO<ChannelNotice, Integer> requestVO = new CudRequestVO<ChannelNotice, Integer>();
+        requestVO.setData(channelNotice);
         requestVO.setMethod(CudRequestVO.CREATE_METHOD);
         requestVO.setKey(null);
         RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
@@ -78,7 +79,7 @@ public class ChannelController {
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            return JsonUtil.fromJson(result, new TypeToken<ResponseData<Channel>>() {
+            return JsonUtil.fromJson(result, new TypeToken<ResponseData<ChannelNotice>>() {
             }.getType());
         }
         return null;

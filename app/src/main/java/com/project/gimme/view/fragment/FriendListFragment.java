@@ -75,6 +75,16 @@ public class FriendListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            initUserListView();
+            initGroupListView();
+            initChannelListView();
+        }
+    }
+
     private void initTabHost() {
         //初始化TabHost容器
         tabHost.setup();

@@ -53,22 +53,15 @@ public class MyInfoFragment extends Fragment {
     TextView userInfoMotto;
     private Unbinder unbinder;
     private User user;
-
     Handler handler = new Handler();
-//    = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            if (msg.what == GET_USER) {
-//                userInfoNick.setText(user.getNick());
-//                userInfoCompany.setText(user.getCompany());
-//                userInfoMotto.setText(user.getMotto());
-//                userInfoIcon.setImageResource(R.mipmap.app_icon);
-//            } else {
-//
-//            }
-//        }
-//    };
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            getUser();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -110,6 +103,7 @@ public class MyInfoFragment extends Fragment {
     }
 
     private void getMyInfoList() {
+        myInfoList.clear();
         for (int i = 1; i <= 6; i++) {
             MyInfoListVO myInfoListVO = new MyInfoListVO();
             myInfoListVO.setNick("待定" + i);
@@ -126,6 +120,7 @@ public class MyInfoFragment extends Fragment {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_SELF.getCode());
+                bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, -1);
                 Intent intent = new Intent(getContext(), InfoActivity.class).putExtras(bundle);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);

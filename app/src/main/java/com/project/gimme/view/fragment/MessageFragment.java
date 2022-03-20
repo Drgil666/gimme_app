@@ -10,11 +10,9 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 
-import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChatMsgController;
 import com.project.gimme.pojo.vo.MessageVO;
@@ -40,8 +38,6 @@ public class MessageFragment extends Fragment {
     private List<MessageVO> messageVOList = new ArrayList<>();
     @BindView(R.id.message_list_view)
     PullRefreshListView listView;
-    @BindView(R.id.message_search_layout)
-    RelativeLayout searchLayout;
     private Unbinder unbinder;
     Handler handler = new Handler();
     private MessageVoAdapter messageVoAdapter;
@@ -51,14 +47,16 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         unbinder = ButterKnife.bind(this, view);
-        initSearchLayout(0.07);
+        initListView();
         return view;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        initListView();
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            getMessageVOList();
+        }
     }
 
     @Override
@@ -67,9 +65,6 @@ public class MessageFragment extends Fragment {
         unbinder.unbind();
     }
 
-    private void initSearchLayout(double size) {
-        searchLayout.getLayoutParams().height = (int) (GimmeApplication.getHeight() * size);
-    }
 
     private void getMessageVOList() {
         new Thread(new Runnable() {

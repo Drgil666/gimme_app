@@ -108,6 +108,7 @@ public class FriendInfoFragment extends Fragment {
             } else {
                 ((ImageView) view).clearColorFilter(); // 清除滤镜效果
             }
+            //TODO:滤镜需要重写
             return false;//如果return true的话,onClick的事件就不会触发!
         });
     }
