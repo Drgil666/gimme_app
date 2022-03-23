@@ -76,12 +76,20 @@ public class FriendListFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        initUserListView();
+        initGroupListView();
+        initChannelListView();
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            initUserListView();
-            initGroupListView();
-            initChannelListView();
+            getUserList();
+            getGroupList();
+            getChannelList();
         }
     }
 

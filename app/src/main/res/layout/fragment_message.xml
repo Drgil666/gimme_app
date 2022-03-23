@@ -10,10 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:id="@+id/message_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:background="@color/gimme_background_dark">
+
+            <EditText
+                android:id="@+id/message_search_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="15sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginBottom="15sp"
+                android:background="@drawable/rounded_edit_view_white_5px" />
+        </RelativeLayout>
+
         <com.project.gimme.view.listview.PullRefreshListView
             android:id="@+id/message_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/message_top_layout"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@null" />
     </RelativeLayout>

@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
 import com.project.gimme.R;
 import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.view.activity.PersonalMsgListActivity;
+import com.project.gimme.view.activity.SearchActivity;
 import com.project.gimme.view.adpter.PersonalMsgAdapter;
 
 import java.util.ArrayList;
@@ -31,13 +34,32 @@ public class FriendFragment extends Fragment {
     @BindView(R.id.friend_personal_msg_list_view)
     ListView personalMsgListView;
     private Unbinder unbinder;
+    @BindView(R.id.friend_list_search_edittext)
+    EditText searchEditText;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_friend, container, false);
         unbinder = ButterKnife.bind(this, view);
         initListView();
+        initSearchEditText();
         return view;
+    }
+
+    private void initSearchEditText() {
+        searchEditText.setOnFocusChangeListener(new android.view.View.
+                OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleUtil.SEARCH_TYPE_ATTRIBUTE, ContactsUtil.SearchType.TYPE_FRIEND.getCode());
+                    Intent intent = new Intent(getContext(), SearchActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override

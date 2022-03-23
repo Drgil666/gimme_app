@@ -7,25 +7,41 @@
     tools:context=".view.fragment.FriendFragment">
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--个人信息-->
+
+        <RelativeLayout
+            android:id="@+id/friend_list_top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:background="@color/gimme_background_dark">
+
+            <EditText
+                android:id="@+id/friend_list_search_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="15sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginBottom="15sp"
+                android:background="@drawable/rounded_edit_view_white_5px" />
+        </RelativeLayout>
+        <!--个人消息-->
         <ListView
             android:id="@+id/friend_personal_msg_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:cacheColorHint="@android:color/transparent">
-
-        </ListView>
+            android:layout_below="@+id/friend_list_top_layout"
+            android:cacheColorHint="@android:color/transparent" />
         <!--横向选项卡-->
         <fragment
+            android:id="@+id/friend_fragment"
+            android:name="com.project.gimme.view.fragment.FriendListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/friend_personal_msg_list_view"
-            android:name="com.project.gimme.view.fragment.FriendListFragment"
-            android:id="@+id/friend_fragment">
-
-        </fragment>
+            android:layout_below="@id/friend_personal_msg_list_view" />
 
     </RelativeLayout>
 </FrameLayout>

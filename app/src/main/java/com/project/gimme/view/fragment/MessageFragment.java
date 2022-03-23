@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
@@ -17,8 +18,11 @@ import com.project.gimme.R;
 import com.project.gimme.controller.ChatMsgController;
 import com.project.gimme.pojo.vo.MessageVO;
 import com.project.gimme.pojo.vo.ResponseData;
+import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.view.activity.ChatActivity;
+import com.project.gimme.view.activity.SearchActivity;
 import com.project.gimme.view.adpter.MessageVoAdapter;
 import com.project.gimme.view.listview.PullRefreshListView;
 
@@ -41,14 +45,37 @@ public class MessageFragment extends Fragment {
     private Unbinder unbinder;
     Handler handler = new Handler();
     private MessageVoAdapter messageVoAdapter;
+    @BindView(R.id.message_search_edittext)
+    EditText searchEditText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         unbinder = ButterKnife.bind(this, view);
-        initListView();
+        initEditText();
         return view;
+    }
+
+    private void initEditText() {
+        searchEditText.setOnFocusChangeListener(new android.view.View.
+                OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleUtil.SEARCH_TYPE_ATTRIBUTE, ContactsUtil.SearchType.TYPE_MESSAGE.getCode());
+                    Intent intent = new Intent(getContext(), SearchActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initListView();
     }
 
     @Override

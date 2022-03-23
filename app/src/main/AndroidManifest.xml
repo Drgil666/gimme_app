@@ -5,12 +5,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!--外部存储的写权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--外部存储的读权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 外部存储的写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 外部存储的读权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
 
     <application
         android:name=".GimmeApplication"
@@ -22,6 +19,10 @@
         android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:exported="true" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.project.gimme.fileprovider"
@@ -41,9 +42,9 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
-                <!-- 额外的类别信息，不是必要的一般设置为DEFAULT-->
+                <!-- 额外的类别信息，不是必要的一般设置为DEFAULT -->
                 <category android:name="android.intent.category.DEFAULT" />
-                <!-- 接收分享的文件类型，这里表示接收所有类型文件-->
+                <!-- 接收分享的文件类型，这里表示接收所有类型文件 -->
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
