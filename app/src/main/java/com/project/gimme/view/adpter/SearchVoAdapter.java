@@ -6,12 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.project.gimme.R;
 import com.project.gimme.pojo.vo.SearchVO;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SearchVoAdapter extends BaseAdapter {
@@ -44,12 +49,20 @@ public class SearchVoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        //TODO:待完成
-        return null;
+        SearchVO searchVO = getItem(position);
+        convertView = layoutInflater.inflate(R.layout.listview_search, parent, false);
+        ViewHolder viewHolder = new ViewHolder(convertView);
+        Picasso.with(context).load(R.mipmap.app_icon).into(viewHolder.icon);
+        viewHolder.nick.setText(searchVO.getObjectNick() + "(" + searchVO.getObjectId() + ")");
+        return convertView;
     }
 
     @SuppressLint("NonConstantResourceId")
     static class ViewHolder {
+        @BindView(R.id.listview_search_icon)
+        ImageView icon;
+        @BindView(R.id.listview_search_nick)
+        TextView nick;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -54,10 +54,19 @@ public class FriendFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     Bundle bundle = new Bundle();
-                    bundle.putInt(BundleUtil.SEARCH_TYPE_ATTRIBUTE, ContactsUtil.SearchType.TYPE_FRIEND.getCode());
+                    bundle.putInt(BundleUtil.SEARCH_TYPE_ATTRIBUTE, ContactsUtil.SearchType.TYPE_CONTACTS.getCode());
                     Intent intent = new Intent(getContext(), SearchActivity.class).putExtras(bundle);
                     startActivity(intent);
                 }
+            }
+        });
+        searchEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(BundleUtil.SEARCH_TYPE_ATTRIBUTE, ContactsUtil.SearchType.TYPE_CONTACTS.getCode());
+                Intent intent = new Intent(getContext(), SearchActivity.class).putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

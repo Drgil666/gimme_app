@@ -29,6 +29,8 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:gravity="center"
+            android:inputType="text"
+            android:maxLines="1"
             android:text="取消"
             android:textColor="@color/gimme_color"
             android:textSize="20sp" />
@@ -38,5 +40,6 @@
         android:id="@+id/search_listview"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/search_search_layout" />
+        android:layout_below="@+id/search_search_layout"
+        android:background="@color/gimme_background_lighter" />
 </RelativeLayout>

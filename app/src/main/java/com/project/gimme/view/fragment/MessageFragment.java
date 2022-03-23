@@ -70,6 +70,15 @@ public class MessageFragment extends Fragment {
                 }
             }
         });
+        searchEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(BundleUtil.SEARCH_TYPE_ATTRIBUTE, ContactsUtil.SearchType.TYPE_MESSAGE.getCode());
+                Intent intent = new Intent(getContext(), SearchActivity.class).putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
