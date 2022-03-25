@@ -154,12 +154,16 @@ public class MainActivity extends BaseActivity {
         if (op.equals(SessionUtil.Character.TYPE_MESSAGE.getCode())) {
             Picasso.with(this).load(R.mipmap.message_select).into(messageIcon);
             messageText.setTextColor(R.color.gimme_color);
+            Picasso.with(this).load(R.mipmap.add_plus).into(topRightButton);
         } else if (op.equals(SessionUtil.Character.TYPE_FRIEND.getCode())) {
             Picasso.with(this).load(R.mipmap.contacts_select).into(friendIcon);
             friendText.setTextColor(R.color.gimme_color);
+            Picasso.with(this).load(R.mipmap.add_plus).into(topRightButton);
         } else if (op.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
             Picasso.with(this).load(R.mipmap.my_info_select).into(myInfoIcon);
             myInfoText.setTextColor(R.color.gimme_color);
+            Picasso.with(this).load(R.mipmap.setting).into(topRightButton);
+            //TODO:右上角逻辑需要修改
         }
     }
 

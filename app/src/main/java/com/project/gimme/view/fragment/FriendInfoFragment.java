@@ -4,14 +4,13 @@ import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,7 +28,9 @@ import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.UserUtil;
+import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendInfoAdapter;
+import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -64,6 +65,8 @@ public class FriendInfoFragment extends Fragment {
     private Unbinder unbinder;
     Handler handler = new Handler();
     FriendInfoAdapter friendInfoAdapter;
+    @BindView(R.id.fragment_friend_img)
+    ImageView imageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +75,7 @@ public class FriendInfoFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         getType();
         getUserVO();
+        initImageView();
         initTopBar();
         initButton();
         return view;
@@ -92,7 +96,8 @@ public class FriendInfoFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
                 bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
-                getActivity().finish();
+                Intent intent = new Intent(getContext(), ChatActivity.class).putExtras(bundle);
+                startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
             });
         } else {
@@ -102,14 +107,33 @@ public class FriendInfoFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void initTopBar() {
+        Picasso.with(getContext()).load(R.mipmap.app_icon).into(icon);
         icon.setOnTouchListener((view, motionEvent) -> {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果
-            } else {
-                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
-            }
+//            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+//                ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果
+//            } else {
+//                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
+//            }
             //TODO:滤镜需要重写
+            Picasso.with(getContext()).load(R.mipmap.app_icon).into(imageView);
+            imageView.setVisibility(View.VISIBLE);
             return false;//如果return true的话,onClick的事件就不会触发!
+        });
+    }
+
+    private void initImageView() {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha1to0));
+                imageView.setVisibility(View.GONE);
+            }
+        });
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
         });
     }
 

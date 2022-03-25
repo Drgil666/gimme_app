@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.ChannelNoticeActivity">
+    <!--顶边栏-->
+    <RelativeLayout
+        android:id="@+id/channel_notice_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/gimme_background_lighter">
+        <!--昵称-->
+        <TextView
+            android:id="@+id/channel_notice_top_nick_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="频道公告详情"
+            android:textColor="@color/black"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+        <!--左侧按钮-->
+        <ImageView
+            android:id="@+id/channel_notice_top_left_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:src="@mipmap/back" />
+        <!--右侧按钮-->
+        <ImageView
+            android:id="@+id/channel_notice_top_right_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20sp"
+            android:src="@mipmap/info" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/channel_notice_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/channel_notice_top_bar"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:transcriptMode="alwaysScroll"></ListView>
+</RelativeLayout>

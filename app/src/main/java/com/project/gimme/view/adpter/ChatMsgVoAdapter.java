@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.project.gimme.R;
@@ -22,6 +23,7 @@ import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.InfoTypeUtil;
+import com.project.gimme.view.activity.ChannelNoticeActivity;
 import com.project.gimme.view.activity.InfoActivity;
 
 import java.util.ArrayList;
@@ -79,6 +81,8 @@ public class ChatMsgVoAdapter extends BaseAdapter {
         convertView = layoutInflater.inflate(R.layout.listview_chat, parent, false);
         LinearLayout linearLayout;
         ViewHolder viewHolder = new ViewHolder(convertView);
+        viewHolder.leftLayout = convertView.findViewById(R.id.left_layout);
+        viewHolder.rightLayout = convertView.findViewById(R.id.right_layout);
         if (!chatMsgVO.getIsSelf()) {
             linearLayout = convertView.findViewById(R.id.right_bubble);
             linearLayout.setVisibility(View.GONE);
@@ -107,18 +111,6 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                 }
             });
             viewHolder.channelNoticeCount = convertView.findViewById(R.id.left_channel_count);
-            if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-                viewHolder.channelNoticeCount.setText("共" + chatMsgVO.getChannelNoticeCount() + "条回复");
-                viewHolder.channelNoticeCount.setVisibility(View.VISIBLE);
-                //TODO:做频道公告内activity的跳转逻辑
-            } else {
-                viewHolder.channelNoticeCount.setVisibility(View.GONE);
-            }
-            if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
-                viewHolder.nick.setVisibility(View.GONE);
-            } else {
-                viewHolder.nick.setVisibility(View.VISIBLE);
-            }
         } else {
             linearLayout = convertView.findViewById(R.id.left_bubble);
             linearLayout.setVisibility(View.GONE);
@@ -146,17 +138,37 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                 }
             });
             viewHolder.channelNoticeCount = convertView.findViewById(R.id.right_channel_count);
-            if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-                viewHolder.channelNoticeCount.setText("共" + chatMsgVO.getChannelNoticeCount() + "条回复");
-                viewHolder.channelNoticeCount.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.channelNoticeCount.setVisibility(View.GONE);
-            }
-            if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
-                viewHolder.nick.setVisibility(View.GONE);
-            } else {
-                viewHolder.nick.setVisibility(View.VISIBLE);
-            }
+        }
+        if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+            viewHolder.channelNoticeCount.setText("共" + chatMsgVO.getChannelNoticeCount() + "条回复");
+            viewHolder.channelNoticeCount.setVisibility(View.VISIBLE);
+            viewHolder.leftLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleUtil.CHANNEL_NOTICE_ID_ATTRIBUTE, chatMsgVO.getObjectId());
+                    System.out.println(chatMsgVO.getText());
+                    Intent intent = new Intent(context, ChannelNoticeActivity.class).putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
+            viewHolder.rightLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleUtil.CHANNEL_NOTICE_ID_ATTRIBUTE, chatMsgVO.getObjectId());
+                    System.out.println(chatMsgVO.getText());
+                    Intent intent = new Intent(context, ChannelNoticeActivity.class).putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
+        } else {
+            viewHolder.channelNoticeCount.setVisibility(View.GONE);
+        }
+        if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
+            viewHolder.nick.setVisibility(View.GONE);
+        } else {
+            viewHolder.nick.setVisibility(View.VISIBLE);
         }
         viewHolder.icon.setOnTouchListener((view, motionEvent) -> {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -174,6 +186,8 @@ public class ChatMsgVoAdapter extends BaseAdapter {
         TextView nick;
         TextView text;
         TextView channelNoticeCount;
+        RelativeLayout leftLayout;
+        RelativeLayout rightLayout;
 
         ViewHolder(View view) {
         }

@@ -26,11 +26,11 @@
 
         <ImageView
             android:id="@+id/chat_file_info_top_left_button"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="20sp"
-            android:src="@mipmap/app_icon" />
+            android:src="@mipmap/back" />
     </RelativeLayout>
     <!--文件描述-->
     <RelativeLayout

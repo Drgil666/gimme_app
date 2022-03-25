@@ -34,6 +34,7 @@ import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
+import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -136,10 +137,12 @@ public class ChatActivity extends SwipeBackActivity {
     }
 
     private void initTopBar() {
+        Picasso.with(this).load(R.mipmap.back).into(leftButton);
         leftButton.setOnClickListener(view -> {
             finish();
             overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });
+        Picasso.with(this).load(R.mipmap.info).into(rightButton);
         rightButton.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);

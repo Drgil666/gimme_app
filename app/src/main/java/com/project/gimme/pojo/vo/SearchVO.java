@@ -24,4 +24,12 @@ public class SearchVO {
      * 会话类型
      */
     private String objectType;
+    /**
+     * 总人数
+     */
+    private Integer memberCount;
+    /**
+     * 是否建立关系
+     */
+    private Boolean isJoined;
 }

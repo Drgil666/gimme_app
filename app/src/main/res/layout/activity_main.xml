@@ -32,12 +32,12 @@
 
             <ImageView
                 android:id="@+id/main_top_right_button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="20sp"
-                android:src="@mipmap/app_icon" />
+                android:src="@mipmap/add_plus" />
         </RelativeLayout>
         <!--主体内容-->
         <RelativeLayout

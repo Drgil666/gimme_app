@@ -1,12 +1,17 @@
 package com.project.gimme.view.activity;
 
+import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,7 +23,9 @@ import com.project.gimme.controller.SearchController;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.SearchVO;
 import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.ContactsUtil;
+import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.view.adpter.SearchVoAdapter;
 
 import org.apache.commons.lang3.StringUtils;
@@ -55,10 +62,37 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void initSearchListView() {
-        searchListView.setOnClickListener(new View.OnClickListener() {
+        searchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                //TODO:跳转逻辑
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                System.out.println(id);
+//                System.out.println(searchVOList.get(position).getObjectType());
+                SearchVO searchVO = searchVOList.get(position);
+                if (searchVO.getIsJoined()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(OBJECT_ID_ATTRIBUTE, searchVO.getObjectId());
+                    if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_FRIEND.getName())) {
+                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_FRIEND.getCode());
+                    } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_GROUP.getName())) {
+                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP.getCode());
+                    } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_CHANNEL.getName())) {
+                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL.getCode());
+                    }
+                    Intent intent = new Intent(mContext, ChatActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(OBJECT_ID_ATTRIBUTE, searchVO.getObjectId());
+                    if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_FRIEND.getName())) {
+                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_FRIEND.getCode());
+                    } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_GROUP.getName())) {
+                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP.getCode());
+                    } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_CHANNEL.getName())) {
+                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL.getCode());
+                    }
+                    Intent intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -66,7 +100,7 @@ public class SearchActivity extends AppCompatActivity {
     private void getType() {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt(BundleUtil.SEARCH_TYPE_ATTRIBUTE);
-        System.out.println("search type:" + type);
+        //System.out.println("search type:" + type);
     }
 
     private void initTopBar() {
@@ -89,7 +123,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                System.out.println(searchEditText.getText().toString());
+                //System.out.println(searchEditText.getText().toString());
                 if (!StringUtils.isEmpty(searchEditText.getText().toString())) {
                     getSearchList(searchEditText.getText().toString());
                 }
