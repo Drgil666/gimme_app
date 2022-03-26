@@ -50,6 +50,7 @@ public class MyInfoAdapter extends BaseAdapter {
         //TODO:待调整
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         MyInfoListVO myInfoListVO = myInfoListVOList.get(position);

@@ -53,7 +53,7 @@ public class ChannelNoticeController {
         requestVO.setKey(null);
         RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
         Request request = new Request.Builder()
-                .url(REMOTE_URL + "/api/channel")
+                .url(REMOTE_URL + "/api/channel/notice")
                 .header(TOKEN, GimmeApplication.getToken())
                 .post(body)
                 .build();

@@ -19,11 +19,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
+import com.project.gimme.controller.ChannelNoticeController;
 import com.project.gimme.controller.ChatMsgController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.UserController;
+import com.project.gimme.pojo.ChannelNotice;
 import com.project.gimme.pojo.ChatMsg;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
@@ -116,24 +119,12 @@ public class ChatActivity extends SwipeBackActivity {
                             chatMsgVoAdapter = new ChatMsgVoAdapter(mContext, chatMsgVOList, type);
                             chatListView.setAdapter(chatMsgVoAdapter);
                             chatListView.setSelection(chatMsgVOList.size() - 1);
+                            chatMsgVoAdapter.notifyDataSetChanged();
                         }
                     });
                 }
             }
         }).start();
-
-//        for (int i = 1; i <= 10; i++) {
-//            ChatMsgVO chatMsgVO = new ChatMsgVO();
-//            chatMsgVO.setId(i);
-//            chatMsgVO.setOwnerId(1);
-//            chatMsgVO.setText("这是一条信息" + i);
-//            chatMsgVO.setObjectId(objectId);
-//            chatMsgVO.setIsSelf(i % 2 == 1);
-//            chatMsgVO.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
-//            chatMsgVO.setOwnerNick("这是一个昵称" + chatMsgVO.getId());
-//            chatMsgVO.setTimeStamp(new Date());
-//            chatMsgList.add(chatMsgVO);
-//        }
     }
 
     private void initTopBar() {
@@ -211,7 +202,6 @@ public class ChatActivity extends SwipeBackActivity {
                     refresh();
                     createChatMsg(chatBottomEditText.getText().toString());
                     chatBottomEditText.setText(null);
-
                 }
             }
             return true;
@@ -227,17 +217,46 @@ public class ChatActivity extends SwipeBackActivity {
             @SneakyThrows
             @Override
             public void run() {
-                ResponseData<ChatMsgVO> responseData = ChatMsgController.createChatMsg(chatMsg);
-                if (responseData != null && responseData.isSuccess()) {
-                    ChatMsgVO chatMsgVO = responseData.getData();
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            chatMsgVOList.add(chatMsgVO);
-                            chatMsgVoAdapter.notifyDataSetChanged();
-                            chatListView.setSelection(chatMsgVOList.size() - 1);
-                        }
-                    });
+                if (!chatMsg.getType().equals(ChatMsgUtil.Character.TYPE_CHANNEL.getName())) {
+                    ResponseData<ChatMsgVO> responseData = ChatMsgController.createChatMsg(chatMsg);
+                    if (responseData != null && responseData.isSuccess()) {
+                        ChatMsgVO chatMsgVO = responseData.getData();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                chatMsgVOList.add(chatMsgVO);
+                                chatMsgVoAdapter.notifyDataSetChanged();
+                                chatListView.setSelection(chatMsgVOList.size() - 1);
+                            }
+                        });
+                    }
+                } else {
+                    ChannelNotice channelNotice = new ChannelNotice();
+                    channelNotice.setChannelId(objectId);
+                    channelNotice.setType("1");
+                    channelNotice.setText(chatMsg.getText());
+                    ResponseData<ChannelNotice> responseData = ChannelNoticeController.createChannelNotice(channelNotice);
+                    if (responseData != null && responseData.isSuccess()) {
+                        channelNotice = responseData.getData();
+                        ChatMsgVO chatMsgVO = new ChatMsgVO();
+                        chatMsgVO.setType(ChatMsgUtil.Character.TYPE_CHANNEL.getName());
+                        chatMsgVO.setTimeStamp(channelNotice.getCreateTime());
+                        chatMsgVO.setIsSelf(true);
+                        chatMsgVO.setObjectId(channelNotice.getId());
+                        chatMsgVO.setText(channelNotice.getText());
+                        chatMsgVO.setId(channelNotice.getId());
+                        chatMsgVO.setOwnerId(GimmeApplication.getUserId());
+                        chatMsgVO.setOwnerNick("用户id");
+                        chatMsgVO.setChannelNoticeCount(0);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                chatMsgVOList.add(chatMsgVO);
+                                chatMsgVoAdapter.notifyDataSetChanged();
+                                chatListView.setSelection(chatMsgVOList.size() - 1);
+                            }
+                        });
+                    }
                 }
             }
         }).start();
@@ -263,9 +282,9 @@ public class ChatActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            if (StringUtils.isEmpty(userVO.getNote()))
+                            if (StringUtils.isEmpty(userVO.getNote())) {
                                 setTopNick(userVO.getNick());
-                            else {
+                            } else {
                                 setTopNick(userVO.getNote());
                             }
                             setTopDescription(userVO.getMotto());

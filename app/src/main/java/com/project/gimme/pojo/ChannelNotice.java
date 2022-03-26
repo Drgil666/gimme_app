@@ -7,6 +7,8 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Property;
 
+import java.util.Date;
+
 
 /**
  * @author DrGilbert
@@ -35,13 +37,19 @@ public class ChannelNotice {
      */
     @Property(nameInDb = "text")
     private String text;
+    /**
+     * 频道公告创建时间
+     */
+    private Date createTime;
 
-    @Generated(hash = 701826718)
-    public ChannelNotice(Integer id, String type, Integer channelId, String text) {
+    @Generated(hash = 248381806)
+    public ChannelNotice(Integer id, String type, Integer channelId, String text,
+                         Date createTime) {
         this.id = id;
         this.type = type;
         this.channelId = channelId;
         this.text = text;
+        this.createTime = createTime;
     }
 
     @Generated(hash = 2146001694)
@@ -78,6 +86,14 @@ public class ChannelNotice {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Date getCreateTime() {
+        return this.createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
 }
