@@ -8,7 +8,7 @@
         android:id="@+id/gridview_other_info_icon"
         android:layout_width="50sp"
         android:layout_height="50sp"
-        android:src="@mipmap/app_icon" />
+        android:src="@mipmap/default_icon" />
 
     <TextView
         android:id="@+id/gridview_other_info_nick"

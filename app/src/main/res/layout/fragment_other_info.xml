@@ -17,11 +17,11 @@
 
             <!--群聊/频道标题-->
             <RelativeLayout
-                android:clickable="true"
                 android:id="@+id/fragment_other_info_top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="80sp"
-                android:background="@drawable/list_item_color_bg">
+                android:background="@drawable/list_item_color_bg"
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/fragment_other_info_top_bar_icon"
@@ -29,7 +29,7 @@
                     android:layout_height="70sp"
                     android:layout_marginStart="10sp"
                     android:layout_marginTop="5sp"
-                    android:src="@mipmap/app_icon" />
+                    android:src="@mipmap/default_icon" />
 
                 <TextView
                     android:id="@+id/fragment_other_info_top_nick"
@@ -54,21 +54,21 @@
                     android:textSize="18sp" />
 
                 <ImageView
-                    android:layout_width="35sp"
-                    android:layout_height="35sp"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10sp"
-                    android:src="@mipmap/app_icon" />
+                    android:src="@mipmap/right_arrow" />
             </RelativeLayout>
             <!--群聊/频道成员-->
             <RelativeLayout
-                android:clickable="true"
                 android:id="@+id/fragment_other_info_member_layout"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginTop="20sp"
-                android:background="@drawable/list_item_color_bg">
+                android:background="@drawable/list_item_color_bg"
+                android:clickable="true">
 
                 <TextView
                     android:id="@+id/fragment_other_info_member_left_text"
@@ -92,17 +92,18 @@
 
                 <ImageView
                     android:id="@+id/fragment_other_info_member_icon"
-                    android:layout_width="35sp"
-                    android:layout_height="35sp"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5sp"
                     android:layout_marginEnd="10sp"
-                    android:src="@mipmap/app_icon" />
+                    android:src="@mipmap/right_arrow" />
 
                 <GridView
                     android:id="@+id/fragment_other_info_member_gridview"
-                    android:layout_below="@+id/fragment_other_info_member_left_text"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
+                    android:layout_below="@+id/fragment_other_info_member_left_text"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="30sp"
                     android:layout_marginTop="10sp"
@@ -119,11 +120,11 @@
                 android:background="@color/white">
                 <!--群/频道号-->
                 <RelativeLayout
-                    android:clickable="true"
                     android:id="@+id/fragment_other_info_introduction_id_layout"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
-                    android:background="@drawable/list_item_color_bg">
+                    android:background="@drawable/list_item_color_bg"
+                    android:clickable="true">
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_left_text"
@@ -142,16 +143,16 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5sp"
-                        android:src="@mipmap/app_icon" />
+                        android:src="@mipmap/right_arrow" />
 
                     <ImageView
                         android:id="@+id/fragment_other_info_right_qr"
-                        android:layout_width="30sp"
-                        android:layout_height="30sp"
+                        android:layout_width="20sp"
+                        android:layout_height="20sp"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5sp"
                         android:layout_toStartOf="@+id/fragment_other_info_right_icon"
-                        android:src="@mipmap/app_icon" />
+                        android:src="@mipmap/qr_code" />
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_right_text"
@@ -175,11 +176,11 @@
                     android:clickable="true">
 
                     <TextView
-                        android:layout_marginTop="5sp"
                         android:id="@+id/fragment_other_info_introduction_group_notice_nick"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="25sp"
+                        android:layout_marginTop="5sp"
                         android:text="群聊公告"
                         android:textColor="@color/black"
                         android:textSize="22sp" />
@@ -206,7 +207,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5sp"
-                        android:src="@mipmap/app_icon" />
+                        android:src="@mipmap/right_arrow" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -234,7 +235,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5sp"
-                        android:src="@mipmap/app_icon" />
+                        android:src="@mipmap/right_arrow" />
                 </RelativeLayout>
             </RelativeLayout>
             <!--我的相关信息-->
@@ -246,11 +247,11 @@
                 android:background="@color/white">
                 <!--查找聊天记录-->
                 <RelativeLayout
-                    android:clickable="true"
                     android:id="@+id/fragment_other_info_my_chat_msg"
                     android:layout_width="match_parent"
                     android:layout_height="50sp"
-                    android:background="@drawable/list_item_color_bg">
+                    android:background="@drawable/list_item_color_bg"
+                    android:clickable="true">
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_chat_msg_left_text"
@@ -269,7 +270,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5sp"
-                        android:src="@mipmap/app_icon" />
+                        android:src="@mipmap/right_arrow" />
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_chat_msg_right_text"
@@ -307,7 +308,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5sp"
-                        android:src="@mipmap/app_icon" />
+                        android:src="@mipmap/right_arrow" />
 
                     <TextView
                         android:id="@+id/fragment_other_info_introduction_note_right_text"
@@ -331,4 +332,11 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/fragment_other_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:visibility="gone" />
 </RelativeLayout>

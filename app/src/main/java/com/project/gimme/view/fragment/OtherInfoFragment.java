@@ -10,7 +10,9 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,7 @@ import com.project.gimme.view.activity.ChatFileActivity;
 import com.project.gimme.view.activity.ParamActivity;
 import com.project.gimme.view.activity.QrActivity;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +91,11 @@ public class OtherInfoFragment extends Fragment {
     TextView myNoteLeftText;
     private Unbinder unbinder;
     private GroupNotice groupNotice = new GroupNotice();
+    private Boolean isJoined;
+    @BindView(R.id.fragment_other_img)
+    ImageView imageView;
+    @BindView(R.id.fragment_other_info_top_bar_icon)
+    ImageView topBarIcon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,13 +107,32 @@ public class OtherInfoFragment extends Fragment {
         initMember();
         initIntroduction();
         initMyLayout();
+        initImageView();
         return view;
+    }
+
+    private void initImageView() {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha1to0));
+                imageView.setVisibility(View.GONE);
+            }
+        });
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
     }
 
     private void getType() {
         Bundle bundle = getActivity().getIntent().getExtras();
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
+        isJoined = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
+        System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
     }
 
     private void initTopBar() {
@@ -116,6 +143,13 @@ public class OtherInfoFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "类型错误!", Toast.LENGTH_LONG).show();
         }
+        topBarIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Picasso.with(getContext()).load(R.mipmap.default_icon).into(imageView);
+                imageView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void initMember() {
@@ -131,6 +165,9 @@ public class OtherInfoFragment extends Fragment {
     }
 
     private void initIntroduction() {
+        if (!isJoined) {
+            introductionGroupFileLayout.setVisibility(View.GONE);
+        }
         introductionIdLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -292,6 +329,9 @@ public class OtherInfoFragment extends Fragment {
     }
 
     private void initMyLayout() {
+        if (!isJoined) {
+            myLayout.setVisibility(View.GONE);
+        }
         myChatMsg.setOnClickListener(view -> System.out.println("click!"));
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             myNoteLeftText.setText("我的群昵称");

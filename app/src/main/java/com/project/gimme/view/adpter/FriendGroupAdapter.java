@@ -55,7 +55,7 @@ public class FriendGroupAdapter extends BaseAdapter {
         convertView = layoutInflater.inflate(R.layout.listview_friend_list_group_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.text.setText(group.getNick());
-        viewHolder.icon.setImageResource(R.mipmap.app_icon);
+        viewHolder.icon.setImageResource(R.mipmap.default_icon);
         return convertView;
     }
 

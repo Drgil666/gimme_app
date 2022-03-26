@@ -56,7 +56,7 @@ public class MyInfoAdapter extends BaseAdapter {
         MyInfoListVO myInfoListVO = myInfoListVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.gridview_my_info, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
-        viewHolder.icon.setImageResource(R.mipmap.app_icon);
+        viewHolder.icon.setImageResource(R.mipmap.default_icon);
         viewHolder.nick.setText(myInfoListVO.getNick());
         viewHolder.description.setText(myInfoListVO.getDescription());
         return convertView;

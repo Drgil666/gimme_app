@@ -53,7 +53,7 @@ public class PersonalMsgAdapter extends BaseAdapter {
         convertView = layoutInflater.inflate(R.layout.listview_personal_msg, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.text.setText(text);
-        viewHolder.icon.setImageResource(R.mipmap.app_icon);
+        viewHolder.icon.setImageResource(R.mipmap.right_arrow);
         return convertView;
     }
 

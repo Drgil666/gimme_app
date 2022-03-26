@@ -34,6 +34,7 @@ import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.RefreshVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
+import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
@@ -138,6 +139,7 @@ public class ChatActivity extends SwipeBackActivity {
             Bundle bundle = new Bundle();
             bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
             bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+            bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
             Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
             startActivity(intent);
             overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);

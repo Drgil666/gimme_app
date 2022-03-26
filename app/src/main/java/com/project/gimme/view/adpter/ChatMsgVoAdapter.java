@@ -87,7 +87,8 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             linearLayout = convertView.findViewById(R.id.right_bubble);
             linearLayout.setVisibility(View.GONE);
             viewHolder.icon = convertView.findViewById(R.id.left_image);
-            viewHolder.icon.setImageResource(R.mipmap.app_icon);
+            viewHolder.icon.setImageResource(R.mipmap.default_icon);
+            viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
             viewHolder.text = convertView.findViewById(R.id.left_content);
             viewHolder.text.setText(chatMsgVO.getText());
             viewHolder.nick = convertView.findViewById(R.id.left_name);
@@ -115,7 +116,8 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             linearLayout = convertView.findViewById(R.id.left_bubble);
             linearLayout.setVisibility(View.GONE);
             viewHolder.icon = convertView.findViewById(R.id.right_image);
-            viewHolder.icon.setImageResource(R.mipmap.app_icon);
+            viewHolder.icon.setImageResource(R.mipmap.default_icon);
+            viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
             viewHolder.text = convertView.findViewById(R.id.right_content);
             viewHolder.text.setText(chatMsgVO.getText());
             viewHolder.nick = convertView.findViewById(R.id.right_name);

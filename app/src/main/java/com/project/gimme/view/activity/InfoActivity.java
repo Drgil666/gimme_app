@@ -1,8 +1,5 @@
 package com.project.gimme.view.activity;
 
-import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
-import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -16,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.view.fragment.FriendInfoFragment;
 import com.project.gimme.view.fragment.OtherInfoFragment;
@@ -32,6 +30,7 @@ public class InfoActivity extends SwipeBackActivity {
     private final Integer height = GimmeApplication.getHeight();
     private Integer type;
     private Integer objectId;
+    private Boolean isJoined;
     @BindView(R.id.info_top_text)
     TextView tabText;
     @BindView(R.id.info_top_left_button)
@@ -54,9 +53,10 @@ public class InfoActivity extends SwipeBackActivity {
 
     private void getType() {
         Bundle bundle = getIntent().getExtras();
-        type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
-        objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
-        System.out.println("type:" + type + " object_id:" + objectId);
+        type = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
+        objectId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
+        isJoined = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
+//        System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
     }
 
     private void initTopBar(double size) {

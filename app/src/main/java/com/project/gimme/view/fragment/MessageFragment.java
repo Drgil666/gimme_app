@@ -47,7 +47,6 @@ public class MessageFragment extends Fragment {
     private MessageVoAdapter messageVoAdapter;
     @BindView(R.id.message_search_edittext)
     EditText searchEditText;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,6 +84,14 @@ public class MessageFragment extends Fragment {
     public void onStart() {
         super.onStart();
         initListView();
+    }
+
+    private Integer getNewMessageCount(List<MessageVO> messageVOList) {
+        Integer cnt = 0;
+        for (MessageVO messageVO : messageVOList) {
+            cnt += messageVO.getNewMessageCount();
+        }
+        return cnt;
     }
 
     @Override

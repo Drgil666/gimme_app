@@ -55,7 +55,7 @@ public class FriendChannelAdapter extends BaseAdapter {
         convertView = layoutInflater.inflate(R.layout.listview_friend_list_channel_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.text.setText(channel.getNick());
-        viewHolder.icon.setImageResource(R.mipmap.app_icon);
+        viewHolder.icon.setImageResource(R.mipmap.default_icon);
         return convertView;
     }
 

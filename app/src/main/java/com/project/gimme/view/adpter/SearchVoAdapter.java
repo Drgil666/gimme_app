@@ -52,7 +52,7 @@ public class SearchVoAdapter extends BaseAdapter {
         SearchVO searchVO = getItem(position);
         convertView = layoutInflater.inflate(R.layout.listview_search, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
-        Picasso.with(context).load(R.mipmap.app_icon).into(viewHolder.icon);
+        Picasso.with(context).load(R.mipmap.default_icon).into(viewHolder.icon);
         viewHolder.nick.setText(searchVO.getObjectNick() + "(" + searchVO.getObjectId() + ")");
         return convertView;
     }

@@ -94,7 +94,7 @@ public class MyInfoFragment extends Fragment {
                             userInfoNick.setText(user.getNick());
                             userInfoCompany.setText(user.getCompany());
                             userInfoMotto.setText(user.getMotto());
-                            userInfoIcon.setImageResource(R.mipmap.app_icon);
+                            userInfoIcon.setImageResource(R.mipmap.default_icon);
                         }
                     });
                 }

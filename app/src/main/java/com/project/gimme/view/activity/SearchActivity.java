@@ -68,31 +68,24 @@ public class SearchActivity extends AppCompatActivity {
 //                System.out.println(id);
 //                System.out.println(searchVOList.get(position).getObjectType());
                 SearchVO searchVO = searchVOList.get(position);
-                if (searchVO.getIsJoined()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(OBJECT_ID_ATTRIBUTE, searchVO.getObjectId());
-                    if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_FRIEND.getName())) {
-                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_FRIEND.getCode());
-                    } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_GROUP.getName())) {
-                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP.getCode());
-                    } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_CHANNEL.getName())) {
-                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL.getCode());
-                    }
-                    Intent intent = new Intent(mContext, ChatActivity.class).putExtras(bundle);
-                    startActivity(intent);
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(OBJECT_ID_ATTRIBUTE, searchVO.getObjectId());
-                    if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_FRIEND.getName())) {
-                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_FRIEND.getCode());
-                    } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_GROUP.getName())) {
-                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP.getCode());
-                    } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_CHANNEL.getName())) {
-                        bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL.getCode());
-                    }
-                    Intent intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
-                    startActivity(intent);
+
+                Bundle bundle = new Bundle();
+                bundle.putInt(OBJECT_ID_ATTRIBUTE, searchVO.getObjectId());
+                bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, searchVO.getIsJoined());
+                if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_FRIEND.getName())) {
+                    bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_FRIEND.getCode());
+                } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_GROUP.getName())) {
+                    bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP.getCode());
+                } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_CHANNEL.getName())) {
+                    bundle.putInt(CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL.getCode());
                 }
+                Intent intent;
+                if (searchVO.getIsJoined()) {
+                    intent = new Intent(mContext, ChatActivity.class).putExtras(bundle);
+                } else {
+                    intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
+                }
+                startActivity(intent);
             }
         });
     }

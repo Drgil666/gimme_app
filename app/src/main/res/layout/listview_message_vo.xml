@@ -13,11 +13,11 @@
         android:id="@+id/listview_message_vo_nick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/listview_message_vo_image"
         android:layout_marginLeft="10sp"
-        android:text="111"
+        android:layout_toRightOf="@+id/listview_message_vo_image"
         android:ellipsize="end"
         android:maxLines="1"
+        android:text="111"
         android:textColor="@color/black"
         android:textSize="22sp" />
 
@@ -25,13 +25,13 @@
         android:id="@+id/listview_message_vo_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="msg1"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="35sp"
+        android:layout_toRightOf="@id/listview_message_vo_image"
         android:ellipsize="end"
         android:maxLines="1"
+        android:text="msg1"
         android:textColor="@color/gimme_font1"
-        android:layout_toRightOf="@id/listview_message_vo_image"
-        android:layout_marginTop="35sp"
-        android:layout_marginLeft="10sp"
         android:textSize="18sp"></TextView>
 
     <TextView
@@ -45,18 +45,27 @@
         android:textColor="@color/gimme_font1"
         android:textSize="22sp"></TextView>
 
-    <TextView
-        android:id="@+id/listview_message_vo_new_message_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/listview_message_vo_new_message_count_background"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
         android:layout_below="@+id/listview_message_vo_timestamp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="2sp"
         android:layout_marginRight="10sp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="?"
-        android:textColor="@color/gimme_font1"
-        android:textSize="22sp"
-        android:visibility="invisible" />
+        android:background="@mipmap/new_message"
+        android:textAlignment="center"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/listview_message_vo_new_message_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="49"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
 </RelativeLayout>

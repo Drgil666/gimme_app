@@ -2,6 +2,7 @@ package com.project.gimme.view.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,7 +49,12 @@ public class MainActivity extends BaseActivity {
     ImageView myInfoIcon;
     @BindView(R.id.main_my_info_layout_text)
     TextView myInfoText;
+    @BindView(R.id.main_message_layout_new_message_count_background)
+    RelativeLayout newMessageCountBackGround;
+    @BindView(R.id.main_message_layout_new_message_count)
+    TextView newMessageCount;
 
+    //TODO:动态更新的部分仍然需要修复
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +70,16 @@ public class MainActivity extends BaseActivity {
         initTopBar(0.1);
         initTopText();
         initBottomBar(0.1);
+        initNewMessageCount(0);
+    }
+
+    public void initNewMessageCount(Integer count) {
+        if (count != 0) {
+            newMessageCountBackGround.setVisibility(View.VISIBLE);
+            newMessageCount.setText(count > 99 ? "99+" : count.toString());
+        } else {
+            newMessageCountBackGround.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void initTopBar(double size) {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.project.gimme.GimmeApplication;
@@ -63,15 +64,18 @@ public class MessageVoAdapter extends BaseAdapter {
         MessageVO messageVO = messageVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_message_vo, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
-        Picasso.with(convertView.getContext()).load(R.mipmap.app_icon).into(viewHolder.avatar);
+        Picasso.with(convertView.getContext()).load(R.mipmap.default_icon).into(viewHolder.avatar);
         viewHolder.nick.setText(messageVO.getNick());
         viewHolder.text.setText(messageVO.getText());
         viewHolder.timestamp.setText(NumberUtil.changeToHourAndMinute(messageVO.getTimestamp()));
         if (messageVO.getNewMessageCount() != 0) {
-            viewHolder.newMessageCount.setVisibility(View.VISIBLE);
-            viewHolder.newMessageCount.setText(messageVO.getNewMessageCount().toString());
+            viewHolder.newMessageCountBackGround.setVisibility(View.VISIBLE);
+            viewHolder.newMessageCount.setText(
+                    messageVO.getNewMessageCount() > 99 ?
+                            "99+" :
+                            messageVO.getNewMessageCount().toString());
         } else {
-            viewHolder.newMessageCount.setVisibility(View.INVISIBLE);
+            viewHolder.newMessageCountBackGround.setVisibility(View.INVISIBLE);
         }
         return convertView;
     }
@@ -88,6 +92,8 @@ public class MessageVoAdapter extends BaseAdapter {
         TextView timestamp;
         @BindView(R.id.listview_message_vo_new_message_count)
         TextView newMessageCount;
+        @BindView(R.id.listview_message_vo_new_message_count_background)
+        RelativeLayout newMessageCountBackGround;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

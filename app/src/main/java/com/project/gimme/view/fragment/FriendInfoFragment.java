@@ -24,6 +24,7 @@ import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.pojo.vo.UserVoParamItem;
+import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.utils.NumberUtil;
@@ -60,8 +61,11 @@ public class FriendInfoFragment extends Fragment {
     private UserVO userVO = new UserVO();
     @BindView(R.id.fragment_friend_info_listview)
     ListView listView;
-    @BindView(R.id.fragment_friend_info_button)
-    Button button;
+    @BindView(R.id.fragment_friend_info_chat_button)
+    Button chatButton;
+    @BindView(R.id.fragment_friend_info_add_button)
+    Button addButton;
+    private Boolean isJoined;
     private Unbinder unbinder;
     Handler handler = new Handler();
     FriendInfoAdapter friendInfoAdapter;
@@ -85,29 +89,37 @@ public class FriendInfoFragment extends Fragment {
         Bundle bundle = getActivity().getIntent().getExtras();
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
-        System.out.println("type:" + type + " id:" + objectId);
+        isJoined = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
+        System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
     }
 
     private void initButton() {
-        if (!(type.equals(InfoTypeUtil.Character.TYPE_SELF.getCode())
-                || type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())
-                || type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode()))) {
-            button.setOnClickListener(view -> {
-                Bundle bundle = new Bundle();
-                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
-                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
-                Intent intent = new Intent(getContext(), ChatActivity.class).putExtras(bundle);
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
-            });
+        if (isJoined) {
+            addButton.setVisibility(View.GONE);
+            chatButton.setVisibility(View.VISIBLE);
+            if (!(type.equals(InfoTypeUtil.Character.TYPE_SELF.getCode())
+                    || type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())
+                    || type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode()))) {
+                chatButton.setOnClickListener(view -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+                    bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                    Intent intent = new Intent(getContext(), ChatActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
+                });
+            } else {
+                chatButton.setVisibility(View.GONE);
+            }
         } else {
-            button.setVisibility(View.GONE);
+            chatButton.setVisibility(View.GONE);
+            addButton.setVisibility(View.VISIBLE);
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void initTopBar() {
-        Picasso.with(getContext()).load(R.mipmap.app_icon).into(icon);
+        Picasso.with(getContext()).load(R.mipmap.default_icon).into(icon);
         icon.setOnTouchListener((view, motionEvent) -> {
 //            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 //                ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果
@@ -115,7 +127,7 @@ public class FriendInfoFragment extends Fragment {
 //                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
 //            }
             //TODO:滤镜需要重写
-            Picasso.with(getContext()).load(R.mipmap.app_icon).into(imageView);
+            Picasso.with(getContext()).load(R.mipmap.default_icon).into(imageView);
             imageView.setVisibility(View.VISIBLE);
             return false;//如果return true的话,onClick的事件就不会触发!
         });

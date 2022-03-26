@@ -61,7 +61,7 @@ public class FriendUserAdapter extends BaseAdapter {
         } else {
             viewHolder.text.setText(userVO.getNote());
         }
-        viewHolder.icon.setImageResource(R.mipmap.app_icon);
+        viewHolder.icon.setImageResource(R.mipmap.default_icon);
         return convertView;
     }
 
