@@ -63,12 +63,12 @@ public class GroupUserDao extends AbstractDao<GroupUser, Void> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, GroupUser entity) {
         stmt.clearBindings();
-
+ 
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(1, groupId);
         }
-
+ 
         Integer userId = entity.getUserId();
         if (userId != null) {
             stmt.bindLong(2, userId);

@@ -23,6 +23,7 @@ import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.InfoTypeUtil;
+import com.project.gimme.utils.TextUtil;
 import com.project.gimme.view.activity.ChannelNoticeActivity;
 import com.project.gimme.view.activity.InfoActivity;
 
@@ -90,7 +91,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.icon.setImageResource(R.mipmap.default_icon);
             viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
             viewHolder.text = convertView.findViewById(R.id.left_content);
-            viewHolder.text.setText(chatMsgVO.getText());
+            viewHolder.text.setText(TextUtil.expandableText(chatMsgVO.getText()));
             viewHolder.nick = convertView.findViewById(R.id.left_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
             viewHolder.icon.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +120,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.icon.setImageResource(R.mipmap.default_icon);
             viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
             viewHolder.text = convertView.findViewById(R.id.right_content);
-            viewHolder.text.setText(chatMsgVO.getText());
+            viewHolder.text.setText(TextUtil.expandableText(chatMsgVO.getText()));
             viewHolder.nick = convertView.findViewById(R.id.right_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
             viewHolder.icon.setOnClickListener(new View.OnClickListener() {
