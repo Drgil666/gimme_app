@@ -19,10 +19,15 @@ public class GroupUserDao extends AbstractDao<GroupUser, Void> {
 
     public static final String TABLENAME = "group_user";
 
-    /** Drops the underlying database table. */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"group_user\"";
-        db.execSQL(sql);
+    /**
+     * Properties of entity GroupUser.<br/>
+     * Can be used for QueryBuilder and for referencing column names.
+     */
+    public static class Properties {
+        public final static Property GroupId = new Property(0, Integer.class, "groupId", false, "group_id");
+        public final static Property UserId = new Property(1, Integer.class, "userId", false, "user_id");
+        public final static Property Type = new Property(2, String.class, "type", false, "type");
+        public final static Property GroupNick = new Property(3, String.class, "groupNick", false, "group_nick");
     }
 
 
@@ -47,6 +52,14 @@ public class GroupUserDao extends AbstractDao<GroupUser, Void> {
                 " (\"group_id\" ASC,\"user_id\" ASC);");
     }
 
+    /**
+     * Drops the underlying database table.
+     */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"group_user\"";
+        db.execSQL(sql);
+    }
+
     @Override
     protected final void bindValues(DatabaseStatement stmt, GroupUser entity) {
         stmt.clearBindings();
@@ -60,12 +73,12 @@ public class GroupUserDao extends AbstractDao<GroupUser, Void> {
         if (userId != null) {
             stmt.bindLong(2, userId);
         }
-
+ 
         String type = entity.getType();
         if (type != null) {
             stmt.bindString(3, type);
         }
-
+ 
         String groupNick = entity.getGroupNick();
         if (groupNick != null) {
             stmt.bindString(4, groupNick);
@@ -75,17 +88,17 @@ public class GroupUserDao extends AbstractDao<GroupUser, Void> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, GroupUser entity) {
         stmt.clearBindings();
-
+ 
         Integer groupId = entity.getGroupId();
         if (groupId != null) {
             stmt.bindLong(1, groupId);
         }
-
+ 
         Integer userId = entity.getUserId();
         if (userId != null) {
             stmt.bindLong(2, userId);
         }
-
+ 
         String type = entity.getType();
         if (type != null) {
             stmt.bindString(3, type);
@@ -119,17 +132,6 @@ public class GroupUserDao extends AbstractDao<GroupUser, Void> {
         entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
         entity.setType(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setGroupNick(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-    }
-
-    /**
-     * Properties of entity GroupUser.<br/>
-     * Can be used for QueryBuilder and for referencing column names.
-     */
-    public static class Properties {
-        public final static Property GroupId = new Property(0, Integer.class, "groupId", false, "group_id");
-        public final static Property UserId = new Property(1, Integer.class, "userId", false, "user_id");
-        public final static Property Type = new Property(2, String.class, "type", false, "type");
-        public final static Property GroupNick = new Property(3, String.class, "groupNick", false, "group_nick");
     }
 
     @Override

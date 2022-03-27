@@ -9,10 +9,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.gimme.R;
+import com.xuexiang.xui.XUI;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import io.github.rockerhieu.emojiconize.Emojiconize;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * @author DrGilbert
@@ -26,6 +27,7 @@ public abstract class SwipeBackActivity extends AppCompatActivity implements BGA
         // 「必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回」
         // 在 super.onCreate(savedInstanceState) 之前调用该方法
         //Emoji初始化
+        XUI.initTheme(this);
         Emojiconize.activity(this).go();
         //强制竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -62,7 +64,7 @@ public abstract class SwipeBackActivity extends AppCompatActivity implements BGA
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     /**

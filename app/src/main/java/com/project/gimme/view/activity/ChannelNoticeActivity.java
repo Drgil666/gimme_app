@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelNoticeController;
 import com.project.gimme.pojo.vo.ChatMsgVO;
@@ -24,8 +22,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lombok.SneakyThrows;
 
+/**
+ * @author 25741
+ */
 @SuppressLint("NonConstantResourceId")
-public class ChannelNoticeActivity extends AppCompatActivity {
+public class ChannelNoticeActivity extends SwipeBackActivity {
     private Integer channelNoticeId;
     private List<ChatMsgVO> chatMsgVOList;
     @BindView(R.id.channel_notice_top_left_button)

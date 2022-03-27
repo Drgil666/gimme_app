@@ -6,8 +6,10 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.xuexiang.xui.XUI;
+
+import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import io.github.rockerhieu.emojiconize.Emojiconize;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * @author DrGilbert
@@ -18,6 +20,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Emoji初始化
+        XUI.initTheme(this);
         Emojiconize.activity(this).go();
         super.onCreate(savedInstanceState);
         //强制竖屏
@@ -26,7 +29,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
     @Override

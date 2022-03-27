@@ -13,7 +13,6 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,6 +38,7 @@ import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.widget.edittext.MultiLineEditText;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -57,7 +57,7 @@ public class ChatActivity extends SwipeBackActivity {
     private Integer type;
     private Integer objectId;
     @BindView(R.id.chat_bottom_edit_text)
-    EditText chatBottomEditText;
+    MultiLineEditText chatBottomEditText;
     @BindView(R.id.chat_list_view)
     ListView chatListView;
     @BindView(R.id.chat_top_left_button)
@@ -179,7 +179,7 @@ public class ChatActivity extends SwipeBackActivity {
     }
 
     private void initChatBottom() {
-        chatBottomEditText.addTextChangedListener(new TextWatcher() {
+        chatBottomEditText.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -192,18 +192,18 @@ public class ChatActivity extends SwipeBackActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                System.out.println(chatBottomEditText.getText());
+                System.out.println(chatBottomEditText.getContentText());
             }
         });
-        chatBottomEditText.setOnEditorActionListener((v, actionId, event) -> {
+        chatBottomEditText.getEditText().setOnEditorActionListener((v, actionId, event) -> {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER
                     && v.getText() != null
                     && event.getAction() == KeyEvent.ACTION_DOWN) {
-                System.out.println("这里是监听回车事件->" + chatBottomEditText.getText().toString());
-                if (!StringUtils.isEmpty(chatBottomEditText.getText().toString())) {
+                System.out.println("这里是监听回车事件->" + chatBottomEditText.getContentText());
+                if (!StringUtils.isEmpty(chatBottomEditText.getContentText())) {
                     refresh();
-                    createChatMsg(chatBottomEditText.getText().toString());
-                    chatBottomEditText.setText(null);
+                    createChatMsg(chatBottomEditText.getContentText());
+                    chatBottomEditText.setContentText(null);
                 }
             }
             return true;

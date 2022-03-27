@@ -8,11 +8,10 @@ import android.os.Build;
 import android.os.StrictMode;
 
 import com.project.gimme.controller.TestController;
+import com.xuexiang.xui.XUI;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import io.rong.imlib.RongIMClient;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * @author DrGilbert
@@ -28,11 +27,6 @@ public class GimmeApplication extends Application {
     public static final String APP_KEY = "pvxdm17jpdthr";
     public static final String LOCAL_STORAGE = "gimme_token";
     public static final String TOKEN = "token";
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     public static Integer getUserId() {
         return userId;
@@ -87,15 +81,13 @@ public class GimmeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        XUI.init(this);
+        XUI.debug(true);
         RongIMClient.init(getApplicationContext(), APP_KEY);
         //滑动工具初始化
         BGASwipeBackHelper.init(this, null);
         //字体初始化
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/ping_fang_sc.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
+        XUI.initFontStyle("fonts/ping_fang_sc.ttf");
         TestController.test(REMOTE_URL + "/api/user/check");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
