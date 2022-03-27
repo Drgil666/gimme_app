@@ -12,26 +12,34 @@ import android.widget.TextView;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.controller.ChatMsgController;
 import com.project.gimme.pojo.vo.MessageVO;
+import com.project.gimme.pojo.vo.RefreshVO;
 import com.project.gimme.utils.NumberUtil;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.widget.textview.badge.Badge;
+import com.xuexiang.xui.widget.textview.badge.BadgeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lombok.SneakyThrows;
 
 /**
  * @author DrGilbert
  * @date 2022/1/11 14:58
  */
 public class MessageVoAdapter extends BaseAdapter {
-    private List<MessageVO> messageVOList;
+    private List<MessageVO> messageVOList = new ArrayList<>();
     private LayoutInflater layoutInflater;
+    private Context mContext;
 
     public MessageVoAdapter(Context context, List<MessageVO> messageVOList) {
         layoutInflater = LayoutInflater.from(context);
         this.messageVOList = messageVOList;
+        this.mContext = context;
     }
 
     @Override
@@ -69,15 +77,45 @@ public class MessageVoAdapter extends BaseAdapter {
         viewHolder.text.setText(messageVO.getText());
         viewHolder.timestamp.setText(NumberUtil.changeToHourAndMinute(messageVO.getTimestamp()));
         if (messageVO.getNewMessageCount() != 0) {
-            viewHolder.newMessageCountBackGround.setVisibility(View.VISIBLE);
-            viewHolder.newMessageCount.setText(
-                    messageVO.getNewMessageCount() > 99 ?
-                            "99+" :
-                            messageVO.getNewMessageCount().toString());
+            Badge badge = new BadgeView(mContext)
+                    .bindTarget(viewHolder.newMessageCountBackGround)
+                    .setBadgeNumber(messageVO.getNewMessageCount());
+            badge.setOnDragStateChangedListener((dragState, badge1, targetView) -> {
+                switch (dragState) {
+                    case Badge.OnDragStateChangedListener.STATE_START:
+                        break;
+                    case Badge.OnDragStateChangedListener.STATE_DRAGGING:
+                        break;
+                    case Badge.OnDragStateChangedListener.STATE_DRAGGING_OUT_OF_RANGE:
+                        break;
+                    case Badge.OnDragStateChangedListener.STATE_SUCCEED: {
+                        refresh(messageVO.getType(), messageVO.getObjectId());
+                        //刷新状态
+                    }
+                    break;
+                    case Badge.OnDragStateChangedListener.STATE_CANCELED:
+                        break;
+                    default:
+                        break;
+                }
+            });
         } else {
             viewHolder.newMessageCountBackGround.setVisibility(View.INVISIBLE);
         }
         return convertView;
+    }
+
+    private void refresh(String type, Integer objectId) {
+        RefreshVO refreshVO = new RefreshVO();
+        refreshVO.setChatType(type);
+        refreshVO.setObjectId(objectId);
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ChatMsgController.refresh(refreshVO);
+            }
+        }).start();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -90,8 +128,8 @@ public class MessageVoAdapter extends BaseAdapter {
         TextView text;
         @BindView(R.id.listview_message_vo_timestamp)
         TextView timestamp;
-        @BindView(R.id.listview_message_vo_new_message_count)
-        TextView newMessageCount;
+        //@BindView(R.id.listview_message_vo_new_message_count)
+        //TextView newMessageCount;
         @BindView(R.id.listview_message_vo_new_message_count_background)
         RelativeLayout newMessageCountBackGround;
 
