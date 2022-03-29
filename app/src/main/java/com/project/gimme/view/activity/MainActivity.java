@@ -77,9 +77,10 @@ public class MainActivity extends BaseActivity {
         initNewMessageCount(0);
         mMenuPopup = new XUISimplePopup(this, new AdapterItem[]{
                 new AdapterItem("创建群/频道", R.mipmap.app_icon),
-                new AdapterItem("添加好友/群/频道", R.mipmap.app_icon),
-                new AdapterItem("扫一扫", R.mipmap.app_icon),
+                new AdapterItem("加好友/群/频道", R.mipmap.app_icon),
+                new AdapterItem("扫一扫", R.mipmap.app_icon)
         }).setHasDivider(true).create((adapter, item, position) -> XToastUtils.toast(item.getTitle().toString()));
+
         setTopRightButton(0.0);
     }
 
