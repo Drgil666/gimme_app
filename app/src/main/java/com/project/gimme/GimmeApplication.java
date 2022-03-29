@@ -27,6 +27,7 @@ public class GimmeApplication extends Application {
     public static final String APP_KEY = "pvxdm17jpdthr";
     public static final String LOCAL_STORAGE = "gimme_token";
     public static final String TOKEN = "token";
+    public static final String APP_NAME = "gimme";
 
     public static Integer getUserId() {
         return userId;

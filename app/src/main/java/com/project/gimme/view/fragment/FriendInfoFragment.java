@@ -5,6 +5,7 @@ import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.pojo.vo.UserVoParamItem;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.UserUtil;
@@ -151,7 +153,18 @@ public class FriendInfoFragment extends Fragment {
                         .setIsCenter(true)
                         .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
                             dialog.dismiss();
-                            System.out.println("Item " + (position + 1));
+                            switch (position) {
+                                case 0: {
+                                    FileUtil.saveImageToGallery(getContext(), ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                                    XToastUtils.toast("保存成功!");
+                                    break;
+                                }
+                                case 1: {
+                                    break;
+                                }
+                                default:
+                                    break;
+                            }
                         })
                         .build()
                         .show();

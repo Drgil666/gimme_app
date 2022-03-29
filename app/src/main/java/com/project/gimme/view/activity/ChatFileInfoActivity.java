@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.PicassoTransformation;
+import com.project.gimme.utils.XToastUtils;
 import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 
@@ -93,7 +95,19 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                         .setIsCenter(true)
                         .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
                             dialog.dismiss();
-                            System.out.println("Item " + (position + 1));
+//                            XToastUtils.toast("Item " + (position + 1));
+                            switch (position) {
+                                case 0: {
+                                    FileUtil.saveImageToGallery(mContext, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                                    XToastUtils.toast("保存成功!");
+                                    break;
+                                }
+                                case 1: {
+                                    break;
+                                }
+                                default:
+                                    break;
+                            }
                         })
                         .build()
                         .show();
