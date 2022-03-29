@@ -32,6 +32,7 @@ import com.project.gimme.utils.UserUtil;
 import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendInfoAdapter;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -144,7 +145,17 @@ public class FriendInfoFragment extends Fragment {
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                return false;
+                new BottomSheet.BottomListSheetBuilder(getContext())
+                        .addItem("保存到相册")
+                        .addItem("转发")
+                        .setIsCenter(true)
+                        .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
+                            dialog.dismiss();
+                            System.out.println("Item " + (position + 1));
+                        })
+                        .build()
+                        .show();
+                return true;
             }
         });
     }

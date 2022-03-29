@@ -14,10 +14,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.utils.SessionUtil;
+import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.fragment.FriendFragment;
 import com.project.gimme.view.fragment.MessageFragment;
 import com.project.gimme.view.fragment.MyInfoFragment;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.adapter.simple.AdapterItem;
+import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +56,7 @@ public class MainActivity extends BaseActivity {
     RelativeLayout newMessageCountBackGround;
     @BindView(R.id.main_message_layout_new_message_count)
     TextView newMessageCount;
+    private XUISimplePopup mMenuPopup;
 
     //TODO:动态更新的部分仍然需要修复
     @Override
@@ -71,6 +75,12 @@ public class MainActivity extends BaseActivity {
         initTopText();
         initBottomBar(0.1);
         initNewMessageCount(0);
+        mMenuPopup = new XUISimplePopup(this, new AdapterItem[]{
+                new AdapterItem("创建群/频道", R.mipmap.app_icon),
+                new AdapterItem("添加好友/群/频道", R.mipmap.app_icon),
+                new AdapterItem("扫一扫", R.mipmap.app_icon),
+        }).setHasDivider(true).create((adapter, item, position) -> XToastUtils.toast(item.getTitle().toString()));
+        setTopRightButton(0.0);
     }
 
     public void initNewMessageCount(Integer count) {
@@ -97,7 +107,7 @@ public class MainActivity extends BaseActivity {
 
     private void setTopRightButton(double size) {
         topRightButton.setOnClickListener(view -> {
-//                    System.out.println("click!");
+            mMenuPopup.showDown(view);
                 }
         );
     }
