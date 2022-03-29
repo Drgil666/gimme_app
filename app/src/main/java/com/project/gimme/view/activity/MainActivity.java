@@ -1,6 +1,7 @@
 package com.project.gimme.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,12 @@ import com.project.gimme.view.fragment.MessageFragment;
 import com.project.gimme.view.fragment.MyInfoFragment;
 import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.adapter.simple.AdapterItem;
+import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +64,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_message_layout_new_message_count)
     TextView newMessageCount;
     private XUISimplePopup mMenuPopup;
-
+    private Context mContext = this;
     //TODO:动态更新的部分仍然需要修复
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +91,51 @@ public class MainActivity extends BaseActivity {
                 new AdapterItem("创建群/频道"),
                 new AdapterItem("加好友/群/频道"),
                 new AdapterItem("扫一扫")
-        }).setHasDivider(true).create((adapter, item, position) -> XToastUtils.toast(item.getTitle().toString()));
+        }).setHasDivider(true).
+                create(new XUISimplePopup.OnPopupItemClickListener() {
+                           @Override
+                           public void onItemClick(XUISimpleAdapter adapter, AdapterItem item, int position) {
+                               switch (position) {
+                                   case 0: {
+                                       break;
+                                   }
+                                   case 1: {
+                                       break;
+                                   }
+                                   case 2: {
+                                       List<String> itemList = new ArrayList<>();
+                                       itemList.add("相机扫描");
+                                       itemList.add("本地图片导入");
+                                       new MaterialDialog.Builder(mContext)
+                                               .title("请选择扫描方式")
+                                               .items(itemList)
+                                               .itemsCallbackSingleChoice(
+                                                       0,
+                                                       (dialog, itemView, which, text) -> {
+                                                           XToastUtils.toast(which + ": " + text);
+                                                           switch (which) {
+                                                               case 0: {
+                                                                   break;
+                                                               }
+                                                               case 1: {
+                                                                   //TODO:打开二维码功能需要设计
+                                                                   break;
+                                                               }
+                                                           }
+                                                           return true;
+                                                       })
+                                               .positiveText("选择")
+                                               .negativeText("返回")
+                                               .show();
+                                   }
+                                   default: {
+                                       XToastUtils.toast("类型错误!");
+                                       break;
+                                   }
+                               }
+                           }
+                       }
+                );
     }
 
     public void initNewMessageCount(Integer count) {
