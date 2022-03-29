@@ -69,21 +69,24 @@
             android:text="456B"
             android:textSize="18sp" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/chat_file_info_download_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/chat_file_info_file_layout">
+        android:layout_below="@id/chat_file_info_file_layout"
+        android:layout_centerHorizontal="true">
 
         <Button
             android:id="@+id/chat_file_info_download_button"
             android:layout_width="160sp"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="35sp"
-            android:textStyle="bold"
+            android:text="下载"
             android:textSize="20sp"
-            android:text="下载" />
+            android:textStyle="bold" />
+
     </RelativeLayout>
 
     <ImageView

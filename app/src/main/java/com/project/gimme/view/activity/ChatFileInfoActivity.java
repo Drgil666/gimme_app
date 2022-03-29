@@ -26,6 +26,7 @@ import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.PicassoTransformation;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 
 import java.io.File;
 
@@ -70,7 +71,7 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         filePath = path + "/" + GimmeApplication.getUserId() + "/" + id;
         //TODO:本地数据库采用id/文件名->uuid映射，文件存储采用uuid。
         initImageView();
-        getFile();
+        getFileInfo();
         initTopBar();
         downLoad();
     }
@@ -86,7 +87,17 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                return false;
+                new BottomSheet.BottomListSheetBuilder(mContext)
+                        .addItem("保存到相册")
+                        .addItem("转发")
+                        .setIsCenter(true)
+                        .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
+                            dialog.dismiss();
+                            System.out.println("Item " + (position + 1));
+                        })
+                        .build()
+                        .show();
+                return true;
             }
         });
     }
@@ -100,7 +111,7 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
 //        System.out.println("id: " + id + " fileName:" + fileName);
     }
 
-    private void getFile() {
+    private void getFileInfo() {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
@@ -136,7 +147,9 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             //如果应用之前请求过此权限但用户拒绝了请求，此方法将返回 true。
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {//这里可以写个对话框之类的项向用户解释为什么要申请权限，并在对话框的确认键后续再次申请权限.它在用户选择"不再询问"的情况下返回false
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                //这里可以写个对话框之类的项向用户解释为什么要申请权限，
+                // 并在对话框的确认键后续再次申请权限.它在用户选择"不再询问"的情况下返回false
             } else {
                 //申请权限，字符串数组内是一个或多个要申请的权限，1是申请权限结果的返回参数，在onRequestPermissionsResult可以得知申请结果
                 ActivityCompat.requestPermissions(this,
