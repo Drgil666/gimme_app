@@ -57,7 +57,6 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_message_layout_new_message_count)
     TextView newMessageCount;
     private XUISimplePopup mMenuPopup;
-
     //TODO:动态更新的部分仍然需要修复
     @Override
     protected void onCreate(Bundle savedInstanceState) {
