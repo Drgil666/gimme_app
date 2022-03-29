@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -29,6 +28,7 @@ import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.UserUtil;
+import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendInfoAdapter;
 import com.squareup.picasso.Picasso;
@@ -288,7 +288,7 @@ public class FriendInfoFragment extends Fragment {
         } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode())) {
             return getChannelItemList();
         } else {
-            Toast.makeText(getActivity(), "类型错误!", Toast.LENGTH_SHORT).show();
+            XToastUtils.toast("类型错误!");
         }
         return null;
     }

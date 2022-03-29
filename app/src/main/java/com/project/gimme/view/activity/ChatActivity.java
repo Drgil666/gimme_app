@@ -16,7 +16,6 @@ import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
@@ -36,6 +35,7 @@ import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
+import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
@@ -170,7 +170,7 @@ public class ChatActivity extends SwipeBackActivity {
             }
             getChannelInfo(objectId);
         } else {
-            Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
+            XToastUtils.toast("类型错误!");
         }
     }
 
@@ -296,7 +296,7 @@ public class ChatActivity extends SwipeBackActivity {
                     finish();
                     overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
                     Looper.prepare();
-                    Toast.makeText(ChatActivity.this, "该用户不存在!", Toast.LENGTH_LONG).show();
+                    XToastUtils.toast("该用户不存在!");
                     Looper.loop();
                 }
             }
@@ -323,7 +323,7 @@ public class ChatActivity extends SwipeBackActivity {
                     finish();
                     overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
                     Looper.prepare();
-                    Toast.makeText(ChatActivity.this, "该群组不存在!", Toast.LENGTH_LONG).show();
+                    XToastUtils.toast("该群组不存在!");
                     Looper.loop();
                 }
             }
@@ -350,7 +350,7 @@ public class ChatActivity extends SwipeBackActivity {
                     finish();
                     overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
                     Looper.prepare();
-                    Toast.makeText(ChatActivity.this, "该频道不存在!", Toast.LENGTH_LONG).show();
+                    XToastUtils.toast("该频道不存在!");
                     Looper.loop();
                 }
             }

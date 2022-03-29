@@ -15,7 +15,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -30,6 +29,7 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.ChatFileActivity;
 import com.project.gimme.view.activity.ParamActivity;
 import com.project.gimme.view.activity.QrActivity;
@@ -141,7 +141,7 @@ public class OtherInfoFragment extends Fragment {
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             getChannelVO(objectId);
         } else {
-            Toast.makeText(getContext(), "类型错误!", Toast.LENGTH_LONG).show();
+            XToastUtils.toast("类型错误!");
         }
         topBarIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +160,7 @@ public class OtherInfoFragment extends Fragment {
             memberLeft.setText("频道成员");
             getUserVoList(type, objectId);
         } else {
-            Toast.makeText(getContext(), "类型错误!", Toast.LENGTH_LONG).show();
+            XToastUtils.toast("类型错误!");
         }
     }
 
@@ -202,7 +202,7 @@ public class OtherInfoFragment extends Fragment {
             introductionGroupNoticeLayout.setVisibility(View.GONE);
             introductionGroupFileLayout.setVisibility(View.GONE);
         } else {
-            Toast.makeText(getContext(), "类型错误!", Toast.LENGTH_LONG).show();
+            XToastUtils.toast("类型错误!");
         }
     }
 

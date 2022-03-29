@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
@@ -21,6 +20,7 @@ import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.vo.LoginVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.LogUtil;
+import com.project.gimme.utils.XToastUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -92,7 +92,7 @@ public class LoginActivity extends BaseActivity {
         {
             if (StringUtils.isEmpty(userAccount.getText().toString())
                     || StringUtils.isEmpty(userPassword.getText().toString())) {
-                Toast.makeText(this, "用户名或密码不可为空!", Toast.LENGTH_LONG).show();
+                XToastUtils.toast("用户名或密码不可为空!");
             } else {
                 GimmeApplication.setToken(null);
                 login();
@@ -131,7 +131,7 @@ public class LoginActivity extends BaseActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(LoginActivity.this, "登录失败!", Toast.LENGTH_LONG).show();
+                            XToastUtils.toast("登录失败!");
                         }
                     }
                 });

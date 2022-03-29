@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.Channel;
@@ -12,6 +11,7 @@ import com.project.gimme.pojo.Group;
 import com.project.gimme.pojo.User;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.XToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,7 +71,7 @@ public class QrActivity extends SwipeBackActivity {
             bodyNick.setText(channel.getNick());
             bodyId.setText("频道号:" + channel.getId());
         } else {
-            Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
+            XToastUtils.toast("类型错误!");
         }
     }
 

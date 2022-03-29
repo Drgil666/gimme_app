@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,6 +14,7 @@ import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.InfoTypeUtil;
+import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.fragment.FriendInfoFragment;
 import com.project.gimme.view.fragment.OtherInfoFragment;
 
@@ -88,7 +88,7 @@ public class InfoActivity extends SwipeBackActivity {
                 || type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
             setTopText("频道成员设置");
         } else {
-            Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
+            XToastUtils.toast("类型错误!");
         }
         if (!to.isAdded()) {//未被add
             fragmentTransaction.hide(from).add(R.id.info_fragment, to).commit();

@@ -13,7 +13,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.gimme.R;
@@ -24,6 +23,7 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.FileUtil;
+import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ChatFileAdapter;
 import com.project.gimme.view.listview.PullRefreshListView;
 
@@ -113,7 +113,7 @@ public class ChatFileActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(), "上传成功!", Toast.LENGTH_LONG).show();
+                            XToastUtils.toast("上传成功!");
                             getChatFileList();
                         }
                     });

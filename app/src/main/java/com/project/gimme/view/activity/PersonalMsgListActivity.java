@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.PersonalMsgVO;
 import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.PersonalMsgListAdapter;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class PersonalMsgListActivity extends SwipeBackActivity {
             getPersonalMsgOtherList();
             initPersonalMsgListView();
         } else {
-            Toast.makeText(this, "类型错误!", Toast.LENGTH_LONG).show();
+            XToastUtils.toast("类型错误!");
         }
     }
 
