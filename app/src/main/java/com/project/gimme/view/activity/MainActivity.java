@@ -1,6 +1,7 @@
 package com.project.gimme.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_message_layout_new_message_count)
     TextView newMessageCount;
     private XUISimplePopup mMenuPopup;
+
     //TODO:动态更新的部分仍然需要修复
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +74,18 @@ public class MainActivity extends BaseActivity {
         fragmentTransaction.add(R.id.main_body_fragment, messageFragment).commit();
         initTopBar(0.1);
         initTopText();
+        initPopUp();
         initBottomBar(0.1);
         initNewMessageCount(0);
-        mMenuPopup = new XUISimplePopup(this, new AdapterItem[]{
-                new AdapterItem("创建群/频道", R.mipmap.app_icon),
-                new AdapterItem("加好友/群/频道", R.mipmap.app_icon),
-                new AdapterItem("扫一扫", R.mipmap.app_icon)
-        }).setHasDivider(true).create((adapter, item, position) -> XToastUtils.toast(item.getTitle().toString()));
-
         setTopRightButton(0.0);
+    }
+
+    private void initPopUp() {
+        mMenuPopup = new XUISimplePopup(this, new AdapterItem[]{
+                new AdapterItem("创建群/频道"),
+                new AdapterItem("加好友/群/频道"),
+                new AdapterItem("扫一扫")
+        }).setHasDivider(true).create((adapter, item, position) -> XToastUtils.toast(item.getTitle().toString()));
     }
 
     public void initNewMessageCount(Integer count) {
@@ -107,7 +112,12 @@ public class MainActivity extends BaseActivity {
 
     private void setTopRightButton(double size) {
         topRightButton.setOnClickListener(view -> {
-            mMenuPopup.showDown(view);
+                    if (!currentFragment.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
+                        mMenuPopup.showDown(view);
+                    } else {
+                        Intent intent = new Intent(this, SettingActivity.class);
+                        startActivity(intent);
+                    }
                 }
         );
     }
