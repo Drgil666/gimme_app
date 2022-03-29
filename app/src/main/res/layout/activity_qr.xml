@@ -42,8 +42,8 @@
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/app_icon"
-            android:background="@drawable/rounded_edit_view_gimme_dark" />
+            android:background="@drawable/rounded_edit_view_gimme_dark"
+            android:src="@mipmap/default_icon" />
 
         <TextView
             android:id="@+id/qr_body_nick"
@@ -71,7 +71,6 @@
             android:layout_height="150sp"
             android:layout_below="@+id/qr_body_id"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
-            android:src="@mipmap/app_icon" />
+            android:layout_marginTop="15sp" />
     </RelativeLayout>
 </RelativeLayout>

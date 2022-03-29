@@ -1,17 +1,26 @@
 package com.project.gimme.view.activity;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.Group;
 import com.project.gimme.pojo.User;
+import com.project.gimme.pojo.vo.QrVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.XToastUtils;
+import com.xuexiang.xqrcode.XQRCode;
+import com.xuexiang.xutil.display.ImageUtils;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +51,7 @@ public class QrActivity extends SwipeBackActivity {
         getType();
         initTopBar();
         initQrBody();
+        createQrCodeWithLogo(ImageUtils.getBitmap(R.mipmap.app_icon));
     }
 
     private void initTopBar() {
@@ -73,6 +83,21 @@ public class QrActivity extends SwipeBackActivity {
         } else {
             XToastUtils.toast("类型错误!");
         }
+        bodyQrCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createQrCodeWithLogo(ImageUtils.getBitmap(R.mipmap.app_icon));
+            }
+        });
+    }
+
+    private void createQrCodeWithLogo(Bitmap logo) {
+        QrVO qrVO = new QrVO();
+        qrVO.setObjectId(objectId);
+        qrVO.setChatType(ChatMsgUtil.CHARACTER_LIST[type].getName());
+        qrVO.setTimestamp(new Date());
+        qrVO.setShareUserId(GimmeApplication.getUserId());
+        bodyQrCode.setImageBitmap(XQRCode.createQRCodeWithLogo(new Gson().toJson(qrVO), 400, 400, logo));
     }
 
     private User getUser(Integer id) {
