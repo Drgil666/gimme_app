@@ -117,7 +117,6 @@ public class FriendListFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
         userListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
             @Override
@@ -170,7 +169,6 @@ public class FriendListFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
         groupListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
             @Override
@@ -223,7 +221,6 @@ public class FriendListFragment extends Fragment {
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
         channelListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
             @Override

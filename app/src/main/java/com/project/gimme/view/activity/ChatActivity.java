@@ -85,6 +85,7 @@ public class ChatActivity extends SwipeBackActivity {
         initChatBottom();
     }
 
+
     private void initBundle() {
         Bundle bundle = this.getIntent().getExtras();
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
@@ -132,7 +133,6 @@ public class ChatActivity extends SwipeBackActivity {
         Picasso.with(this).load(R.mipmap.back).into(leftButton);
         leftButton.setOnClickListener(view -> {
             finish();
-            overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });
         Picasso.with(this).load(R.mipmap.info).into(rightButton);
         rightButton.setOnClickListener(view -> {
@@ -142,7 +142,6 @@ public class ChatActivity extends SwipeBackActivity {
             bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
             Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
             startActivity(intent);
-            overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
             UserVO userVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), UserVO.class);
@@ -294,7 +293,6 @@ public class ChatActivity extends SwipeBackActivity {
                     });
                 } else {
                     finish();
-                    overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
                     Looper.prepare();
                     XToastUtils.toast("该用户不存在!");
                     Looper.loop();
@@ -321,7 +319,6 @@ public class ChatActivity extends SwipeBackActivity {
                     });
                 } else {
                     finish();
-                    overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
                     Looper.prepare();
                     XToastUtils.toast("该群组不存在!");
                     Looper.loop();
@@ -348,7 +345,6 @@ public class ChatActivity extends SwipeBackActivity {
                     });
                 } else {
                     finish();
-                    overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
                     Looper.prepare();
                     XToastUtils.toast("该频道不存在!");
                     Looper.loop();

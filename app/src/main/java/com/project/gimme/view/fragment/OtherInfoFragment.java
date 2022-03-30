@@ -176,7 +176,6 @@ public class OtherInfoFragment extends Fragment {
                 bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
                 Intent intent = new Intent(getActivity(), QrActivity.class).putExtras(bundle);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
             }
         });
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
@@ -194,7 +193,6 @@ public class OtherInfoFragment extends Fragment {
                     bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
                     Intent intent = new Intent(getActivity(), ChatFileActivity.class).putExtras(bundle);
                     startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
                 }
             });
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
@@ -350,7 +348,6 @@ public class OtherInfoFragment extends Fragment {
                 }
                 Intent intent = new Intent(getContext(), ParamActivity.class).putExtras(bundle);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
             }
         });
     }

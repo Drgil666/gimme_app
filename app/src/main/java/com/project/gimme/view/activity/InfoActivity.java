@@ -62,7 +62,6 @@ public class InfoActivity extends SwipeBackActivity {
     private void initTopBar(double size) {
         leftButton.setOnClickListener(view -> {
             finish();
-            overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });
         topBar.getLayoutParams().height = (int) Math.floor(height * size);
         initFragment();

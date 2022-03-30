@@ -1,7 +1,6 @@
 package com.project.gimme.view.adpter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -109,7 +108,6 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                     //TODO：尽快接入接口!
                     Intent intent = new Intent(context, InfoActivity.class).putExtras(bundle);
                     context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
                 }
             });
             viewHolder.channelNoticeCount = convertView.findViewById(R.id.left_channel_count);
@@ -137,7 +135,6 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
                     Intent intent = new Intent(context, InfoActivity.class).putExtras(bundle);
                     context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
                 }
             });
             viewHolder.channelNoticeCount = convertView.findViewById(R.id.right_channel_count);

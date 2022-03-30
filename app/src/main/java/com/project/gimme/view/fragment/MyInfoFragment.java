@@ -123,7 +123,6 @@ public class MyInfoFragment extends Fragment {
                 bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, -1);
                 Intent intent = new Intent(getContext(), InfoActivity.class).putExtras(bundle);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
             }
         });
         userInfoIcon.setOnTouchListener((view, motionEvent) -> {

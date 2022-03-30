@@ -49,7 +49,6 @@ public class PersonalMsgListActivity extends SwipeBackActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
             }
         });
         if (type.equals(TYPE_PERSONAL)) {
@@ -111,7 +110,6 @@ public class PersonalMsgListActivity extends SwipeBackActivity {
 
     @Override
     protected void onDestroy() {
-        overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         super.onDestroy();
     }
 }

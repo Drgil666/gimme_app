@@ -1,7 +1,6 @@
 package com.project.gimme.view.adpter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -72,7 +71,6 @@ public class FriendInfoAdapter extends BaseAdapter {
                     bundle.putString(BundleUtil.PARAM_VALUE_ATTRIBUTE, userVoParamItem.getParamValue());
                     Intent intent = new Intent(context, ParamActivity.class).putExtras(bundle);
                     context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
                 }
             });
         }

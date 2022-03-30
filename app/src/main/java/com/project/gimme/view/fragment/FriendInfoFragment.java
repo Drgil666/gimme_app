@@ -109,7 +109,6 @@ public class FriendInfoFragment extends Fragment {
                     bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
                     Intent intent = new Intent(getContext(), ChatActivity.class).putExtras(bundle);
                     startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
                 });
             } else {
                 chatButton.setVisibility(View.GONE);

@@ -54,14 +54,12 @@ public class ParamActivity extends SwipeBackActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
             }
         });
         topRightText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
-                overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
             }
         });
         topText.setText("编辑" + paramName);

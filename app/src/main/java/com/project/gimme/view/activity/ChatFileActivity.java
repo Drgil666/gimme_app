@@ -125,7 +125,6 @@ public class ChatFileActivity extends SwipeBackActivity {
     private void initTopBar() {
         topLeftButton.setOnClickListener(view -> {
             finish();
-            overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });
         searchText.setText("");
         searchText.addTextChangedListener(new TextWatcher() {
@@ -179,7 +178,6 @@ public class ChatFileActivity extends SwipeBackActivity {
             bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
             Intent intent = new Intent(getApplicationContext(), ChatFileInfoActivity.class).putExtras(bundle);
             startActivity(intent);
-            overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
         });
         chatFileListView.setOnRefreshListener(new PullRefreshListView.OnRefreshListener() {
             @Override

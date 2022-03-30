@@ -150,7 +150,6 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
     private void initTopBar() {
         topLeftButton.setOnClickListener(view -> {
             finish();
-            overridePendingTransition(R.anim.back_left_in, R.anim.back_right_out);
         });
     }
 

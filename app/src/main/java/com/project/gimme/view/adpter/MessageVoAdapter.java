@@ -76,9 +76,11 @@ public class MessageVoAdapter extends BaseAdapter {
         viewHolder.nick.setText(messageVO.getNick());
         viewHolder.text.setText(messageVO.getText());
         viewHolder.timestamp.setText(NumberUtil.changeToHourAndMinute(messageVO.getTimestamp()));
+        //messageVO.setNewMessageCount(150);
         if (messageVO.getNewMessageCount() != 0) {
             Badge badge = new BadgeView(mContext)
                     .bindTarget(viewHolder.newMessageCountBackGround)
+                    .setBadgeTextSize(18, true)
                     .setBadgeNumber(messageVO.getNewMessageCount());
             badge.setOnDragStateChangedListener((dragState, badge1, targetView) -> {
                 switch (dragState) {
@@ -89,6 +91,7 @@ public class MessageVoAdapter extends BaseAdapter {
                     case Badge.OnDragStateChangedListener.STATE_DRAGGING_OUT_OF_RANGE:
                         break;
                     case Badge.OnDragStateChangedListener.STATE_SUCCEED: {
+                        messageVOList.get(position).setNewMessageCount(0);
                         refresh(messageVO.getType(), messageVO.getObjectId());
                         //刷新状态
                     }
