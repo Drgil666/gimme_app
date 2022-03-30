@@ -37,6 +37,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lombok.SneakyThrows;
 
+/**
+ * @author 25741
+ */
 @SuppressLint("NonConstantResourceId")
 public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.search_search_edit_text)
@@ -82,8 +85,10 @@ public class SearchActivity extends AppCompatActivity {
                 Intent intent;
                 if (searchVO.getIsJoined()) {
                     intent = new Intent(mContext, ChatActivity.class).putExtras(bundle);
-                } else {
+                } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_FRIEND.getName())) {
                     intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
+                } else {
+                    intent = new Intent(mContext, OtherInformationActivity.class).putExtras(bundle);
                 }
                 startActivity(intent);
             }
@@ -125,31 +130,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void getSearchList(String keyword) {
-//        searchVOList = new ArrayList<>();
-//        for (int i = 1; i <= 5; i++) {
-//            SearchVO searchVO = new SearchVO();
-//            searchVO.setAvatar(null);
-//            searchVO.setObjectId(i);
-//            searchVO.setObjectType(ChatMsgUtil.Character.TYPE_FRIEND.getName());
-//            searchVO.setObjectNick("好友" + i);
-//            searchVOList.add(searchVO);
-//        }
-//        for (int i = 1; i <= 5; i++) {
-//            SearchVO searchVO = new SearchVO();
-//            searchVO.setAvatar(null);
-//            searchVO.setObjectId(i);
-//            searchVO.setObjectType(ChatMsgUtil.Character.TYPE_GROUP.getName());
-//            searchVO.setObjectNick("群聊" + i);
-//            searchVOList.add(searchVO);
-//        }
-//        for (int i = 1; i <= 5; i++) {
-//            SearchVO searchVO = new SearchVO();
-//            searchVO.setAvatar(null);
-//            searchVO.setObjectId(i);
-//            searchVO.setObjectType(ChatMsgUtil.Character.TYPE_CHANNEL.getName());
-//            searchVO.setObjectNick("频道" + i);
-//            searchVOList.add(searchVO);
-//        }
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
