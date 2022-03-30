@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gimme_background_lighter"
+    tools:context=".view.activity.OtherInformationActivity">
+    <!--顶边栏-->
+    <RelativeLayout
+        android:id="@+id/other_information_info_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/gimme_background_lighter">
+
+        <TextView
+            android:id="@+id/other_information_info_top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="群聊资料"
+            android:textColor="@color/black"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/other_information_info_top_left_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:src="@mipmap/back" />
+    </RelativeLayout>
+    <!--群聊/频道标题-->
+    <RelativeLayout
+        android:id="@+id/other_information_info_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/other_information_info_top_bar"
+        android:background="@drawable/list_item_color_bg"
+        android:clickable="true"
+        android:padding="15sp">
+
+        <ImageView
+            android:id="@+id/other_information_top_info_icon"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:src="@mipmap/default_icon" />
+
+        <TextView
+            android:id="@+id/other_information_top_info_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="15sp"
+            android:layout_toEndOf="@+id/other_information_top_info_icon"
+            android:text="群聊"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/other_information_top_info_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/other_information_top_info_icon"
+            android:layout_marginTop="10sp"
+            android:text="本群创建于1970年01月01日"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <!--群聊/频道介绍-->
+    <RelativeLayout
+        android:id="@+id/other_information_introduction_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/other_information_info_bar"
+        android:layout_marginTop="10sp"
+        android:background="@drawable/list_item_color_bg"
+        android:clickable="true"
+        android:padding="15sp">
+
+        <TextView
+            android:id="@+id/other_information_introduction_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="群介绍"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/other_information_introduction_left_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/other_information_introduction_left_text"
+            android:layout_marginTop="10sp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="这是一个介绍这是一个介绍这是一个介绍这是一个介绍这是一个介绍这是一个介绍这是一个介绍这是一个介绍这是一个介绍这是一个介绍这是一个介绍这是一个介绍"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <!--群聊/频道成员-->
+    <RelativeLayout
+        android:id="@+id/other_information_member_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/other_information_introduction_bar"
+        android:layout_marginTop="10sp"
+        android:background="@drawable/list_item_color_bg"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/other_information_member_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15sp"
+            android:layout_marginTop="5sp"
+            android:text="成员概况"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/other_information_member_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:layout_marginEnd="5sp"
+            android:layout_toStartOf="@+id/other_information_member_icon"
+            android:text="查看35名群成员"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/other_information_member_icon"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5sp"
+            android:layout_marginEnd="10sp"
+            android:src="@mipmap/right_arrow" />
+
+        <GridView
+            android:id="@+id/other_information_member_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/other_information_member_left_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="30sp"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="10sp"
+            android:numColumns="5"
+            tools:ignore="NestedScrolling" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/other_information_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:padding="5sp">
+
+        <Button
+            android:id="@+id/other_information_bottom_left"
+            android:layout_width="180sp"
+            android:layout_height="60sp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10sp"
+            android:text="111" />
+
+        <Button
+            android:id="@+id/other_information_bottom_right"
+            android:layout_width="180sp"
+            android:layout_height="60sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10sp"
+            android:text="222" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/other_information_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:visibility="gone" />
+</RelativeLayout>

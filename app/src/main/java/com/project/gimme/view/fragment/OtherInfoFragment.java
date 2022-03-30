@@ -10,9 +10,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,10 +29,10 @@ import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.ChatFileActivity;
+import com.project.gimme.view.activity.OtherInformationActivity;
 import com.project.gimme.view.activity.ParamActivity;
 import com.project.gimme.view.activity.QrActivity;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,10 +90,8 @@ public class OtherInfoFragment extends Fragment {
     private Unbinder unbinder;
     private GroupNotice groupNotice = new GroupNotice();
     private Boolean isJoined;
-    @BindView(R.id.fragment_other_img)
-    ImageView imageView;
-    @BindView(R.id.fragment_other_info_top_bar_icon)
-    ImageView topBarIcon;
+    @BindView(R.id.fragment_other_info_top_bar)
+    RelativeLayout topBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,25 +103,9 @@ public class OtherInfoFragment extends Fragment {
         initMember();
         initIntroduction();
         initMyLayout();
-        initImageView();
         return view;
     }
 
-    private void initImageView() {
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageView.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha1to0));
-                imageView.setVisibility(View.GONE);
-            }
-        });
-        imageView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });
-    }
 
     private void getType() {
         Bundle bundle = getActivity().getIntent().getExtras();
@@ -143,11 +123,14 @@ public class OtherInfoFragment extends Fragment {
         } else {
             XToastUtils.toast("类型错误!");
         }
-        topBarIcon.setOnClickListener(new View.OnClickListener() {
+        topBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Picasso.with(getContext()).load(R.mipmap.default_icon).into(imageView);
-                imageView.setVisibility(View.VISIBLE);
+                Bundle bundle = new Bundle();
+                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                Intent intent = new Intent(getContext(), OtherInformationActivity.class).putExtras(bundle);
+                startActivity(intent);
             }
         });
     }

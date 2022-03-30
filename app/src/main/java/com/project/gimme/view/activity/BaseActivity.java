@@ -6,9 +6,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tandong.swichlayout.BaseEffects;
-import com.tandong.swichlayout.SwichLayoutInterFace;
-import com.tandong.swichlayout.SwitchLayout;
 import com.xuexiang.xui.XUI;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
@@ -18,7 +15,7 @@ import io.github.rockerhieu.emojiconize.Emojiconize;
  * @author DrGilbert
  * @date 2022/1/8 16:48
  */
-public class BaseActivity extends AppCompatActivity implements SwichLayoutInterFace {
+public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +35,5 @@ public class BaseActivity extends AppCompatActivity implements SwichLayoutInterF
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    @Override
-    public void setEnterSwichLayout() {
-        SwitchLayout.getSlideFromLeft(this, false, null);
-    }
-
-    //第二个Activity退出时的动画效果
-    @Override
-    public void setExitSwichLayout() {
-        SwitchLayout.getSlideToLeft(this, true,
-                BaseEffects.getMoreQuickEffect());
     }
 }
