@@ -1,13 +1,17 @@
 package com.project.gimme.view.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,10 +25,15 @@ import com.project.gimme.view.fragment.FriendFragment;
 import com.project.gimme.view.fragment.MessageFragment;
 import com.project.gimme.view.fragment.MyInfoFragment;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xqrcode.XQRCode;
+import com.xuexiang.xqrcode.util.QRCodeAnalyzeUtils;
 import com.xuexiang.xui.adapter.simple.AdapterItem;
 import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
+import com.xuexiang.xutil.app.IntentUtils;
+import com.xuexiang.xutil.app.PathUtils;
+import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +73,17 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_message_layout_new_message_count)
     TextView newMessageCount;
     private XUISimplePopup mMenuPopup;
-    private Context mContext = this;
+    private final Context mContext = this;
+    private final Activity activity = this;
+    /**
+     * 扫描跳转Activity RequestCode
+     */
+    public static final int REQUEST_CODE = 111;
+    /**
+     * 选择系统图片Request Code
+     */
+    public static final int REQUEST_IMAGE = 112;
+
     //TODO:动态更新的部分仍然需要修复
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +134,15 @@ public class MainActivity extends BaseActivity {
                                                            XToastUtils.toast(which + ": " + text);
                                                            switch (which) {
                                                                case 0: {
+                                                                   XQRCode.startScan(activity, REQUEST_CODE);
                                                                    break;
                                                                }
                                                                case 1: {
-                                                                   //TODO:打开二维码功能需要设计
+                                                                   startActivityForResult(IntentUtils.getDocumentPickerIntent(IntentUtils.DocumentType.IMAGE), REQUEST_IMAGE);
                                                                    break;
+                                                               }
+                                                               default: {
+                                                                   XToastUtils.toast("类型错误!");
                                                                }
                                                            }
                                                            return true;
@@ -136,6 +159,61 @@ public class MainActivity extends BaseActivity {
                            }
                        }
                 );
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //处理二维码扫描结果
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            //处理扫描结果（在界面上显示）
+            handleScanResult(data);
+        }
+        //选择系统图片并解析
+        else if (requestCode == REQUEST_IMAGE) {
+            if (data != null) {
+                Uri uri = data.getData();
+                getAnalyzeQRCodeResult(uri);
+            }
+        }
+    }
+
+    /**
+     * 处理二维码扫描结果
+     *
+     * @param data
+     */
+    private void handleScanResult(Intent data) {
+        if (data != null) {
+            Bundle bundle = data.getExtras();
+            if (bundle != null) {
+                if (bundle.getInt(XQRCode.RESULT_TYPE) == XQRCode.RESULT_SUCCESS) {
+                    String result = bundle.getString(XQRCode.RESULT_DATA);
+                    XToastUtils.toast("解析结果:" + result);
+                } else if (bundle.getInt(XQRCode.RESULT_TYPE) == XQRCode.RESULT_FAILED) {
+                    XToastUtils.toast("解析二维码失败");
+                }
+            }
+        }
+    }
+
+    /**
+     * 进行二维码解析
+     *
+     * @param uri
+     */
+    private void getAnalyzeQRCodeResult(Uri uri) {
+        XQRCode.analyzeQRCode(PathUtils.getFilePathByUri(mContext, uri), new QRCodeAnalyzeUtils.AnalyzeCallback() {
+            @Override
+            public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
+                ToastUtils.toast("解析结果:" + result, Toast.LENGTH_LONG);
+            }
+
+            @Override
+            public void onAnalyzeFailed() {
+                ToastUtils.toast("解析二维码失败", Toast.LENGTH_LONG);
+            }
+        });
     }
 
     public void initNewMessageCount(Integer count) {
