@@ -6,6 +6,7 @@ package com.project.gimme.utils;
  */
 public class TextUtil {
     private static String regex = "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]";
+    private static Integer threshold = 12;
 
     public static String expandableText(String text) {
         int cnt = 0;
@@ -22,7 +23,7 @@ public class TextUtil {
                 cnt++;
                 newText.append(text.charAt(i));
             }
-            if (cnt >= 10 && i != text.length() - 1) {
+            if (cnt >= threshold && i != text.length() - 1) {
                 cnt = 0;
                 newText.append("\n");
             }

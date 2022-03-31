@@ -14,6 +14,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -39,6 +41,7 @@ import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
+import com.project.gimme.view.adpter.EmojiAdapter;
 import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
 
@@ -80,6 +83,8 @@ public class ChatActivity extends SwipeBackActivity {
     ImageView addButton;
     @BindView(R.id.chat_bottom_below_layout)
     RelativeLayout bottomBelowLayout;
+    @BindView(R.id.chat_bottom_below_listview)
+    GridView bottomBelowGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,6 +208,7 @@ public class ChatActivity extends SwipeBackActivity {
                 System.out.println(chatBottomEditText.getContentText());
             }
         });
+        //TODO:切换页面时需要关闭输入法，或者关闭表情界面等。
         chatBottomEditText.getEditText().setOnEditorActionListener((v, actionId, event) -> {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER
                     && v.getText() != null
@@ -224,6 +230,20 @@ public class ChatActivity extends SwipeBackActivity {
             public void onClick(View v) {
                 if (bottomBelowLayout.getVisibility() == View.GONE) {
                     bottomBelowLayout.setVisibility(View.VISIBLE);
+                    bottomBelowGridView.setNumColumns(7);
+                    chatBottomEditText.getEditText().clearFocus();
+                    bottomBelowGridView.setHorizontalSpacing(10);
+                    bottomBelowGridView.setVerticalSpacing(10);
+                    bottomBelowGridView.setAdapter(new EmojiAdapter(mContext));
+                    bottomBelowGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            String emoji = (String) bottomBelowGridView.getAdapter().getItem(position);
+                            String text = chatBottomEditText.getEditText().getText().toString();
+                            text += emoji;
+                            chatBottomEditText.getEditText().setText(text);
+                        }
+                    });
                 } else {
                     bottomBelowLayout.setVisibility(View.GONE);
                 }
