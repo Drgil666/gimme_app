@@ -42,15 +42,21 @@ public class Channel {
      */
     @Property(nameInDb = "description")
     private String description;
+    /**
+     * 频道头像
+     */
+    @Property(nameInDb = "avatar")
+    private String avatar;
 
-    @Generated(hash = 931615689)
+    @Generated(hash = 678621732)
     public Channel(Integer id, Integer ownerId, String nick, Date createTime,
-                   String description) {
+                   String description, String avatar) {
         this.id = id;
         this.ownerId = ownerId;
         this.nick = nick;
         this.createTime = createTime;
         this.description = description;
+        this.avatar = avatar;
     }
 
     @Generated(hash = 459652974)
@@ -95,5 +101,13 @@ public class Channel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

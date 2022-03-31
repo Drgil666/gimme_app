@@ -29,12 +29,12 @@ import okhttp3.Response;
  */
 public class ChatMsgController {
 
-    public static ResponseData<List<MessageVO>> getMessageVoList() throws IOException {
+    public static ResponseData<List<MessageVO>> getMessageVoList(String keyword) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .header(TOKEN, GimmeApplication.getToken())
-                .url(REMOTE_URL + "/api/chatMsg/list/info").get().build();
+                .url(REMOTE_URL + "/api/chatMsg/list/info?keyword=" + keyword).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {

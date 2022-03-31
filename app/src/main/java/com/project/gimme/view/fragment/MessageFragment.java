@@ -114,7 +114,7 @@ public class MessageFragment extends Fragment {
             @SneakyThrows
             @Override
             public void run() {
-                ResponseData<List<MessageVO>> responseData = ChatMsgController.getMessageVoList();
+                ResponseData<List<MessageVO>> responseData = ChatMsgController.getMessageVoList("");
                 if (responseData != null && responseData.isSuccess()) {
                     messageVOList = responseData.getData();
                     handler.post(new Runnable() {

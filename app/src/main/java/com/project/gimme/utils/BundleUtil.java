@@ -16,4 +16,7 @@ public class BundleUtil {
     public static final String SEARCH_TYPE_ATTRIBUTE = "search_type";
     public static final String CHANNEL_NOTICE_ID_ATTRIBUTE = "channel_notice_id";
     public static final String IS_JOINED_ATTRIBUTE = "is_joined";
+    public static final String CONTACTS_LIST_TYPE_ATTRIBUTE = "friend_list_type";
+    public static final String CHAT_MSG_ID_ATTRIBUTE = "chat_msg_id";
+    public static final String TRANSMIT_ATTRIBUTE = "transmit";
 }

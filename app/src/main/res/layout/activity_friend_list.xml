@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gimme_background_lighter"
+    tools:context=".view.activity.FriendListActivity">
+    <!--顶边栏-->
+    <RelativeLayout
+        android:id="@+id/activity_friend_list_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:layout_marginTop="10sp"
+        android:background="@color/gimme_background_lighter">
+
+        <TextView
+            android:id="@+id/activity_friend_list_top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="创建群聊/频道"
+            android:textColor="@color/black"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/activity_friend_list_top_left_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:src="@mipmap/back" />
+    </RelativeLayout>
+
+    <com.xuexiang.xui.widget.tabbar.EasyIndicator
+        android:id="@+id/activity_friend_list_indicator1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_friend_list_top_bar"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/gimme_background_lighter"
+        app:indicator_height="42dp"
+        app:indicator_line_color="@color/gimme_color"
+        app:indicator_line_height="2dp"
+        app:indicator_line_show="true"
+        app:indicator_selected_color="@color/gimme_color"
+        app:indicator_textSize="14sp"
+        app:indicator_width="0dp" />
+
+    <RelativeLayout
+        android:id="@+id/activity_friend_list_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:layout_below="@+id/activity_friend_list_indicator1"
+        android:background="@color/gimme_background_dark">
+
+        <EditText
+            android:id="@+id/activity_friend_list_search_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:background="@drawable/rounded_edit_view_white_5px"
+            android:hint="   搜索" />
+
+    </RelativeLayout>
+
+    <com.xuexiang.xui.widget.tabbar.EasyIndicator
+        android:id="@+id/activity_friend_list_indicator2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_friend_list_search_layout"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/gimme_background_lighter"
+        app:indicator_height="42dp"
+        app:indicator_line_color="@color/gimme_color"
+        app:indicator_line_height="2dp"
+        app:indicator_line_show="true"
+        app:indicator_selected_color="@color/gimme_color"
+        app:indicator_textSize="14sp"
+        app:indicator_width="0dp" />
+
+    <ListView
+        android:id="@+id/activity_friend_list_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_friend_list_indicator2"
+        android:layout_marginTop="9dp"
+        android:background="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/activity_friend_list_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:padding="10sp">
+
+        <Button
+            android:id="@+id/activity_friend_list_bottom_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="立即创建"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</RelativeLayout>

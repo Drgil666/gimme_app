@@ -13,8 +13,10 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.project.gimme.GimmeApplication;
@@ -72,6 +74,12 @@ public class ChatActivity extends SwipeBackActivity {
     private ChatMsgVoAdapter chatMsgVoAdapter;
     Handler handler = new Handler();
     final Context mContext = this;
+    @BindView(R.id.chat_bottom_edit_emoji)
+    ImageView emojiButton;
+    @BindView(R.id.chat_bottom_edit_add)
+    ImageView addButton;
+    @BindView(R.id.chat_bottom_below_layout)
+    RelativeLayout bottomBelowLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +91,7 @@ public class ChatActivity extends SwipeBackActivity {
         initTopBar();
         initChatListView();
         initChatBottom();
+        initChatBottomBelow();
     }
 
 
@@ -206,6 +215,29 @@ public class ChatActivity extends SwipeBackActivity {
                 }
             }
             return true;
+        });
+    }
+
+    private void initChatBottomBelow() {
+        emojiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomBelowLayout.getVisibility() == View.GONE) {
+                    bottomBelowLayout.setVisibility(View.VISIBLE);
+                } else {
+                    bottomBelowLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomBelowLayout.getVisibility() == View.GONE) {
+                    bottomBelowLayout.setVisibility(View.VISIBLE);
+                } else {
+                    bottomBelowLayout.setVisibility(View.GONE);
+                }
+            }
         });
     }
 

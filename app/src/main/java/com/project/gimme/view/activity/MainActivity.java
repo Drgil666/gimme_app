@@ -19,6 +19,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.utils.SessionUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.fragment.FriendFragment;
@@ -116,9 +118,17 @@ public class MainActivity extends BaseActivity {
                            public void onItemClick(XUISimpleAdapter adapter, AdapterItem item, int position) {
                                switch (position) {
                                    case 0: {
+                                       Bundle bundle = new Bundle();
+                                       bundle.putInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE, ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode());
+                                       Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
+                                       startActivity(intent);
                                        break;
                                    }
                                    case 1: {
+                                       Bundle bundle = new Bundle();
+                                       bundle.putInt(BundleUtil.SEARCH_TYPE_ATTRIBUTE, ContactsUtil.SearchType.TYPE_MESSAGE.getCode());
+                                       Intent intent = new Intent(mContext, SearchActivity.class).putExtras(bundle);
+                                       startActivity(intent);
                                        break;
                                    }
                                    case 2: {

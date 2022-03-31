@@ -37,13 +37,20 @@ public class Group {
      */
     @Property(nameInDb = "description")
     private String description;
+    /**
+     * 群头像
+     */
+    @Property(nameInDb = "avatar")
+    private String avatar;
 
-    @Generated(hash = 1637966632)
-    public Group(Integer id, Date createTime, String nick, String description) {
+    @Generated(hash = 56168295)
+    public Group(Integer id, Date createTime, String nick, String description,
+                 String avatar) {
         this.id = id;
         this.createTime = createTime;
         this.nick = nick;
         this.description = description;
+        this.avatar = avatar;
     }
 
     @Generated(hash = 117982048)
@@ -80,5 +87,13 @@ public class Group {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

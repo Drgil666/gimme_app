@@ -58,7 +58,7 @@
                 android:layout_marginEnd="20sp"
                 android:src="@mipmap/info" />
         </RelativeLayout>
-
+        <!--聊天记录-->
         <ListView
             android:id="@+id/chat_list_view"
             android:layout_width="fill_parent"
@@ -76,31 +76,66 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            android:padding="10sp">
+            android:background="@color/white">
 
-            <!--            <EditText-->
-            <!--                android:id="@+id/chat_bottom_edit_text"-->
-            <!--                android:layout_width="300sp"-->
-            <!--                android:layout_height="30sp"-->
-            <!--                android:layout_centerVertical="true"-->
-            <!--                android:layout_marginStart="20sp"-->
-            <!--                android:background="@drawable/rounded_edit_view_gimme"-->
-            <!--                android:visibility="gone"-->
-            <!--                android:textSize="20sp" />-->
-            <com.xuexiang.xui.widget.edittext.MultiLineEditText
-                android:id="@+id/chat_bottom_edit_text"
-                android:layout_width="300sp"
+            <RelativeLayout
+                android:id="@+id/chat_bottom_text_bar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10sp"
-                android:layout_marginTop="10sp"
-                android:layout_marginBottom="10sp"
-                android:background="@drawable/rounded_edit_view_gimme"
-                app:mlet_contentTextSize="20sp"
-                app:mlet_contentViewHeight="20sp"
-                app:mlet_isFixHeight="false"
-                app:mlet_showSurplusNumber="false" />
+                android:padding="10sp">
+                <!--            <EditText-->
+                <!--                android:id="@+id/chat_bottom_edit_text"-->
+                <!--                android:layout_width="300sp"-->
+                <!--                android:layout_height="30sp"-->
+                <!--                android:layout_centerVertical="true"-->
+                <!--                android:layout_marginStart="20sp"-->
+                <!--                android:background="@drawable/rounded_edit_view_gimme"-->
+                <!--                android:visibility="gone"-->
+                <!--                android:textSize="20sp" />-->
+                <com.xuexiang.xui.widget.edittext.MultiLineEditText
+                    android:id="@+id/chat_bottom_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    android:layout_toLeftOf="@+id/chat_bottom_edit_emoji"
+                    android:background="@drawable/rounded_edit_view_gimme"
+                    app:mlet_contentTextSize="20sp"
+                    app:mlet_contentViewHeight="20sp"
+                    app:mlet_isFixHeight="false"
+                    app:mlet_showSurplusNumber="false" />
 
+                <ImageView
+                    android:id="@+id/chat_bottom_edit_emoji"
+                    android:layout_width="45sp"
+                    android:layout_height="45sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5sp"
+                    android:layout_toStartOf="@+id/chat_bottom_edit_add"
+                    android:src="@mipmap/emoji" />
+
+                <ImageView
+                    android:id="@+id/chat_bottom_edit_add"
+                    android:layout_width="45sp"
+                    android:layout_height="45sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/add_plus_round" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/chat_bottom_below_layout"
+                android:layout_width="match_parent"
+                android:layout_height="250sp"
+                android:visibility="gone"
+                android:layout_below="@+id/chat_bottom_text_bar"
+                android:padding="25sp">
+
+                <GridView
+                    android:id="@+id/chat_bottom_below_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:numColumns="4" />
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
 

@@ -44,7 +44,6 @@
             android:id="@+id/main_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/main_bottom_bar"
             android:layout_below="@+id/main_top_bar"
             android:background="@color/gimme_background_lighter">
 
@@ -61,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="80sp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="0sp"
             android:background="@color/white">
 
             <LinearLayout
