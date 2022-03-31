@@ -19,7 +19,6 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Emoji初始化
         XUI.initTheme(this);
         Emojiconize.activity(this).go();
         super.onCreate(savedInstanceState);

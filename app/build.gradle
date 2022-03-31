@@ -56,9 +56,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.3.0'
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    //Emoji表情支持
-    implementation 'io.github.rockerhieu:emojiconize:1.0.0'
-    implementation 'io.github.rockerhieu:emojicon:1.4.2'
     //右滑关闭页面
     implementation 'cn.bingoogolapple:bga-swipebacklayout:2.0.1@aar'
     //ButterKnife
@@ -80,4 +77,7 @@ dependencies {
     implementation 'com.github.xuexiangjys.XUtil:xutil-sub:2.0.0'
     //XQRCode二维码扫描
     implementation 'com.github.xuexiangjys:XQRCode:1.1.0'
+    //Emoji支持
+    implementation 'io.github.rockerhieu:emojiconize:1.0.0'
+    implementation 'io.github.rockerhieu:emojicon:1.4.1'
 }

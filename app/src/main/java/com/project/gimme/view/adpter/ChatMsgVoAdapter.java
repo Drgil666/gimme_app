@@ -29,6 +29,8 @@ import com.project.gimme.view.activity.InfoActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.rockerhieu.emojicon.EmojiconTextView;
+
 /**
  * @author DrGilbert
  * @date 2022/1/13 12:56
@@ -91,6 +93,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
             viewHolder.text = convertView.findViewById(R.id.left_content);
             viewHolder.text.setText(TextUtil.expandableText(chatMsgVO.getText()));
+            viewHolder.text.setEmojiconSize(30);
             viewHolder.nick = convertView.findViewById(R.id.left_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
             viewHolder.icon.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +122,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
             viewHolder.text = convertView.findViewById(R.id.right_content);
             viewHolder.text.setText(TextUtil.expandableText(chatMsgVO.getText()));
+            viewHolder.text.setEmojiconSize(30);
             viewHolder.nick = convertView.findViewById(R.id.right_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
             viewHolder.icon.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +188,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
     static class ViewHolder {
         ImageView icon;
         TextView nick;
-        TextView text;
+        EmojiconTextView text;
         TextView channelNoticeCount;
         RelativeLayout leftLayout;
         RelativeLayout rightLayout;
