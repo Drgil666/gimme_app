@@ -288,6 +288,8 @@ public class ChatActivity extends SwipeBackActivity {
                     }
                     case 2: {
                         //待办
+                        Intent intent = new Intent(mContext, ToDoListActivity.class);
+                        startActivity(intent);
                         break;
                     }
                 }
