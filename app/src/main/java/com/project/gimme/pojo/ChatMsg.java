@@ -48,27 +48,36 @@ public class ChatMsg {
      */
     @Property(nameInDb = "owner_id")
     private Integer ownerId;
+    /**
+     * 消息类型
+     */
+    @Property(nameInDb = "msgType")
+    private Integer msgType;
 
-    @Generated(hash = 811432883)
+    @Generated(hash = 1878353699)
     public ChatMsg(Integer id, String text, String type, Integer objectId,
-                   Date timeStamp, Integer ownerId) {
+                   Date timeStamp, Integer ownerId, Integer msgType) {
         this.id = id;
         this.text = text;
         this.type = type;
         this.objectId = objectId;
         this.timeStamp = timeStamp;
         this.ownerId = ownerId;
+        this.msgType = msgType;
     }
 
     @Generated(hash = 1355502543)
     public ChatMsg() {
     }
+
     public Integer getId() {
         return this.id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getText() {
         return this.text;
     }
@@ -88,20 +97,33 @@ public class ChatMsg {
     public Integer getObjectId() {
         return this.objectId;
     }
+
     public void setObjectId(Integer objectId) {
         this.objectId = objectId;
     }
+
     public Date getTimeStamp() {
         return this.timeStamp;
     }
+
     public void setTimeStamp(Date timeStamp) {
         this.timeStamp = timeStamp;
     }
+
     public Integer getOwnerId() {
         return this.ownerId;
     }
+
     public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public Integer getMsgType() {
+        return this.msgType;
+    }
+
+    public void setMsgType(Integer msgType) {
+        this.msgType = msgType;
     }
 
 }

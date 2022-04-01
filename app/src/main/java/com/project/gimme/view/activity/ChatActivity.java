@@ -7,6 +7,7 @@ import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,10 +26,12 @@ import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.ChannelNoticeController;
+import com.project.gimme.controller.ChatFileInfoController;
 import com.project.gimme.controller.ChatMsgController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.ChannelNotice;
+import com.project.gimme.pojo.ChatFile;
 import com.project.gimme.pojo.ChatMsg;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
@@ -38,16 +41,22 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.JsonUtil;
+import com.project.gimme.utils.MsgTypeUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 import com.project.gimme.view.adpter.EmojiAdapter;
+import com.project.gimme.view.adpter.ExtraOptionAdapter;
 import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
+import com.xuexiang.xutil.app.IntentUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -75,7 +84,8 @@ public class ChatActivity extends SwipeBackActivity {
     TextView topDescription;
     private List<ChatMsgVO> chatMsgVOList = new ArrayList<>();
     private ChatMsgVoAdapter chatMsgVoAdapter;
-    Handler handler = new Handler();
+    Handler handler1 = new Handler();
+    Handler handler2 = new Handler();
     final Context mContext = this;
     @BindView(R.id.chat_bottom_edit_emoji)
     ImageView emojiButton;
@@ -85,6 +95,9 @@ public class ChatActivity extends SwipeBackActivity {
     RelativeLayout bottomBelowLayout;
     @BindView(R.id.chat_bottom_below_listview)
     GridView bottomBelowGridView;
+    private Integer currentBottomBelow = 0;
+    private static final Integer EMOJI_GRIDVIEW = 0;
+    private static final Integer EXTRA_OPTION_GRIDVIEW = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +111,6 @@ public class ChatActivity extends SwipeBackActivity {
         initChatBottom();
         initChatBottomBelow();
     }
-
 
     private void initBundle() {
         Bundle bundle = this.getIntent().getExtras();
@@ -129,7 +141,7 @@ public class ChatActivity extends SwipeBackActivity {
                         ChatMsgController.getChatMsgVoList(ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId, "");
                 if (responseData != null && responseData.isSuccess()) {
                     chatMsgVOList = responseData.getData();
-                    handler.post(new Runnable() {
+                    handler1.post(new Runnable() {
                         @Override
                         public void run() {
                             chatMsgVoAdapter = new ChatMsgVoAdapter(mContext, chatMsgVOList, type);
@@ -216,7 +228,12 @@ public class ChatActivity extends SwipeBackActivity {
                 System.out.println("这里是监听回车事件->" + chatBottomEditText.getContentText());
                 if (!StringUtils.isEmpty(chatBottomEditText.getContentText())) {
                     refresh();
-                    createChatMsg(chatBottomEditText.getContentText());
+                    ChatMsg chatMsg = new ChatMsg();
+                    chatMsg.setText(chatBottomEditText.getContentText());
+                    chatMsg.setMsgType(MsgTypeUtil.MsgType.TYPE_TEXT.getCode());
+                    chatMsg.setObjectId(objectId);
+                    chatMsg.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
+                    createChatMsg(chatMsg);
                     chatBottomEditText.setContentText(null);
                 }
             }
@@ -224,28 +241,111 @@ public class ChatActivity extends SwipeBackActivity {
         });
     }
 
+    private void initEmojiGridView() {
+        currentBottomBelow = EMOJI_GRIDVIEW;
+        bottomBelowLayout.setVisibility(View.VISIBLE);
+        bottomBelowGridView.setNumColumns(7);
+        chatBottomEditText.getEditText().clearFocus();
+        bottomBelowGridView.setHorizontalSpacing(10);
+        bottomBelowGridView.setVerticalSpacing(10);
+        bottomBelowGridView.setAdapter(new EmojiAdapter(mContext));
+        bottomBelowGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String emoji = (String) bottomBelowGridView.getAdapter().getItem(position);
+                String text = chatBottomEditText.getEditText().getText().toString();
+                text += emoji;
+                chatBottomEditText.getEditText().setText(text);
+            }
+        });
+    }
+
+    private void initExtraOptionGridView() {
+        currentBottomBelow = EXTRA_OPTION_GRIDVIEW;
+        bottomBelowLayout.setVisibility(View.VISIBLE);
+        bottomBelowGridView.setNumColumns(4);
+        chatBottomEditText.getEditText().clearFocus();
+        bottomBelowGridView.setHorizontalSpacing(10);
+        bottomBelowGridView.setVerticalSpacing(10);
+        bottomBelowGridView.setAdapter(new ExtraOptionAdapter(mContext));
+        bottomBelowGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ExtraOptionAdapter.ExtraOptionItem extraOptionItem = (ExtraOptionAdapter.ExtraOptionItem) bottomBelowGridView.getAdapter().getItem(position);
+                System.out.println(extraOptionItem.getText());
+                switch (position) {
+                    case 0: {
+                        //发送图片
+                        Intent intent = IntentUtils.getDocumentPickerIntent(IntentUtils.DocumentType.IMAGE);
+                        startActivityForResult(intent, MsgTypeUtil.MsgType.TYPE_PIC.getCode());
+                        break;
+                    }
+                    case 1: {
+                        //发送文件
+                        break;
+                    }
+                    case 2: {
+                        //待办
+                        break;
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MsgTypeUtil.MsgType.TYPE_PIC.getCode()) {
+            if (data != null) {
+                Uri uri = data.getData();
+                if (FileUtil.getRealPathFromUri(this, uri) != null) {
+                    //从uri得到绝对路径，并获取到file文件
+                    File file = new File(FileUtil.getRealPathFromUri(this, uri));
+                    uploadFile(file, ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId);
+                }
+            }
+        }
+    }
+
+    private void uploadFile(File file, String chatType, Integer objectId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<ChatFile> responseData = ChatFileInfoController.upLoadFile(file, chatType, objectId);
+                if (responseData != null && responseData.isSuccess()) {
+                    ChatFile chatFile = responseData.getData();
+                    handler1.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChatMsg chatMsg = new ChatMsg();
+                            chatMsg.setMsgType(MsgTypeUtil.MsgType.TYPE_PIC.getCode());
+                            chatMsg.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
+                            chatMsg.setObjectId(objectId);
+                            chatMsg.setText(chatFile.getMongoId());
+                            chatMsg.setOwnerId(chatFile.getOwnerId());
+                            chatMsg.setTimeStamp(new Date());
+                            createChatMsg(chatMsg);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
     private void initChatBottomBelow() {
         emojiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bottomBelowLayout.getVisibility() == View.GONE) {
-                    bottomBelowLayout.setVisibility(View.VISIBLE);
-                    bottomBelowGridView.setNumColumns(7);
-                    chatBottomEditText.getEditText().clearFocus();
-                    bottomBelowGridView.setHorizontalSpacing(10);
-                    bottomBelowGridView.setVerticalSpacing(10);
-                    bottomBelowGridView.setAdapter(new EmojiAdapter(mContext));
-                    bottomBelowGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String emoji = (String) bottomBelowGridView.getAdapter().getItem(position);
-                            String text = chatBottomEditText.getEditText().getText().toString();
-                            text += emoji;
-                            chatBottomEditText.getEditText().setText(text);
-                        }
-                    });
+                    initEmojiGridView();
                 } else {
-                    bottomBelowLayout.setVisibility(View.GONE);
+                    if (currentBottomBelow.equals(EMOJI_GRIDVIEW)) {
+                        bottomBelowLayout.setVisibility(View.GONE);
+                    } else {
+                        initEmojiGridView();
+                    }
                 }
             }
         });
@@ -253,19 +353,19 @@ public class ChatActivity extends SwipeBackActivity {
             @Override
             public void onClick(View v) {
                 if (bottomBelowLayout.getVisibility() == View.GONE) {
-                    bottomBelowLayout.setVisibility(View.VISIBLE);
+                    initExtraOptionGridView();
                 } else {
-                    bottomBelowLayout.setVisibility(View.GONE);
+                    if (currentBottomBelow.equals(EXTRA_OPTION_GRIDVIEW)) {
+                        bottomBelowLayout.setVisibility(View.GONE);
+                    } else {
+                        initExtraOptionGridView();
+                    }
                 }
             }
         });
     }
 
-    private void createChatMsg(String text) {
-        ChatMsg chatMsg = new ChatMsg();
-        chatMsg.setText(text);
-        chatMsg.setObjectId(objectId);
-        chatMsg.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
+    private void createChatMsg(ChatMsg chatMsg) {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
@@ -274,7 +374,7 @@ public class ChatActivity extends SwipeBackActivity {
                     ResponseData<ChatMsgVO> responseData = ChatMsgController.createChatMsg(chatMsg);
                     if (responseData != null && responseData.isSuccess()) {
                         ChatMsgVO chatMsgVO = responseData.getData();
-                        handler.post(new Runnable() {
+                        handler2.post(new Runnable() {
                             @Override
                             public void run() {
                                 chatMsgVOList.add(chatMsgVO);
@@ -286,7 +386,7 @@ public class ChatActivity extends SwipeBackActivity {
                 } else {
                     ChannelNotice channelNotice = new ChannelNotice();
                     channelNotice.setChannelId(objectId);
-                    channelNotice.setType("1");
+                    channelNotice.setType(chatMsg.getMsgType());
                     channelNotice.setText(chatMsg.getText());
                     ResponseData<ChannelNotice> responseData = ChannelNoticeController.createChannelNotice(channelNotice);
                     if (responseData != null && responseData.isSuccess()) {
@@ -297,16 +397,16 @@ public class ChatActivity extends SwipeBackActivity {
                         chatMsgVO.setIsSelf(true);
                         chatMsgVO.setObjectId(channelNotice.getId());
                         chatMsgVO.setText(channelNotice.getText());
+                        chatMsgVO.setMsgType(channelNotice.getType());
                         chatMsgVO.setId(channelNotice.getId());
                         chatMsgVO.setOwnerId(GimmeApplication.getUserId());
                         chatMsgVO.setOwnerNick("用户id");
                         chatMsgVO.setChannelNoticeCount(0);
-                        handler.post(new Runnable() {
+                        handler2.post(new Runnable() {
                             @Override
                             public void run() {
                                 chatMsgVOList.add(chatMsgVO);
-                                chatMsgVoAdapter.notifyDataSetChanged();
-                                chatListView.setSelection(chatMsgVOList.size() - 1);
+                                getChatMessageList(type, objectId);
                             }
                         });
                     }
@@ -332,7 +432,7 @@ public class ChatActivity extends SwipeBackActivity {
                         UserController.getUserVO(id.toString(), ChatMsgUtil.Character.TYPE_FRIEND.getName(), "");
                 if (responseData != null && responseData.isSuccess()) {
                     UserVO userVO = responseData.getData();
-                    handler.post(new Runnable() {
+                    handler1.post(new Runnable() {
                         @Override
                         public void run() {
                             if (StringUtils.isEmpty(userVO.getNote())) {
@@ -362,7 +462,7 @@ public class ChatActivity extends SwipeBackActivity {
                         GroupController.getGroupInfo(id.toString());
                 if (responseData != null && responseData.isSuccess()) {
                     GroupVO groupVO = responseData.getData();
-                    handler.post(new Runnable() {
+                    handler1.post(new Runnable() {
                         @Override
                         public void run() {
                             setTopNick(groupVO.getNick());
@@ -388,7 +488,7 @@ public class ChatActivity extends SwipeBackActivity {
                         ChannelController.getChannelInfo(id.toString());
                 if (responseData != null && responseData.isSuccess()) {
                     ChannelVO channelVO = responseData.getData();
-                    handler.post(new Runnable() {
+                    handler1.post(new Runnable() {
                         @Override
                         public void run() {
                             setTopNick(channelVO.getNick());

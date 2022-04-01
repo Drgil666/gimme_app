@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,20 +18,31 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.controller.ChatFileController;
+import com.project.gimme.controller.ChatFileInfoController;
+import com.project.gimme.pojo.ChatFile;
 import com.project.gimme.pojo.ChatMsg;
 import com.project.gimme.pojo.vo.ChatMsgVO;
+import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.InfoTypeUtil;
+import com.project.gimme.utils.MsgTypeUtil;
 import com.project.gimme.utils.TextUtil;
 import com.project.gimme.view.activity.ChannelNoticeActivity;
 import com.project.gimme.view.activity.InfoActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.rockerhieu.emojicon.EmojiconTextView;
+import lombok.SneakyThrows;
 
 /**
  * @author DrGilbert
@@ -38,11 +51,14 @@ import io.github.rockerhieu.emojicon.EmojiconTextView;
 public class ChatMsgVoAdapter extends BaseAdapter {
     private List<ChatMsgVO> chatMsgVOList = new ArrayList<>();
     private LayoutInflater layoutInflater;
-    private Context context;
+    private Context mContext;
     private Integer type;
+    private ViewHolder viewHolder;
+    private Handler handler1 = new Handler();
+    private Handler handler2 = new Handler();
 
     public ChatMsgVoAdapter(Context context, List<ChatMsgVO> chatMsgVOList, Integer type) {
-        this.context = context;
+        this.mContext = context;
         layoutInflater = LayoutInflater.from(context);
         this.chatMsgVOList = chatMsgVOList;
         this.type = type;
@@ -82,7 +98,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
         ChatMsgVO chatMsgVO = chatMsgVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_chat, parent, false);
         LinearLayout linearLayout;
-        ViewHolder viewHolder = new ViewHolder(convertView);
+        viewHolder = new ViewHolder(convertView);
         viewHolder.leftLayout = convertView.findViewById(R.id.left_layout);
         viewHolder.rightLayout = convertView.findViewById(R.id.right_layout);
         if (!chatMsgVO.getIsSelf()) {
@@ -93,6 +109,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
             viewHolder.text = convertView.findViewById(R.id.left_content);
             viewHolder.text.setText(TextUtil.expandableText(chatMsgVO.getText()));
+            viewHolder.text.setVisibility(View.VISIBLE);
             viewHolder.text.setEmojiconSize(30);
             viewHolder.nick = convertView.findViewById(R.id.left_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
@@ -109,11 +126,12 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                     }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
                     //TODO：尽快接入接口!
-                    Intent intent = new Intent(context, InfoActivity.class).putExtras(bundle);
-                    context.startActivity(intent);
+                    Intent intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
+                    mContext.startActivity(intent);
                 }
             });
             viewHolder.channelNoticeCount = convertView.findViewById(R.id.left_channel_count);
+            viewHolder.pic = convertView.findViewById(R.id.left_pic);
         } else {
             linearLayout = convertView.findViewById(R.id.left_bubble);
             linearLayout.setVisibility(View.GONE);
@@ -121,6 +139,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.icon.setImageResource(R.mipmap.default_icon);
             viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
             viewHolder.text = convertView.findViewById(R.id.right_content);
+            viewHolder.text.setVisibility(View.VISIBLE);
             viewHolder.text.setText(TextUtil.expandableText(chatMsgVO.getText()));
             viewHolder.text.setEmojiconSize(30);
             viewHolder.nick = convertView.findViewById(R.id.right_name);
@@ -137,11 +156,26 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                         bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode());
                     }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
-                    Intent intent = new Intent(context, InfoActivity.class).putExtras(bundle);
-                    context.startActivity(intent);
+                    Intent intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
+                    mContext.startActivity(intent);
                 }
             });
             viewHolder.channelNoticeCount = convertView.findViewById(R.id.right_channel_count);
+            viewHolder.pic = convertView.findViewById(R.id.right_pic);
+        }
+        viewHolder.pic.setVisibility(View.GONE);
+        if (chatMsgVO.getMsgType().equals(MsgTypeUtil.MsgType.TYPE_PIC.getCode())) {
+            viewHolder.text.setVisibility(View.GONE);
+            RoundedCorners roundedCorners = new RoundedCorners(5);
+            RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
+            Glide.with(mContext)
+                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getText())
+                    .apply(new RequestOptions().override(110, 110))
+                    .apply(options)
+//                                .placeholder(R.drawable.loading_spinner)
+                    .into(viewHolder.pic);
+//            downloadChatFile(viewHolder.text.getText().toString());
+            viewHolder.pic.setVisibility(View.VISIBLE);
         }
         if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             viewHolder.channelNoticeCount.setText("共" + chatMsgVO.getChannelNoticeCount() + "条回复");
@@ -152,8 +186,8 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                     Bundle bundle = new Bundle();
                     bundle.putInt(BundleUtil.CHANNEL_NOTICE_ID_ATTRIBUTE, chatMsgVO.getObjectId());
                     System.out.println(chatMsgVO.getText());
-                    Intent intent = new Intent(context, ChannelNoticeActivity.class).putExtras(bundle);
-                    context.startActivity(intent);
+                    Intent intent = new Intent(mContext, ChannelNoticeActivity.class).putExtras(bundle);
+                    mContext.startActivity(intent);
                 }
             });
             viewHolder.rightLayout.setOnClickListener(new View.OnClickListener() {
@@ -162,8 +196,8 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                     Bundle bundle = new Bundle();
                     bundle.putInt(BundleUtil.CHANNEL_NOTICE_ID_ATTRIBUTE, chatMsgVO.getObjectId());
                     System.out.println(chatMsgVO.getText());
-                    Intent intent = new Intent(context, ChannelNoticeActivity.class).putExtras(bundle);
-                    context.startActivity(intent);
+                    Intent intent = new Intent(mContext, ChannelNoticeActivity.class).putExtras(bundle);
+                    mContext.startActivity(intent);
                 }
             });
         } else {
@@ -185,6 +219,65 @@ public class ChatMsgVoAdapter extends BaseAdapter {
         return convertView;
     }
 
+    private void downloadChatFile(String id) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                Looper.prepare();
+                ResponseData<ChatFile> responseData = ChatFileController.getChatFile(id);
+                if (responseData != null && responseData.isSuccess()) {
+                    ChatFile chatFile = responseData.getData();
+                    handler1.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            String path = mContext.getExternalFilesDir(null).getPath();
+                            String filePath = path + "/" + GimmeApplication.getUserId() + "/" + chatFile.getId();
+                            File file = new File(filePath, chatFile.getFilename());
+                            if (!file.exists()) {
+                                System.out.println("文件不存在！");
+                                loadPicture(chatFile.getId(), chatFile.getFilename());
+                            } else {
+                                System.out.println("文件已存在！");
+                            }
+                        }
+                    });
+                }
+                Looper.loop();
+            }
+        }).start();
+    }
+
+    private void loadPicture(Integer id, String fileName) {
+        String path = mContext.getExternalFilesDir(null).getPath();
+        String filePath = path + "/" + GimmeApplication.getUserId() + "/" + id.toString();
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                Looper.prepare();
+                ChatFileInfoController.downloadFile(filePath, id, fileName);
+                //TODO:优化文件目录
+                handler2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        File file = new File(filePath, fileName);
+                        //System.out.println(filePath + "/" + fileName);
+//                        Bitmap bitmap = BitmapFactory.decodeFile(filePath + "/" + fileName);
+//                        bitmap = Bitmap.createScaledBitmap(bitmap, 110, 110, false);
+//                        viewHolder.pic.setImageBitmap(bitmap);
+                        Glide.with(mContext)
+                                .load(file)
+                                .centerCrop()
+//                                .placeholder(R.drawable.loading_spinner)
+                                .into(viewHolder.pic);
+                    }
+                });
+                Looper.loop();
+            }
+        }).start();
+    }
+
     static class ViewHolder {
         ImageView icon;
         TextView nick;
@@ -192,6 +285,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
         TextView channelNoticeCount;
         RelativeLayout leftLayout;
         RelativeLayout rightLayout;
+        ImageView pic;
 
         ViewHolder(View view) {
         }

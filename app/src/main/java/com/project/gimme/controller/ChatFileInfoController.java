@@ -5,6 +5,7 @@ import static com.project.gimme.GimmeApplication.TOKEN;
 
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
+import com.project.gimme.pojo.ChatFile;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.JsonUtil;
 
@@ -51,10 +52,11 @@ public class ChatFileInfoController {
                 fileOutputStream.write(buffer, 0, len);
             }
             fileOutputStream.flush();
+            fileOutputStream.close();
         }
     }
 
-    public static ResponseData<String> upLoadFile(File file, String chatType, Integer objectId) throws IOException {
+    public static ResponseData<ChatFile> upLoadFile(File file, String chatType, Integer objectId) throws IOException {
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -71,8 +73,8 @@ public class ChatFileInfoController {
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            ResponseData<String> userResponseData =
-                    JsonUtil.fromJson(result, new TypeToken<ResponseData<String>>() {
+            ResponseData<ChatFile> userResponseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<ChatFile>>() {
                     }.getType());
             return userResponseData;
         }

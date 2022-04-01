@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import com.project.gimme.GimmeApplication;
 import com.squareup.picasso.Transformation;
 
+/**
+ * @author 25741
+ */
 public class PicassoTransformation implements Transformation {
     @Override
     public Bitmap transform(Bitmap source) {

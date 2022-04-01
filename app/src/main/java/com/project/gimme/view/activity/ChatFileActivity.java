@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChatFileController;
 import com.project.gimme.controller.ChatFileInfoController;
+import com.project.gimme.pojo.ChatFile;
 import com.project.gimme.pojo.vo.ChatFileVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
@@ -108,7 +109,7 @@ public class ChatFileActivity extends SwipeBackActivity {
             @SneakyThrows
             @Override
             public void run() {
-                ResponseData<String> responseData = ChatFileInfoController.upLoadFile(file, chatType, objectId);
+                ResponseData<ChatFile> responseData = ChatFileInfoController.upLoadFile(file, chatType, objectId);
                 if (responseData != null && responseData.isSuccess()) {
                     handler.post(new Runnable() {
                         @Override
