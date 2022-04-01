@@ -68,7 +68,6 @@
                     android:id="@+id/left_pic"
                     android:layout_width="110sp"
                     android:layout_height="110sp"
-                    android:background="@drawable/rounded_edit_view_white_5px"
                     android:clickable="true"
                     android:focusable="true"
                     android:src="@mipmap/default_icon"
@@ -84,6 +83,51 @@
                     android:textIsSelectable="true"
                     android:textSize="20sp"
                     android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/left_file_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_view_white_5px"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/left_file_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="文件.exe"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/left_file_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/left_file_name"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginTop="5sp"
+                    android:text="7.77MB"
+                    android:textColor="@color/gimme_font1"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/left_file_pic"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="80sp"
+                    android:layout_toEndOf="@+id/left_file_name"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@mipmap/doc" />
+
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
@@ -137,7 +181,6 @@
                     android:id="@+id/right_pic"
                     android:layout_width="110sp"
                     android:layout_height="110sp"
-                    android:background="@drawable/rounded_edit_view_white_5px"
                     android:clickable="true"
                     android:src="@mipmap/default_icon"
                     android:visibility="gone" />
@@ -153,7 +196,54 @@
                     android:textIsSelectable="true"
                     android:textSize="20sp"
                     android:visibility="gone" />
+
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/right_file_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_view_white_5px"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/right_file_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="文件.exe"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/right_file_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/right_file_name"
+                    android:layout_marginStart="5sp"
+                    android:layout_marginTop="5sp"
+                    android:text="7.77MB"
+                    android:textColor="@color/gimme_font1"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/right_file_pic"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="80sp"
+                    android:layout_toEndOf="@+id/right_file_name"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@mipmap/doc" />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
         <androidx.cardview.widget.CardView

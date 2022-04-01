@@ -281,6 +281,8 @@ public class ChatActivity extends SwipeBackActivity {
                         break;
                     }
                     case 1: {
+                        Intent intent = IntentUtils.getDocumentPickerIntent(IntentUtils.DocumentType.ANY);
+                        startActivityForResult(intent, MsgTypeUtil.MsgType.TYPE_FILE.getCode());
                         //发送文件
                         break;
                     }
@@ -302,13 +304,22 @@ public class ChatActivity extends SwipeBackActivity {
                 if (FileUtil.getRealPathFromUri(this, uri) != null) {
                     //从uri得到绝对路径，并获取到file文件
                     File file = new File(FileUtil.getRealPathFromUri(this, uri));
-                    uploadFile(file, ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId);
+                    uploadFile(file, ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId, MsgTypeUtil.MsgType.TYPE_PIC.getCode());
+                }
+            }
+        } else if (requestCode == MsgTypeUtil.MsgType.TYPE_FILE.getCode()) {
+            if (data != null) {
+                Uri uri = data.getData();
+                if (FileUtil.getRealPathFromUri(this, uri) != null) {
+                    //从uri得到绝对路径，并获取到file文件
+                    File file = new File(FileUtil.getRealPathFromUri(this, uri));
+                    uploadFile(file, ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId, MsgTypeUtil.MsgType.TYPE_FILE.getCode());
                 }
             }
         }
     }
 
-    private void uploadFile(File file, String chatType, Integer objectId) {
+    private void uploadFile(File file, String chatType, Integer objectId, Integer msgType) {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
@@ -320,7 +331,7 @@ public class ChatActivity extends SwipeBackActivity {
                         @Override
                         public void run() {
                             ChatMsg chatMsg = new ChatMsg();
-                            chatMsg.setMsgType(MsgTypeUtil.MsgType.TYPE_PIC.getCode());
+                            chatMsg.setMsgType(MsgTypeUtil.MSG_TYPE_LIST[msgType].getCode());
                             chatMsg.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
                             chatMsg.setObjectId(objectId);
                             chatMsg.setText(chatFile.getMongoId());

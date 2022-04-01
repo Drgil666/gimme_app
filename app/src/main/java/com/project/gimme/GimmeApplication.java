@@ -11,7 +11,6 @@ import com.project.gimme.controller.TestController;
 import com.xuexiang.xui.XUI;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
-import io.rong.imlib.RongIMClient;
 
 /**
  * @author DrGilbert
@@ -84,7 +83,7 @@ public class GimmeApplication extends Application {
         super.onCreate();
         XUI.init(this);
         XUI.debug(true);
-        RongIMClient.init(getApplicationContext(), APP_KEY);
+//        RongIMClient.init(getApplicationContext(), APP_KEY);
         //滑动工具初始化
         BGASwipeBackHelper.init(this, null);
         //字体初始化

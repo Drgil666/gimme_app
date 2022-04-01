@@ -47,6 +47,14 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
                 " (\"id\" DESC);");
     }
 
+    /**
+     * Drops the underlying database table.
+     */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"channel_notice\"";
+        db.execSQL(sql);
+    }
+
     @Override
     protected final void bindValues(DatabaseStatement stmt, ChannelNotice entity) {
         stmt.clearBindings();
@@ -56,7 +64,7 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
             stmt.bindLong(1, id);
         }
 
-        String type = entity.getType();
+        Integer type = entity.getType();
         if (type != null) {
             stmt.bindString(2, type);
         }
@@ -69,6 +77,11 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
         String text = entity.getText();
         if (text != null) {
             stmt.bindString(4, text);
+        }
+
+        java.util.Date createTime = entity.getCreateTime();
+        if (createTime != null) {
+            stmt.bindLong(5, createTime.getTime());
         }
     }
 
@@ -81,7 +94,7 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
             stmt.bindLong(1, id);
         }
 
-        String type = entity.getType();
+        Integer type = entity.getType();
         if (type != null) {
             stmt.bindString(2, type);
         }
@@ -95,6 +108,11 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
         if (text != null) {
             stmt.bindString(4, text);
         }
+
+        java.util.Date createTime = entity.getCreateTime();
+        if (createTime != null) {
+            stmt.bindLong(5, createTime.getTime());
+        }
     }
 
     @Override
@@ -106,9 +124,10 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
     public ChannelNotice readEntity(Cursor cursor, int offset) {
         ChannelNotice entity = new ChannelNotice( //
                 cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0), // id
-                cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // type
+                cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // type
                 cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // channelId
-                cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // text
+                cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // text
+                cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)) // createTime
         );
         return entity;
     }
@@ -119,6 +138,7 @@ public class ChannelNoticeDao extends AbstractDao<ChannelNotice, Integer> {
         entity.setType(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setChannelId(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
         entity.setText(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setCreateTime(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
     }
 
     @Override

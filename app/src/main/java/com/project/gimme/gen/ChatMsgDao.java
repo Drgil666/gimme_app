@@ -19,6 +19,29 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
 
     public static final String TABLENAME = "chat_msg";
 
+    /**
+     * Properties of entity ChatMsg.<br/>
+     * Can be used for QueryBuilder and for referencing column names.
+     */
+    public static class Properties {
+        public final static Property Id = new Property(0, Integer.class, "id", true, "id");
+        public final static Property Text = new Property(1, String.class, "text", false, "text");
+        public final static Property Type = new Property(2, String.class, "type", false, "type");
+        public final static Property ObjectId = new Property(3, Integer.class, "objectId", false, "object_id");
+        public final static Property TimeStamp = new Property(4, java.util.Date.class, "timeStamp", false, "timestamp");
+        public final static Property OwnerId = new Property(5, Integer.class, "ownerId", false, "owner_id");
+        public final static Property MsgType = new Property(6, Integer.class, "msgType", false, "msgType");
+    }
+
+
+    public ChatMsgDao(DaoConfig config) {
+        super(config);
+    }
+
+    public ChatMsgDao(DaoConfig config, DaoSession daoSession) {
+        super(config, daoSession);
+    }
+
     /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
@@ -81,6 +104,11 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
         if (ownerId != null) {
             stmt.bindLong(6, ownerId);
         }
+
+        Integer msgType = entity.getMsgType();
+        if (msgType != null) {
+            stmt.bindLong(7, msgType);
+        }
     }
 
     @Override
@@ -116,6 +144,11 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
         if (ownerId != null) {
             stmt.bindLong(6, ownerId);
         }
+
+        Integer msgType = entity.getMsgType();
+        if (msgType != null) {
+            stmt.bindLong(7, msgType);
+        }
     }
 
     @Override
@@ -131,7 +164,8 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
                 cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // type
                 cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // objectId
                 cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)), // timeStamp
-                cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5) // ownerId
+                cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // ownerId
+                cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6) // msgType
         );
         return entity;
     }
@@ -144,6 +178,7 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
         entity.setObjectId(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
         entity.setTimeStamp(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
         entity.setOwnerId(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
+        entity.setMsgType(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
     }
 
     @Override
