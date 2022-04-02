@@ -239,6 +239,7 @@ public class ChatActivity extends SwipeBackActivity {
                                     Bundle bundle = new Bundle();
                                     bundle.putInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE, ContactsUtil.ContactType.TYPE_TRANSMIT.getCode());
                                     bundle.putInt(BundleUtil.TRANSMIT_ATTRIBUTE, ContactsUtil.TransmitType.TYPE_IMAGE.getCode());
+                                    //TODO:消息转发逻辑仍然需要设计！
                                     Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
                                     startActivity(intent);
                                     break;

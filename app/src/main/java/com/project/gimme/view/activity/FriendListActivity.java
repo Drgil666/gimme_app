@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,7 +28,6 @@ import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ContactVoAdapter;
-import com.xuexiang.xui.widget.button.SmoothCheckBox;
 import com.xuexiang.xui.widget.tabbar.EasyIndicator;
 
 import java.util.ArrayList;
@@ -112,6 +110,7 @@ public class FriendListActivity extends SwipeBackActivity {
         type = bundle.getInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE);
         if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
             transmitMsgType = bundle.getInt(BundleUtil.TRANSMIT_ATTRIBUTE);
+            chatMsgId = bundle.getInt(BundleUtil.CHAT_MSG_ID_ATTRIBUTE);
             //TODO:chatMsgId还需要修改
         } else if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
 
@@ -251,24 +250,6 @@ public class FriendListActivity extends SwipeBackActivity {
 
     private void initListView() {
         getUserVOList("");
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
-                    SmoothCheckBox checkBox = view.findViewById(R.id.listview_friend_list_contact_vo_list_checkbox);
-                    checkBox.setChecked(!checkBox.isChecked());
-                } else {
-                    transmitMessage(chatMsgId, transmitMsgType, contactVoAdapter.getItem(position).getObjectId());
-                    XToastUtils.toast("转发成功!");
-                    finish();
-                }
-            }
-        });
-
-    }
-
-    private void transmitMessage(Integer chatMsgId, Integer type, Integer objectId) {
-
     }
 
     private void getUserVOList(String keyword) {
@@ -287,7 +268,7 @@ public class FriendListActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type);
+                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type, chatMsgId);
                             listView.setAdapter(contactVoAdapter);
                         }
                     });
@@ -312,7 +293,7 @@ public class FriendListActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type);
+                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type, chatMsgId);
                             listView.setAdapter(contactVoAdapter);
                         }
                     });
@@ -336,7 +317,7 @@ public class FriendListActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type);
+                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type, chatMsgId);
                             listView.setAdapter(contactVoAdapter);
                         }
                     });

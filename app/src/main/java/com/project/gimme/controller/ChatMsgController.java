@@ -102,4 +102,19 @@ public class ChatMsgController {
         }
         return null;
     }
+
+    public static void transmitChatMsg(RefreshVO refreshVO) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(JsonUtil.toJson(refreshVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/chatMsg/transmit")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+
+        }
+    }
 }

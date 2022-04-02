@@ -16,4 +16,8 @@ public class RefreshVO {
      * 聊天类型
      */
     private String chatType;
+    /**
+     * 聊天记录id
+     */
+    private Integer chatMsgId;
 }
