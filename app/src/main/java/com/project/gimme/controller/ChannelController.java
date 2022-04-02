@@ -102,4 +102,22 @@ public class ChannelController {
         }
         return null;
     }
+
+    public static ResponseData<Channel> createChannelWithFriend(List<Integer> idList) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(JsonUtil.toJson(idList), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/channel/create/friend")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            return JsonUtil.fromJson(result, new TypeToken<ResponseData<Channel>>() {
+            }.getType());
+        }
+        return null;
+    }
 }

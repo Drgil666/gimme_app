@@ -15,8 +15,10 @@ import java.io.IOException;
 import java.util.List;
 
 import okhttp3.Call;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -74,6 +76,24 @@ public class GroupController {
                     JsonUtil.fromJson(result, new TypeToken<ResponseData<List<UserVO>>>() {
                     }.getType());
             return userResponseData;
+        }
+        return null;
+    }
+
+    public static ResponseData<Group> createGroupWithFriend(List<Integer> idList) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(JsonUtil.toJson(idList), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/group/create/friend")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            return JsonUtil.fromJson(result, new TypeToken<ResponseData<Group>>() {
+            }.getType());
         }
         return null;
     }

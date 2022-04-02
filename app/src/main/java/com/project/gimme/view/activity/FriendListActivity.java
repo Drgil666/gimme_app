@@ -2,6 +2,7 @@ package com.project.gimme.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -14,8 +15,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.GroupController;
@@ -26,6 +25,7 @@ import com.project.gimme.pojo.vo.ContactVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ContactVoAdapter;
@@ -43,7 +43,7 @@ import lombok.SneakyThrows;
  * @author 25741
  */
 @SuppressLint("NonConstantResourceId")
-public class FriendListActivity extends AppCompatActivity {
+public class FriendListActivity extends SwipeBackActivity {
     @BindView(R.id.activity_friend_list_indicator1)
     EasyIndicator indicator1;
     @BindView(R.id.activity_friend_list_indicator2)
@@ -52,6 +52,7 @@ public class FriendListActivity extends AppCompatActivity {
     private final String[] indicatorTitle2 = new String[]{"好友", "群聊", "频道"};
     private Integer type;
     private Integer createMethod = 0;
+    private Integer transmitSessionType = 0;
     private Integer chatMsgId = null;
     @BindView(R.id.activity_friend_list_search_edit_text)
     EditText searchText;
@@ -59,7 +60,7 @@ public class FriendListActivity extends AppCompatActivity {
     ListView listView;
     @BindView(R.id.activity_friend_list_bottom_button)
     Button bottomButton;
-    private Integer transmitType = null;
+    private Integer transmitMsgType = null;
     private List<UserVO> userVOList = new ArrayList<>();
     private List<Group> groupList = new ArrayList<>();
     private List<Channel> channelList = new ArrayList<>();
@@ -70,7 +71,7 @@ public class FriendListActivity extends AppCompatActivity {
     ImageView topLeftButton;
     @BindView(R.id.activity_friend_list_bottom_layout)
     RelativeLayout bottomLayout;
-    List<Integer> idList = new ArrayList<>();
+    public static List<Integer> idList = new ArrayList<>();
     private static final Integer CREATE_GROUP = 0;
     private static final Integer CREATE_CHANNEL = 1;
 
@@ -87,6 +88,16 @@ public class FriendListActivity extends AppCompatActivity {
         initListView();
     }
 
+    public static void addItem(Integer id) {
+        idList.add(id);
+        System.out.println("add:" + id);
+    }
+
+    public static void deleteItem(Integer id) {
+        idList.remove(id);
+        System.out.println("remove:" + id);
+    }
+
     private void initTopBar() {
         topLeftButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +111,7 @@ public class FriendListActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE);
         if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
-            transmitType = bundle.getInt(BundleUtil.TRANSMIT_ATTRIBUTE);
+            transmitMsgType = bundle.getInt(BundleUtil.TRANSMIT_ATTRIBUTE);
             //TODO:chatMsgId还需要修改
         } else if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
 
@@ -118,7 +129,7 @@ public class FriendListActivity extends AppCompatActivity {
                 @Override
                 public void onTabClick(String title, int position) {
                     createMethod = position;
-                    getUserVOList(searchText.getText().toString());
+//                    getUserVOList(searchText.getText().toString());
                 }
             });
         } else if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
@@ -128,6 +139,7 @@ public class FriendListActivity extends AppCompatActivity {
             indicator2.setOnTabClickListener(new EasyIndicator.OnTabClickListener() {
                 @Override
                 public void onTabClick(String title, int position) {
+                    transmitSessionType = position;
                     switch (position) {
                         case 0: {
                             getUserVOList(searchText.getText().toString());
@@ -174,6 +186,67 @@ public class FriendListActivity extends AppCompatActivity {
         } else if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
             bottomLayout.setVisibility(View.GONE);
         }
+        bottomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(idList.toString());
+                if (createMethod.equals(CREATE_GROUP)) {
+                    createGroup(idList);
+                } else if (createMethod.equals(CREATE_CHANNEL)) {
+                    createChannel();
+                }
+            }
+        });
+    }
+
+    private void createGroup(List<Integer> idList) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<Group> responseData =
+                        GroupController.createGroupWithFriend(idList);
+                if (responseData != null && responseData.isSuccess()) {
+                    Group group = responseData.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, group.getId());
+                            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP.getCode());
+                            Intent intent = new Intent(mContext, ChatActivity.class).putExtras(bundle);
+                            finish();
+                            startActivity(intent);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    private void createChannel() {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<Channel> responseData =
+                        ChannelController.createChannelWithFriend(idList);
+                if (responseData != null && responseData.isSuccess()) {
+                    Channel channel = responseData.getData();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, channel.getId());
+                            bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_CHANNEL.getCode());
+                            Intent intent = new Intent(mContext, ChatActivity.class).putExtras(bundle);
+                            finish();
+                            startActivity(intent);
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void initListView() {
@@ -185,10 +258,17 @@ public class FriendListActivity extends AppCompatActivity {
                     SmoothCheckBox checkBox = view.findViewById(R.id.listview_friend_list_contact_vo_list_checkbox);
                     checkBox.setChecked(!checkBox.isChecked());
                 } else {
-
+                    transmitMessage(chatMsgId, transmitMsgType, contactVoAdapter.getItem(position).getObjectId());
+                    XToastUtils.toast("转发成功!");
+                    finish();
                 }
             }
         });
+
+    }
+
+    private void transmitMessage(Integer chatMsgId, Integer type, Integer objectId) {
+
     }
 
     private void getUserVOList(String keyword) {
@@ -263,5 +343,11 @@ public class FriendListActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        idList = new ArrayList<>();
     }
 }

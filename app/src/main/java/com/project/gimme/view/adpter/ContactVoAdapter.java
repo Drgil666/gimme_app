@@ -16,6 +16,7 @@ import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.ContactVO;
 import com.project.gimme.utils.ContactsUtil;
+import com.project.gimme.view.activity.FriendListActivity;
 import com.xuexiang.xui.widget.button.SmoothCheckBox;
 
 import java.util.ArrayList;
@@ -79,9 +80,25 @@ public class ContactVoAdapter extends BaseAdapter {
         Glide.with(mContext).load(R.mipmap.default_icon)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .into(viewHolder.icon);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.checkBox.setChecked(!viewHolder.checkBox.isChecked());
+            }
+        });
         viewHolder.nick.setText(contactVO.getNick());
         if (contactType.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
             viewHolder.checkBox.setVisibility(View.VISIBLE);
+            viewHolder.checkBox.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(SmoothCheckBox checkBox, boolean isChecked) {
+                    if (isChecked) {
+                        FriendListActivity.addItem(contactVO.getObjectId());
+                    } else {
+                        FriendListActivity.deleteItem(contactVO.getObjectId());
+                    }
+                }
+            });
         } else {
             viewHolder.checkBox.setVisibility(View.GONE);
         }
