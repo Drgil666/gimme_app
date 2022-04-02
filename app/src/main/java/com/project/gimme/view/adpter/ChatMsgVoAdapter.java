@@ -33,10 +33,14 @@ import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.MsgTypeUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.TextUtil;
+import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.ChannelNoticeActivity;
 import com.project.gimme.view.activity.ChatFileInfoActivity;
 import com.project.gimme.view.activity.InfoActivity;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup;
+import com.xuexiang.xui.widget.popupwindow.easypopup.HorizontalGravity;
+import com.xuexiang.xui.widget.popupwindow.easypopup.VerticalGravity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -247,6 +251,47 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                 ((ImageView) view).clearColorFilter(); // 清除滤镜效果
             }
             return false;//如果return true的话,onClick的事件就不会触发!
+        });
+        EasyPopup easyPopup = new EasyPopup(mContext)
+                .setContentView(R.layout.layout_chat_message_popup)
+                .setFocusAndOutsideEnable(true)
+                .createPopup();
+        TextView popUpCopy = easyPopup.getView(R.id.layout_chat_message_popup_copy);
+        TextView popUpTransmit = easyPopup.getView(R.id.layout_chat_message_popup_transmit);
+        TextView popUpTodo = easyPopup.getView(R.id.layout_chat_message_popup_todo);
+        popUpCopy.setOnClickListener(v -> {
+            XToastUtils.toast(popUpCopy.getText());
+            easyPopup.dismiss();
+        });
+        popUpTransmit.setOnClickListener(v -> {
+            XToastUtils.toast(popUpTransmit.getText());
+            easyPopup.dismiss();
+        });
+        popUpTodo.setOnClickListener(v -> {
+            XToastUtils.toast(popUpTodo.getText());
+            easyPopup.dismiss();
+        });
+        viewHolder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                easyPopup.showAtAnchorView(
+                        view,
+                        VerticalGravity.ABOVE,
+                        HorizontalGravity.CENTER,
+                        0, 0);
+                return true;
+            }
+        });
+        viewHolder.fileLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                easyPopup.showAtAnchorView(
+                        view,
+                        VerticalGravity.ABOVE,
+                        HorizontalGravity.CENTER,
+                        0, 0);
+                return true;
+            }
         });
         return convertView;
     }
