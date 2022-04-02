@@ -1,14 +1,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/list_item_color_bg"
     android:padding="10dp">
 
+    <com.xuexiang.xui.widget.button.SmoothCheckBox
+        android:id="@+id/listview_friend_list_contact_vo_list_checkbox"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:scb_color_checked="@color/gimme_color_lighter" />
+
     <ImageView
         android:id="@+id/listview_friend_list_contact_vo_list_image"
         android:layout_width="60sp"
         android:layout_height="60sp"
-        android:src="@mipmap/app_icon"></ImageView>
+        android:layout_toRightOf="@+id/listview_friend_list_contact_vo_list_checkbox"
+        android:src="@mipmap/app_icon" />
 
     <TextView
         android:id="@+id/listview_friend_list_contact_vo_list_nick"

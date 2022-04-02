@@ -1,12 +1,12 @@
 package com.project.gimme.view.adpter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,17 +20,23 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.ChatMsg;
+import com.project.gimme.pojo.vo.ChatMsgFileVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.InfoTypeUtil;
+import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.MsgTypeUtil;
+import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.TextUtil;
 import com.project.gimme.view.activity.ChannelNoticeActivity;
+import com.project.gimme.view.activity.ChatFileInfoActivity;
 import com.project.gimme.view.activity.InfoActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +53,11 @@ public class ChatMsgVoAdapter extends BaseAdapter {
     private Context mContext;
     private Integer type;
     private ViewHolder viewHolder;
-    private Handler handler1 = new Handler();
-    private Handler handler2 = new Handler();
+    private Activity activity;
 
     public ChatMsgVoAdapter(Context context, List<ChatMsgVO> chatMsgVOList, Integer type) {
         this.mContext = context;
+        this.activity = (Activity) context;
         layoutInflater = LayoutInflater.from(context);
         this.chatMsgVOList = chatMsgVOList;
         this.type = type;
@@ -78,6 +84,13 @@ public class ChatMsgVoAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return chatMsgVOList.get(position).getId();
+    }
+
+    private void setFileIcon(String name) {
+        Glide.with(mContext)
+                .load(R.mipmap.doc)
+                .apply(new RequestOptions().override(50, 50))
+                .into(viewHolder.pic);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -172,11 +185,39 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                     .apply(options)
 //                                .placeholder(R.drawable.loading_spinner)
                     .into(viewHolder.pic);
+            viewHolder.pic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ImageView imageView = activity.findViewById(R.id.chat_imageview);
+                    Picasso.with(mContext)
+                            .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVOList
+                                    .get(position)
+                                    .getText()).into(imageView);
+                    imageView.setVisibility(View.VISIBLE);
+                }
+            });
         } else if (chatMsgVO.getMsgType().equals(MsgTypeUtil.MsgType.TYPE_FILE.getCode())) {
             viewHolder.text.setVisibility(View.GONE);
             viewHolder.fileLayout.setVisibility(View.VISIBLE);
             viewHolder.pic.setVisibility(View.GONE);
             viewHolder.layout.setVisibility(View.GONE);
+            ChatMsgFileVO chatMsgFileVO = JsonUtil.fromJson(chatMsgVO.getText(),
+                    new TypeToken<ChatMsgFileVO>() {
+                    }.getType());
+            viewHolder.fileLayoutName.setText(chatMsgFileVO.getFileName());
+            viewHolder.fileLayoutSize.setText(NumberUtil.changeToFileSize(chatMsgFileVO.getFileSize()));
+            setFileIcon(chatMsgFileVO.getFileName());
+            viewHolder.fileLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleUtil.CHAT_FILE_INFO_ID_ATTRIBUTE, chatMsgFileVO.getChatFileId());
+                    bundle.putString(BundleUtil.FILE_NAME_ATTRIBUTE, chatMsgFileVO.getFileName());
+                    bundle.putLong(BundleUtil.FILE_SIZE_ATTRIBUTE, chatMsgFileVO.getFileSize());
+                    Intent intent = new Intent(mContext, ChatFileInfoActivity.class).putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+            });
         }
         if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             viewHolder.channelNoticeCount.setText("共" + chatMsgVO.getChannelNoticeCount() + "条回复");

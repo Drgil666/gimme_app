@@ -99,9 +99,12 @@
 
                 <TextView
                     android:id="@+id/left_file_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100sp"
                     android:layout_height="wrap_content"
-                    android:text="文件.exe"
+                    android:layout_marginStart="5sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="1111111111文件.exe"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
@@ -213,9 +216,12 @@
 
                 <TextView
                     android:id="@+id/right_file_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100sp"
                     android:layout_height="wrap_content"
-                    android:text="文件.exe"
+                    android:layout_marginStart="5sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="123123123123"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 

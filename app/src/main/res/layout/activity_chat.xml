@@ -65,9 +65,12 @@
             android:layout_height="fill_parent"
             android:layout_above="@id/chat_bottom_bar"
             android:layout_below="@id/chat_top_bar"
+            android:longClickable="true"
+            android:clickable="true"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@null"
-            android:transcriptMode="alwaysScroll">
+            android:transcriptMode="alwaysScroll"
+            android:focusable="true">
 
         </ListView>
         <!--底边栏-->
@@ -137,4 +140,10 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/chat_imageview"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:background="@color/black"
+        android:layout_height="match_parent" />
 </RelativeLayout>

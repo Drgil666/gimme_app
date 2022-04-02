@@ -29,6 +29,7 @@ import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ContactVoAdapter;
+import com.xuexiang.xui.widget.button.SmoothCheckBox;
 import com.xuexiang.xui.widget.tabbar.EasyIndicator;
 
 import java.util.ArrayList;
@@ -69,6 +70,9 @@ public class FriendListActivity extends AppCompatActivity {
     ImageView topLeftButton;
     @BindView(R.id.activity_friend_list_bottom_layout)
     RelativeLayout bottomLayout;
+    List<Integer> idList = new ArrayList<>();
+    private static final Integer CREATE_GROUP = 0;
+    private static final Integer CREATE_CHANNEL = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +102,8 @@ public class FriendListActivity extends AppCompatActivity {
         if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
             transmitType = bundle.getInt(BundleUtil.TRANSMIT_ATTRIBUTE);
             //TODO:chatMsgId还需要修改
+        } else if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
+
         } else {
             XToastUtils.toast("类型错误!");
         }
@@ -119,7 +125,6 @@ public class FriendListActivity extends AppCompatActivity {
             indicator1.setVisibility(View.GONE);
             indicator2.setVisibility(View.VISIBLE);
             indicator2.setTabTitles(indicatorTitle2);
-
             indicator2.setOnTabClickListener(new EasyIndicator.OnTabClickListener() {
                 @Override
                 public void onTabClick(String title, int position) {
@@ -176,7 +181,12 @@ public class FriendListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
+                    SmoothCheckBox checkBox = view.findViewById(R.id.listview_friend_list_contact_vo_list_checkbox);
+                    checkBox.setChecked(!checkBox.isChecked());
+                } else {
 
+                }
             }
         });
     }
@@ -197,7 +207,7 @@ public class FriendListActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList);
+                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type);
                             listView.setAdapter(contactVoAdapter);
                         }
                     });
@@ -222,7 +232,7 @@ public class FriendListActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList);
+                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type);
                             listView.setAdapter(contactVoAdapter);
                         }
                     });
@@ -246,7 +256,7 @@ public class FriendListActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList);
+                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type);
                             listView.setAdapter(contactVoAdapter);
                         }
                     });

@@ -7,6 +7,7 @@ import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -34,6 +36,7 @@ import com.project.gimme.pojo.ChannelNotice;
 import com.project.gimme.pojo.ChatFile;
 import com.project.gimme.pojo.ChatMsg;
 import com.project.gimme.pojo.vo.ChannelVO;
+import com.project.gimme.pojo.vo.ChatMsgFileVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.RefreshVO;
@@ -41,6 +44,7 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.MsgTypeUtil;
@@ -49,6 +53,7 @@ import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 import com.project.gimme.view.adpter.EmojiAdapter;
 import com.project.gimme.view.adpter.ExtraOptionAdapter;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
 import com.xuexiang.xutil.app.IntentUtils;
 
@@ -98,6 +103,8 @@ public class ChatActivity extends SwipeBackActivity {
     private Integer currentBottomBelow = 0;
     private static final Integer EMOJI_GRIDVIEW = 0;
     private static final Integer EXTRA_OPTION_GRIDVIEW = 1;
+    @BindView(R.id.chat_imageview)
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +208,50 @@ public class ChatActivity extends SwipeBackActivity {
 
     private void initChatListView() {
         getChatMessageList(type, objectId);
+        initImageView();
+    }
+
+    private void initImageView() {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha1to0));
+                imageView.setVisibility(View.GONE);
+            }
+        });
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new BottomSheet.BottomListSheetBuilder(mContext)
+                        .addItem("保存到相册")
+                        .addItem("转发")
+                        .setIsCenter(true)
+                        .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
+                            dialog.dismiss();
+//                            XToastUtils.toast("Item " + (position + 1));
+                            switch (position) {
+                                case 0: {
+                                    FileUtil.saveImageToGallery(mContext, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                                    XToastUtils.toast("保存成功!");
+                                    break;
+                                }
+                                case 1: {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE, ContactsUtil.ContactType.TYPE_TRANSMIT.getCode());
+                                    bundle.putInt(BundleUtil.TRANSMIT_ATTRIBUTE, ContactsUtil.TransmitType.TYPE_IMAGE.getCode());
+                                    Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
+                                    startActivity(intent);
+                                    break;
+                                }
+                                default:
+                                    break;
+                            }
+                        })
+                        .build()
+                        .show();
+                return true;
+            }
+        });
     }
 
     private void initChatBottom() {
@@ -288,6 +339,9 @@ public class ChatActivity extends SwipeBackActivity {
                     }
                     case 2: {
                         //待办
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                        bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
                         Intent intent = new Intent(mContext, ToDoListActivity.class);
                         startActivity(intent);
                         break;
@@ -336,7 +390,15 @@ public class ChatActivity extends SwipeBackActivity {
                             chatMsg.setMsgType(MsgTypeUtil.MSG_TYPE_LIST[msgType].getCode());
                             chatMsg.setType(ChatMsgUtil.CHARACTER_LIST[type].getName());
                             chatMsg.setObjectId(objectId);
-                            chatMsg.setText(chatFile.getMongoId());
+                            if (msgType.equals(MsgTypeUtil.MsgType.TYPE_PIC.getCode())) {
+                                chatMsg.setText(chatFile.getMongoId());
+                            } else if (msgType.equals(MsgTypeUtil.MsgType.TYPE_FILE.getCode())) {
+                                ChatMsgFileVO chatMsgFileVO = new ChatMsgFileVO();
+                                chatMsgFileVO.setChatFileId(chatFile.getId());
+                                chatMsgFileVO.setFileName(file.getName());
+                                chatMsgFileVO.setFileSize(file.length() * 8);
+                                chatMsg.setText(JsonUtil.toJson(chatMsgFileVO));
+                            }
                             chatMsg.setOwnerId(chatFile.getOwnerId());
                             chatMsg.setTimeStamp(new Date());
                             createChatMsg(chatMsg);

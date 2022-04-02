@@ -12,4 +12,5 @@
     <color name="gimme_background_lighter">#EDEDED</color>
     <color name="gimme_font1">#797979</color>
     <color name="gimme_color">#376DF6</color>
+    <color name="gimme_color_lighter">#4F7EF6</color>
 </resources>

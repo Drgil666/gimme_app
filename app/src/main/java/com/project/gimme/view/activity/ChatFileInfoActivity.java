@@ -52,15 +52,14 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
     @BindView(R.id.chat_file_info_top_left_button)
     ImageView topLeftButton;
     @BindView(R.id.chat_file_info_file_nick)
-    TextView fileNick;
+    TextView fileNickText;
     @BindView(R.id.chat_file_info_file_size)
-    TextView fileSize;
+    TextView fileSizeText;
     @BindView(R.id.chat_file_info_download_button)
     Button downloadButton;
     private String fileName;
     private String filePath;
-    private Integer type;
-    private Integer objectId;
+    private Long fileSize;
     final Context mContext = this;
     @BindView(R.id.chat_file_info_img)
     ImageView imageView;
@@ -127,9 +126,10 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         Bundle bundle = this.getIntent().getExtras();
         id = bundle.getInt(BundleUtil.CHAT_FILE_INFO_ID_ATTRIBUTE);
         fileName = bundle.getString(BundleUtil.FILE_NAME_ATTRIBUTE);
-        type = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
-        objectId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
-//        System.out.println("id: " + id + " fileName:" + fileName);
+        fileSize = bundle.getLong(BundleUtil.FILE_SIZE_ATTRIBUTE);
+        fileNickText.setText(fileName);
+        fileSizeText.setText(NumberUtil.changeToFileSize(fileSize));
+        topText.setText(fileName);
     }
 
     private void getFileInfo() {
@@ -144,8 +144,8 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            fileNick.setText(chatFile.getFilename());
-                            fileSize.setText(NumberUtil.changeToFileSize(chatFile.getSize()));
+                            fileNickText.setText(chatFile.getFilename());
+                            fileSizeText.setText(NumberUtil.changeToFileSize(chatFile.getSize()));
                             topText.setText(chatFile.getFilename());
                         }
                     });
