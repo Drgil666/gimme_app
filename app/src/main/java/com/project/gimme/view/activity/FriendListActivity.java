@@ -110,7 +110,6 @@ public class FriendListActivity extends SwipeBackActivity {
         type = bundle.getInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE);
         if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
             chatMsgId = bundle.getInt(BundleUtil.CHAT_MSG_ID_ATTRIBUTE);
-            //TODO:chatMsgId还需要修改
         } else if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
 
         } else {

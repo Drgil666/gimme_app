@@ -131,7 +131,6 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                         bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode());
                     }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
-                    //TODO：尽快接入接口!
                     Intent intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
                     mContext.startActivity(intent);
                 }

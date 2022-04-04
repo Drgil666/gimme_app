@@ -28,7 +28,6 @@ public class EmojiAdapter extends BaseAdapter {
 
     public EmojiAdapter(Context context) {
         mContext = context;
-        //TODO:表情需要导入
         getEmojiList();
         layoutInflater = LayoutInflater.from(context);
     }

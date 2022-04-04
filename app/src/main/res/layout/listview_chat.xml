@@ -180,7 +180,6 @@
                     android:text="2222"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
-                <!--TODO:点击弹窗的逻辑要填充！-->
                 <ImageView
                     android:id="@+id/right_pic"
                     android:layout_width="110sp"

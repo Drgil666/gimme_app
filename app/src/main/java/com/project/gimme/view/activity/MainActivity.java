@@ -337,7 +337,6 @@ public class MainActivity extends BaseActivity {
             Picasso.with(this).load(R.mipmap.my_info_select).into(myInfoIcon);
             myInfoText.setTextColor(R.color.gimme_color);
             Picasso.with(this).load(R.mipmap.setting).into(topRightButton);
-            //TODO:右上角逻辑需要修改
         }
     }
 
