@@ -217,8 +217,14 @@ public class OtherInformationActivity extends SwipeBackActivity {
                             memberRightText.setText("查看" + groupVO.getTotalCount() + "名群成员");
                             topInfoNick.setText(groupVO.getNick());
                             introductionDescription.setText(groupVO.getDescription());
-                            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + groupVO.getAvatar()).into(imageView);
-                            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + groupVO.getAvatar()).into(topInfoIcon);
+                            Glide.with(mContext)
+                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + groupVO.getAvatar())
+                                    .error(R.mipmap.default_icon)
+                                    .into(imageView);
+                            Glide.with(mContext)
+                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + groupVO.getAvatar())
+                                    .error(R.mipmap.default_icon)
+                                    .into(topInfoIcon);
                         }
                     });
                 }
@@ -241,8 +247,14 @@ public class OtherInformationActivity extends SwipeBackActivity {
                             memberRightText.setText("查看" + channelVO.getTotalCount() + "名频道成员");
                             topInfoNick.setText(channelVO.getNick());
                             introductionDescription.setText(channelVO.getDescription());
-                            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channelVO.getAvatar()).into(imageView);
-                            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channelVO.getAvatar()).into(topInfoIcon);
+                            Glide.with(mContext)
+                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channelVO.getAvatar())
+                                    .error(R.mipmap.default_icon)
+                                    .into(imageView);
+                            Glide.with(mContext)
+                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channelVO.getAvatar())
+                                    .error(R.mipmap.default_icon)
+                                    .into(topInfoIcon);
                         }
                     });
                 }

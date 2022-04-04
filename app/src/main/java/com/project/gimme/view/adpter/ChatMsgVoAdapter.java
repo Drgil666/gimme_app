@@ -114,7 +114,10 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             linearLayout.setVisibility(View.GONE);
             viewHolder.layout = convertView.findViewById(R.id.left_layout);
             viewHolder.icon = convertView.findViewById(R.id.left_image);
-            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar()).into(viewHolder.icon);
+            Glide.with(mContext)
+                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar())
+                    .error(R.mipmap.default_icon)
+                    .into(viewHolder.icon);
             viewHolder.text = convertView.findViewById(R.id.left_content);
             viewHolder.nick = convertView.findViewById(R.id.left_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
@@ -145,7 +148,10 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             linearLayout.setVisibility(View.GONE);
             viewHolder.layout = convertView.findViewById(R.id.right_layout);
             viewHolder.icon = convertView.findViewById(R.id.right_image);
-            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar()).into(viewHolder.icon);
+            Glide.with(mContext)
+                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar())
+                    .error(R.mipmap.default_icon)
+                    .into(viewHolder.icon);
             viewHolder.text = convertView.findViewById(R.id.right_content);
             viewHolder.nick = convertView.findViewById(R.id.right_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
@@ -187,6 +193,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
             Glide.with(mContext)
                     .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getText())
+                    .error(R.mipmap.default_icon)
                     .apply(new RequestOptions().override(110, 110))
                     .apply(options)
 //                                .placeholder(R.drawable.loading_spinner)
@@ -199,7 +206,9 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                     Picasso.with(mContext)
                             .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVOList
                                     .get(position)
-                                    .getText()).into(imageView);
+                                    .getText())
+                            .error(R.mipmap.default_icon)
+                            .into(imageView);
                     imageView.setVisibility(View.VISIBLE);
                 }
             });

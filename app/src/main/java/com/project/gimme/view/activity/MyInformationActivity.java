@@ -69,6 +69,7 @@ public class MyInformationActivity extends AppCompatActivity {
                             infoMotto.setText(user.getMotto());
                             Glide.with(mContext)
                                     .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + user.getAvatar())
+                                    .error(R.mipmap.default_icon)
                                     .into(infoIcon);
                         }
                     });

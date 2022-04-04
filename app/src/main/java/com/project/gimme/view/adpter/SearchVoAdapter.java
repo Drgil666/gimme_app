@@ -55,6 +55,7 @@ public class SearchVoAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder(convertView);
         Glide.with(context)
                 .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + searchVO.getAvatar())
+                .error(R.mipmap.default_icon)
                 .into(viewHolder.icon);
         viewHolder.nick.setText(searchVO.getObjectNick() + "(" + searchVO.getObjectId() + ")");
         return convertView;

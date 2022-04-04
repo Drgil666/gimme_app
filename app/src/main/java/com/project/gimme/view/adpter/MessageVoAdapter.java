@@ -72,7 +72,10 @@ public class MessageVoAdapter extends BaseAdapter {
         MessageVO messageVO = messageVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_message_vo, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
-        Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + messageVO.getAvatar()).into(viewHolder.avatar);
+        Glide.with(mContext)
+                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + messageVO.getAvatar())
+                .error(R.mipmap.default_icon)
+                .into(viewHolder.avatar);
         viewHolder.nick.setText(messageVO.getNick());
         viewHolder.text.setText(messageVO.getText());
         viewHolder.timestamp.setText(NumberUtil.changeToHourAndMinute(messageVO.getTimestamp()));

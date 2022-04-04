@@ -96,6 +96,7 @@ public class MyInfoFragment extends Fragment {
                             userInfoMotto.setText(user.getMotto());
                             Glide.with(getContext())
                                     .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + user.getAvatar())
+                                    .error(R.mipmap.default_icon)
                                     .into(userInfoIcon);
                         }
                     });

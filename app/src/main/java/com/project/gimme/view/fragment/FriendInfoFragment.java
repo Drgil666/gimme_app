@@ -124,6 +124,7 @@ public class FriendInfoFragment extends Fragment {
     private void initTopBar() {
         Glide.with(getContext())
                 .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + userVO.getAvatar())
+                .error(R.mipmap.default_icon)
                 .into(icon);
         icon.setOnTouchListener((view, motionEvent) -> {
 //            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -134,6 +135,7 @@ public class FriendInfoFragment extends Fragment {
             //TODO:滤镜需要重写
             Picasso.with(getContext())
                     .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + userVO.getAvatar())
+                    .error(R.mipmap.default_icon)
                     .into(imageView);
             imageView.setVisibility(View.VISIBLE);
             return false;//如果return true的话,onClick的事件就不会触发!

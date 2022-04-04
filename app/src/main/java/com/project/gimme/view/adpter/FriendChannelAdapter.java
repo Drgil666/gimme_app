@@ -60,6 +60,7 @@ public class FriendChannelAdapter extends BaseAdapter {
         viewHolder.text.setText(channel.getNick());
         Glide.with(mContext)
                 .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channel.getAvatar())
+                .error(R.mipmap.default_icon)
                 .into(viewHolder.icon);
         return convertView;
     }

@@ -60,6 +60,7 @@ public class FriendGroupAdapter extends BaseAdapter {
         viewHolder.text.setText(group.getNick());
         Glide.with(mContext)
                 .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + group.getAvatar())
+                .error(R.mipmap.default_icon)
                 .into(viewHolder.icon);
         return convertView;
     }
