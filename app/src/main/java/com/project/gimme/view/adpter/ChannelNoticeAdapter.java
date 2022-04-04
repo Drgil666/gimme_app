@@ -282,7 +282,7 @@ public class ChannelNoticeAdapter extends BaseAdapter {
             Bundle bundle = new Bundle();
             bundle.putInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE, ContactsUtil.ContactType.TYPE_TRANSMIT.getCode());
             bundle.putInt(BundleUtil.CHAT_MSG_ID_ATTRIBUTE, chatMsgVO.getId());
-            Intent intent = new Intent(mContext, FriendListActivity.class);
+            Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
             mContext.startActivity(intent);
             easyPopup.dismiss();
         });

@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.UserVO;
 
@@ -27,10 +29,12 @@ import butterknife.ButterKnife;
 public class FriendUserAdapter extends BaseAdapter {
     private List<UserVO> userList = new ArrayList<>();
     private LayoutInflater layoutInflater;
+    private Context mContext;
 
     public FriendUserAdapter(Context context, List<UserVO> userList) {
         layoutInflater = LayoutInflater.from(context);
         this.userList = userList;
+        mContext = context;
     }
 
     @Override
@@ -61,7 +65,10 @@ public class FriendUserAdapter extends BaseAdapter {
         } else {
             viewHolder.text.setText(userVO.getNote());
         }
-        viewHolder.icon.setImageResource(R.mipmap.default_icon);
+        Glide.with(mContext)
+                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + userVO.getAvatar())
+                .into(viewHolder.icon);
+//        viewHolder.icon.setImageResource(R.mipmap.default_icon);
         return convertView;
     }
 

@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.Group;
 
@@ -25,10 +27,11 @@ import butterknife.ButterKnife;
 public class FriendGroupAdapter extends BaseAdapter {
     private List<Group> groupList = new ArrayList<>();
     private LayoutInflater layoutInflater;
-
+    private Context mContext;
     public FriendGroupAdapter(Context context, List<Group> groupList) {
         layoutInflater = LayoutInflater.from(context);
         this.groupList = groupList;
+        mContext = context;
     }
 
     @Override
@@ -55,7 +58,9 @@ public class FriendGroupAdapter extends BaseAdapter {
         convertView = layoutInflater.inflate(R.layout.listview_friend_list_group_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.text.setText(group.getNick());
-        viewHolder.icon.setImageResource(R.mipmap.default_icon);
+        Glide.with(mContext)
+                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + group.getAvatar())
+                .into(viewHolder.icon);
         return convertView;
     }
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.MyInfoListVO;
+import com.project.gimme.utils.MyInfoUtil;
 
 import java.util.List;
 
@@ -56,9 +57,13 @@ public class MyInfoAdapter extends BaseAdapter {
         MyInfoListVO myInfoListVO = myInfoListVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.gridview_my_info, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
-        viewHolder.icon.setImageResource(R.mipmap.default_icon);
         viewHolder.nick.setText(myInfoListVO.getNick());
         viewHolder.description.setText(myInfoListVO.getDescription());
+        if (myInfoListVO.getType().equals(MyInfoUtil.MyInfoType.TYPE_FILE.getCode().toString())) {
+            viewHolder.icon.setImageResource(R.mipmap.file);
+        } else if (myInfoListVO.getType().equals(MyInfoUtil.MyInfoType.TYPE_TODO.getCode().toString())) {
+            viewHolder.icon.setImageResource(R.mipmap.todo);
+        }
         return convertView;
     }
 

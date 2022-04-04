@@ -29,6 +29,7 @@
         android:layout_below="@id/listview_my_info_text"
         android:layout_marginStart="10sp"
         android:layout_marginTop="5sp"
+        android:layout_marginBottom="5sp"
         android:textSize="14sp"
         android:textColor="@color/gimme_font1"
         android:text="description" />

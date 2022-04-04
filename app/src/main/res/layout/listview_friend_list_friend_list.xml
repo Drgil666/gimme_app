@@ -8,6 +8,7 @@
         android:id="@+id/listview_friend_list_friend_list_image"
         android:layout_width="60sp"
         android:layout_height="60sp"
+        android:background="@color/xui_config_color_transparent"
         android:src="@mipmap/app_icon"></ImageView>
 
     <TextView

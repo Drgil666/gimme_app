@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
         <activity
+            android:name=".view.activity.MyInformationActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.activity.ToDoListActivity"
             android:exported="true" />
         <activity

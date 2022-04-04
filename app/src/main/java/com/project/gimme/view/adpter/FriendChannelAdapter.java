@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.Channel;
 
@@ -25,10 +27,11 @@ import butterknife.ButterKnife;
 public class FriendChannelAdapter extends BaseAdapter {
     private List<Channel> channelList = new ArrayList<>();
     private LayoutInflater layoutInflater;
-
+    private Context mContext;
     public FriendChannelAdapter(Context context, List<Channel> channelList) {
         layoutInflater = LayoutInflater.from(context);
         this.channelList = channelList;
+        mContext = context;
     }
 
     @Override
@@ -55,7 +58,9 @@ public class FriendChannelAdapter extends BaseAdapter {
         convertView = layoutInflater.inflate(R.layout.listview_friend_list_channel_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.text.setText(channel.getNick());
-        viewHolder.icon.setImageResource(R.mipmap.default_icon);
+        Glide.with(mContext)
+                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channel.getAvatar())
+                .into(viewHolder.icon);
         return convertView;
     }
 

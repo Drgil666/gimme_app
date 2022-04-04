@@ -21,9 +21,8 @@ import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.MyInfoListVO;
 import com.project.gimme.pojo.vo.ResponseData;
-import com.project.gimme.utils.BundleUtil;
-import com.project.gimme.utils.InfoTypeUtil;
-import com.project.gimme.view.activity.InfoActivity;
+import com.project.gimme.utils.MyInfoUtil;
+import com.project.gimme.view.activity.MyInformationActivity;
 import com.project.gimme.view.adpter.MyInfoAdapter;
 
 import java.util.ArrayList;
@@ -39,7 +38,6 @@ import lombok.SneakyThrows;
  */
 @SuppressLint("NonConstantResourceId")
 public class MyInfoFragment extends Fragment {
-    private static final Integer GET_USER = 1;
     private List<MyInfoListVO> myInfoList = new ArrayList<>();
     @BindView(R.id.user_info_icon)
     ImageView userInfoIcon;
@@ -103,12 +101,12 @@ public class MyInfoFragment extends Fragment {
     }
 
     private void getMyInfoList() {
-        myInfoList.clear();
-        for (int i = 1; i <= 6; i++) {
+        myInfoList = new ArrayList<>();
+        for (MyInfoUtil.MyInfoType myInfoType : MyInfoUtil.MY_INFO_TYPE_LIST) {
             MyInfoListVO myInfoListVO = new MyInfoListVO();
-            myInfoListVO.setNick("待定" + i);
-            myInfoListVO.setDescription("描述" + i);
-            myInfoListVO.setType(i + "");
+            myInfoListVO.setNick(myInfoType.getName());
+            myInfoListVO.setDescription(myInfoType.getDescription());
+            myInfoListVO.setType(myInfoType.getCode() + "");
             myInfoList.add(myInfoListVO);
         }
     }
@@ -118,10 +116,7 @@ public class MyInfoFragment extends Fragment {
         userInfoIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_SELF.getCode());
-                bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, -1);
-                Intent intent = new Intent(getContext(), InfoActivity.class).putExtras(bundle);
+                Intent intent = new Intent(getContext(), MyInformationActivity.class);
                 startActivity(intent);
             }
         });

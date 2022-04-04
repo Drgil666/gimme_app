@@ -212,7 +212,6 @@ public class ChatActivity extends SwipeBackActivity {
     }
 
     private void initChatListView() {
-        getChatMessageList(type, objectId);
         initImageView();
     }
 
@@ -583,6 +582,13 @@ public class ChatActivity extends SwipeBackActivity {
                 }
             }
         }).start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getChatMessageList(type, objectId);
+        bottomBelowGridView.setVisibility(View.GONE);
     }
 
     @Override
