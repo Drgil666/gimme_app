@@ -39,6 +39,7 @@ public class FileUtil {
     private static final String DATA_TYPE_CHM = "application/x-chm";
     private static final String DATA_TYPE_TXT = "text/plain";
     private static final String DATA_TYPE_PDF = "application/pdf";
+
     /**
      * 获取对应文件的Uri
      *
@@ -163,9 +164,14 @@ public class FileUtil {
     //复杂版处理  (适配多种API)
     public static String getRealPathFromUri(Context context, Uri uri) {
         int sdkVersion = Build.VERSION.SDK_INT;
-        if (sdkVersion < 11) return getRealPathFromUri_BelowApi11(context, uri);
-        if (sdkVersion < 19) return getRealPathFromUri_Api11To18(context, uri);
-        else return getRealPathFromUri_AboveApi19(context, uri);
+        if (sdkVersion < 11) {
+            return getRealPathFromUri_BelowApi11(context, uri);
+        }
+        if (sdkVersion < 19) {
+            return getRealPathFromUri_Api11To18(context, uri);
+        } else {
+            return getRealPathFromUri_AboveApi19(context, uri);
+        }
     }
 
     /**
@@ -268,8 +274,9 @@ public class FileUtil {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (cursor != null)
+            if (cursor != null) {
                 cursor.close();
+            }
         }
         return null;
     }
@@ -298,7 +305,13 @@ public class FileUtil {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
-    //保存文件到指定路径
+    /**
+     * 保存图片到指定路径
+     *
+     * @param context 上下文
+     * @param bmp     图片
+     * @return
+     */
     public static boolean saveImageToGallery(Context context, Bitmap bmp) {
         // 首先保存图片
         String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + GimmeApplication.APP_NAME;
@@ -330,5 +343,12 @@ public class FileUtil {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static String changeToFileName(String name, Integer limit) {
+        if (name.length() > limit) {
+            return name.substring(0, 5) + "..." + name.substring(name.length() - 6);
+        }
+        return name;
     }
 }

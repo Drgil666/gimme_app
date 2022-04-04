@@ -127,9 +127,9 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
         id = bundle.getInt(BundleUtil.CHAT_FILE_INFO_ID_ATTRIBUTE);
         fileName = bundle.getString(BundleUtil.FILE_NAME_ATTRIBUTE);
         fileSize = bundle.getLong(BundleUtil.FILE_SIZE_ATTRIBUTE);
-        fileNickText.setText(fileName);
+        fileNickText.setText(FileUtil.changeToFileName(fileName, 25));
         fileSizeText.setText(NumberUtil.changeToFileSize(fileSize));
-        topText.setText(fileName);
+        topText.setText(FileUtil.changeToFileName(fileName, 25));
     }
 
     private void getFileInfo() {
@@ -144,9 +144,9 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            fileNickText.setText(chatFile.getFilename());
+                            fileNickText.setText(FileUtil.changeToFileName(chatFile.getFilename(), 25));
                             fileSizeText.setText(NumberUtil.changeToFileSize(chatFile.getSize()));
-                            topText.setText(chatFile.getFilename());
+                            topText.setText(FileUtil.changeToFileName(chatFile.getFilename(), 25));
                         }
                     });
                 }

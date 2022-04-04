@@ -28,6 +28,7 @@ import com.project.gimme.pojo.vo.ChatMsgFileVO;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.MsgTypeUtil;
@@ -208,7 +209,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             ChatMsgFileVO chatMsgFileVO = JsonUtil.fromJson(chatMsgVO.getText(),
                     new TypeToken<ChatMsgFileVO>() {
                     }.getType());
-            viewHolder.fileLayoutName.setText(chatMsgFileVO.getFileName());
+            viewHolder.fileLayoutName.setText(FileUtil.changeToFileName(chatMsgFileVO.getFileName(), 10));
             viewHolder.fileLayoutSize.setText(NumberUtil.changeToFileSize(chatMsgFileVO.getFileSize()));
             setFileIcon(chatMsgFileVO.getFileName());
             viewHolder.fileLayout.setOnClickListener(new View.OnClickListener() {
