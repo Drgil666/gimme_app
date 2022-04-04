@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.vo.ResponseData;
@@ -74,7 +76,6 @@ public class FriendInfoFragment extends Fragment {
     FriendInfoAdapter friendInfoAdapter;
     @BindView(R.id.fragment_friend_img)
     ImageView imageView;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -121,7 +122,9 @@ public class FriendInfoFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void initTopBar() {
-        Picasso.with(getContext()).load(R.mipmap.default_icon).into(icon);
+        Glide.with(getContext())
+                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + userVO.getAvatar())
+                .into(icon);
         icon.setOnTouchListener((view, motionEvent) -> {
 //            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 //                ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果
@@ -129,7 +132,9 @@ public class FriendInfoFragment extends Fragment {
 //                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
 //            }
             //TODO:滤镜需要重写
-            Picasso.with(getContext()).load(R.mipmap.default_icon).into(imageView);
+            Picasso.with(getContext())
+                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + userVO.getAvatar())
+                    .into(imageView);
             imageView.setVisibility(View.VISIBLE);
             return false;//如果return true的话,onClick的事件就不会触发!
         });

@@ -24,4 +24,8 @@ public class ChatMsgVO extends ChatMsg {
      * 频道公告回复个数
      */
     private Integer channelNoticeCount;
+    /**
+     * 会话者头像
+     */
+    private String avatar;
 }

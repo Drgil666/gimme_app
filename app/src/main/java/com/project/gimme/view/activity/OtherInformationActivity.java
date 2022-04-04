@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.GroupController;
@@ -24,7 +26,6 @@ import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
-import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 
@@ -130,7 +131,6 @@ public class OtherInformationActivity extends SwipeBackActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void initInfoLayout() {
         topInfoIcon.setOnTouchListener((view, motionEvent) -> {
-            Picasso.with(mContext).load(R.mipmap.default_icon).into(imageView);
             imageView.setVisibility(View.VISIBLE);
             return true;
             //如果return true的话,onClick的事件就不会触发!
@@ -217,6 +217,8 @@ public class OtherInformationActivity extends SwipeBackActivity {
                             memberRightText.setText("查看" + groupVO.getTotalCount() + "名群成员");
                             topInfoNick.setText(groupVO.getNick());
                             introductionDescription.setText(groupVO.getDescription());
+                            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + groupVO.getAvatar()).into(imageView);
+                            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + groupVO.getAvatar()).into(topInfoIcon);
                         }
                     });
                 }
@@ -239,6 +241,8 @@ public class OtherInformationActivity extends SwipeBackActivity {
                             memberRightText.setText("查看" + channelVO.getTotalCount() + "名频道成员");
                             topInfoNick.setText(channelVO.getNick());
                             introductionDescription.setText(channelVO.getDescription());
+                            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channelVO.getAvatar()).into(imageView);
+                            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channelVO.getAvatar()).into(topInfoIcon);
                         }
                     });
                 }

@@ -87,7 +87,8 @@ public class ContactVoAdapter extends BaseAdapter {
         ContactVO contactVO = contactVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_friend_list_contact_vo_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
-        Glide.with(mContext).load(R.mipmap.default_icon)
+        Glide.with(mContext)
+                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + contactVO.getAvatar())
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .into(viewHolder.icon);
         convertView.setOnClickListener(new View.OnClickListener() {

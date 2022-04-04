@@ -113,8 +113,7 @@ public class ChannelNoticeAdapter extends BaseAdapter {
             linearLayout.setVisibility(View.GONE);
             viewHolder.layout = convertView.findViewById(R.id.left_layout);
             viewHolder.icon = convertView.findViewById(R.id.left_image);
-            viewHolder.icon.setImageResource(R.mipmap.default_icon);
-            viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
+            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar()).into(viewHolder.icon);
             viewHolder.text = convertView.findViewById(R.id.left_content);
             viewHolder.nick = convertView.findViewById(R.id.left_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());
@@ -145,8 +144,7 @@ public class ChannelNoticeAdapter extends BaseAdapter {
             linearLayout.setVisibility(View.GONE);
             viewHolder.layout = convertView.findViewById(R.id.right_layout);
             viewHolder.icon = convertView.findViewById(R.id.right_image);
-            viewHolder.icon.setImageResource(R.mipmap.default_icon);
-            viewHolder.icon.setBackgroundColor(Color.TRANSPARENT);
+            Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar()).into(viewHolder.icon);
             viewHolder.text = convertView.findViewById(R.id.right_content);
             viewHolder.nick = convertView.findViewById(R.id.right_name);
             viewHolder.nick.setText(chatMsgVO.getOwnerNick());

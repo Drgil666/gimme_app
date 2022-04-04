@@ -68,7 +68,6 @@ public class FriendUserAdapter extends BaseAdapter {
         Glide.with(mContext)
                 .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + userVO.getAvatar())
                 .into(viewHolder.icon);
-//        viewHolder.icon.setImageResource(R.mipmap.default_icon);
         return convertView;
     }
 

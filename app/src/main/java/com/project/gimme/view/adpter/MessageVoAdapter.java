@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChatMsgController;
 import com.project.gimme.pojo.vo.MessageVO;
 import com.project.gimme.pojo.vo.RefreshVO;
 import com.project.gimme.utils.NumberUtil;
-import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.textview.badge.Badge;
 import com.xuexiang.xui.widget.textview.badge.BadgeView;
 
@@ -72,11 +72,10 @@ public class MessageVoAdapter extends BaseAdapter {
         MessageVO messageVO = messageVOList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_message_vo, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
-        Picasso.with(convertView.getContext()).load(R.mipmap.default_icon).into(viewHolder.avatar);
+        Glide.with(mContext).load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + messageVO.getAvatar()).into(viewHolder.avatar);
         viewHolder.nick.setText(messageVO.getNick());
         viewHolder.text.setText(messageVO.getText());
         viewHolder.timestamp.setText(NumberUtil.changeToHourAndMinute(messageVO.getTimestamp()));
-        //messageVO.setNewMessageCount(150);
         if (messageVO.getNewMessageCount() != 0) {
             Badge badge = new BadgeView(mContext)
                     .bindTarget(viewHolder.newMessageCountBackGround)

@@ -28,6 +28,10 @@ public class ContactVO {
      * 会话id
      */
     private Integer objectId;
+    /**
+     * 会话头像
+     */
+    private String avatar;
 
     public static ContactVO convertUserVO(UserVO userVO) {
         ContactVO contactVO = new ContactVO();
@@ -39,6 +43,7 @@ public class ContactVO {
         }
         contactVO.type = ChatMsgUtil.Character.TYPE_FRIEND.getCode();
         contactVO.objectId = userVO.getId();
+        contactVO.avatar = userVO.getAvatar();
         return contactVO;
     }
 
@@ -48,6 +53,7 @@ public class ContactVO {
         contactVO.objectId = group.getId();
         contactVO.nick = group.getNick();
         contactVO.type = ChatMsgUtil.Character.TYPE_GROUP.getCode();
+        contactVO.avatar = group.getAvatar();
         return contactVO;
 
     }
@@ -58,6 +64,7 @@ public class ContactVO {
         contactVO.objectId = channel.getId();
         contactVO.nick = channel.getNick();
         contactVO.type = ChatMsgUtil.Character.TYPE_CHANNEL.getCode();
+        contactVO.avatar = channel.getAvatar();
         return contactVO;
     }
 }

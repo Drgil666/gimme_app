@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.User;
@@ -92,7 +94,9 @@ public class MyInfoFragment extends Fragment {
                             userInfoNick.setText(user.getNick());
                             userInfoCompany.setText(user.getCompany());
                             userInfoMotto.setText(user.getMotto());
-                            userInfoIcon.setImageResource(R.mipmap.default_icon);
+                            Glide.with(getContext())
+                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + user.getAvatar())
+                                    .into(userInfoIcon);
                         }
                     });
                 }

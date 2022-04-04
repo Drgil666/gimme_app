@@ -9,9 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.SearchVO;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,9 @@ public class SearchVoAdapter extends BaseAdapter {
         SearchVO searchVO = getItem(position);
         convertView = layoutInflater.inflate(R.layout.listview_search, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
-        Picasso.with(context).load(R.mipmap.default_icon).into(viewHolder.icon);
+        Glide.with(context)
+                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + searchVO.getAvatar())
+                .into(viewHolder.icon);
         viewHolder.nick.setText(searchVO.getObjectNick() + "(" + searchVO.getObjectId() + ")");
         return convertView;
     }
