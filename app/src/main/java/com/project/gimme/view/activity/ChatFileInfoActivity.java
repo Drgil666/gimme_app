@@ -3,7 +3,6 @@ package com.project.gimme.view.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -24,7 +23,6 @@ import com.project.gimme.controller.ChatFileInfoController;
 import com.project.gimme.pojo.ChatFile;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
-import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.PicassoTransformation;
@@ -92,28 +90,11 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
             public boolean onLongClick(View v) {
                 new BottomSheet.BottomListSheetBuilder(mContext)
                         .addItem("保存到相册")
-                        .addItem("转发")
                         .setIsCenter(true)
                         .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
                             dialog.dismiss();
-//                            XToastUtils.toast("Item " + (position + 1));
-                            switch (position) {
-                                case 0: {
-                                    FileUtil.saveImageToGallery(mContext, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
-                                    XToastUtils.toast("保存成功!");
-                                    break;
-                                }
-                                case 1: {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE, ContactsUtil.ContactType.TYPE_TRANSMIT.getCode());
-                                    bundle.putInt(BundleUtil.TRANSMIT_ATTRIBUTE, ContactsUtil.TransmitType.TYPE_IMAGE.getCode());
-                                    Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
-                                    startActivity(intent);
-                                    break;
-                                }
-                                default:
-                                    break;
-                            }
+                            FileUtil.saveImageToGallery(mContext, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                            XToastUtils.toast("保存成功!");
                         })
                         .build()
                         .show();

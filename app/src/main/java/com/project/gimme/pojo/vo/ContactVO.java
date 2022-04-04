@@ -2,6 +2,7 @@ package com.project.gimme.pojo.vo;
 
 import com.project.gimme.pojo.Channel;
 import com.project.gimme.pojo.Group;
+import com.project.gimme.utils.ChatMsgUtil;
 
 import lombok.Data;
 
@@ -20,6 +21,10 @@ public class ContactVO {
      */
     private String nick;
     /**
+     * 会话类型
+     */
+    private Integer type;
+    /**
      * 会话id
      */
     private Integer objectId;
@@ -32,6 +37,7 @@ public class ContactVO {
         } else {
             contactVO.nick = userVO.getNick();
         }
+        contactVO.type = ChatMsgUtil.Character.TYPE_FRIEND.getCode();
         contactVO.objectId = userVO.getId();
         return contactVO;
     }
@@ -41,6 +47,7 @@ public class ContactVO {
         contactVO.img = group.getAvatar();
         contactVO.objectId = group.getId();
         contactVO.nick = group.getNick();
+        contactVO.type = ChatMsgUtil.Character.TYPE_GROUP.getCode();
         return contactVO;
 
     }
@@ -50,6 +57,7 @@ public class ContactVO {
         contactVO.img = channel.getAvatar();
         contactVO.objectId = channel.getId();
         contactVO.nick = channel.getNick();
+        contactVO.type = ChatMsgUtil.Character.TYPE_CHANNEL.getCode();
         return contactVO;
     }
 }

@@ -38,7 +38,6 @@ import com.project.gimme.utils.MsgTypeUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.TextUtil;
 import com.project.gimme.view.activity.ChannelNoticeActivity;
-import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.activity.ChatFileInfoActivity;
 import com.project.gimme.view.activity.FriendListActivity;
 import com.project.gimme.view.activity.InfoActivity;
@@ -56,7 +55,7 @@ import io.github.rockerhieu.emojicon.EmojiconTextView;
  * @author DrGilbert
  * @date 2022/1/13 12:56
  */
-public class ChatMsgVoAdapter extends BaseAdapter {
+public class ChannelNoticeAdapter extends BaseAdapter {
     private List<ChatMsgVO> chatMsgVOList = new ArrayList<>();
     private LayoutInflater layoutInflater;
     private Context mContext;
@@ -64,7 +63,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
     private ViewHolder viewHolder;
     private Activity activity;
 
-    public ChatMsgVoAdapter(Context context, List<ChatMsgVO> chatMsgVOList, Integer type) {
+    public ChannelNoticeAdapter(Context context, List<ChatMsgVO> chatMsgVOList, Integer type) {
         this.mContext = context;
         this.activity = (Activity) context;
         layoutInflater = LayoutInflater.from(context);
@@ -131,7 +130,6 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                         bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode());
                     }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
-                    //TODO：尽快接入接口!
                     Intent intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
                     mContext.startActivity(intent);
                 }
@@ -197,8 +195,8 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.pic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ImageView imageView = activity.findViewById(R.id.chat_imageview);
-                    ChatActivity.setChatMsgId(chatMsgVO.getId());
+                    ImageView imageView = activity.findViewById(R.id.channel_notice_imageview);
+                    ChannelNoticeActivity.setChatMsgId(chatMsgVO.getId());
                     Picasso.with(mContext)
                             .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVOList
                                     .get(position)
@@ -275,11 +273,6 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                 System.out.println(copyText.getText().toString());
                 ClipData mClipData = ClipData.newPlainText(null, copyText.getText().toString());
                 cm.setPrimaryClip(mClipData);
-                easyPopup.dismiss();
-            });
-            TextView popUpTodo = easyPopup.getView(R.id.layout_chat_message_popup_todo);
-            popUpTodo.setVisibility(View.VISIBLE);
-            popUpTodo.setOnClickListener(v -> {
                 easyPopup.dismiss();
             });
         }

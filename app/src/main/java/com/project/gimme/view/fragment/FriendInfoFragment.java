@@ -26,14 +26,12 @@ import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.pojo.vo.UserVoParamItem;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
-import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.ChatActivity;
-import com.project.gimme.view.activity.FriendListActivity;
 import com.project.gimme.view.adpter.FriendInfoAdapter;
 import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
@@ -150,27 +148,11 @@ public class FriendInfoFragment extends Fragment {
             public boolean onLongClick(View v) {
                 new BottomSheet.BottomListSheetBuilder(getContext())
                         .addItem("保存到相册")
-                        .addItem("转发")
                         .setIsCenter(true)
                         .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
                             dialog.dismiss();
-                            switch (position) {
-                                case 0: {
-                                    FileUtil.saveImageToGallery(getContext(), ((BitmapDrawable) imageView.getDrawable()).getBitmap());
-                                    XToastUtils.toast("保存成功!");
-                                    break;
-                                }
-                                case 1: {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE, ContactsUtil.ContactType.TYPE_TRANSMIT.getCode());
-                                    bundle.putInt(BundleUtil.TRANSMIT_ATTRIBUTE, ContactsUtil.TransmitType.TYPE_IMAGE.getCode());
-                                    Intent intent = new Intent(getContext(), FriendListActivity.class).putExtras(bundle);
-                                    startActivity(intent);
-                                    break;
-                                }
-                                default:
-                                    break;
-                            }
+                            FileUtil.saveImageToGallery(getContext(), ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                            XToastUtils.toast("保存成功!");
                         })
                         .build()
                         .show();

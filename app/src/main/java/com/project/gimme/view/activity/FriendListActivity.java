@@ -109,7 +109,6 @@ public class FriendListActivity extends SwipeBackActivity {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE);
         if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
-            transmitMsgType = bundle.getInt(BundleUtil.TRANSMIT_ATTRIBUTE);
             chatMsgId = bundle.getInt(BundleUtil.CHAT_MSG_ID_ATTRIBUTE);
             //TODO:chatMsgId还需要修改
         } else if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
@@ -188,7 +187,7 @@ public class FriendListActivity extends SwipeBackActivity {
         bottomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(idList.toString());
+//                System.out.println(idList.toString());
                 if (createMethod.equals(CREATE_GROUP)) {
                     createGroup(idList);
                 } else if (createMethod.equals(CREATE_CHANNEL)) {

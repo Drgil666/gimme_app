@@ -41,8 +41,6 @@ public class ContactVoAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Context mContext;
     private Integer contactType;
-    private Integer type;
-    private Integer objectId;
     private Integer chatMsgId;
     private Handler handler = new Handler();
 
@@ -117,6 +115,15 @@ public class ContactVoAdapter extends BaseAdapter {
             });
         } else {
             viewHolder.checkBox.setVisibility(View.GONE);
+        }
+        if (contactType.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    transmitMessage(chatMsgId, contactVO.getType(), contactVO.getObjectId());
+                }
+            });
+
         }
         return convertView;
     }

@@ -48,5 +48,12 @@
         android:layout_below="@+id/channel_notice_top_bar"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@null"
-        android:transcriptMode="alwaysScroll"></ListView>
+        android:transcriptMode="alwaysScroll" />
+
+    <ImageView
+        android:id="@+id/channel_notice_imageview"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:background="@color/black"
+        android:layout_height="match_parent" />
 </RelativeLayout>

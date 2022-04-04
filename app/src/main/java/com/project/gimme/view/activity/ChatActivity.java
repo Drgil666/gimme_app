@@ -105,6 +105,7 @@ public class ChatActivity extends SwipeBackActivity {
     private static final Integer EXTRA_OPTION_GRIDVIEW = 1;
     @BindView(R.id.chat_imageview)
     ImageView imageView;
+    public static Integer chatMsgId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +118,10 @@ public class ChatActivity extends SwipeBackActivity {
         initChatListView();
         initChatBottom();
         initChatBottomBelow();
+    }
+
+    public static void setChatMsgId(Integer id) {
+        chatMsgId = id;
     }
 
     private void initBundle() {
@@ -217,6 +222,7 @@ public class ChatActivity extends SwipeBackActivity {
             public void onClick(View v) {
                 imageView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha1to0));
                 imageView.setVisibility(View.GONE);
+                getChatMessageList(type, objectId);
             }
         });
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -238,8 +244,7 @@ public class ChatActivity extends SwipeBackActivity {
                                 case 1: {
                                     Bundle bundle = new Bundle();
                                     bundle.putInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE, ContactsUtil.ContactType.TYPE_TRANSMIT.getCode());
-                                    bundle.putInt(BundleUtil.TRANSMIT_ATTRIBUTE, ContactsUtil.TransmitType.TYPE_IMAGE.getCode());
-                                    //TODO:消息转发逻辑仍然需要设计！
+                                    bundle.putInt(BundleUtil.CHAT_MSG_ID_ATTRIBUTE, chatMsgId);
                                     Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
                                     startActivity(intent);
                                     break;
@@ -454,8 +459,7 @@ public class ChatActivity extends SwipeBackActivity {
                             @Override
                             public void run() {
                                 chatMsgVOList.add(chatMsgVO);
-                                chatMsgVoAdapter.notifyDataSetChanged();
-                                chatListView.setSelection(chatMsgVOList.size() - 1);
+                                getChatMessageList(type, objectId);
                             }
                         });
                     }
