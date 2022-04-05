@@ -23,4 +23,5 @@ public class BundleUtil {
     public static final String OBJECT_NICK_ATTRIBUTE = "object_nick";
     public static final String USER_COMPANY_ATTRIBUTE = "user_company";
     public static final String USER_MOTTO_ATTRIBUTE = "user_motto";
+    public static final String OBJECT_ATTRIBUTE = "object";
 }

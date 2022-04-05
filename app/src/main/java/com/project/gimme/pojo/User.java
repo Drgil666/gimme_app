@@ -32,15 +32,10 @@ public class User {
     @Property(nameInDb = "avatar")
     private String avatar;
     /**
-     * 用户国家id
-     */
-    @Property(nameInDb = "country")
-    private Integer country;
-    /**
      * 用户城市id
      */
     @Property(nameInDb = "city")
-    private Integer city;
+    private String city;
     /**
      * 用户省份id
      */
@@ -68,61 +63,53 @@ public class User {
     @Property(nameInDb = "occupation")
     private Integer occupation;
     /**
-     * 用户公司
-     */
-    @Property(nameInDb = "company")
-    private String company;
-    /**
      * 用户个性签名
      */
     @Property(nameInDb = "motto")
     private String motto;
+    /**
+     * 公司
+     */
+    @Property(nameInDb = "company")
+    private String company;
     /**
      * 密码
      */
     @Property(nameInDb = "password")
     private String password;
 
-    @Generated(hash = 1349429673)
-    public User(Integer id, String nick, String avatar, Integer country,
-                Integer city, Integer province, Date birthday, String mail,
-                Integer gender, Integer occupation, String company, String motto,
-                String password) {
+    @Generated(hash = 508783077)
+    public User(Integer id, String nick, String avatar, String city,
+                Integer province, Date birthday, String mail, Integer gender,
+                Integer occupation, String motto, String company, String password) {
         this.id = id;
         this.nick = nick;
         this.avatar = avatar;
-        this.country = country;
         this.city = city;
         this.province = province;
         this.birthday = birthday;
         this.mail = mail;
         this.gender = gender;
         this.occupation = occupation;
-        this.company = company;
         this.motto = motto;
+        this.company = company;
         this.password = password;
     }
-
     @Generated(hash = 586692638)
     public User() {
     }
-
     public Integer getId() {
         return this.id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
-
     public String getNick() {
         return this.nick;
     }
-
     public void setNick(String nick) {
         this.nick = nick;
     }
-
     public String getAvatar() {
         return this.avatar;
     }
@@ -131,30 +118,20 @@ public class User {
         this.avatar = avatar;
     }
 
-    public Integer getCountry() {
-        return this.country;
-    }
-
-    public void setCountry(Integer country) {
-        this.country = country;
-    }
-
-    public Integer getCity() {
+    public String getCity() {
         return this.city;
     }
 
-    public void setCity(Integer city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
     public Integer getProvince() {
         return this.province;
     }
-
     public void setProvince(Integer province) {
         this.province = province;
     }
-
     public Date getBirthday() {
         return this.birthday;
     }
@@ -171,20 +148,20 @@ public class User {
         this.mail = mail;
     }
 
+    public Integer getGender() {
+        return this.gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
     public Integer getOccupation() {
         return this.occupation;
     }
 
     public void setOccupation(Integer occupation) {
         this.occupation = occupation;
-    }
-
-    public String getCompany() {
-        return this.company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
     }
 
     public String getMotto() {
@@ -195,14 +172,6 @@ public class User {
         this.motto = motto;
     }
 
-    public Integer getGender() {
-        return this.gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
     public String getPassword() {
         return this.password;
     }
@@ -210,4 +179,13 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getCompany() {
+        return this.company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
 }

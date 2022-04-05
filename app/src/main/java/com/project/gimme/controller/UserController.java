@@ -6,6 +6,7 @@ import static com.project.gimme.GimmeApplication.TOKEN;
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.pojo.User;
+import com.project.gimme.pojo.vo.CudRequestVO;
 import com.project.gimme.pojo.vo.LoginVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
@@ -83,24 +84,6 @@ public class UserController {
         return null;
     }
 
-    public static ResponseData<List<User>> getFriendList(String keyword) throws IOException {
-        //创建OkHttpClient对象
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .header(TOKEN, GimmeApplication.getToken())
-                .url(REMOTE_URL + "/api/user/friend/list?keyword=" + keyword).get().build();
-        Call call = client.newCall(request);
-        Response response = call.execute();
-        if (response.isSuccessful()) {
-            String result = response.body().string();
-            ResponseData<List<User>> userResponseData =
-                    JsonUtil.fromJson(result, new TypeToken<ResponseData<List<User>>>() {
-                    }.getType());
-            return userResponseData;
-        }
-        return null;
-    }
-
     public static ResponseData<List<UserVO>> getFriendListInfo(String keyword) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
@@ -115,6 +98,28 @@ public class UserController {
                     JsonUtil.fromJson(result, new TypeToken<ResponseData<List<UserVO>>>() {
                     }.getType());
             return userResponseData;
+        }
+        return null;
+    }
+
+    public static ResponseData<User> updateUser(User user) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        CudRequestVO<User, Integer> requestVO = new CudRequestVO<User, Integer>();
+        requestVO.setData(user);
+        requestVO.setMethod(CudRequestVO.UPDATE_METHOD);
+        requestVO.setKey(null);
+        RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/user")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            return JsonUtil.fromJson(result, new TypeToken<ResponseData<User>>() {
+            }.getType());
         }
         return null;
     }

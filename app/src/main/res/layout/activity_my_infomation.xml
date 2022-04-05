@@ -5,10 +5,26 @@
     android:layout_height="match_parent"
     android:background="@color/gimme_background_lighter"
     tools:context=".view.activity.MyInformationActivity">
+    <!--顶边栏-->
+    <RelativeLayout
+        android:id="@+id/my_information_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/gimme_background_lighter">
+
+        <ImageView
+            android:id="@+id/my_information_top_left_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:src="@mipmap/back" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/my_information_info_layout"
         android:layout_width="wrap_content"
+        android:layout_below="@+id/my_information_top_bar"
         android:layout_height="wrap_content"
         android:layout_marginStart="20sp"
         android:layout_marginTop="20sp">
@@ -65,5 +81,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="40sp"
         android:layout_marginTop="20sp"
+        android:layout_marginBottom="20sp"
         android:background="@drawable/rounded_edit_view_white_10px" />
 </RelativeLayout>

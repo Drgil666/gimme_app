@@ -26,6 +26,7 @@ import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.MyInfoListVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.MyInfoUtil;
 import com.project.gimme.view.activity.MyInformationActivity;
 import com.project.gimme.view.adpter.MyInfoAdapter;
@@ -130,6 +131,7 @@ public class MyInfoFragment extends Fragment {
                 bundle.putString(BundleUtil.USER_AVATAR_ATTRIBUTE, user.getAvatar());
                 bundle.putString(BundleUtil.USER_COMPANY_ATTRIBUTE, user.getCompany());
                 bundle.putString(BundleUtil.USER_MOTTO_ATTRIBUTE, user.getMotto());
+                bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(user));
                 Intent intent = new Intent(getContext(), MyInformationActivity.class).putExtras(bundle);
                 startActivity(intent);
             }

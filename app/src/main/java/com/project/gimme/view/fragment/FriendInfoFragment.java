@@ -20,6 +20,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.UserController;
@@ -30,12 +31,13 @@ import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.InfoTypeUtil;
+import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.ParamItemUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.ChatActivity;
-import com.project.gimme.view.adpter.FriendInfoAdapter;
+import com.project.gimme.view.adpter.MyInformationItemAdapter;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 
 import org.apache.commons.lang3.StringUtils;
@@ -73,7 +75,7 @@ public class FriendInfoFragment extends Fragment {
     private Boolean isJoined;
     private Unbinder unbinder;
     Handler handler = new Handler();
-    FriendInfoAdapter friendInfoAdapter;
+    MyInformationItemAdapter myInformationItemAdapter;
     @BindView(R.id.fragment_friend_img)
     ImageView imageView;
 
@@ -95,7 +97,10 @@ public class FriendInfoFragment extends Fragment {
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
         isJoined = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
-        System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
+        userVO = JsonUtil.fromJson(bundle.getString(BundleUtil.OBJECT_ATTRIBUTE), new TypeToken<UserVO>() {
+        }.getType());
+        initUser();
+//        System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
     }
 
     private void initButton() {
@@ -167,6 +172,27 @@ public class FriendInfoFragment extends Fragment {
         unbinder.unbind();
     }
 
+    private void initUser() {
+        if (StringUtils.isEmpty(userVO.getNote())) {
+            nick.setText(userVO.getNick());
+        } else {
+            nick.setText(userVO.getNote());
+        }
+        company.setText(userVO.getCompany());
+        motto.setText(userVO.getMotto());
+        List<UserVoParamItem> itemList = getItemList();
+        myInformationItemAdapter = new MyInformationItemAdapter(getContext(), userVO, itemList);
+        listView.setAdapter(myInformationItemAdapter);
+        Glide.with(getContext())
+                .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
+                .error(R.mipmap.default_icon)
+                .into(icon);
+        Glide.with(getContext())
+                .load(userVO.getAvatar())
+                .error(R.mipmap.default_icon)
+                .into(imageView);
+    }
+
     private void getUserVO() {
         new Thread(new Runnable() {
             @SneakyThrows
@@ -179,24 +205,7 @@ public class FriendInfoFragment extends Fragment {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            if (StringUtils.isEmpty(userVO.getNote())) {
-                                nick.setText(userVO.getNick());
-                            } else {
-                                nick.setText(userVO.getNote());
-                            }
-                            company.setText(userVO.getCompany());
-                            motto.setText(userVO.getMotto());
-                            List<UserVoParamItem> itemList = getItemList();
-                            friendInfoAdapter = new FriendInfoAdapter(getContext(), itemList);
-                            listView.setAdapter(friendInfoAdapter);
-                            Glide.with(getContext())
-                                    .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
-                                    .error(R.mipmap.default_icon)
-                                    .into(icon);
-                            Glide.with(getContext())
-                                    .load(userVO.getAvatar())
-                                    .error(R.mipmap.default_icon)
-                                    .into(imageView);
+                            initUser();
                         }
                     });
                 }
@@ -215,6 +224,10 @@ public class FriendInfoFragment extends Fragment {
         item = new UserVoParamItem("昵称", userVO.getNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("邮箱", userVO.getMail(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+        itemList.add(item);
+        item = new UserVoParamItem("所在地", userVO.getCity(), false, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
+        itemList.add(item);
+        item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName(), false, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
         itemList.add(item);
         return itemList;
     }
@@ -238,9 +251,9 @@ public class FriendInfoFragment extends Fragment {
         itemList.add(item);
         item = new UserVoParamItem("生日", NumberUtil.changeToYearAndMonthAndDay(userVO.getBirthday()), true, ParamItemUtil.ParamType.TYPE_DATE.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("所在地", userVO.getCountryNick() + "-" + userVO.getProvinceNick() + "-" + userVO.getCityNick(), true, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
+        item = new UserVoParamItem("所在地", userVO.getCity(), true, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("职业", userVO.getOccupationNick(), true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
+        item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName(), true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
         itemList.add(item);
         return itemList;
     }
@@ -262,6 +275,10 @@ public class FriendInfoFragment extends Fragment {
         itemList.add(item);
         item = new UserVoParamItem("邮箱", userVO.getMail(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
+        item = new UserVoParamItem("所在地", userVO.getCity(), true, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
+        itemList.add(item);
+        item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName(), false, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
+        itemList.add(item);
         return itemList;
     }
 
@@ -281,6 +298,10 @@ public class FriendInfoFragment extends Fragment {
         item = new UserVoParamItem("频道昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("邮箱", userVO.getMail(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+        itemList.add(item);
+        item = new UserVoParamItem("所在地", userVO.getCity(), false, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
+        itemList.add(item);
+        item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName(), false, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
         itemList.add(item);
         return itemList;
     }

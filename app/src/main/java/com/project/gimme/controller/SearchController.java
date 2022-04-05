@@ -17,6 +17,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * @author 25741
+ */
 public class SearchController {
     public static ResponseData<List<SearchVO>> getSearchVoList(String searchType, String keyword) throws IOException {
         //创建OkHttpClient对象

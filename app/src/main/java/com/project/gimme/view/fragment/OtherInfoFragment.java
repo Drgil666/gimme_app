@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
@@ -29,6 +30,7 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.ChatFileActivity;
 import com.project.gimme.view.activity.OtherInformationActivity;
@@ -116,6 +118,15 @@ public class OtherInfoFragment extends Fragment {
         type = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
         isJoined = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
+        if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+            groupVO = JsonUtil.fromJson(bundle.getString(BundleUtil.OBJECT_ATTRIBUTE), new TypeToken<GroupVO>() {
+            }.getType());
+            initGroupVO();
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+            channelVO = JsonUtil.fromJson(bundle.getString(BundleUtil.OBJECT_ATTRIBUTE), new TypeToken<ChannelVO>() {
+            }.getType());
+            initChannelVO();
+        }
         System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
     }
 
@@ -231,6 +242,19 @@ public class OtherInfoFragment extends Fragment {
         }).start();
     }
 
+    private void initGroupVO() {
+        introductionIdRight.setText(groupVO.getId().toString());
+        memberRight.setText("查看" + groupVO.getTotalCount() + "名群成员");
+        topBarNick.setText(groupVO.getNick());
+        topBarDescription.setText(groupVO.getDescription());
+        myNoteRightText.setText(groupVO.getMyNote());
+        Glide.with(getContext())
+                .load(GimmeApplication.getImageUrl(groupVO.getAvatar()))
+                .error(R.mipmap.default_icon)
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                .into(topBarIcon);
+    }
+
     private void getGroupVO(Integer objectId) {
         new Thread(new Runnable() {
             @SneakyThrows
@@ -243,21 +267,25 @@ public class OtherInfoFragment extends Fragment {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            introductionIdRight.setText(groupVO.getId().toString());
-                            memberRight.setText("查看" + groupVO.getTotalCount() + "名群成员");
-                            topBarNick.setText(groupVO.getNick());
-                            topBarDescription.setText(groupVO.getDescription());
-                            myNoteRightText.setText(groupVO.getMyNote());
-                            Glide.with(getContext())
-                                    .load(GimmeApplication.getImageUrl(groupVO.getAvatar()))
-                                    .error(R.mipmap.default_icon)
-                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
-                                    .into(topBarIcon);
+                            initGroupVO();
                         }
                     });
                 }
             }
         }).start();
+    }
+
+    private void initChannelVO() {
+        introductionIdRight.setText(channelVO.getId().toString());
+        memberRight.setText("查看" + channelVO.getTotalCount() + "名频道成员");
+        topBarNick.setText(channelVO.getNick());
+        topBarDescription.setText(channelVO.getDescription());
+        myNoteRightText.setText(channelVO.getMyNote());
+        Glide.with(getContext())
+                .load(GimmeApplication.getImageUrl(channelVO.getAvatar()))
+                .error(R.mipmap.default_icon)
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                .into(topBarIcon);
     }
 
     private void getChannelVO(Integer objectId) {
@@ -272,16 +300,7 @@ public class OtherInfoFragment extends Fragment {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            introductionIdRight.setText(channelVO.getId().toString());
-                            memberRight.setText("查看" + channelVO.getTotalCount() + "名频道成员");
-                            topBarNick.setText(channelVO.getNick());
-                            topBarDescription.setText(channelVO.getDescription());
-                            myNoteRightText.setText(channelVO.getMyNote());
-                            Glide.with(getContext())
-                                    .load(GimmeApplication.getImageUrl(channelVO.getAvatar()))
-                                    .error(R.mipmap.default_icon)
-                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
-                                    .into(topBarIcon);
+                            initChannelVO();
                         }
                     });
                 }

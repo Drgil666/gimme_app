@@ -3,6 +3,7 @@ package com.project.gimme.view.activity;
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.INFO_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.OBJECT_NICK_ATTRIBUTE;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -106,6 +107,10 @@ public class ChatActivity extends SwipeBackActivity {
     @BindView(R.id.chat_imageview)
     ImageView imageView;
     public static Integer chatMsgId = null;
+    private UserVO userVO = new UserVO();
+    private GroupVO groupVO = new GroupVO();
+    private ChannelVO channelVO = new ChannelVO();
+    private String nick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +133,8 @@ public class ChatActivity extends SwipeBackActivity {
         Bundle bundle = this.getIntent().getExtras();
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
-        System.out.println("objectId:" + objectId + ",type:" + type);
+        nick = bundle.getString(OBJECT_NICK_ATTRIBUTE);
+        //System.out.println("objectId:" + objectId + ",type:" + type + ",nick:" + nick);
     }
 
     private void refresh() {
@@ -173,16 +179,17 @@ public class ChatActivity extends SwipeBackActivity {
             finish();
         });
         Glide.with(this).load(R.mipmap.info).into(rightButton);
-        rightButton.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
-            bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
-            bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
-            Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
-            startActivity(intent);
-        });
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
-            UserVO userVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), UserVO.class);
+            rightButton.setOnClickListener(view -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
+                bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(userVO));
+                Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
+                startActivity(intent);
+            });
+            userVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), UserVO.class);
             if (userVO != null) {
                 if (StringUtils.isEmpty(userVO.getNote())) {
                     setTopNick(userVO.getNick());
@@ -193,14 +200,32 @@ public class ChatActivity extends SwipeBackActivity {
             }
             getUserInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-            GroupVO groupVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), GroupVO.class);
+            rightButton.setOnClickListener(view -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
+                bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(groupVO));
+                Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
+                startActivity(intent);
+            });
+            groupVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), GroupVO.class);
             if (groupVO != null) {
                 setTopNick(groupVO.getNick());
                 setTopDescription("共10人");
             }
             getGroupInfo(objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-            ChannelVO channelVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), ChannelVO.class);
+            rightButton.setOnClickListener(view -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
+                bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(channelVO));
+                Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
+                startActivity(intent);
+            });
+            channelVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), ChannelVO.class);
             if (channelVO != null) {
                 setTopNick(channelVO.getNick());
                 setTopDescription("共10人");
@@ -510,7 +535,7 @@ public class ChatActivity extends SwipeBackActivity {
                 ResponseData<UserVO> responseData =
                         UserController.getUserVO(id.toString(), ChatMsgUtil.Character.TYPE_FRIEND.getName(), "");
                 if (responseData != null && responseData.isSuccess()) {
-                    UserVO userVO = responseData.getData();
+                    userVO = responseData.getData();
                     handler1.post(new Runnable() {
                         @Override
                         public void run() {
@@ -540,7 +565,7 @@ public class ChatActivity extends SwipeBackActivity {
                 ResponseData<GroupVO> responseData =
                         GroupController.getGroupInfo(id.toString());
                 if (responseData != null && responseData.isSuccess()) {
-                    GroupVO groupVO = responseData.getData();
+                    groupVO = responseData.getData();
                     handler1.post(new Runnable() {
                         @Override
                         public void run() {
@@ -566,7 +591,7 @@ public class ChatActivity extends SwipeBackActivity {
                 ResponseData<ChannelVO> responseData =
                         ChannelController.getChannelInfo(id.toString());
                 if (responseData != null && responseData.isSuccess()) {
-                    ChannelVO channelVO = responseData.getData();
+                    channelVO = responseData.getData();
                     handler1.post(new Runnable() {
                         @Override
                         public void run() {

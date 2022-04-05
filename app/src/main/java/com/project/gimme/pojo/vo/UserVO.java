@@ -17,22 +17,6 @@ public class UserVO extends User {
      */
     private String note;
     /**
-     * 国家名
-     */
-    private String countryNick;
-    /**
-     * 省份名
-     */
-    private String provinceNick;
-    /**
-     * 城市名
-     */
-    private String cityNick;
-    /**
-     * 职业名
-     */
-    private String occupationNick;
-    /**
      * 群/频道昵称
      */
     private String otherNick;

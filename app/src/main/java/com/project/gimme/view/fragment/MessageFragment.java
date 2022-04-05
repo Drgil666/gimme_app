@@ -2,6 +2,7 @@ package com.project.gimme.view.fragment;
 
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.OBJECT_NICK_ATTRIBUTE;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -141,6 +142,7 @@ public class MessageFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putInt(OBJECT_ID_ATTRIBUTE, (int) id);
             bundle.putInt(CHAT_TYPE_ATTRIBUTE, chatType);
+            bundle.putString(OBJECT_NICK_ATTRIBUTE, messageVO.getNick());
             Intent intent = new Intent(getActivity(), ChatActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
