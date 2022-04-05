@@ -58,16 +58,6 @@
             android:layout_marginTop="20dp"
             android:text="登 录"
             android:textSize="22sp" />
-
-        <Button
-            android:id="@+id/test_login"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/login_button"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="测 试"
-            android:textSize="22sp" />
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

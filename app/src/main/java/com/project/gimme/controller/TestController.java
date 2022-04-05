@@ -1,5 +1,6 @@
 package com.project.gimme.controller;
 
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.utils.LogUtil;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import okhttp3.Response;
  * @date 2022/2/13 19:00
  */
 public class TestController {
-    public static void test(final String url) {
+    public static void test() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -23,8 +24,7 @@ public class TestController {
                     OkHttpClient client = new OkHttpClient();
                     //创建Request
                     Request request = new Request.Builder()
-                            .url(url)//访问连接
-                            .get()
+                            .url(GimmeApplication.REMOTE_URL + "/api/user/check")//访问连接
                             .build();
                     //创建Call对象
                     Call call = client.newCall(request);

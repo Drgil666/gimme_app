@@ -188,7 +188,7 @@ public class FriendInfoFragment extends Fragment {
                 .error(R.mipmap.default_icon)
                 .into(icon);
         Glide.with(getContext())
-                .load(userVO.getAvatar())
+                .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
                 .error(R.mipmap.default_icon)
                 .into(imageView);
     }

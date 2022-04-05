@@ -79,7 +79,7 @@ public class GimmeApplication extends Application {
     }
 
     public static String getImageUrl(String mongoId) {
-        return REMOTE_URL + "/api/chat/file/download/" + mongoId;
+        return REMOTE_URL + "/api/chat/file/image/" + mongoId;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class GimmeApplication extends Application {
         //字体初始化
         //TODO:所有的转场动画需要重新完成！
         XUI.initFontStyle("ping_fang_sc.ttf");
-        TestController.test(REMOTE_URL + "/api/user/check");
+        TestController.test();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());

@@ -188,7 +188,7 @@ public class FriendListActivity extends SwipeBackActivity {
             public void onClick(View v) {
 //                System.out.println(idList.toString());
                 if (createMethod.equals(CREATE_GROUP)) {
-                    createGroup(idList);
+                    createGroup();
                 } else if (createMethod.equals(CREATE_CHANNEL)) {
                     createChannel();
                 }
@@ -196,7 +196,7 @@ public class FriendListActivity extends SwipeBackActivity {
         });
     }
 
-    private void createGroup(List<Integer> idList) {
+    private void createGroup() {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override

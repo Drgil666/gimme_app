@@ -125,7 +125,6 @@ public class LoginActivity extends BaseActivity {
                                 file.mkdirs();
                                 //创建用户对应文件夹
                             }
-
                             LogUtil.log(this.toString(), userResponseData.getData());
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
