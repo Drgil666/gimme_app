@@ -218,11 +218,11 @@ public class OtherInformationActivity extends SwipeBackActivity {
                             topInfoNick.setText(groupVO.getNick());
                             introductionDescription.setText(groupVO.getDescription());
                             Glide.with(mContext)
-                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + groupVO.getAvatar())
+                                    .load(GimmeApplication.getImageUrl(groupVO.getAvatar()))
                                     .error(R.mipmap.default_icon)
                                     .into(imageView);
                             Glide.with(mContext)
-                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + groupVO.getAvatar())
+                                    .load(GimmeApplication.getImageUrl(groupVO.getAvatar()))
                                     .error(R.mipmap.default_icon)
                                     .into(topInfoIcon);
                         }
@@ -248,11 +248,11 @@ public class OtherInformationActivity extends SwipeBackActivity {
                             topInfoNick.setText(channelVO.getNick());
                             introductionDescription.setText(channelVO.getDescription());
                             Glide.with(mContext)
-                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channelVO.getAvatar())
+                                    .load(GimmeApplication.getImageUrl(channelVO.getAvatar()))
                                     .error(R.mipmap.default_icon)
                                     .into(imageView);
                             Glide.with(mContext)
-                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channelVO.getAvatar())
+                                    .load(GimmeApplication.getImageUrl(channelVO.getAvatar()))
                                     .error(R.mipmap.default_icon)
                                     .into(topInfoIcon);
                         }

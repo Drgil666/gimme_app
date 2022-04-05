@@ -13,7 +13,7 @@ import java.util.Locale;
  */
 public class NumberUtil {
     private static final String HOUR_AND_MINUTE = "HH:mm";
-    private static final String YEAR_AND_MONTH_DAY = "yy-MM-dd";
+    private static final String YEAR_AND_MONTH_DAY = "yyyy-MM-dd";
     private static final String STANDARD_TIMESTAMP = "yyyy/MM/dd HH:mm:ss";
     private static final Long B_SIZE = 8L;
     private static final Long KB_SIZE = 1024 * 8L;

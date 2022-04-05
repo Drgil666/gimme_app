@@ -113,7 +113,7 @@ public class ChannelNoticeAdapter extends BaseAdapter {
             viewHolder.layout = convertView.findViewById(R.id.left_layout);
             viewHolder.icon = convertView.findViewById(R.id.left_image);
             Glide.with(mContext)
-                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar())
+                    .load(GimmeApplication.getImageUrl(chatMsgVO.getAvatar()))
                     .error(R.mipmap.default_icon)
                     .into(viewHolder.icon);
             viewHolder.text = convertView.findViewById(R.id.left_content);
@@ -147,7 +147,7 @@ public class ChannelNoticeAdapter extends BaseAdapter {
             viewHolder.layout = convertView.findViewById(R.id.right_layout);
             viewHolder.icon = convertView.findViewById(R.id.right_image);
             Glide.with(mContext)
-                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar())
+                    .load(GimmeApplication.getImageUrl(chatMsgVO.getAvatar()))
                     .error(R.mipmap.default_icon)
                     .into(viewHolder.icon);
             viewHolder.text = convertView.findViewById(R.id.right_content);
@@ -187,13 +187,12 @@ public class ChannelNoticeAdapter extends BaseAdapter {
             viewHolder.text.setVisibility(View.GONE);
             viewHolder.fileLayout.setVisibility(View.GONE);
             viewHolder.pic.setVisibility(View.VISIBLE);
-            RoundedCorners roundedCorners = new RoundedCorners(5);
-            RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
+
             Glide.with(mContext)
-                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getText())
+                    .load(GimmeApplication.getImageUrl(chatMsgVO.getText()))
                     .error(R.mipmap.default_icon)
-                    .apply(new RequestOptions().override(110, 110))
-                    .apply(options)
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10))
+                            .override(110, 110))
 //                                .placeholder(R.drawable.loading_spinner)
                     .into(viewHolder.pic);
             viewHolder.pic.setOnClickListener(new View.OnClickListener() {
@@ -202,9 +201,7 @@ public class ChannelNoticeAdapter extends BaseAdapter {
                     ImageView imageView = activity.findViewById(R.id.channel_notice_imageview);
                     ChannelNoticeActivity.setChatMsgId(chatMsgVO.getId());
                     Glide.with(mContext)
-                            .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVOList
-                                    .get(position)
-                                    .getText())
+                            .load(GimmeApplication.getImageUrl(chatMsgVO.getText()))
                             .error(R.mipmap.default_icon)
                             .into(imageView);
                     imageView.setVisibility(View.VISIBLE);

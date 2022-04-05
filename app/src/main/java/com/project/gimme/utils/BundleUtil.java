@@ -19,4 +19,8 @@ public class BundleUtil {
     public static final String CONTACTS_LIST_TYPE_ATTRIBUTE = "friend_list_type";
     public static final String CHAT_MSG_ID_ATTRIBUTE = "chat_msg_id";
     public static final String FILE_SIZE_ATTRIBUTE = "file_size";
+    public static final String USER_AVATAR_ATTRIBUTE = "user_avatar";
+    public static final String OBJECT_NICK_ATTRIBUTE = "object_nick";
+    public static final String USER_COMPANY_ATTRIBUTE = "user_company";
+    public static final String USER_MOTTO_ATTRIBUTE = "user_motto";
 }

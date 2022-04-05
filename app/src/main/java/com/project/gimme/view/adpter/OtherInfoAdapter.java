@@ -9,9 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.UserVO;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,7 @@ public class OtherInfoAdapter extends BaseAdapter {
     private List<UserVO> userVOList = new ArrayList<>();
     private LayoutInflater layoutInflater;
     private Context context;
+
     public OtherInfoAdapter(Context context, List<UserVO> userVOList) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
@@ -62,13 +66,21 @@ public class OtherInfoAdapter extends BaseAdapter {
             viewHolder.nick.setText(userVO.getNick());
         }
         if (userVO.getId() == -1) {
-            Picasso.with(context).load(R.mipmap.add_plus).into(viewHolder.icon);
+            Glide.with(context)
+                    .load(R.mipmap.add_plus)
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                    .into(viewHolder.icon);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     System.out.println("click!");
                 }
             });
+        } else {
+            Glide.with(context)
+                    .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                    .into(viewHolder.icon);
         }
         return convertView;
     }

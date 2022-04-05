@@ -1,8 +1,5 @@
 package com.project.gimme.view.fragment;
 
-import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
-import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.GroupController;
@@ -51,6 +53,8 @@ public class OtherInfoFragment extends Fragment {
     private Integer objectId;
     private GroupVO groupVO = new GroupVO();
     private ChannelVO channelVO = new ChannelVO();
+    @BindView(R.id.fragment_other_info_top_bar_icon)
+    ImageView topBarIcon;
     @BindView(R.id.fragment_other_info_top_nick)
     TextView topBarNick;
     @BindView(R.id.fragment_other_info_top_description)
@@ -109,8 +113,8 @@ public class OtherInfoFragment extends Fragment {
 
     private void getType() {
         Bundle bundle = getActivity().getIntent().getExtras();
-        type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
-        objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
+        type = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
+        objectId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
         isJoined = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
         System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
     }
@@ -127,8 +131,8 @@ public class OtherInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
-                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
                 Intent intent = new Intent(getContext(), OtherInformationActivity.class).putExtras(bundle);
                 startActivity(intent);
             }
@@ -151,16 +155,6 @@ public class OtherInfoFragment extends Fragment {
         if (!isJoined) {
             introductionGroupFileLayout.setVisibility(View.GONE);
         }
-        introductionIdLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
-                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
-                Intent intent = new Intent(getActivity(), QrActivity.class).putExtras(bundle);
-                startActivity(intent);
-            }
-        });
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             introductionIdLeft.setText("群聊号与二维码");
             introductionGroupNoticeLayout.setVisibility(View.VISIBLE);
@@ -172,9 +166,21 @@ public class OtherInfoFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
-                    bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
-                    bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                    bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
                     Intent intent = new Intent(getActivity(), ChatFileActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+            introductionIdLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
+                    bundle.putString(BundleUtil.USER_AVATAR_ATTRIBUTE, groupVO.getAvatar());
+                    bundle.putString(BundleUtil.OBJECT_NICK_ATTRIBUTE, groupVO.getNick());
+                    Intent intent = new Intent(getActivity(), QrActivity.class).putExtras(bundle);
                     startActivity(intent);
                 }
             });
@@ -182,6 +188,18 @@ public class OtherInfoFragment extends Fragment {
             introductionIdLeft.setText("频道号与二维码");
             introductionGroupNoticeLayout.setVisibility(View.GONE);
             introductionGroupFileLayout.setVisibility(View.GONE);
+            introductionIdLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
+                    bundle.putString(BundleUtil.USER_AVATAR_ATTRIBUTE, channelVO.getAvatar());
+                    bundle.putString(BundleUtil.OBJECT_NICK_ATTRIBUTE, channelVO.getNick());
+                    Intent intent = new Intent(getActivity(), QrActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
         } else {
             XToastUtils.toast("类型错误!");
         }
@@ -230,6 +248,11 @@ public class OtherInfoFragment extends Fragment {
                             topBarNick.setText(groupVO.getNick());
                             topBarDescription.setText(groupVO.getDescription());
                             myNoteRightText.setText(groupVO.getMyNote());
+                            Glide.with(getContext())
+                                    .load(GimmeApplication.getImageUrl(groupVO.getAvatar()))
+                                    .error(R.mipmap.default_icon)
+                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                                    .into(topBarIcon);
                         }
                     });
                 }
@@ -254,6 +277,11 @@ public class OtherInfoFragment extends Fragment {
                             topBarNick.setText(channelVO.getNick());
                             topBarDescription.setText(channelVO.getDescription());
                             myNoteRightText.setText(channelVO.getMyNote());
+                            Glide.with(getContext())
+                                    .load(GimmeApplication.getImageUrl(channelVO.getAvatar()))
+                                    .error(R.mipmap.default_icon)
+                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                                    .into(topBarIcon);
                         }
                     });
                 }

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.Channel;
@@ -59,8 +61,9 @@ public class FriendChannelAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.text.setText(channel.getNick());
         Glide.with(mContext)
-                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + channel.getAvatar())
+                .load(GimmeApplication.getImageUrl(channel.getAvatar()))
                 .error(R.mipmap.default_icon)
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                 .into(viewHolder.icon);
         return convertView;
     }

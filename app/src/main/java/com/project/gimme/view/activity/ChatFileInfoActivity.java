@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChatFileController;
@@ -25,9 +26,7 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.NumberUtil;
-import com.project.gimme.utils.PicassoTransformation;
 import com.project.gimme.utils.XToastUtils;
-import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 
 import java.io.File;
@@ -179,9 +178,8 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                                         || fileName.endsWith(".png")
                                         || fileName.endsWith(".jpeg")
                                         || fileName.endsWith(".bmp")) {
-                                    Picasso.with(mContext)
+                                    Glide.with(mContext)
                                             .load(new File(name))
-                                            .transform(new PicassoTransformation())
                                             .into(imageView);
                                     imageView.setVisibility(View.VISIBLE);
                                 } else {

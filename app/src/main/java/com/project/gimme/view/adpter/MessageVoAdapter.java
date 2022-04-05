@@ -11,6 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChatMsgController;
@@ -73,8 +75,9 @@ public class MessageVoAdapter extends BaseAdapter {
         convertView = layoutInflater.inflate(R.layout.listview_message_vo, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
         Glide.with(mContext)
-                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + messageVO.getAvatar())
+                .load(GimmeApplication.getImageUrl(messageVO.getAvatar()))
                 .error(R.mipmap.default_icon)
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                 .into(viewHolder.avatar);
         viewHolder.nick.setText(messageVO.getNick());
         viewHolder.text.setText(messageVO.getText());

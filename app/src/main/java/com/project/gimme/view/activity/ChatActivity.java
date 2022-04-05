@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
@@ -52,7 +53,6 @@ import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 import com.project.gimme.view.adpter.EmojiAdapter;
 import com.project.gimme.view.adpter.ExtraOptionAdapter;
-import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
 import com.xuexiang.xutil.app.IntentUtils;
@@ -168,11 +168,11 @@ public class ChatActivity extends SwipeBackActivity {
     }
 
     private void initTopBar() {
-        Picasso.with(this).load(R.mipmap.back).into(leftButton);
+        Glide.with(this).load(R.mipmap.back).into(leftButton);
         leftButton.setOnClickListener(view -> {
             finish();
         });
-        Picasso.with(this).load(R.mipmap.info).into(rightButton);
+        Glide.with(this).load(R.mipmap.info).into(rightButton);
         rightButton.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);

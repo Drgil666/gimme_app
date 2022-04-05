@@ -17,12 +17,15 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.MyInfoListVO;
 import com.project.gimme.pojo.vo.ResponseData;
+import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.MyInfoUtil;
 import com.project.gimme.view.activity.MyInformationActivity;
 import com.project.gimme.view.adpter.MyInfoAdapter;
@@ -95,8 +98,9 @@ public class MyInfoFragment extends Fragment {
                             userInfoCompany.setText(user.getCompany());
                             userInfoMotto.setText(user.getMotto());
                             Glide.with(getContext())
-                                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + user.getAvatar())
+                                    .load(GimmeApplication.getImageUrl(user.getAvatar()))
                                     .error(R.mipmap.default_icon)
+                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                                     .into(userInfoIcon);
                         }
                     });
@@ -121,7 +125,12 @@ public class MyInfoFragment extends Fragment {
         userInfoIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MyInformationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(BundleUtil.OBJECT_NICK_ATTRIBUTE, user.getNick());
+                bundle.putString(BundleUtil.USER_AVATAR_ATTRIBUTE, user.getAvatar());
+                bundle.putString(BundleUtil.USER_COMPANY_ATTRIBUTE, user.getCompany());
+                bundle.putString(BundleUtil.USER_MOTTO_ATTRIBUTE, user.getMotto());
+                Intent intent = new Intent(getContext(), MyInformationActivity.class).putExtras(bundle);
                 startActivity(intent);
             }
         });

@@ -42,7 +42,6 @@ import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.activity.ChatFileInfoActivity;
 import com.project.gimme.view.activity.FriendListActivity;
 import com.project.gimme.view.activity.InfoActivity;
-import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup;
 import com.xuexiang.xui.widget.popupwindow.easypopup.HorizontalGravity;
 import com.xuexiang.xui.widget.popupwindow.easypopup.VerticalGravity;
@@ -115,7 +114,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.layout = convertView.findViewById(R.id.left_layout);
             viewHolder.icon = convertView.findViewById(R.id.left_image);
             Glide.with(mContext)
-                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar())
+                    .load(GimmeApplication.getImageUrl(chatMsgVO.getAvatar()))
                     .error(R.mipmap.default_icon)
                     .into(viewHolder.icon);
             viewHolder.text = convertView.findViewById(R.id.left_content);
@@ -149,7 +148,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.layout = convertView.findViewById(R.id.right_layout);
             viewHolder.icon = convertView.findViewById(R.id.right_image);
             Glide.with(mContext)
-                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getAvatar())
+                    .load(GimmeApplication.getImageUrl(chatMsgVO.getAvatar()))
                     .error(R.mipmap.default_icon)
                     .into(viewHolder.icon);
             viewHolder.text = convertView.findViewById(R.id.right_content);
@@ -189,10 +188,10 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.text.setVisibility(View.GONE);
             viewHolder.fileLayout.setVisibility(View.GONE);
             viewHolder.pic.setVisibility(View.VISIBLE);
-            RoundedCorners roundedCorners = new RoundedCorners(5);
+            RoundedCorners roundedCorners = new RoundedCorners(10);
             RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
             Glide.with(mContext)
-                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVO.getText())
+                    .load(GimmeApplication.getImageUrl(chatMsgVO.getAvatar()))
                     .error(R.mipmap.default_icon)
                     .apply(new RequestOptions().override(110, 110))
                     .apply(options)
@@ -203,10 +202,8 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     ImageView imageView = activity.findViewById(R.id.chat_imageview);
                     ChatActivity.setChatMsgId(chatMsgVO.getId());
-                    Picasso.with(mContext)
-                            .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + chatMsgVOList
-                                    .get(position)
-                                    .getText())
+                    Glide.with(mContext)
+                            .load(GimmeApplication.getImageUrl(chatMsgVO.getText()))
                             .error(R.mipmap.default_icon)
                             .into(imageView);
                     imageView.setVisibility(View.VISIBLE);

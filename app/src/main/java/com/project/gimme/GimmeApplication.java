@@ -78,6 +78,10 @@ public class GimmeApplication extends Application {
         GimmeApplication.userId = userId;
     }
 
+    public static String getImageUrl(String mongoId) {
+        return REMOTE_URL + "/api/chat/file/download/" + mongoId;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -7,7 +7,8 @@
     <ImageView
         android:id="@+id/listview_message_vo_image"
         android:layout_width="60sp"
-        android:layout_height="60sp"></ImageView>
+        android:layout_height="60sp"
+        android:background="@drawable/rounded_edit_view_white_5px" />
 
     <TextView
         android:id="@+id/listview_message_vo_nick"

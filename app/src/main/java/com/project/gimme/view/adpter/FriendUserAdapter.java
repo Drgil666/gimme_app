@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.UserVO;
@@ -66,8 +68,9 @@ public class FriendUserAdapter extends BaseAdapter {
             viewHolder.text.setText(userVO.getNote());
         }
         Glide.with(mContext)
-                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + userVO.getAvatar())
+                .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
                 .error(R.mipmap.default_icon)
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                 .into(viewHolder.icon);
         return convertView;
     }

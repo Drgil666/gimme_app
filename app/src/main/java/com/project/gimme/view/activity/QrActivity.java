@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
@@ -42,6 +45,8 @@ public class QrActivity extends SwipeBackActivity {
     ImageView bodyIcon;
     private Integer type;
     private Integer objectId;
+    private String img;
+    private String objectNick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,24 +69,26 @@ public class QrActivity extends SwipeBackActivity {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
+        img = bundle.getString(BundleUtil.USER_AVATAR_ATTRIBUTE);
+        objectNick = bundle.getString(BundleUtil.OBJECT_NICK_ATTRIBUTE);
     }
 
     private void initQrBody() {
+        bodyNick.setText(objectNick);
         if (type.equals(ChatMsgUtil.Character.TYPE_FRIEND.getCode())) {
-            User user = getUser(objectId);
-            bodyNick.setText(user.getNick());
-            bodyId.setText("Gimme号:" + user.getId());
+            bodyId.setText("Gimme号:" + objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-            Group group = getGroup(objectId);
-            bodyNick.setText(group.getNick());
-            bodyId.setText("群号:" + group.getId());
+            bodyId.setText("群号:" + objectId);
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-            Channel channel = getChannel(objectId);
-            bodyNick.setText(channel.getNick());
-            bodyId.setText("频道号:" + channel.getId());
+            bodyId.setText("频道号:" + objectId);
         } else {
             XToastUtils.toast("类型错误!");
         }
+        Glide.with(this)
+                .load(GimmeApplication.getImageUrl(img))
+                .error(R.mipmap.default_icon)
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                .into(bodyIcon);
         bodyQrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

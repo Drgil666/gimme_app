@@ -11,10 +11,12 @@ public class UserVoParamItem {
     private String paramName;
     private String paramValue;
     private Boolean isArrow;
+    private Integer paramType;
 
-    public UserVoParamItem(String name, String value, boolean isArrow) {
-        this.paramName = name;
-        this.paramValue = value;
+    public UserVoParamItem(String paramName, String paramValue, boolean isArrow, Integer type) {
+        this.paramName = paramName;
+        this.paramValue = paramValue;
         this.isArrow = isArrow;
+        this.paramType = type;
     }
 }

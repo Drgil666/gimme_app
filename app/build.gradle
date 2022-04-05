@@ -54,8 +54,6 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.7'
     // 管理本地数据库greendao
     implementation 'org.greenrobot:greendao:3.3.0'
-    // Picasso
-    implementation 'com.squareup.picasso:picasso:2.5.2'
     //右滑关闭页面
     implementation 'cn.bingoogolapple:bga-swipebacklayout:2.0.1@aar'
     //ButterKnife

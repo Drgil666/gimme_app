@@ -15,10 +15,11 @@
         android:text="参数"
         android:textSize="22sp" />
 
-    <TextView
+    <EditText
         android:id="@+id/listview_friend_info_list_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:layout_below="@+id/listview_friend_info_list_param"
         android:layout_marginStart="15sp"
         android:layout_marginTop="0sp"

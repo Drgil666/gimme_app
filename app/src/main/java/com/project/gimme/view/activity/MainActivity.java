@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.utils.BundleUtil;
@@ -26,7 +27,6 @@ import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.fragment.FriendFragment;
 import com.project.gimme.view.fragment.MessageFragment;
 import com.project.gimme.view.fragment.MyInfoFragment;
-import com.squareup.picasso.Picasso;
 import com.xuexiang.xqrcode.XQRCode;
 import com.xuexiang.xqrcode.util.QRCodeAnalyzeUtils;
 import com.xuexiang.xui.adapter.simple.AdapterItem;
@@ -319,24 +319,24 @@ public class MainActivity extends BaseActivity {
     }
 
     private void changeUIColor(Integer op) {
-        Picasso.with(this).load(R.mipmap.message).into(messageIcon);
-        Picasso.with(this).load(R.mipmap.contacts).into(friendIcon);
-        Picasso.with(this).load(R.mipmap.my_info).into(myInfoIcon);
+        Glide.with(this).load(R.mipmap.message).into(messageIcon);
+        Glide.with(this).load(R.mipmap.contacts).into(friendIcon);
+        Glide.with(this).load(R.mipmap.my_info).into(myInfoIcon);
         messageText.setTextColor(R.color.black);
         friendText.setTextColor(R.color.black);
         myInfoText.setTextColor(R.color.black);
         if (op.equals(SessionUtil.Character.TYPE_MESSAGE.getCode())) {
-            Picasso.with(this).load(R.mipmap.message_select).into(messageIcon);
+            Glide.with(this).load(R.mipmap.message_select).into(messageIcon);
             messageText.setTextColor(R.color.gimme_color);
-            Picasso.with(this).load(R.mipmap.add_plus).into(topRightButton);
+            Glide.with(this).load(R.mipmap.add_plus).into(topRightButton);
         } else if (op.equals(SessionUtil.Character.TYPE_FRIEND.getCode())) {
-            Picasso.with(this).load(R.mipmap.contacts_select).into(friendIcon);
+            Glide.with(this).load(R.mipmap.contacts_select).into(friendIcon);
             friendText.setTextColor(R.color.gimme_color);
-            Picasso.with(this).load(R.mipmap.add_plus).into(topRightButton);
+            Glide.with(this).load(R.mipmap.add_plus).into(topRightButton);
         } else if (op.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
-            Picasso.with(this).load(R.mipmap.my_info_select).into(myInfoIcon);
+            Glide.with(this).load(R.mipmap.my_info_select).into(myInfoIcon);
             myInfoText.setTextColor(R.color.gimme_color);
-            Picasso.with(this).load(R.mipmap.setting).into(topRightButton);
+            Glide.with(this).load(R.mipmap.setting).into(topRightButton);
         }
     }
 

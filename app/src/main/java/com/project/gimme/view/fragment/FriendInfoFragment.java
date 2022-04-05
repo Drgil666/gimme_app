@@ -31,11 +31,11 @@ import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.FileUtil;
 import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.utils.NumberUtil;
+import com.project.gimme.utils.ParamItemUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.FriendInfoAdapter;
-import com.squareup.picasso.Picasso;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 
 import org.apache.commons.lang3.StringUtils;
@@ -76,6 +76,7 @@ public class FriendInfoFragment extends Fragment {
     FriendInfoAdapter friendInfoAdapter;
     @BindView(R.id.fragment_friend_img)
     ImageView imageView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -122,10 +123,6 @@ public class FriendInfoFragment extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void initTopBar() {
-        Glide.with(getContext())
-                .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + userVO.getAvatar())
-                .error(R.mipmap.default_icon)
-                .into(icon);
         icon.setOnTouchListener((view, motionEvent) -> {
 //            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 //                ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果
@@ -133,10 +130,6 @@ public class FriendInfoFragment extends Fragment {
 //                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
 //            }
             //TODO:滤镜需要重写
-            Picasso.with(getContext())
-                    .load(GimmeApplication.REMOTE_URL + "/api/chat/file/download/" + userVO.getAvatar())
-                    .error(R.mipmap.default_icon)
-                    .into(imageView);
             imageView.setVisibility(View.VISIBLE);
             return false;//如果return true的话,onClick的事件就不会触发!
         });
@@ -196,6 +189,14 @@ public class FriendInfoFragment extends Fragment {
                             List<UserVoParamItem> itemList = getItemList();
                             friendInfoAdapter = new FriendInfoAdapter(getContext(), itemList);
                             listView.setAdapter(friendInfoAdapter);
+                            Glide.with(getContext())
+                                    .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
+                                    .error(R.mipmap.default_icon)
+                                    .into(icon);
+                            Glide.with(getContext())
+                                    .load(userVO.getAvatar())
+                                    .error(R.mipmap.default_icon)
+                                    .into(imageView);
                         }
                     });
                 }
@@ -205,41 +206,41 @@ public class FriendInfoFragment extends Fragment {
 
     private List<UserVoParamItem> getFriendItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
-        UserVoParamItem item = new UserVoParamItem("备注", userVO.getNote(), true);
+        UserVoParamItem item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
+        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false);
+        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("昵称", userVO.getNick(), false);
+        item = new UserVoParamItem("昵称", userVO.getNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("邮箱", userVO.getMail(), false);
+        item = new UserVoParamItem("邮箱", userVO.getMail(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         return itemList;
     }
 
     private List<UserVoParamItem> getOwnerItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
-        UserVoParamItem item = new UserVoParamItem("昵称", userVO.getNick(), true);
+        UserVoParamItem item = new UserVoParamItem("昵称", userVO.getNick(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
+        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         if (type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode())) {
-            item = new UserVoParamItem("群昵称", userVO.getNote(), false);
+            item = new UserVoParamItem("群昵称", userVO.getNote(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
             itemList.add(item);
         } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
-            item = new UserVoParamItem("频道昵称", userVO.getNote(), false);
+            item = new UserVoParamItem("频道昵称", userVO.getNote(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
             itemList.add(item);
         }
-        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), true);
+        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("邮箱", userVO.getMail(), true);
+        item = new UserVoParamItem("邮箱", userVO.getMail(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("生日", NumberUtil.changeToYearAndMonthAndDay(userVO.getBirthday()), true);
+        item = new UserVoParamItem("生日", NumberUtil.changeToYearAndMonthAndDay(userVO.getBirthday()), true, ParamItemUtil.ParamType.TYPE_DATE.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("所在地", userVO.getCountryNick() + "-" + userVO.getProvinceNick() + "-" + userVO.getCityNick(), true);
+        item = new UserVoParamItem("所在地", userVO.getCountryNick() + "-" + userVO.getProvinceNick() + "-" + userVO.getCityNick(), true, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("职业", userVO.getOccupationNick(), true);
+        item = new UserVoParamItem("职业", userVO.getOccupationNick(), true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
         itemList.add(item);
         return itemList;
     }
@@ -248,18 +249,18 @@ public class FriendInfoFragment extends Fragment {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item;
         if (!StringUtils.isEmpty(userVO.getNote())) {
-            item = new UserVoParamItem("备注", userVO.getNote(), true);
+            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
             itemList.add(item);
         }
-        item = new UserVoParamItem("昵称", userVO.getNick(), false);
+        item = new UserVoParamItem("昵称", userVO.getNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
+        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false);
+        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("群昵称", userVO.getOtherNick(), false);
+        item = new UserVoParamItem("群昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("邮箱", userVO.getMail(), false);
+        item = new UserVoParamItem("邮箱", userVO.getMail(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         return itemList;
     }
@@ -268,18 +269,18 @@ public class FriendInfoFragment extends Fragment {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item;
         if (!StringUtils.isEmpty(userVO.getNote())) {
-            item = new UserVoParamItem("备注", userVO.getNote(), true);
+            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
             itemList.add(item);
         }
-        item = new UserVoParamItem("昵称", userVO.getNick(), false);
+        item = new UserVoParamItem("昵称", userVO.getNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false);
+        item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false);
+        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("频道昵称", userVO.getOtherNick(), false);
+        item = new UserVoParamItem("频道昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("邮箱", userVO.getMail(), false);
+        item = new UserVoParamItem("邮箱", userVO.getMail(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         return itemList;
     }
