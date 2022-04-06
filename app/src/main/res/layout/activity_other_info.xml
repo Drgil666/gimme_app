@@ -4,9 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gimme_background_lighter"
-    tools:context=".view.fragment.OtherInfoFragment">
+    tools:context=".view.activity.OtherInfoActivity">
+    <!--顶边栏-->
+    <RelativeLayout
+        android:id="@+id/other_info_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/gimme_background_lighter">
+
+        <TextView
+            android:id="@+id/other_info_top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="消息"
+            android:textColor="@color/black"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/other_info_top_left_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:src="@mipmap/back" />
+    </RelativeLayout>
     <!--可滚动部件-->
     <ScrollView
+        android:layout_below="@+id/other_info_top_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 

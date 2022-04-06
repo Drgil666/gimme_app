@@ -152,7 +152,6 @@ public class MainActivity extends BaseActivity {
                                                                    break;
                                                                }
                                                                default: {
-                                                                   XToastUtils.toast("类型错误!");
                                                                }
                                                            }
                                                            return true;

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gimme_background_lighter"
+    tools:context=".view.activity.FriendInfoActivity">
+    <!--顶边栏-->
+    <RelativeLayout
+        android:id="@+id/friend_info_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/gimme_background_lighter">
+
+
+        <ImageView
+            android:id="@+id/friend_info_top_left_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:src="@mipmap/back" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/friend_info_top_bar">
+
+        <RelativeLayout
+            android:id="@+id/friend_info_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="20sp">
+
+            <ImageView
+                android:id="@+id/friend_info_icon"
+                android:layout_width="120sp"
+                android:layout_height="120sp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/app_icon" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20sp"
+                android:layout_toEndOf="@id/friend_info_icon">
+
+                <TextView
+                    android:id="@+id/friend_info_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="昵称"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/friend_info_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/friend_info_nick"
+                    android:layout_marginTop="15sp"
+                    android:text="公司名"
+                    android:textColor="@color/black"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/friend_info_motto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/friend_info_company"
+                    android:layout_marginTop="15sp"
+                    android:text="个性签名"
+                    android:textColor="@color/gimme_font1"
+                    android:textSize="22sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/friend_info_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="400sp"
+            android:layout_below="@+id/friend_info_layout"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginEnd="10sp"
+            android:background="@drawable/rounded_edit_view_white_10px" />
+
+        <Button
+            android:id="@+id/friend_info_add_button"
+            android:layout_width="200sp"
+            android:layout_height="60sp"
+            android:layout_below="@+id/friend_info_listview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15sp"
+            android:text="添加好友"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/friend_info_chat_button"
+            android:layout_width="200sp"
+            android:layout_height="60sp"
+            android:layout_below="@+id/friend_info_add_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15sp"
+            android:text="发信息"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/friend_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

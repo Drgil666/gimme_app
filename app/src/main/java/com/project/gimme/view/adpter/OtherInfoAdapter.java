@@ -70,12 +70,6 @@ public class OtherInfoAdapter extends BaseAdapter {
                     .load(R.mipmap.add_plus)
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                     .into(viewHolder.icon);
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    System.out.println("click!");
-                }
-            });
         } else {
             Glide.with(context)
                     .load(GimmeApplication.getImageUrl(userVO.getAvatar()))

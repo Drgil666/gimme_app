@@ -1,19 +1,17 @@
-package com.project.gimme.view.fragment;
+package com.project.gimme.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -33,14 +31,10 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
-import com.project.gimme.view.activity.ChatFileActivity;
-import com.project.gimme.view.activity.MainActivity;
-import com.project.gimme.view.activity.OtherInformationActivity;
-import com.project.gimme.view.activity.ParamActivity;
-import com.project.gimme.view.activity.QrActivity;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
 
 import java.util.ArrayList;
@@ -48,16 +42,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import lombok.SneakyThrows;
 
-/**
- * @author DrGilbert
- */
 @SuppressLint("NonConstantResourceId")
-public class OtherInfoFragment extends Fragment {
+public class OtherInfoActivity extends SwipeBackActivity {
+    private final Integer height = GimmeApplication.getHeight();
     private Integer type;
     private Integer objectId;
+    @BindView(R.id.other_info_top_text)
+    TextView tabText;
+    @BindView(R.id.other_info_top_left_button)
+    ImageView leftButton;
+    @BindView(R.id.other_info_top_bar)
+    RelativeLayout topBar;
     private GroupVO groupVO = new GroupVO();
     private ChannelVO channelVO = new ChannelVO();
     @BindView(R.id.fragment_other_info_top_bar_icon)
@@ -100,28 +97,36 @@ public class OtherInfoFragment extends Fragment {
     TextView myNoteLeftText;
     @BindView(R.id.fragment_other_info_exit_button)
     Button exitButton;
-    private Unbinder unbinder;
     private GroupNotice groupNotice = new GroupNotice();
     private Boolean isJoined;
     @BindView(R.id.fragment_other_info_top_bar)
-    RelativeLayout topBar;
+    RelativeLayout topInfoBar;
+    private final Context mContext = this;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_other_info, container, false);
-        unbinder = ButterKnife.bind(this, view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_other_info);
+        ButterKnife.bind(this);
+        initTopBar(0.1);
         getType();
         initTopBar();
         initMember();
+        initGridView();
         initIntroduction();
         initMyLayout();
-        return view;
+    }
+
+    private void initTopBar(double size) {
+        leftButton.setOnClickListener(view -> {
+            finish();
+        });
+        topBar.getLayoutParams().height = (int) Math.floor(height * size);
     }
 
 
     private void getType() {
-        Bundle bundle = getActivity().getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
         type = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
         isJoined = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
@@ -153,7 +158,7 @@ public class OtherInfoFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
                 bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
-                Intent intent = new Intent(getContext(), OtherInformationActivity.class).putExtras(bundle);
+                Intent intent = new Intent(mContext, OtherInformationActivity.class).putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -169,6 +174,25 @@ public class OtherInfoFragment extends Fragment {
         } else {
             XToastUtils.toast("类型错误!");
         }
+    }
+
+    private void initGridView() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                if (id == -1) {
+                    bundle.putInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE, ContactsUtil.ContactType.TYPE_INVITATION.getCode());
+                    Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
+                    Intent intent = new Intent(mContext, FriendInfoActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void initIntroduction() {
@@ -188,7 +212,7 @@ public class OtherInfoFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
-                    Intent intent = new Intent(getActivity(), ChatFileActivity.class).putExtras(bundle);
+                    Intent intent = new Intent(mContext, ChatFileActivity.class).putExtras(bundle);
                     startActivity(intent);
                 }
             });
@@ -200,7 +224,7 @@ public class OtherInfoFragment extends Fragment {
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
                     bundle.putString(BundleUtil.USER_AVATAR_ATTRIBUTE, groupVO.getAvatar());
                     bundle.putString(BundleUtil.OBJECT_NICK_ATTRIBUTE, groupVO.getNick());
-                    Intent intent = new Intent(getActivity(), QrActivity.class).putExtras(bundle);
+                    Intent intent = new Intent(mContext, QrActivity.class).putExtras(bundle);
                     startActivity(intent);
                 }
             });
@@ -216,19 +240,13 @@ public class OtherInfoFragment extends Fragment {
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
                     bundle.putString(BundleUtil.USER_AVATAR_ATTRIBUTE, channelVO.getAvatar());
                     bundle.putString(BundleUtil.OBJECT_NICK_ATTRIBUTE, channelVO.getNick());
-                    Intent intent = new Intent(getActivity(), QrActivity.class).putExtras(bundle);
+                    Intent intent = new Intent(mContext, QrActivity.class).putExtras(bundle);
                     startActivity(intent);
                 }
             });
         } else {
             XToastUtils.toast("类型错误!");
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     private void getGroupNotice(Integer objectId) {
@@ -257,7 +275,7 @@ public class OtherInfoFragment extends Fragment {
         topBarNick.setText(groupVO.getNick());
         topBarDescription.setText(groupVO.getDescription());
         myNoteRightText.setText(groupVO.getMyNote());
-        Glide.with(getContext())
+        Glide.with(this)
                 .load(GimmeApplication.getImageUrl(groupVO.getAvatar()))
                 .error(R.mipmap.default_icon)
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
@@ -291,7 +309,7 @@ public class OtherInfoFragment extends Fragment {
         topBarNick.setText(channelVO.getNick());
         topBarDescription.setText(channelVO.getDescription());
         myNoteRightText.setText(channelVO.getMyNote());
-        Glide.with(getContext())
+        Glide.with(this)
                 .load(GimmeApplication.getImageUrl(channelVO.getAvatar()))
                 .error(R.mipmap.default_icon)
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
@@ -336,7 +354,7 @@ public class OtherInfoFragment extends Fragment {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                gridView.setAdapter(new OtherInfoAdapter(getContext(), userVOList));
+                                gridView.setAdapter(new OtherInfoAdapter(mContext, userVOList));
                             }
                         });
                     }
@@ -358,7 +376,7 @@ public class OtherInfoFragment extends Fragment {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                gridView.setAdapter(new OtherInfoAdapter(getContext(), userVOList));
+                                gridView.setAdapter(new OtherInfoAdapter(mContext, userVOList));
                             }
                         });
                     }
@@ -387,7 +405,7 @@ public class OtherInfoFragment extends Fragment {
                 } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
                     bundle.putString(BundleUtil.PARAM_NAME_ATTRIBUTE, channelVO.getMyNote());
                 }
-                Intent intent = new Intent(getContext(), ParamActivity.class).putExtras(bundle);
+                Intent intent = new Intent(mContext, ParamActivity.class).putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -442,7 +460,7 @@ public class OtherInfoFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        Intent intent = new Intent(mContext, MainActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -459,7 +477,7 @@ public class OtherInfoFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        Intent intent = new Intent(mContext, MainActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -476,7 +494,7 @@ public class OtherInfoFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        Intent intent = new Intent(mContext, MainActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -493,7 +511,7 @@ public class OtherInfoFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        Intent intent = new Intent(mContext, MainActivity.class);
                         startActivity(intent);
                     }
                 });

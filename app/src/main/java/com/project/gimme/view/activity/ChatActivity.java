@@ -187,7 +187,7 @@ public class ChatActivity extends SwipeBackActivity {
                 bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
                 bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
                 bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(userVO));
-                Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
+                Intent intent = new Intent(this, FriendInfoActivity.class).putExtras(bundle);
                 startActivity(intent);
             });
             userVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), UserVO.class);
@@ -207,7 +207,7 @@ public class ChatActivity extends SwipeBackActivity {
                 bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
                 bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
                 bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(groupVO));
-                Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
+                Intent intent = new Intent(this, OtherInfoActivity.class).putExtras(bundle);
                 startActivity(intent);
             });
             groupVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), GroupVO.class);
@@ -223,7 +223,7 @@ public class ChatActivity extends SwipeBackActivity {
                 bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
                 bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
                 bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(channelVO));
-                Intent intent = new Intent(this, InfoActivity.class).putExtras(bundle);
+                Intent intent = new Intent(this, OtherInfoActivity.class).putExtras(bundle);
                 startActivity(intent);
             });
             channelVO = JsonUtil.fromJson(this.getIntent().getExtras().getString(INFO_ATTRIBUTE), ChannelVO.class);

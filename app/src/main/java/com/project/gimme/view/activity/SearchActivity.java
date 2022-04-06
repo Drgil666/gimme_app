@@ -86,7 +86,7 @@ public class SearchActivity extends AppCompatActivity {
                 if (searchVO.getIsJoined()) {
                     intent = new Intent(mContext, ChatActivity.class).putExtras(bundle);
                 } else if (searchVO.getObjectType().equals(ChatMsgUtil.Character.TYPE_FRIEND.getName())) {
-                    intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
+                    intent = new Intent(mContext, FriendInfoActivity.class).putExtras(bundle);
                 } else {
                     intent = new Intent(mContext, OtherInformationActivity.class).putExtras(bundle);
                 }

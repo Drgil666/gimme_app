@@ -1,23 +1,21 @@
-package com.project.gimme.view.fragment;
+package com.project.gimme.view.activity;
 
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.reflect.TypeToken;
@@ -36,7 +34,6 @@ import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.ParamItemUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
-import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.adpter.MyInformationItemAdapter;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 
@@ -47,53 +44,53 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import lombok.SneakyThrows;
 
-/**
- * @author DrGilbert
- */
 @SuppressLint("NonConstantResourceId")
-public class FriendInfoFragment extends Fragment {
+public class FriendInfoActivity extends SwipeBackActivity {
+    private final Integer height = GimmeApplication.getHeight();
+    private Boolean isJoined;
+    @BindView(R.id.friend_info_top_left_button)
+    ImageView leftButton;
+    @BindView(R.id.friend_info_top_bar)
+    RelativeLayout topBar;
     private Integer type;
     private Integer objectId;
-    @BindView(R.id.fragment_friend_info_icon)
+    @BindView(R.id.friend_info_icon)
     ImageView icon;
-    @BindView(R.id.fragment_friend_info_nick)
+    @BindView(R.id.friend_info_nick)
     TextView nick;
-    @BindView(R.id.fragment_friend_info_company)
+    @BindView(R.id.friend_info_company)
     TextView company;
-    @BindView(R.id.fragment_friend_info_motto)
+    @BindView(R.id.friend_info_motto)
     TextView motto;
     private UserVO userVO = new UserVO();
-    @BindView(R.id.fragment_friend_info_listview)
+    @BindView(R.id.friend_info_listview)
     ListView listView;
-    @BindView(R.id.fragment_friend_info_chat_button)
+    @BindView(R.id.friend_info_chat_button)
     Button chatButton;
-    @BindView(R.id.fragment_friend_info_add_button)
+    @BindView(R.id.friend_info_add_button)
     Button addButton;
-    private Boolean isJoined;
-    private Unbinder unbinder;
     Handler handler = new Handler();
     MyInformationItemAdapter myInformationItemAdapter;
-    @BindView(R.id.fragment_friend_img)
+    @BindView(R.id.friend_img)
     ImageView imageView;
+    private Context mContext = this;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_friend_info, container, false);
-        unbinder = ButterKnife.bind(this, view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_friend_info);
+        ButterKnife.bind(this);
         getType();
         getUserVO();
+        initTopBar(0.1);
         initImageView();
-        initTopBar();
         initButton();
-        return view;
     }
 
     private void getType() {
-        Bundle bundle = getActivity().getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
         isJoined = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
@@ -101,6 +98,13 @@ public class FriendInfoFragment extends Fragment {
         }.getType());
         initUser();
 //        System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
+    }
+
+    private void initTopBar(double size) {
+        leftButton.setOnClickListener(view -> {
+            finish();
+        });
+        topBar.getLayoutParams().height = (int) Math.floor(height * size);
     }
 
     private void initButton() {
@@ -114,7 +118,7 @@ public class FriendInfoFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
                     bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
-                    Intent intent = new Intent(getContext(), ChatActivity.class).putExtras(bundle);
+                    Intent intent = new Intent(this, ChatActivity.class).putExtras(bundle);
                     startActivity(intent);
                 });
             } else {
@@ -126,37 +130,23 @@ public class FriendInfoFragment extends Fragment {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private void initTopBar() {
-        icon.setOnTouchListener((view, motionEvent) -> {
-//            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果
-//            } else {
-//                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
-//            }
-            //TODO:滤镜需要重写
-            imageView.setVisibility(View.VISIBLE);
-            return false;//如果return true的话,onClick的事件就不会触发!
-        });
-    }
-
     private void initImageView() {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha1to0));
+                imageView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha1to0));
                 imageView.setVisibility(View.GONE);
             }
         });
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                new BottomSheet.BottomListSheetBuilder(getContext())
+                new BottomSheet.BottomListSheetBuilder(mContext)
                         .addItem("保存到相册")
                         .setIsCenter(true)
                         .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
                             dialog.dismiss();
-                            FileUtil.saveImageToGallery(getContext(), ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                            FileUtil.saveImageToGallery(mContext, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
                             XToastUtils.toast("保存成功!");
                         })
                         .build()
@@ -166,31 +156,27 @@ public class FriendInfoFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
     private void initUser() {
-        if (StringUtils.isEmpty(userVO.getNote())) {
-            nick.setText(userVO.getNick());
-        } else {
-            nick.setText(userVO.getNote());
+        if (userVO != null) {
+            if (StringUtils.isEmpty(userVO.getNote())) {
+                nick.setText(userVO.getNick());
+            } else {
+                nick.setText(userVO.getNote());
+            }
+            company.setText(userVO.getCompany());
+            motto.setText(userVO.getMotto());
+            List<UserVoParamItem> itemList = getItemList();
+            myInformationItemAdapter = new MyInformationItemAdapter(this, userVO, itemList);
+            listView.setAdapter(myInformationItemAdapter);
+            Glide.with(this)
+                    .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
+                    .error(R.mipmap.default_icon)
+                    .into(icon);
+            Glide.with(this)
+                    .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
+                    .error(R.mipmap.default_icon)
+                    .into(imageView);
         }
-        company.setText(userVO.getCompany());
-        motto.setText(userVO.getMotto());
-        List<UserVoParamItem> itemList = getItemList();
-        myInformationItemAdapter = new MyInformationItemAdapter(getContext(), userVO, itemList);
-        listView.setAdapter(myInformationItemAdapter);
-        Glide.with(getContext())
-                .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
-                .error(R.mipmap.default_icon)
-                .into(icon);
-        Glide.with(getContext())
-                .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
-                .error(R.mipmap.default_icon)
-                .into(imageView);
     }
 
     private void getUserVO() {

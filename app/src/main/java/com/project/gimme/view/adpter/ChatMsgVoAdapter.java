@@ -40,8 +40,8 @@ import com.project.gimme.utils.TextUtil;
 import com.project.gimme.view.activity.ChannelNoticeActivity;
 import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.activity.ChatFileInfoActivity;
+import com.project.gimme.view.activity.FriendInfoActivity;
 import com.project.gimme.view.activity.FriendListActivity;
-import com.project.gimme.view.activity.InfoActivity;
 import com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup;
 import com.xuexiang.xui.widget.popupwindow.easypopup.HorizontalGravity;
 import com.xuexiang.xui.widget.popupwindow.easypopup.VerticalGravity;
@@ -132,7 +132,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                         bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode());
                     }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
-                    Intent intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
+                    Intent intent = new Intent(mContext, FriendInfoActivity.class).putExtras(bundle);
                     mContext.startActivity(intent);
                 }
             });
@@ -166,7 +166,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                         bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode());
                     }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
-                    Intent intent = new Intent(mContext, InfoActivity.class).putExtras(bundle);
+                    Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
                     mContext.startActivity(intent);
                 }
             });

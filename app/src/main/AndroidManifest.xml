@@ -21,6 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
         <activity
+            android:name=".view.activity.OtherInfoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.activity.FriendInfoActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.activity.MyInformationActivity"
             android:exported="true" />
         <activity
@@ -72,9 +78,6 @@
             android:exported="false" />
         <activity
             android:name=".view.activity.QrActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.activity.InfoActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.PersonalMsgListActivity"
