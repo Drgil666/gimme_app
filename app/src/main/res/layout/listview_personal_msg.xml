@@ -8,20 +8,28 @@
         android:id="@+id/listview_personal_message_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
+        android:layout_marginStart="5sp"
+        android:layout_marginTop="5sp"
+        android:text="item1"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginTop="10sp"
-        android:layout_marginLeft="5sp"
-        android:text="item1" />
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:id="@+id/listview_personal_message_count"
+        android:layout_width="40sp"
+        android:layout_height="30sp"
+        android:layout_marginTop="5sp"
+        android:layout_marginEnd="15sp"
+        android:layout_toLeftOf="@+id/listview_personal_message_icon" />
 
     <ImageView
         android:id="@+id/listview_personal_message_icon"
         android:layout_width="30sp"
         android:layout_height="30sp"
-        android:layout_marginTop="15sp"
         android:layout_alignParentEnd="true"
+        android:layout_marginTop="5sp"
         android:layout_marginEnd="10sp"
-        android:src="@mipmap/app_icon" />
+        android:src="@mipmap/right_arrow" />
 
 </RelativeLayout>

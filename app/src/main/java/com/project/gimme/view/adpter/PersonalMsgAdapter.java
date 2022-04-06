@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.project.gimme.R;
+import com.xuexiang.xui.widget.textview.badge.Badge;
+import com.xuexiang.xui.widget.textview.badge.BadgeView;
 
 import java.util.List;
 
@@ -23,10 +26,12 @@ import butterknife.ButterKnife;
 public class PersonalMsgAdapter extends BaseAdapter {
     private List<String> itemList;
     private LayoutInflater layoutInflater;
+    private Context mContext;
 
     public PersonalMsgAdapter(Context context, List<String> list) {
         layoutInflater = LayoutInflater.from(context);
         itemList = list;
+        this.mContext = context;
     }
 
     @Override
@@ -54,6 +59,28 @@ public class PersonalMsgAdapter extends BaseAdapter {
         ViewHolder viewHolder = new ViewHolder(convertView);
         viewHolder.text.setText(text);
         viewHolder.icon.setImageResource(R.mipmap.right_arrow);
+        Badge badge = new BadgeView(mContext)
+                .bindTarget(viewHolder.count)
+                .setBadgeTextSize(18, true)
+                .setBadgeNumber(15);
+        badge.setOnDragStateChangedListener((dragState, badge1, targetView) -> {
+            switch (dragState) {
+                case Badge.OnDragStateChangedListener.STATE_START:
+                    break;
+                case Badge.OnDragStateChangedListener.STATE_DRAGGING:
+                    break;
+                case Badge.OnDragStateChangedListener.STATE_DRAGGING_OUT_OF_RANGE:
+                    break;
+                case Badge.OnDragStateChangedListener.STATE_SUCCEED: {
+                    //TODO:刷新状态
+                    break;
+                }
+                case Badge.OnDragStateChangedListener.STATE_CANCELED:
+                    break;
+                default:
+                    break;
+            }
+        });
         return convertView;
     }
 
@@ -63,6 +90,8 @@ public class PersonalMsgAdapter extends BaseAdapter {
         TextView text;
         @BindView(R.id.listview_personal_message_icon)
         ImageView icon;
+        @BindView(R.id.listview_personal_message_count)
+        RelativeLayout count;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
