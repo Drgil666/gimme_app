@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
@@ -131,6 +133,13 @@ public class FriendInfoActivity extends SwipeBackActivity {
     }
 
     private void initImageView() {
+        icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha0to1));
+                imageView.setVisibility(View.VISIBLE);
+            }
+        });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,10 +179,12 @@ public class FriendInfoActivity extends SwipeBackActivity {
             listView.setAdapter(myInformationItemAdapter);
             Glide.with(this)
                     .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                     .error(R.mipmap.default_icon)
                     .into(icon);
             Glide.with(this)
                     .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                     .error(R.mipmap.default_icon)
                     .into(imageView);
         }

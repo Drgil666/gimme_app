@@ -181,6 +181,7 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                                     Glide.with(mContext)
                                             .load(new File(name))
                                             .into(imageView);
+                                    imageView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha0to1));
                                     imageView.setVisibility(View.VISIBLE);
                                 } else {
                                     FileUtil.openFile(mContext, name);

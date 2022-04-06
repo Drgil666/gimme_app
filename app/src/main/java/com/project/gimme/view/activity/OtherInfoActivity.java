@@ -188,6 +188,8 @@ public class OtherInfoActivity extends SwipeBackActivity {
                 } else {
                     bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
+                    bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, false);
+                    bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(userVOList.get(position)));
                     Intent intent = new Intent(mContext, FriendInfoActivity.class).putExtras(bundle);
                     startActivity(intent);
                 }

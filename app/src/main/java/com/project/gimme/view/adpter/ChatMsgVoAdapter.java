@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -206,6 +207,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                             .load(GimmeApplication.getImageUrl(chatMsgVO.getText()))
                             .error(R.mipmap.default_icon)
                             .into(imageView);
+                    imageView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha0to1));
                     imageView.setVisibility(View.VISIBLE);
                 }
             });

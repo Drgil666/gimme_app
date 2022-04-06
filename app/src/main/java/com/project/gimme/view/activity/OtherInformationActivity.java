@@ -131,6 +131,7 @@ public class OtherInformationActivity extends SwipeBackActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void initInfoLayout() {
         topInfoIcon.setOnTouchListener((view, motionEvent) -> {
+            imageView.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.alpha0to1));
             imageView.setVisibility(View.VISIBLE);
             return true;
             //如果return true的话,onClick的事件就不会触发!
