@@ -24,4 +24,8 @@ public class UserVO extends User {
      * 群权限/频道权限
      */
     private String otherType;
+    /**
+     * 是否是好友关系
+     */
+    private Boolean isJoined;
 }

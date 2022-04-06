@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/listview_chat_msg_image"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:background="@drawable/rounded_edit_view_white_5px"
+        android:src="@mipmap/default_icon" />
+
+    <TextView
+        android:id="@+id/listview_chat_msg_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10sp"
+        android:layout_toRightOf="@+id/listview_chat_msg_image"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="111"
+        android:textColor="@color/black"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/listview_chat_msg_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="35sp"
+        android:layout_marginEnd="10sp"
+        android:layout_toEndOf="@id/listview_chat_msg_image"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1msg1"
+        android:textColor="@color/gimme_font1"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/listview_chat_msg_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10sp"
+        android:ellipsize="end"
+        android:text="16:00"
+        android:textColor="@color/gimme_font1"
+        android:textSize="22sp" />
+</RelativeLayout>

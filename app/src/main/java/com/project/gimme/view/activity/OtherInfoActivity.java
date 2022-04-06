@@ -55,7 +55,7 @@ public class OtherInfoActivity extends SwipeBackActivity {
     @BindView(R.id.other_info_top_left_button)
     ImageView leftButton;
     @BindView(R.id.other_info_top_bar)
-    RelativeLayout topBar;
+    RelativeLayout topInfoBar;
     private GroupVO groupVO = new GroupVO();
     private ChannelVO channelVO = new ChannelVO();
     @BindView(R.id.fragment_other_info_top_bar_icon)
@@ -101,7 +101,7 @@ public class OtherInfoActivity extends SwipeBackActivity {
     private GroupNotice groupNotice = new GroupNotice();
     private Boolean isJoined;
     @BindView(R.id.fragment_other_info_top_bar)
-    RelativeLayout topInfoBar;
+    RelativeLayout topBar;
     private final Context mContext = this;
 
     @Override
@@ -122,7 +122,7 @@ public class OtherInfoActivity extends SwipeBackActivity {
         leftButton.setOnClickListener(view -> {
             finish();
         });
-        topBar.getLayoutParams().height = (int) Math.floor(height * size);
+        topInfoBar.getLayoutParams().height = (int) Math.floor(height * size);
     }
 
 
@@ -142,7 +142,7 @@ public class OtherInfoActivity extends SwipeBackActivity {
             initChannelVO();
             initExitButton();
         }
-        System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
+        //System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
     }
 
     private void initTopBar() {
@@ -192,7 +192,7 @@ public class OtherInfoActivity extends SwipeBackActivity {
                     } else {
                         bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP_MEMBER.getCode());
                     }
-                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, userVOList.get(position).getId());
                     bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, false);
                     bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(userVOList.get(position)));
                     Intent intent = new Intent(mContext, FriendInfoActivity.class).putExtras(bundle);
@@ -396,7 +396,16 @@ public class OtherInfoActivity extends SwipeBackActivity {
         if (!isJoined) {
             myLayout.setVisibility(View.GONE);
         }
-        myChatMsg.setOnClickListener(view -> System.out.println("click!"));
+        myChatMsg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
+                Intent intent = new Intent(mContext, ChatMsgActivity.class).putExtras(bundle);
+                startActivity(intent);
+            }
+        });
         if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
             myNoteLeftText.setText("我的群昵称");
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
