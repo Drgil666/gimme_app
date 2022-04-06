@@ -134,6 +134,7 @@ public class ChatActivity extends SwipeBackActivity {
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         nick = bundle.getString(OBJECT_NICK_ATTRIBUTE);
+        setTopNick(nick);
         //System.out.println("objectId:" + objectId + ",type:" + type + ",nick:" + nick);
     }
 

@@ -263,7 +263,6 @@ public class MyInformationItemAdapter extends BaseAdapter {
                         pvOptions.show();
                     }
                 });
-
             } else {
                 XToastUtils.toast("类型错误!");
             }

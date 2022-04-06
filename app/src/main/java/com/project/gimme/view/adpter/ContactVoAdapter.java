@@ -124,9 +124,19 @@ public class ContactVoAdapter extends BaseAdapter {
                     transmitMessage(chatMsgId, contactVO.getType(), contactVO.getObjectId());
                 }
             });
-
+        }
+        if (contactType.equals(ContactsUtil.ContactType.TYPE_INVITATION.getCode())) {
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
         }
         return convertView;
+    }
+
+    private void createPersonalMsg(Integer userId, Integer type, Integer objectId) {
+        //TODO:向群组/频道管理员发起邀请
     }
 
     private void transmitMessage(Integer chatMsgId, Integer type, Integer objectId) {

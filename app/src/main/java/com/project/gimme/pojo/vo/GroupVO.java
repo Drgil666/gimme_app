@@ -20,4 +20,8 @@ public class GroupVO extends Group {
      * 群昵称
      */
     private String myNote;
+    /**
+     * 我的权限
+     */
+    private String myPriority;
 }

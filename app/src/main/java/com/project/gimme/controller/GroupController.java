@@ -6,6 +6,7 @@ import static com.project.gimme.GimmeApplication.TOKEN;
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.pojo.Group;
+import com.project.gimme.pojo.vo.CudRequestVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
@@ -96,5 +97,25 @@ public class GroupController {
             }.getType());
         }
         return null;
+    }
+
+    public static void deleteGroup(Integer groupId) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        CudRequestVO<Group, Integer> requestVO = new CudRequestVO<>();
+        Group group = new Group();
+        group.setId(groupId);
+        requestVO.setKey(null);
+        requestVO.setData(group);
+        requestVO.setMethod(CudRequestVO.DELETE_METHOD);
+        RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/group")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+        }
     }
 }

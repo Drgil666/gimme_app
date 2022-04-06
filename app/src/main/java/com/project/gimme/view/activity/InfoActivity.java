@@ -47,6 +47,8 @@ public class InfoActivity extends SwipeBackActivity {
         ButterKnife.bind(this);
         friendInfoFragment = new FriendInfoFragment();
         otherInfoFragment = new OtherInfoFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.getFragments().clear();
         getType();
         initTopBar(0.1);
     }
@@ -70,7 +72,6 @@ public class InfoActivity extends SwipeBackActivity {
     private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment from = getFragment(currentFragment);
         Fragment to = getFragment(type);
         if (type.equals(InfoTypeUtil.Character.TYPE_FRIEND.getCode())) {
             setTopText("聊天设置");
@@ -89,11 +90,7 @@ public class InfoActivity extends SwipeBackActivity {
         } else {
             XToastUtils.toast("类型错误!");
         }
-        if (!to.isAdded()) {//未被add
-            fragmentTransaction.hide(from).add(R.id.info_fragment, to).commit();
-        } else {//已经被add
-            fragmentTransaction.hide(from).show(to).commit();
-        }
+        fragmentTransaction.replace(R.id.info_fragment, to).commit();
     }
 
     private Fragment getFragment(Integer type) {

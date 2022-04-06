@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,8 +22,10 @@ import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
+import com.project.gimme.controller.ChannelUserController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.GroupNoticeController;
+import com.project.gimme.controller.GroupUserController;
 import com.project.gimme.pojo.GroupNotice;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.GroupVO;
@@ -31,8 +34,10 @@ import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.JsonUtil;
+import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.ChatFileActivity;
+import com.project.gimme.view.activity.MainActivity;
 import com.project.gimme.view.activity.OtherInformationActivity;
 import com.project.gimme.view.activity.ParamActivity;
 import com.project.gimme.view.activity.QrActivity;
@@ -93,6 +98,8 @@ public class OtherInfoFragment extends Fragment {
     TextView myNoteRightText;
     @BindView(R.id.fragment_other_info_introduction_note_left_text)
     TextView myNoteLeftText;
+    @BindView(R.id.fragment_other_info_exit_button)
+    Button exitButton;
     private Unbinder unbinder;
     private GroupNotice groupNotice = new GroupNotice();
     private Boolean isJoined;
@@ -122,10 +129,12 @@ public class OtherInfoFragment extends Fragment {
             groupVO = JsonUtil.fromJson(bundle.getString(BundleUtil.OBJECT_ATTRIBUTE), new TypeToken<GroupVO>() {
             }.getType());
             initGroupVO();
+            initExitButton();
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             channelVO = JsonUtil.fromJson(bundle.getString(BundleUtil.OBJECT_ATTRIBUTE), new TypeToken<ChannelVO>() {
             }.getType());
             initChannelVO();
+            initExitButton();
         }
         System.out.println("type:" + type + " object_id:" + objectId + " is joined:" + isJoined);
     }
@@ -268,6 +277,7 @@ public class OtherInfoFragment extends Fragment {
                         @Override
                         public void run() {
                             initGroupVO();
+                            initExitButton();
                         }
                     });
                 }
@@ -301,6 +311,7 @@ public class OtherInfoFragment extends Fragment {
                         @Override
                         public void run() {
                             initChannelVO();
+                            initExitButton();
                         }
                     });
                 }
@@ -380,5 +391,113 @@ public class OtherInfoFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    private void initExitButton() {
+        if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+            if (groupVO.getMyPriority().equals(UserUtil.GroupCharacter.TYPE_GROUP_USER.getName())) {
+                exitButton.setText("退出群聊");
+                exitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteGroupUser(groupVO.getId());
+                    }
+                });
+            } else {
+                exitButton.setText("解散群聊");
+                exitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteGroup(groupVO.getId());
+                    }
+                });
+            }
+        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+            if (channelVO.getMyPriority().equals(UserUtil.ChannelCharacter.TYPE_CHANNEL_USER.getName())) {
+                exitButton.setText("退出频道");
+                exitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteChannelUser(channelVO.getId());
+                    }
+                });
+            } else {
+                exitButton.setText("解散频道");
+                exitButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteChannel(channelVO.getId());
+                    }
+                });
+            }
+        }
+    }
+
+    private void deleteGroupUser(Integer groupId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                GroupUserController.deleteGroupUser(groupId, new ArrayList<>());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void deleteGroup(Integer groupId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                GroupController.deleteGroup(groupId);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void deleteChannelUser(Integer channelId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ChannelUserController.deleteChannelUser(channelId, new ArrayList<>());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void deleteChannel(Integer channelId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ChannelController.deleteChannel(channelId);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }).start();
     }
 }

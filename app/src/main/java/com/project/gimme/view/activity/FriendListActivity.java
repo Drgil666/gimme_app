@@ -50,7 +50,6 @@ public class FriendListActivity extends SwipeBackActivity {
     private final String[] indicatorTitle2 = new String[]{"好友", "群聊", "频道"};
     private Integer type;
     private Integer createMethod = 0;
-    private Integer transmitSessionType = 0;
     private Integer chatMsgId = null;
     @BindView(R.id.activity_friend_list_search_edit_text)
     EditText searchText;
@@ -58,11 +57,11 @@ public class FriendListActivity extends SwipeBackActivity {
     ListView listView;
     @BindView(R.id.activity_friend_list_bottom_button)
     Button bottomButton;
-    private Integer transmitMsgType = null;
     private List<UserVO> userVOList = new ArrayList<>();
     private List<Group> groupList = new ArrayList<>();
     private List<Channel> channelList = new ArrayList<>();
     Handler handler = new Handler();
+    private Integer currentType = 0;
     private ContactVoAdapter contactVoAdapter;
     private final Context mContext = this;
     @BindView(R.id.activity_friend_list_top_left_button)
@@ -88,12 +87,12 @@ public class FriendListActivity extends SwipeBackActivity {
 
     public static void addItem(Integer id) {
         idList.add(id);
-        System.out.println("add:" + id);
+//        System.out.println("add:" + id);
     }
 
     public static void deleteItem(Integer id) {
         idList.remove(id);
-        System.out.println("remove:" + id);
+//        System.out.println("remove:" + id);
     }
 
     private void initTopBar() {
@@ -112,6 +111,8 @@ public class FriendListActivity extends SwipeBackActivity {
             chatMsgId = bundle.getInt(BundleUtil.CHAT_MSG_ID_ATTRIBUTE);
         } else if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
 
+        } else if (type.equals(ContactsUtil.ContactType.TYPE_INVITATION.getCode())) {
+            chatMsgId = bundle.getInt(BundleUtil.CHAT_MSG_ID_ATTRIBUTE);
         } else {
             XToastUtils.toast("类型错误!");
         }
@@ -126,7 +127,16 @@ public class FriendListActivity extends SwipeBackActivity {
                 @Override
                 public void onTabClick(String title, int position) {
                     createMethod = position;
-//                    getUserVOList(searchText.getText().toString());
+                }
+            });
+        } else if (type.equals(ContactsUtil.ContactType.TYPE_INVITATION.getCode())) {
+            indicator2.setVisibility(View.GONE);
+            indicator1.setVisibility(View.VISIBLE);
+            indicator1.setTabTitles(indicatorTitle1);
+            indicator1.setOnTabClickListener(new EasyIndicator.OnTabClickListener() {
+                @Override
+                public void onTabClick(String title, int position) {
+                    createMethod = position;
                 }
             });
         } else if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
@@ -136,7 +146,7 @@ public class FriendListActivity extends SwipeBackActivity {
             indicator2.setOnTabClickListener(new EasyIndicator.OnTabClickListener() {
                 @Override
                 public void onTabClick(String title, int position) {
-                    transmitSessionType = position;
+                    currentType = position;
                     switch (position) {
                         case 0: {
                             getUserVOList(searchText.getText().toString());
@@ -173,6 +183,27 @@ public class FriendListActivity extends SwipeBackActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 System.out.println(searchText.getText().toString());
+                if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode()) ||
+                        type.equals(ContactsUtil.ContactType.TYPE_INVITATION.getCode())) {
+                    getUserVOList(searchText.getText().toString());
+                } else if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
+                    switch (currentType) {
+                        case 0: {
+                            getUserVOList(searchText.getText().toString());
+                            break;
+                        }
+                        case 1: {
+                            getGroupList(searchText.getText().toString());
+                            break;
+                        }
+                        case 2: {
+                            getChannelList(searchText.getText().toString());
+                            break;
+                        }
+                        default: {
+                        }
+                    }
+                }
             }
         });
     }
@@ -180,7 +211,8 @@ public class FriendListActivity extends SwipeBackActivity {
     private void initBottomLayout() {
         if (type.equals(ContactsUtil.ContactType.TYPE_CREATE_CONTACT.getCode())) {
             bottomLayout.setVisibility(View.VISIBLE);
-        } else if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())) {
+        } else if (type.equals(ContactsUtil.ContactType.TYPE_TRANSMIT.getCode())
+                || type.equals(ContactsUtil.ContactType.TYPE_INVITATION.getCode())) {
             bottomLayout.setVisibility(View.GONE);
         }
         bottomButton.setOnClickListener(new View.OnClickListener() {

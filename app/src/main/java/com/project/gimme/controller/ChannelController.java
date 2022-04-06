@@ -120,4 +120,24 @@ public class ChannelController {
         }
         return null;
     }
+
+    public static void deleteChannel(Integer channelId) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        CudRequestVO<Channel, Integer> requestVO = new CudRequestVO<>();
+        Channel channel = new Channel();
+        channel.setId(channelId);
+        requestVO.setKey(null);
+        requestVO.setData(channel);
+        requestVO.setMethod(CudRequestVO.DELETE_METHOD);
+        RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/channel")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+        }
+    }
 }

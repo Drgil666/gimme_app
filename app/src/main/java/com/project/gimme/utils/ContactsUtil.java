@@ -17,6 +17,7 @@ public class ContactsUtil {
     private static final String TRANSMIT_ATTRIBUTE = "transmit";
     private static final String IMAGE_ATTRIBUTE = "image";
     private static final String CHAT_MSG_ATTRIBUTE = "chat_msg";
+    private static final String INVITATION_ATTRIBUTE = "invitation";
 
     @AllArgsConstructor
     @Getter
@@ -43,7 +44,11 @@ public class ContactsUtil {
         /**
          * 转发类型
          */
-        TYPE_TRANSMIT(1, TRANSMIT_ATTRIBUTE);
+        TYPE_TRANSMIT(1, TRANSMIT_ATTRIBUTE),
+        /**
+         * 邀请类型
+         */
+        TYPE_INVITATION(2, INVITATION_ATTRIBUTE);
         private final Integer code;
         private final String name;
     }
