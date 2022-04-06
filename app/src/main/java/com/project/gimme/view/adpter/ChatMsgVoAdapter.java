@@ -189,14 +189,11 @@ public class ChatMsgVoAdapter extends BaseAdapter {
             viewHolder.text.setVisibility(View.GONE);
             viewHolder.fileLayout.setVisibility(View.GONE);
             viewHolder.pic.setVisibility(View.VISIBLE);
-            RoundedCorners roundedCorners = new RoundedCorners(10);
-            RequestOptions options = RequestOptions.bitmapTransform(roundedCorners);
             Glide.with(mContext)
-                    .load(GimmeApplication.getImageUrl(chatMsgVO.getAvatar()))
+                    .load(GimmeApplication.getImageUrl(chatMsgVO.getText()))
                     .error(R.mipmap.default_icon)
-                    .apply(new RequestOptions().override(110, 110))
-                    .apply(options)
-//                                .placeholder(R.drawable.loading_spinner)
+                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+//                  .placeholder(R.drawable.loading_spinner)
                     .into(viewHolder.pic);
             viewHolder.pic.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -10,6 +10,8 @@ import android.os.StrictMode;
 import com.project.gimme.controller.TestController;
 import com.xuexiang.xui.XUI;
 
+import org.apache.commons.lang3.StringUtils;
+
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 
 /**
@@ -79,7 +81,7 @@ public class GimmeApplication extends Application {
     }
 
     public static String getImageUrl(String mongoId) {
-        return REMOTE_URL + "/api/chat/file/image/" + mongoId;
+        return REMOTE_URL + "/api/chat/file/image" + (StringUtils.isEmpty(mongoId) ? "" : "/" + mongoId);
     }
 
     @Override

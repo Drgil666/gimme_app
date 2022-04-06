@@ -32,6 +32,7 @@ import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.ContactsUtil;
+import com.project.gimme.utils.InfoTypeUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
@@ -186,7 +187,11 @@ public class OtherInfoActivity extends SwipeBackActivity {
                     Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
                     startActivity(intent);
                 } else {
-                    bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                    if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode());
+                    } else {
+                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP_MEMBER.getCode());
+                    }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
                     bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, false);
                     bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(userVOList.get(position)));

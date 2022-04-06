@@ -330,7 +330,7 @@ public class ChatActivity extends SwipeBackActivity {
         chatBottomEditText.getEditText().clearFocus();
         bottomBelowGridView.setHorizontalSpacing(10);
         bottomBelowGridView.setVerticalSpacing(10);
-        bottomBelowGridView.setAdapter(new EmojiAdapter(mContext));
+        bottomBelowGridView.setAdapter(new EmojiAdapter(this));
         bottomBelowGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -349,7 +349,7 @@ public class ChatActivity extends SwipeBackActivity {
         chatBottomEditText.getEditText().clearFocus();
         bottomBelowGridView.setHorizontalSpacing(10);
         bottomBelowGridView.setVerticalSpacing(10);
-        bottomBelowGridView.setAdapter(new ExtraOptionAdapter(mContext));
+        bottomBelowGridView.setAdapter(new ExtraOptionAdapter(this));
         bottomBelowGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -614,7 +614,7 @@ public class ChatActivity extends SwipeBackActivity {
     protected void onStart() {
         super.onStart();
         getChatMessageList(type, objectId);
-        bottomBelowGridView.setVisibility(View.GONE);
+        bottomBelowLayout.setVisibility(View.GONE);
     }
 
     @Override
