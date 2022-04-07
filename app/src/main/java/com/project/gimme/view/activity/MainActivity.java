@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -103,7 +102,6 @@ public class MainActivity extends BaseActivity {
         initTopText();
         initPopUp();
         initBottomBar(0.1);
-        initNewMessageCount(0);
         setTopRightButton(0.0);
     }
 
@@ -223,15 +221,6 @@ public class MainActivity extends BaseActivity {
                 ToastUtils.toast("解析二维码失败", Toast.LENGTH_LONG);
             }
         });
-    }
-
-    public void initNewMessageCount(Integer count) {
-        if (count != 0) {
-            newMessageCountBackGround.setVisibility(View.VISIBLE);
-            newMessageCount.setText(count > 99 ? "99+" : count.toString());
-        } else {
-            newMessageCountBackGround.setVisibility(View.INVISIBLE);
-        }
     }
 
     private void initTopBar(double size) {

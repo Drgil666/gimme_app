@@ -6,7 +6,8 @@ package com.project.gimme.utils;
  */
 public class TextUtil {
     private static String regex = "[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]";
-    private static Integer threshold = 12;
+    private static Integer expand_threshold = 12;
+    private static Integer ellipsis_threshold = 3;
 
     public static String expandableText(String text) {
         int cnt = 0;
@@ -23,11 +24,33 @@ public class TextUtil {
                 cnt++;
                 newText.append(text.charAt(i));
             }
-            if (cnt >= threshold && i != text.length() - 1) {
+            if (cnt >= expand_threshold && i != text.length() - 1) {
                 cnt = 0;
                 newText.append("\n");
             }
         }
         return newText.toString();
+    }
+
+    public static String ellipsisText(String text, Integer limit) {
+        if (limit == null) {
+            return text;
+        }
+        int cnt = 0;
+        for (int i = 0; i < text.length(); i++) {
+            if (cnt >= limit && i != text.length() - 1) {
+                return text.substring(0, i) + "...";
+            }
+            if (i + 1 < text.length() && (text.charAt(i) + String.valueOf(text.charAt(i + 1))).matches(regex)) {
+                cnt++;
+                i++;
+            } else if ((int) text.charAt(i) > 255) {
+                cnt++;
+            } else {
+                cnt++;
+            }
+
+        }
+        return text;
     }
 }

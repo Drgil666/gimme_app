@@ -21,7 +21,7 @@ public class PersonalMsg {
      * 消息通知类型
      */
     @Property(nameInDb = "type")
-    private String type;
+    private String objectType;
     /**
      * 消息创建者id
      */
@@ -40,27 +40,37 @@ public class PersonalMsg {
     /**
      * 备注
      */
+    @Property(nameInDb = "note")
     private String note;
     /**
      * 处理状态
      */
+    @Property(nameInDb = "status")
     private Integer status;
+    /**
+     * 消息类型
+     */
+    @Property(nameInDb = "type")
+    private String type;
 
-    @Generated(hash = 1705211617)
-    public PersonalMsg(Integer id, String type, Integer ownerId, Integer operatorId,
-                       Integer objectId, String note, Integer status) {
+    @Generated(hash = 501944353)
+    public PersonalMsg(Integer id, String objectType, Integer ownerId,
+                       Integer operatorId, Integer objectId, String note, Integer status,
+                       String type) {
         this.id = id;
-        this.type = type;
+        this.objectType = objectType;
         this.ownerId = ownerId;
         this.operatorId = operatorId;
         this.objectId = objectId;
         this.note = note;
         this.status = status;
+        this.type = type;
     }
 
     @Generated(hash = 1820845707)
     public PersonalMsg() {
     }
+
     public Integer getId() {
         return this.id;
     }
@@ -69,20 +79,22 @@ public class PersonalMsg {
         this.id = id;
     }
 
-    public String getType() {
-        return this.type;
+    public String getObjectType() {
+        return this.objectType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setObjectType(String objectType) {
+        this.objectType = objectType;
     }
 
     public Integer getOwnerId() {
         return this.ownerId;
     }
+
     public void setOwnerId(Integer ownerId) {
         this.ownerId = ownerId;
     }
+
     public Integer getOperatorId() {
         return this.operatorId;
     }
@@ -98,14 +110,24 @@ public class PersonalMsg {
     public String getNote() {
         return this.note;
     }
+
     public void setNote(String note) {
         this.note = note;
     }
+
     public Integer getStatus() {
         return this.status;
     }
+
     public void setStatus(Integer status) {
         this.status = status;
     }
 
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

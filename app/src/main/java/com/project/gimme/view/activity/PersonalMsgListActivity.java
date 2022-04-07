@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.PersonalMsgVO;
 import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.ChatMsgUtil;
+import com.project.gimme.utils.PersonalMsgUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.PersonalMsgListAdapter;
 
@@ -24,8 +26,6 @@ import butterknife.ButterKnife;
  */
 @SuppressLint("NonConstantResourceId")
 public class PersonalMsgListActivity extends SwipeBackActivity {
-    private static final Integer TYPE_PERSONAL = 0;
-    private static final Integer TYPE_OTHER = 1;
     private List<PersonalMsgVO> personalMsgVOList = new ArrayList<>();
     @BindView(R.id.personal_msg_list_list_view)
     ListView personalMsgListView;
@@ -51,11 +51,11 @@ public class PersonalMsgListActivity extends SwipeBackActivity {
                 finish();
             }
         });
-        if (type.equals(TYPE_PERSONAL)) {
+        if (type.equals(PersonalMsgUtil.PersonalMsgType.TYPE_FRIEND_PERSONAL_MSG.getCode())) {
             setTopText("新朋友");
-            getPersonalMsgPersonalList();
+            getPersonalMsgFriendList();
             initPersonalMsgListView();
-        } else if (type.equals(TYPE_OTHER)) {
+        } else if (type.equals(PersonalMsgUtil.PersonalMsgType.TYPE_OTHER_PERSONAL_MSG.getCode())) {
             setTopText("群聊/频道消息");
             getPersonalMsgOtherList();
             initPersonalMsgListView();
@@ -68,40 +68,183 @@ public class PersonalMsgListActivity extends SwipeBackActivity {
         topText.setText(text);
     }
 
-    private void getPersonalMsgPersonalList() {
-        for (int i = 1; i <= 2; i++) {
-            PersonalMsgVO personalMsgVO = new PersonalMsgVO();
-            personalMsgVO.setId(i);
-            personalMsgVO.setObjectId(1);
-            personalMsgVO.setOperatorNick("被操作用户");
-            personalMsgVO.setObjectId(1);
-            personalMsgVO.setNote("note" + i);
-            personalMsgVO.setStatus(0);
-            personalMsgVO.setObjectNick("群聊/频道" + i);
-            personalMsgVO.setType((i - 1) + "");
-            personalMsgVOList.add(personalMsgVO);
-        }
+    private void getPersonalMsgFriendList() {
+        PersonalMsgVO personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作用户" + 1);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_ACCEPT.getCode());
+        personalMsgVO.setType(PersonalMsgUtil.FriendPersonalMsg.TYPE_INSERT_FRIEND.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_FRIEND.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作用户" + 1);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_NULL.getCode());
+        personalMsgVO.setType(PersonalMsgUtil.FriendPersonalMsg.TYPE_DELETE_FRIEND.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_FRIEND.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作用户" + 1);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_CHOOSE.getCode());
+        personalMsgVO.setType(PersonalMsgUtil.FriendPersonalMsg.TYPE_INSERT_FRIEND.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_FRIEND.getName());
+        personalMsgVOList.add(personalMsgVO);
     }
 
     private void getPersonalMsgOtherList() {
-        for (int i = 3; i <= 13; i++) {
-            PersonalMsgVO personalMsgVO = new PersonalMsgVO();
-            personalMsgVO.setId(i);
-            personalMsgVO.setObjectId(1);
-            personalMsgVO.setOperatorNick("被操作用户");
-            personalMsgVO.setObjectId(1);
-            personalMsgVO.setNote("note" + i);
-            personalMsgVO.setStatus(0);
-            personalMsgVO.setObjectNick("群聊/频道" + i);
-            personalMsgVO.setType((i - 1) + "");
-            personalMsgVOList.add(personalMsgVO);
-        }
+        PersonalMsgVO personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作群聊" + 1);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_NULL.getCode());
+        personalMsgVO.setObjectNick("群聊" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.GroupPersonalMsg.TYPE_INSERT_GROUP.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_GROUP.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作群聊" + 1);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_NULL.getCode());
+        personalMsgVO.setObjectNick("群聊" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.GroupPersonalMsg.TYPE_DELETE_GROUP.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_GROUP.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作群聊" + 1);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_CHOOSE.getCode());
+        personalMsgVO.setObjectNick("群聊" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.GroupPersonalMsg.TYPE_INSERT_GROUP_MEMBER.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_GROUP.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作群聊" + 1);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_NULL.getCode());
+        personalMsgVO.setObjectNick("群聊" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.GroupPersonalMsg.TYPE_DELETE_GROUP_MEMBER.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_GROUP.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作群聊" + 1);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_NULL.getCode());
+        personalMsgVO.setObjectNick("群聊" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.GroupPersonalMsg.TYPE_UPDATE_GROUP_MEMBER.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_GROUP.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作频道");
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_NULL.getCode());
+        personalMsgVO.setObjectNick("频道" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.ChannelPersonalMsg.TYPE_INSERT_CHANNEL.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_CHANNEL.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作频道");
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_NULL.getCode());
+        personalMsgVO.setObjectNick("频道" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.ChannelPersonalMsg.TYPE_DELETE_CHANNEL.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_CHANNEL.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作频道");
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_CHOOSE.getCode());
+        personalMsgVO.setObjectNick("频道" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.ChannelPersonalMsg.TYPE_INSERT_CHANNEL_MEMBER.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_CHANNEL.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作频道");
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_NULL.getCode());
+        personalMsgVO.setObjectNick("频道" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.ChannelPersonalMsg.TYPE_UPDATE_CHANNEL_MEMBER.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_CHANNEL.getName());
+        personalMsgVOList.add(personalMsgVO);
+        personalMsgVO = new PersonalMsgVO();
+        personalMsgVO.setId(1);
+        personalMsgVO.setObjectId(1);
+        personalMsgVO.setOperatorNick("被操作频道");
+        personalMsgVO.setNote("note" + 1);
+        personalMsgVO.setOwnerId(2);
+        personalMsgVO.setOperatorId(2);
+        personalMsgVO.setOwnerNick("操作用户" + 1);
+        personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_NULL.getCode());
+        personalMsgVO.setObjectNick("频道" + 1);
+        personalMsgVO.setType(PersonalMsgUtil.ChannelPersonalMsg.TYPE_DELETE_CHANNEL_MEMBER.getName());
+        personalMsgVO.setObjectType(ChatMsgUtil.Character.TYPE_CHANNEL.getName());
+        personalMsgVOList.add(personalMsgVO);
     }
 
     private void getType() {
         Bundle bundle = this.getIntent().getExtras();
         type = bundle.getInt(BundleUtil.PERSONAL_MSG_TYPE_ATTRIBUTE);
-        System.out.println("type:" + type);
+        personalMsgVOList = new ArrayList<>();
+        //System.out.println("type:" + type);
     }
 
     private void initPersonalMsgListView() {

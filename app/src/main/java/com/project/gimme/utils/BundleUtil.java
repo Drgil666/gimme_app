@@ -24,4 +24,5 @@ public class BundleUtil {
     public static final String USER_COMPANY_ATTRIBUTE = "user_company";
     public static final String USER_MOTTO_ATTRIBUTE = "user_motto";
     public static final String OBJECT_ATTRIBUTE = "object";
+    public static final String MESSAGE_VO_NEW_COUNT = "message_vo_new_count";
 }

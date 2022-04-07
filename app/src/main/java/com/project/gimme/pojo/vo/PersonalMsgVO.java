@@ -20,4 +20,12 @@ public class PersonalMsgVO extends PersonalMsg {
      * 被操作用户名
      */
     private String operatorNick;
+    /**
+     * 操作者用户名
+     */
+    private String ownerNick;
+    /**
+     * 操作者头像
+     */
+    private String avatar;
 }

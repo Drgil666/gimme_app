@@ -2,58 +2,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/list_item_color_bg"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/listview_personal_msg_list_icon"
         android:layout_width="80sp"
         android:layout_height="80sp"
-        android:layout_marginStart="10sp"
+        android:layout_marginStart="5sp"
         android:layout_marginTop="10sp"
         android:src="@mipmap/default_icon" />
 
     <TextView
         android:id="@+id/listview_personal_msg_list_nick"
-        android:layout_width="wrap_content"
+        android:layout_width="300sp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15sp"
+        android:layout_marginStart="10sp"
         android:layout_marginTop="5sp"
         android:layout_toEndOf="@id/listview_personal_msg_list_icon"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="昵称"
         android:textColor="@color/black"
-        android:textSize="28sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/listview_chat_file_owner_nick"
-        android:layout_width="wrap_content"
+        android:layout_width="220sp"
         android:layout_height="wrap_content"
-        android:text="留言:"
-        android:textSize="20sp"
-        android:layout_marginTop="0sp"
-        android:layout_marginStart="15sp"
         android:layout_below="@+id/listview_personal_msg_list_nick"
-        android:layout_toEndOf="@id/listview_personal_msg_list_icon" />
-
-    <TextView
-        android:id="@+id/listview_personal_msg_list_object"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/listview_chat_file_owner_nick"
-        android:layout_marginStart="15sp"
-        android:layout_marginTop="0sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="20sp"
         android:layout_toEndOf="@id/listview_personal_msg_list_icon"
-        android:text="来源:"
-        android:textSize="20sp" />
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="对方留言:"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/listview_personal_msg_list_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="已同意"
-        android:textSize="20sp"
-        android:textColor="@color/gimme_font1"
-        android:layout_marginEnd="10sp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="45sp" />
+        android:layout_marginTop="40sp"
+        android:layout_marginEnd="10sp"
+        android:text="已同意"
+        android:textColor="@color/gimme_font1"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:id="@+id/listview_personal_msg_list_choose_layout"
+        android:layout_width="150sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="5sp">
+
+        <Button
+            android:id="@+id/listview_personal_msg_list_refuse_button"
+            android:layout_width="68sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="拒绝"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/listview_personal_msg_list_confirm_button"
+            android:layout_width="68sp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10sp"
+            android:layout_toStartOf="@+id/listview_personal_msg_list_refuse_button"
+            android:text="同意"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
 </RelativeLayout>

@@ -19,10 +19,19 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
 
     public static final String TABLENAME = "personal_msg";
 
-    /** Drops the underlying database table. */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"personal_msg\"";
-        db.execSQL(sql);
+    /**
+     * Properties of entity PersonalMsg.<br/>
+     * Can be used for QueryBuilder and for referencing column names.
+     */
+    public static class Properties {
+        public final static Property Id = new Property(0, Integer.class, "id", true, "id");
+        public final static Property ObjectType = new Property(1, String.class, "objectType", false, "type");
+        public final static Property OwnerId = new Property(2, Integer.class, "ownerId", false, "owner_id");
+        public final static Property OperatorId = new Property(3, Integer.class, "operatorId", false, "operator_id");
+        public final static Property ObjectId = new Property(4, Integer.class, "objectId", false, "object_id");
+        public final static Property Note = new Property(5, String.class, "note", false, "note");
+        public final static Property Status = new Property(6, Integer.class, "status", false, "status");
+        public final static Property Type = new Property(7, String.class, "type", false, "type");
     }
 
 
@@ -34,17 +43,28 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         super(config, daoSession);
     }
 
-    /** Creates the underlying database table. */
+    /**
+     * Creates the underlying database table.
+     */
     public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists? "IF NOT EXISTS ": "";
+        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "\"personal_msg\" (" + //
                 "\"id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"type\" TEXT," + // 1: type
+                "\"type\" TEXT," + // 1: objectType
                 "\"owner_id\" INTEGER," + // 2: ownerId
                 "\"operator_id\" INTEGER," + // 3: operatorId
                 "\"object_id\" INTEGER," + // 4: objectId
-                "\"NOTE\" TEXT," + // 5: note
-                "\"STATUS\" INTEGER);"); // 6: status
+                "\"note\" TEXT," + // 5: note
+                "\"status\" INTEGER," + // 6: status
+                "\"type\" TEXT);"); // 7: type
+    }
+
+    /**
+     * Drops the underlying database table.
+     */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"personal_msg\"";
+        db.execSQL(sql);
     }
 
     @Override
@@ -56,9 +76,9 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
             stmt.bindLong(1, id);
         }
 
-        String type = entity.getType();
-        if (type != null) {
-            stmt.bindString(2, type);
+        String objectType = entity.getObjectType();
+        if (objectType != null) {
+            stmt.bindString(2, objectType);
         }
 
         Integer ownerId = entity.getOwnerId();
@@ -70,7 +90,7 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         if (operatorId != null) {
             stmt.bindLong(4, operatorId);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(5, objectId);
@@ -84,6 +104,11 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         Integer status = entity.getStatus();
         if (status != null) {
             stmt.bindLong(7, status);
+        }
+
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(8, type);
         }
     }
 
@@ -96,9 +121,9 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
             stmt.bindLong(1, id);
         }
 
-        String type = entity.getType();
-        if (type != null) {
-            stmt.bindString(2, type);
+        String objectType = entity.getObjectType();
+        if (objectType != null) {
+            stmt.bindString(2, objectType);
         }
 
         Integer ownerId = entity.getOwnerId();
@@ -110,7 +135,7 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         if (operatorId != null) {
             stmt.bindLong(4, operatorId);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(5, objectId);
@@ -125,6 +150,11 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         if (status != null) {
             stmt.bindLong(7, status);
         }
+
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(8, type);
+        }
     }
 
     @Override
@@ -136,12 +166,13 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
     public PersonalMsg readEntity(Cursor cursor, int offset) {
         PersonalMsg entity = new PersonalMsg( //
                 cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0), // id
-                cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // type
+                cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // objectType
                 cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // ownerId
                 cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // operatorId
                 cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // objectId
                 cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // note
-                cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6) // status
+                cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // status
+                cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // type
         );
         return entity;
     }
@@ -149,12 +180,13 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
     @Override
     public void readEntity(Cursor cursor, PersonalMsg entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getInt(offset + 0));
-        entity.setType(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setObjectType(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setOwnerId(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
         entity.setOperatorId(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
         entity.setObjectId(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
         entity.setNote(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setStatus(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
+        entity.setType(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
     }
 
     @Override
