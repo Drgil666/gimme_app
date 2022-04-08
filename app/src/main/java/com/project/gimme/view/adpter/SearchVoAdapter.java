@@ -28,6 +28,7 @@ public class SearchVoAdapter extends BaseAdapter {
     public SearchVoAdapter(Context context, List<SearchVO> personalMsgVOList) {
         layoutInflater = LayoutInflater.from(context);
         itemList = personalMsgVOList;
+        this.context = context;
     }
 
     @Override

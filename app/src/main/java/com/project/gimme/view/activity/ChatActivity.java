@@ -299,15 +299,14 @@ public class ChatActivity extends SwipeBackActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                System.out.println(chatBottomEditText.getContentText());
+                //System.out.println(chatBottomEditText.getContentText());
             }
         });
-        //TODO:切换页面时需要关闭输入法，或者关闭表情界面等。
         chatBottomEditText.getEditText().setOnEditorActionListener((v, actionId, event) -> {
             if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER
                     && v.getText() != null
                     && event.getAction() == KeyEvent.ACTION_DOWN) {
-                System.out.println("这里是监听回车事件->" + chatBottomEditText.getContentText());
+//                System.out.println("这里是监听回车事件->" + chatBottomEditText.getContentText());
                 if (!StringUtils.isEmpty(chatBottomEditText.getContentText())) {
                     refresh();
                     ChatMsg chatMsg = new ChatMsg();
@@ -366,15 +365,6 @@ public class ChatActivity extends SwipeBackActivity {
                         Intent intent = IntentUtils.getDocumentPickerIntent(IntentUtils.DocumentType.ANY);
                         startActivityForResult(intent, MsgTypeUtil.MsgType.TYPE_FILE.getCode());
                         //发送文件
-                        break;
-                    }
-                    case 2: {
-                        //待办
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
-                        bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
-                        Intent intent = new Intent(mContext, ToDoListActivity.class);
-                        startActivity(intent);
                         break;
                     }
                 }
@@ -445,11 +435,17 @@ public class ChatActivity extends SwipeBackActivity {
             @Override
             public void onClick(View v) {
                 if (bottomBelowLayout.getVisibility() == View.GONE) {
+                    Glide.with(mContext).load(R.mipmap.emoji_select).into(emojiButton);
+                    Glide.with(mContext).load(R.mipmap.add_plus_round).into(addButton);
                     initEmojiGridView();
                 } else {
                     if (currentBottomBelow.equals(EMOJI_GRIDVIEW)) {
                         bottomBelowLayout.setVisibility(View.GONE);
+                        Glide.with(mContext).load(R.mipmap.emoji).into(emojiButton);
+                        Glide.with(mContext).load(R.mipmap.add_plus_round).into(addButton);
                     } else {
+                        Glide.with(mContext).load(R.mipmap.emoji_select).into(emojiButton);
+                        Glide.with(mContext).load(R.mipmap.add_plus_round).into(addButton);
                         initEmojiGridView();
                     }
                 }
@@ -459,11 +455,17 @@ public class ChatActivity extends SwipeBackActivity {
             @Override
             public void onClick(View v) {
                 if (bottomBelowLayout.getVisibility() == View.GONE) {
+                    Glide.with(mContext).load(R.mipmap.emoji).into(emojiButton);
+                    Glide.with(mContext).load(R.mipmap.add_plus_round_select).into(addButton);
                     initExtraOptionGridView();
                 } else {
                     if (currentBottomBelow.equals(EXTRA_OPTION_GRIDVIEW)) {
                         bottomBelowLayout.setVisibility(View.GONE);
+                        Glide.with(mContext).load(R.mipmap.emoji).into(emojiButton);
+                        Glide.with(mContext).load(R.mipmap.add_plus_round).into(addButton);
                     } else {
+                        Glide.with(mContext).load(R.mipmap.emoji).into(emojiButton);
+                        Glide.with(mContext).load(R.mipmap.add_plus_round_select).into(addButton);
                         initExtraOptionGridView();
                     }
                 }

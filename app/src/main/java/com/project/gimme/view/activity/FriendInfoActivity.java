@@ -2,6 +2,7 @@ package com.project.gimme.view.activity;
 
 import static com.project.gimme.utils.BundleUtil.CHAT_TYPE_ATTRIBUTE;
 import static com.project.gimme.utils.BundleUtil.OBJECT_ID_ATTRIBUTE;
+import static com.project.gimme.utils.BundleUtil.OTHER_ID_ATTRIBUTE;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -78,6 +79,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
     @BindView(R.id.friend_img)
     ImageView imageView;
     private Context mContext = this;
+    private String otherId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,10 @@ public class FriendInfoActivity extends SwipeBackActivity {
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
         isJoined = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
+        otherId = bundle.getString(OTHER_ID_ATTRIBUTE);
+        if (StringUtils.isEmpty(otherId)) {
+            otherId = "";
+        }
         userVO = JsonUtil.fromJson(bundle.getString(BundleUtil.OBJECT_ATTRIBUTE), new TypeToken<UserVO>() {
         }.getType());
         initUser();
@@ -196,9 +202,10 @@ public class FriendInfoActivity extends SwipeBackActivity {
             @Override
             public void run() {
                 ResponseData<UserVO> responseData =
-                        UserController.getUserVO(objectId.toString(), ChatMsgUtil.Character.TYPE_FRIEND.getName(), "");
+                        UserController.getUserVO(objectId.toString(), ChatMsgUtil.Character.TYPE_FRIEND.getName(), otherId.toString());
                 if (responseData != null && responseData.isSuccess()) {
                     userVO = responseData.getData();
+                    isJoined = !StringUtils.isEmpty(userVO.getNote());
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -236,10 +243,10 @@ public class FriendInfoActivity extends SwipeBackActivity {
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         if (type.equals(InfoTypeUtil.Character.TYPE_GROUP_SELF.getCode())) {
-            item = new UserVoParamItem("群昵称", userVO.getNote(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+            item = new UserVoParamItem("群昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
             itemList.add(item);
         } else if (type.equals(InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode())) {
-            item = new UserVoParamItem("频道昵称", userVO.getNote(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+            item = new UserVoParamItem("频道昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
             itemList.add(item);
         }
         item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
@@ -268,8 +275,8 @@ public class FriendInfoActivity extends SwipeBackActivity {
         itemList.add(item);
         item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("群昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
-        itemList.add(item);
+//        item = new UserVoParamItem("群昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+//        itemList.add(item);
         item = new UserVoParamItem("邮箱", userVO.getMail(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("所在地", userVO.getCity(), true, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
@@ -292,8 +299,8 @@ public class FriendInfoActivity extends SwipeBackActivity {
         itemList.add(item);
         item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("频道昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
-        itemList.add(item);
+//        item = new UserVoParamItem("频道昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+//        itemList.add(item);
         item = new UserVoParamItem("邮箱", userVO.getMail(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("所在地", userVO.getCity(), false, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());

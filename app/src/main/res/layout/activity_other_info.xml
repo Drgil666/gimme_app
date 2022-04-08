@@ -337,14 +337,16 @@
                         android:layout_marginEnd="5sp"
                         android:src="@mipmap/right_arrow" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/fragment_other_info_introduction_note_right_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5sp"
+                        android:background="@null"
                         android:layout_toStartOf="@+id/fragment_other_info_introduction_note_right_icon"
                         android:text="XXX"
+
                         android:textSize="18sp" />
                 </RelativeLayout>
             </RelativeLayout>

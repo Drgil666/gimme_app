@@ -64,7 +64,6 @@ public class PersonalMsgListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         PersonalMsgVO personalMsgVO = itemList.get(position);
         convertView = layoutInflater.inflate(R.layout.listview_personal_msg_list, parent, false);
-        //TODO:待完成:消息对应
         ViewHolder viewHolder = new ViewHolder(convertView);
         Glide.with(mContext)
                 .load(GimmeApplication.getImageUrl(personalMsgVO.getAvatar()))
@@ -124,6 +123,24 @@ public class PersonalMsgListAdapter extends BaseAdapter {
         } else {
             viewHolder.status.setVisibility(View.GONE);
             viewHolder.chooseLayout.setVisibility(View.VISIBLE);
+            viewHolder.confirmButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_ACCEPT.getCode());
+                    viewHolder.chooseLayout.setVisibility(View.GONE);
+                    viewHolder.status.setVisibility(View.VISIBLE);
+                    viewHolder.status.setText(PersonalMsgUtil.STATUS_LIST[personalMsgVO.getStatus()].getName());
+                }
+            });
+            viewHolder.refuseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    personalMsgVO.setStatus(PersonalMsgUtil.Status.TYPE_REJECT.getCode());
+                    viewHolder.chooseLayout.setVisibility(View.GONE);
+                    viewHolder.status.setVisibility(View.VISIBLE);
+                    viewHolder.status.setText(PersonalMsgUtil.STATUS_LIST[personalMsgVO.getStatus()].getName());
+                }
+            });
         }
         return convertView;
     }

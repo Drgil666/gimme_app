@@ -12,12 +12,15 @@
 
     <TextView
         android:id="@+id/gridview_other_info_nick"
-        android:layout_width="wrap_content"
+        android:layout_width="63sp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/gridview_other_info_icon"
-        android:layout_marginStart="6sp"
         android:layout_marginTop="5sp"
+        android:layout_marginStart="-5sp"
+        android:textAlignment="center"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="昵称"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 </RelativeLayout>

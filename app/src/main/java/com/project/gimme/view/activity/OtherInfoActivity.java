@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,7 +27,9 @@ import com.project.gimme.controller.ChannelUserController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.GroupNoticeController;
 import com.project.gimme.controller.GroupUserController;
+import com.project.gimme.pojo.ChannelUser;
 import com.project.gimme.pojo.GroupNotice;
+import com.project.gimme.pojo.GroupUser;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.ResponseData;
@@ -37,6 +42,7 @@ import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
+import com.xuexiang.xutil.common.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +99,7 @@ public class OtherInfoActivity extends SwipeBackActivity {
     @BindView(R.id.fragment_other_info_my_note)
     RelativeLayout myNote;
     @BindView(R.id.fragment_other_info_introduction_note_right_text)
-    TextView myNoteRightText;
+    EditText myNoteRightText;
     @BindView(R.id.fragment_other_info_introduction_note_left_text)
     TextView myNoteLeftText;
     @BindView(R.id.fragment_other_info_exit_button)
@@ -103,6 +109,8 @@ public class OtherInfoActivity extends SwipeBackActivity {
     @BindView(R.id.fragment_other_info_top_bar)
     RelativeLayout topBar;
     private final Context mContext = this;
+    private GroupUser groupUser = new GroupUser();
+    private ChannelUser channelUser = new ChannelUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,14 +192,18 @@ public class OtherInfoActivity extends SwipeBackActivity {
                 Bundle bundle = new Bundle();
                 if (id == -1) {
                     bundle.putInt(BundleUtil.CONTACTS_LIST_TYPE_ATTRIBUTE, ContactsUtil.ContactType.TYPE_INVITATION.getCode());
+                    bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                    bundle.putInt(BundleUtil.CHAT_MSG_ID_ATTRIBUTE, objectId);
                     Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
                     startActivity(intent);
                 } else {
                     if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
                         bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_MEMBER.getCode());
+
                     } else {
                         bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_GROUP_MEMBER.getCode());
                     }
+                    bundle.putString(BundleUtil.OTHER_ID_ATTRIBUTE, objectId.toString());
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, userVOList.get(position).getId());
                     bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, false);
                     bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(userVOList.get(position)));
@@ -411,20 +423,82 @@ public class OtherInfoActivity extends SwipeBackActivity {
         } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
             myNoteLeftText.setText("我的频道昵称");
         }
-        myNote.setOnClickListener(new View.OnClickListener() {
+        myNoteRightText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-                    bundle.putString(BundleUtil.PARAM_NAME_ATTRIBUTE, "群昵称");
-                    bundle.putString(BundleUtil.PARAM_VALUE_ATTRIBUTE, groupVO.getMyNote());
-                } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-                    bundle.putString(BundleUtil.PARAM_NAME_ATTRIBUTE, channelVO.getMyNote());
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!StringUtils.isEmpty(myNoteRightText.getText().toString())) {
+                    if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+                        getGroupUser(groupVO.getId());
+                        groupUser.setGroupNick(myNoteRightText.getText().toString());
+                        updateGroupUser();
+                    } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+                        getChannelUser(channelVO.getId());
+                        channelUser.setChannelNick(myNoteRightText.getText().toString());
+                        updateChannelUser();
+                    }
+                } else {
+                    XToastUtils.toast("备注不可为空!");
                 }
-                Intent intent = new Intent(mContext, ParamActivity.class).putExtras(bundle);
-                startActivity(intent);
             }
         });
+    }
+
+    private void getGroupUser(Integer groupId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<GroupUser> responseData =
+                        GroupUserController.getGroupUser(groupId);
+                if (responseData != null && responseData.isSuccess()) {
+                    groupUser = responseData.getData();
+                }
+            }
+        }).start();
+    }
+
+    private void updateGroupUser() {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                GroupUserController.updateGroupUser(groupUser);
+            }
+        }).start();
+    }
+
+    private void getChannelUser(Integer channelId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ResponseData<ChannelUser> responseData =
+                        ChannelUserController.getChannelUser(channelId);
+                if (responseData != null && responseData.isSuccess()) {
+                    channelUser = responseData.getData();
+                }
+            }
+        }).start();
+    }
+
+    private void updateChannelUser() {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ChannelUserController.updateChannelUser(channelUser);
+            }
+        }).start();
     }
 
     private void initExitButton() {

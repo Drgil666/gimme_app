@@ -77,11 +77,17 @@ public class User {
      */
     @Property(nameInDb = "password")
     private String password;
+    /**
+     * 个人信息时间戳
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date personalMsgTimestamp;
 
-    @Generated(hash = 508783077)
+    @Generated(hash = 964149244)
     public User(Integer id, String nick, String avatar, String city,
                 Integer province, Date birthday, String mail, Integer gender,
-                Integer occupation, String motto, String company, String password) {
+                Integer occupation, String motto, String company, String password,
+                Date personalMsgTimestamp) {
         this.id = id;
         this.nick = nick;
         this.avatar = avatar;
@@ -94,22 +100,29 @@ public class User {
         this.motto = motto;
         this.company = company;
         this.password = password;
+        this.personalMsgTimestamp = personalMsgTimestamp;
     }
+
     @Generated(hash = 586692638)
     public User() {
     }
+
     public Integer getId() {
         return this.id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
+
     public String getNick() {
         return this.nick;
     }
+
     public void setNick(String nick) {
         this.nick = nick;
     }
+
     public String getAvatar() {
         return this.avatar;
     }
@@ -129,9 +142,11 @@ public class User {
     public Integer getProvince() {
         return this.province;
     }
+
     public void setProvince(Integer province) {
         this.province = province;
     }
+
     public Date getBirthday() {
         return this.birthday;
     }
@@ -186,6 +201,14 @@ public class User {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public Date getPersonalMsgTimestamp() {
+        return this.personalMsgTimestamp;
+    }
+
+    public void setPersonalMsgTimestamp(Date personalMsgTimestamp) {
+        this.personalMsgTimestamp = personalMsgTimestamp;
     }
 
 }

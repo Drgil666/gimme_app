@@ -1,9 +1,13 @@
 package com.project.gimme.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
+
+import java.util.Date;
 
 /**
  * @author DrGilbert
@@ -52,11 +56,15 @@ public class PersonalMsg {
      */
     @Property(nameInDb = "type")
     private String type;
+    /**
+     * 时间戳
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date timestamp;
 
-    @Generated(hash = 501944353)
-    public PersonalMsg(Integer id, String objectType, Integer ownerId,
-                       Integer operatorId, Integer objectId, String note, Integer status,
-                       String type) {
+    @Generated(hash = 982954744)
+    public PersonalMsg(Integer id, String objectType, Integer ownerId, Integer operatorId,
+                       Integer objectId, String note, Integer status, String type, Date timestamp) {
         this.id = id;
         this.objectType = objectType;
         this.ownerId = ownerId;
@@ -65,6 +73,7 @@ public class PersonalMsg {
         this.note = note;
         this.status = status;
         this.type = type;
+        this.timestamp = timestamp;
     }
 
     @Generated(hash = 1820845707)
@@ -98,15 +107,19 @@ public class PersonalMsg {
     public Integer getOperatorId() {
         return this.operatorId;
     }
+
     public void setOperatorId(Integer operatorId) {
         this.operatorId = operatorId;
     }
+
     public Integer getObjectId() {
         return this.objectId;
     }
+
     public void setObjectId(Integer objectId) {
         this.objectId = objectId;
     }
+
     public String getNote() {
         return this.note;
     }
@@ -129,5 +142,13 @@ public class PersonalMsg {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Date getTimestamp() {
+        return this.timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }

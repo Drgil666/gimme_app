@@ -94,6 +94,7 @@ public class GimmeApplication extends Application {
         BGASwipeBackHelper.init(this, null);
         //字体初始化
         //TODO:所有的转场动画需要重新完成！
+        //TODO:后台推送需要完成！
         XUI.initFontStyle("ping_fang_sc.ttf");
         TestController.test();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

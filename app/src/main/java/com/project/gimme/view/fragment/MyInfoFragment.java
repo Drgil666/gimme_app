@@ -1,17 +1,17 @@
 package com.project.gimme.view.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
+import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -25,11 +25,14 @@ import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.MyInfoListVO;
 import com.project.gimme.pojo.vo.ResponseData;
-import com.project.gimme.utils.BundleUtil;
-import com.project.gimme.utils.JsonUtil;
-import com.project.gimme.utils.MyInfoUtil;
-import com.project.gimme.view.activity.MyInformationActivity;
-import com.project.gimme.view.adpter.MyInfoAdapter;
+import com.project.gimme.pojo.vo.UserVoParamItem;
+import com.project.gimme.utils.FileUtil;
+import com.project.gimme.utils.NumberUtil;
+import com.project.gimme.utils.ParamItemUtil;
+import com.project.gimme.utils.UserUtil;
+import com.project.gimme.utils.XToastUtils;
+import com.project.gimme.view.adpter.MyInformationItemAdapter;
+import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +50,17 @@ public class MyInfoFragment extends Fragment {
     private List<MyInfoListVO> myInfoList = new ArrayList<>();
     @BindView(R.id.user_info_icon)
     ImageView userInfoIcon;
-    @BindView(R.id.gridview_my_info)
-    GridView myInfoGridView;
+    @BindView(R.id.user_info_listview)
+    ListView listView;
     @BindView(R.id.user_info_nick)
     TextView userInfoNick;
     @BindView(R.id.user_info_company)
     TextView userInfoCompany;
     @BindView(R.id.user_info_motto)
     TextView userInfoMotto;
+    @BindView(R.id.user_info_imageview)
+    ImageView imageView;
+    private List<UserVoParamItem> itemList = new ArrayList<>();
     private Unbinder unbinder;
     private User user;
     Handler handler = new Handler();
@@ -74,7 +80,6 @@ public class MyInfoFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         getUser();
         initUserInfoLayout();
-        initMyInfoGridView();
         return view;
     }
 
@@ -103,6 +108,29 @@ public class MyInfoFragment extends Fragment {
                                     .error(R.mipmap.default_icon)
                                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                                     .into(userInfoIcon);
+                            Glide.with(getContext())
+                                    .load(GimmeApplication.getImageUrl(user.getAvatar()))
+                                    .error(R.mipmap.default_icon)
+                                    .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                                    .into(imageView);
+                            itemList = new ArrayList<>();
+                            UserVoParamItem item = new UserVoParamItem("Gimme账号", user.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+                            itemList.add(item);
+                            item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[user.getGender()].getName(), true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
+                            itemList.add(item);
+                            item = new UserVoParamItem("生日", NumberUtil.changeToYearAndMonthAndDay(user.getBirthday()), true, ParamItemUtil.ParamType.TYPE_DATE.getCode());
+                            itemList.add(item);
+                            item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[user.getOccupation()].getName(), true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
+                            itemList.add(item);
+                            item = new UserVoParamItem("公司", user.getCompany(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+                            itemList.add(item);
+                            item = new UserVoParamItem("邮箱", user.getMail(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+                            itemList.add(item);
+                            item = new UserVoParamItem("个性签名", user.getMotto(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+                            itemList.add(item);
+                            item = new UserVoParamItem("所在地", user.getCity(), true, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
+                            itemList.add(item);
+                            listView.setAdapter(new MyInformationItemAdapter(getContext(), user, itemList));
                         }
                     });
                 }
@@ -110,45 +138,48 @@ public class MyInfoFragment extends Fragment {
         }).start();
     }
 
-    private void getMyInfoList() {
-        myInfoList = new ArrayList<>();
-        for (MyInfoUtil.MyInfoType myInfoType : MyInfoUtil.MY_INFO_TYPE_LIST) {
-            MyInfoListVO myInfoListVO = new MyInfoListVO();
-            myInfoListVO.setNick(myInfoType.getName());
-            myInfoListVO.setDescription(myInfoType.getDescription());
-            myInfoListVO.setType(myInfoType.getCode() + "");
-            myInfoList.add(myInfoListVO);
-        }
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
     private void initUserInfoLayout() {
         userInfoIcon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString(BundleUtil.OBJECT_NICK_ATTRIBUTE, user.getNick());
-                bundle.putString(BundleUtil.USER_AVATAR_ATTRIBUTE, user.getAvatar());
-                bundle.putString(BundleUtil.USER_COMPANY_ATTRIBUTE, user.getCompany());
-                bundle.putString(BundleUtil.USER_MOTTO_ATTRIBUTE, user.getMotto());
-                bundle.putString(BundleUtil.OBJECT_ATTRIBUTE, JsonUtil.toJson(user));
-                Intent intent = new Intent(getContext(), MyInformationActivity.class).putExtras(bundle);
-                startActivity(intent);
+            public void onClick(View v) {
+                imageView.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha0to1));
+                imageView.setVisibility(View.VISIBLE);
+                RelativeLayout topLayout = (RelativeLayout) ((Activity) getContext()).findViewById(R.id.main_top_bar);
+                topLayout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha0to1));
+                topLayout.setVisibility(View.GONE);
+                RelativeLayout bottomLayout = (RelativeLayout) ((Activity) getContext()).findViewById(R.id.main_bottom_bar);
+                bottomLayout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha0to1));
+                bottomLayout.setVisibility(View.GONE);
             }
         });
-        userInfoIcon.setOnTouchListener((view, motionEvent) -> {
-            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                ((ImageView) view).setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY); // 设置滤镜效果
-            } else {
-                ((ImageView) view).clearColorFilter(); // 清除滤镜效果
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha1to0));
+                imageView.setVisibility(View.GONE);
+                RelativeLayout topLayout = (RelativeLayout) ((Activity) getContext()).findViewById(R.id.main_top_bar);
+                topLayout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha1to0));
+                topLayout.setVisibility(View.VISIBLE);
+                RelativeLayout bottomLayout = (RelativeLayout) ((Activity) getContext()).findViewById(R.id.main_bottom_bar);
+                bottomLayout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.alpha1to0));
+                bottomLayout.setVisibility(View.VISIBLE);
             }
-            return false;//如果return true的话,onClick的事件就不会触发!
         });
-    }
-
-    private void initMyInfoGridView() {
-        getMyInfoList();
-        myInfoGridView.setAdapter(new MyInfoAdapter(getContext(), myInfoList));
-        myInfoGridView.setOnItemClickListener((adapterView, view, i, l) -> System.out.println(myInfoGridView.getAdapter().getItemId(i)));
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new BottomSheet.BottomListSheetBuilder(getContext())
+                        .addItem("保存到相册")
+                        .setIsCenter(true)
+                        .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
+                            dialog.dismiss();
+                            FileUtil.saveImageToGallery(getContext(), ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                            XToastUtils.toast("保存成功!");
+                        })
+                        .build()
+                        .show();
+                return true;
+            }
+        });
     }
 }

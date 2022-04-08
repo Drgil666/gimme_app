@@ -30,9 +30,6 @@
             android:name=".view.activity.FriendInfoActivity"
             android:exported="true" />
         <activity
-            android:name=".view.activity.MyInformationActivity"
-            android:exported="true" />
-        <activity
             android:name=".view.activity.ToDoListActivity"
             android:exported="true" />
         <activity

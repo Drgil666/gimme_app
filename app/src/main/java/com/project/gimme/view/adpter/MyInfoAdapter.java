@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.project.gimme.R;
 import com.project.gimme.pojo.vo.MyInfoListVO;
 import com.project.gimme.utils.MyInfoUtil;
@@ -25,10 +26,12 @@ import butterknife.ButterKnife;
 public class MyInfoAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private List<MyInfoListVO> myInfoListVOList;
+    private Context mContext;
 
     public MyInfoAdapter(Context context, List<MyInfoListVO> myInfoListVOList) {
         layoutInflater = LayoutInflater.from(context);
         this.myInfoListVOList = myInfoListVOList;
+        mContext = context;
     }
 
     @Override
@@ -48,7 +51,6 @@ public class MyInfoAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
-        //TODO:待调整
     }
 
     @SuppressLint("ViewHolder")
@@ -60,9 +62,13 @@ public class MyInfoAdapter extends BaseAdapter {
         viewHolder.nick.setText(myInfoListVO.getNick());
         viewHolder.description.setText(myInfoListVO.getDescription());
         if (myInfoListVO.getType().equals(MyInfoUtil.MyInfoType.TYPE_FILE.getCode().toString())) {
-            viewHolder.icon.setImageResource(R.mipmap.file);
+            Glide.with(mContext)
+                    .load(R.mipmap.file)
+                    .into(viewHolder.icon);
         } else if (myInfoListVO.getType().equals(MyInfoUtil.MyInfoType.TYPE_TODO.getCode().toString())) {
-            viewHolder.icon.setImageResource(R.mipmap.todo);
+            Glide.with(mContext)
+                    .load(R.mipmap.todo)
+                    .into(viewHolder.icon);
         }
         return convertView;
     }

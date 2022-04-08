@@ -48,8 +48,7 @@ public class ExtraOptionAdapter extends BaseAdapter {
     private void getItemList() {
         itemList = Arrays.asList(
                 new ExtraOptionItem(R.mipmap.pic, "照片"),
-                new ExtraOptionItem(R.mipmap.file, "文件"),
-                new ExtraOptionItem(R.mipmap.todo, "待办"));
+                new ExtraOptionItem(R.mipmap.file, "文件"));
     }
 
     @Override

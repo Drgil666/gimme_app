@@ -71,6 +71,7 @@ public class FriendListActivity extends SwipeBackActivity {
     public static List<Integer> idList = new ArrayList<>();
     private static final Integer CREATE_GROUP = 0;
     private static final Integer CREATE_CHANNEL = 1;
+    private Integer chatMsgType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +114,7 @@ public class FriendListActivity extends SwipeBackActivity {
 
         } else if (type.equals(ContactsUtil.ContactType.TYPE_INVITATION.getCode())) {
             chatMsgId = bundle.getInt(BundleUtil.CHAT_MSG_ID_ATTRIBUTE);
+            chatMsgType = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
         } else {
             XToastUtils.toast("类型错误!");
         }
@@ -298,7 +300,7 @@ public class FriendListActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type, chatMsgId);
+                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type, chatMsgType, chatMsgId);
                             listView.setAdapter(contactVoAdapter);
                         }
                     });
@@ -323,7 +325,7 @@ public class FriendListActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type, chatMsgId);
+                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type, chatMsgType, chatMsgId);
                             listView.setAdapter(contactVoAdapter);
                         }
                     });
@@ -347,7 +349,7 @@ public class FriendListActivity extends SwipeBackActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type, chatMsgId);
+                            contactVoAdapter = new ContactVoAdapter(mContext, contactVOList, type, chatMsgType, chatMsgId);
                             listView.setAdapter(contactVoAdapter);
                         }
                     });

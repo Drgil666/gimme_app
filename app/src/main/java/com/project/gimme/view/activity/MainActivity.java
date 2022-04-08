@@ -85,8 +85,6 @@ public class MainActivity extends BaseActivity {
      * 选择系统图片Request Code
      */
     public static final int REQUEST_IMAGE = 112;
-
-    //TODO:动态更新的部分仍然需要修复
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
