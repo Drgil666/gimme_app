@@ -43,7 +43,7 @@ import lombok.SneakyThrows;
 public class ChatFileActivity extends SwipeBackActivity {
     Handler handler = new Handler();
     private Integer type;
-    @BindView(R.id.chat_file_info_top_left_button)
+    @BindView(R.id.chat_file_top_left_button)
     ImageView topLeftButton;
     @BindView(R.id.chat_file_search_text)
     TextView searchText;

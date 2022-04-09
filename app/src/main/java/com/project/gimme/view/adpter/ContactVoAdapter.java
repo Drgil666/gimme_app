@@ -16,19 +16,21 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.controller.ChannelUserController;
 import com.project.gimme.controller.ChatMsgController;
-import com.project.gimme.pojo.PersonalMsg;
+import com.project.gimme.controller.GroupUserController;
+import com.project.gimme.pojo.ChannelUser;
+import com.project.gimme.pojo.GroupUser;
 import com.project.gimme.pojo.vo.ContactVO;
 import com.project.gimme.pojo.vo.RefreshVO;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.ContactsUtil;
-import com.project.gimme.utils.PersonalMsgUtil;
+import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.activity.FriendListActivity;
 import com.xuexiang.xui.widget.button.SmoothCheckBox;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -134,28 +136,45 @@ public class ContactVoAdapter extends BaseAdapter {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    createPersonalMsg(chatMsgType, chatMsgId);
+                    if (chatMsgType.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+                        createGroupUser(chatMsgId, contactVO.getObjectId());
+                    } else if (chatMsgType.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+                        createChannelUser(chatMsgId, contactVO.getObjectId());
+                    }
+                    XToastUtils.toast("邀请成功!");
+                    ((Activity) mContext).finish();
                 }
             });
         }
         return convertView;
     }
 
-    private void createPersonalMsg(Integer type, Integer objectId) {
-        //TODO:向群组/频道管理员发起邀请
-        //发起用户
-        PersonalMsg personalMsg = new PersonalMsg();
-        personalMsg.setStatus(PersonalMsgUtil.Status.TYPE_TODO.getCode());
-        personalMsg.setTimestamp(new Date());
-        personalMsg.setObjectType(ChatMsgUtil.CHARACTER_LIST[type].getName());
-        personalMsg.setObjectId(objectId);
-        if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-            personalMsg.setType(PersonalMsgUtil.GroupPersonalMsg.TYPE_INSERT_GROUP_MEMBER.getName());
-        } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-            personalMsg.setType(PersonalMsgUtil.ChannelPersonalMsg.TYPE_INSERT_CHANNEL_MEMBER.getName());
-        }
-        personalMsg.setNote(null);
+    private void createGroupUser(Integer groupId, Integer userId) {
+        GroupUser groupUser = new GroupUser();
+        groupUser.setGroupId(groupId);
+        groupUser.setUserId(userId);
+        groupUser.setType(UserUtil.GroupCharacter.TYPE_GROUP_USER.getName());
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                GroupUserController.createGroupUser(groupUser);
+            }
+        }).start();
+    }
 
+    private void createChannelUser(Integer channelId, Integer userId) {
+        ChannelUser channelUser = new ChannelUser();
+        channelUser.setChannelId(channelId);
+        channelUser.setUserId(userId);
+        channelUser.setType(UserUtil.ChannelCharacter.TYPE_CHANNEL_USER.getName());
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ChannelUserController.createChannelUser(channelUser);
+            }
+        }).start();
     }
 
     private void transmitMessage(Integer chatMsgId, Integer type, Integer objectId) {

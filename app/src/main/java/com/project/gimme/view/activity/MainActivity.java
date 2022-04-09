@@ -325,7 +325,6 @@ public class MainActivity extends BaseActivity {
             myInfoText.setTextColor(R.color.gimme_color);
             Glide.with(this).load(R.mipmap.setting).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(topRightButton);
         }
-        //TODO:Glide要缓存常量图片
     }
 
     private Fragment getFragment(Integer op) {

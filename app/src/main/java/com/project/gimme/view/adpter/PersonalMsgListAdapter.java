@@ -16,6 +16,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.controller.PersonalMsgController;
+import com.project.gimme.pojo.PersonalMsg;
 import com.project.gimme.pojo.vo.PersonalMsgVO;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.PersonalMsgUtil;
@@ -26,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lombok.SneakyThrows;
 
 /**
  * @author DrGilbert
@@ -58,6 +61,17 @@ public class PersonalMsgListAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return itemList.get(position).getId();
+    }
+
+    private void updatePersonalMsg(PersonalMsgVO personalMsgVO) {
+        PersonalMsg personalMsg = personalMsgVO;
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                PersonalMsgController.updatePersonalMsg(personalMsg);
+            }
+        }).start();
     }
 
     @Override
@@ -130,6 +144,7 @@ public class PersonalMsgListAdapter extends BaseAdapter {
                     viewHolder.chooseLayout.setVisibility(View.GONE);
                     viewHolder.status.setVisibility(View.VISIBLE);
                     viewHolder.status.setText(PersonalMsgUtil.STATUS_LIST[personalMsgVO.getStatus()].getName());
+                    updatePersonalMsg(personalMsgVO);
                 }
             });
             viewHolder.refuseButton.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +154,7 @@ public class PersonalMsgListAdapter extends BaseAdapter {
                     viewHolder.chooseLayout.setVisibility(View.GONE);
                     viewHolder.status.setVisibility(View.VISIBLE);
                     viewHolder.status.setText(PersonalMsgUtil.STATUS_LIST[personalMsgVO.getStatus()].getName());
+                    updatePersonalMsg(personalMsgVO);
                 }
             });
         }

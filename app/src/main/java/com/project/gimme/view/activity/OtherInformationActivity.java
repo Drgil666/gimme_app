@@ -262,4 +262,11 @@ public class OtherInformationActivity extends SwipeBackActivity {
             }
         }).start();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initInfoLayout();
+        initMemberLayout();
+    }
 }

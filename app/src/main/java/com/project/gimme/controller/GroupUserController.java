@@ -83,4 +83,23 @@ public class GroupUserController {
 
         }
     }
+
+    public static void createGroupUser(GroupUser groupUser) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        CudRequestVO<GroupUser, Integer> requestVO = new CudRequestVO<>();
+        requestVO.setMethod(CudRequestVO.CREATE_METHOD);
+        requestVO.setData(groupUser);
+        requestVO.setKey(null);
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/group/user")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+
+        }
+    }
 }

@@ -65,12 +65,12 @@
             android:layout_height="fill_parent"
             android:layout_above="@id/chat_bottom_bar"
             android:layout_below="@id/chat_top_bar"
-            android:longClickable="true"
-            android:clickable="true"
             android:cacheColorHint="@android:color/transparent"
+            android:clickable="true"
             android:divider="@null"
-            android:transcriptMode="alwaysScroll"
-            android:focusable="true">
+            android:focusable="true"
+            android:longClickable="true"
+            android:transcriptMode="alwaysScroll">
 
         </ListView>
         <!--底边栏-->

@@ -83,4 +83,23 @@ public class ChannelUserController {
 
         }
     }
+
+    public static void createChannelUser(ChannelUser channelUser) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        CudRequestVO<ChannelUser, Integer> requestVO = new CudRequestVO<>();
+        requestVO.setMethod(CudRequestVO.CREATE_METHOD);
+        requestVO.setData(channelUser);
+        requestVO.setKey(null);
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/channel/user")
+                .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+
+        }
+    }
 }

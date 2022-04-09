@@ -51,6 +51,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import lombok.SneakyThrows;
 
+/**
+ * @author 25741
+ */
 @SuppressLint("NonConstantResourceId")
 public class OtherInfoActivity extends SwipeBackActivity {
     private final Integer height = GimmeApplication.getHeight();
@@ -607,5 +610,12 @@ public class OtherInfoActivity extends SwipeBackActivity {
                 });
             }
         }).start();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getType();
+        initMember();
     }
 }

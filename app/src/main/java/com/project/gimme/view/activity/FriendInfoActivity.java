@@ -24,7 +24,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.controller.FriendController;
+import com.project.gimme.controller.PersonalMsgController;
 import com.project.gimme.controller.UserController;
+import com.project.gimme.pojo.Friend;
+import com.project.gimme.pojo.PersonalMsg;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.pojo.vo.UserVoParamItem;
@@ -43,6 +47,7 @@ import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -135,7 +140,48 @@ public class FriendInfoActivity extends SwipeBackActivity {
         } else {
             chatButton.setVisibility(View.GONE);
             addButton.setVisibility(View.VISIBLE);
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Friend friend = new Friend();
+                    friend.setFriendId(objectId);
+                    friend.setMsgTimestamp(new Date());
+                    friend.setFriendNote(null);
+                    createFriend(friend);
+                    addButton.setVisibility(View.GONE);
+                    XToastUtils.toast("好友添加成功!");
+                    chatButton.setVisibility(View.VISIBLE);
+                }
+            });
+            chatButton.setOnClickListener(view -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
+                Intent intent = new Intent(this, ChatActivity.class).putExtras(bundle);
+                startActivity(intent);
+            });
         }
+
+    }
+
+    private void createFriend(Friend friend) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                FriendController.createFriend(friend);
+            }
+        }).start();
+    }
+
+    private void createPersonalMsg(PersonalMsg personalMsg) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                PersonalMsgController.createPersonalMsg(personalMsg);
+            }
+        }).start();
     }
 
     private void initImageView() {
@@ -205,7 +251,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
                         UserController.getUserVO(objectId.toString(), ChatMsgUtil.Character.TYPE_FRIEND.getName(), otherId.toString());
                 if (responseData != null && responseData.isSuccess()) {
                     userVO = responseData.getData();
-                    isJoined = !StringUtils.isEmpty(userVO.getNote());
+                    isJoined = userVO.getIsJoined();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -219,8 +265,11 @@ public class FriendInfoActivity extends SwipeBackActivity {
 
     private List<UserVoParamItem> getFriendItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
-        UserVoParamItem item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
-        itemList.add(item);
+        UserVoParamItem item;
+//        if(isJoined) {
+//            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+//            itemList.add(item);
+//        }
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
@@ -265,10 +314,10 @@ public class FriendInfoActivity extends SwipeBackActivity {
     private List<UserVoParamItem> getGroupItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item;
-        if (!StringUtils.isEmpty(userVO.getNote())) {
-            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
-            itemList.add(item);
-        }
+//        if (isJoined) {
+//            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+//            itemList.add(item);
+//        }
         item = new UserVoParamItem("昵称", userVO.getNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
@@ -289,10 +338,10 @@ public class FriendInfoActivity extends SwipeBackActivity {
     private List<UserVoParamItem> getChannelItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item;
-        if (!StringUtils.isEmpty(userVO.getNote())) {
-            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
-            itemList.add(item);
-        }
+//        if (isJoined) {
+//            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+//            itemList.add(item);
+//        }
         item = new UserVoParamItem("昵称", userVO.getNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());

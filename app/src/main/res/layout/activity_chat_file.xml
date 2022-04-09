@@ -25,7 +25,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/chat_file_info_top_left_button"
+            android:id="@+id/chat_file_top_left_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
@@ -79,9 +79,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="40sp"
-        android:contentDescription="添加"
-        android:src="@mipmap/app_icon" />
+        android:layout_marginStart="40sp"
+        android:layout_marginTop="40sp"
+        android:layout_marginEnd="40sp"
+        android:layout_marginBottom="40sp"
+        android:src="@mipmap/add_plus_round" />
 
     <com.project.gimme.view.listview.PullRefreshListView
         android:id="@+id/chat_file_listview"

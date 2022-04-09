@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
 import org.greenrobot.greendao.AbstractDaoMaster;
-import org.greenrobot.greendao.database.StandardDatabase;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.database.DatabaseOpenHelper;
+import org.greenrobot.greendao.database.StandardDatabase;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 
 
@@ -28,6 +28,7 @@ public class DaoMaster extends AbstractDaoMaster {
         ChatMsgDao.createTable(db, ifNotExists);
         CheckInDao.createTable(db, ifNotExists);
         CheckInUserDao.createTable(db, ifNotExists);
+        FriendDao.createTable(db, ifNotExists);
         GroupDao.createTable(db, ifNotExists);
         GroupNoticeDao.createTable(db, ifNotExists);
         GroupUserDao.createTable(db, ifNotExists);
@@ -48,6 +49,7 @@ public class DaoMaster extends AbstractDaoMaster {
         ChatMsgDao.dropTable(db, ifExists);
         CheckInDao.dropTable(db, ifExists);
         CheckInUserDao.dropTable(db, ifExists);
+        FriendDao.dropTable(db, ifExists);
         GroupDao.dropTable(db, ifExists);
         GroupNoticeDao.dropTable(db, ifExists);
         GroupUserDao.dropTable(db, ifExists);
@@ -82,6 +84,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(ChatMsgDao.class);
         registerDaoClass(CheckInDao.class);
         registerDaoClass(CheckInUserDao.class);
+        registerDaoClass(FriendDao.class);
         registerDaoClass(GroupDao.class);
         registerDaoClass(GroupNoticeDao.class);
         registerDaoClass(GroupUserDao.class);
