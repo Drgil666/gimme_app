@@ -64,6 +64,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,13 +113,21 @@ public class ChatActivity extends SwipeBackActivity {
     private GroupVO groupVO = new GroupVO();
     private ChannelVO channelVO = new ChannelVO();
     private String nick;
+    private Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
-        initBundle();
+        getType();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("刷新消息!" + System.currentTimeMillis());
+                getChatMessageList(type, objectId);
+            }
+        }, 0, 1000);
         refresh();
         initTopBar();
         initChatListView();
@@ -129,7 +139,7 @@ public class ChatActivity extends SwipeBackActivity {
         chatMsgId = id;
     }
 
-    private void initBundle() {
+    private void getType() {
         Bundle bundle = this.getIntent().getExtras();
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
@@ -159,19 +169,33 @@ public class ChatActivity extends SwipeBackActivity {
                 ResponseData<List<ChatMsgVO>> responseData =
                         ChatMsgController.getChatMsgVoList(ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId, "");
                 if (responseData != null && responseData.isSuccess()) {
-                    chatMsgVOList = responseData.getData();
                     handler1.post(new Runnable() {
                         @Override
                         public void run() {
-                            chatMsgVoAdapter = new ChatMsgVoAdapter(mContext, chatMsgVOList, type);
-                            chatListView.setAdapter(chatMsgVoAdapter);
-                            chatListView.setSelection(chatMsgVOList.size() - 1);
-                            chatMsgVoAdapter.notifyDataSetChanged();
+                            if (!isEqual(responseData.getData(), chatMsgVOList)) {
+                                chatMsgVOList = responseData.getData();
+                                chatMsgVoAdapter = new ChatMsgVoAdapter(mContext, chatMsgVOList, type);
+                                chatListView.setAdapter(chatMsgVoAdapter);
+                                chatListView.setSelection(chatMsgVOList.size() - 1);
+                                chatMsgVoAdapter.notifyDataSetChanged();
+                            }
                         }
                     });
                 }
             }
         }).start();
+    }
+
+    private Boolean isEqual(List<ChatMsgVO> chatMsgVOList1, List<ChatMsgVO> chatMsgVOList2) {
+        if (chatMsgVOList1.size() != chatMsgVOList2.size()) {
+            return false;
+        }
+        for (int i = 0; i < chatMsgVOList1.size(); i++) {
+            if (!JsonUtil.toJson(chatMsgVOList1.get(i)).equals(JsonUtil.toJson(chatMsgVOList2.get(i)))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void initTopBar() {
@@ -486,6 +510,7 @@ public class ChatActivity extends SwipeBackActivity {
                             @Override
                             public void run() {
                                 chatMsgVOList.add(chatMsgVO);
+                                chatListView.setSelection(chatMsgVOList.size() - 1);
                                 getChatMessageList(type, objectId);
                             }
                         });
@@ -600,6 +625,14 @@ public class ChatActivity extends SwipeBackActivity {
                         public void run() {
                             setTopNick(channelVO.getNick());
                             setTopDescription("共" + channelVO.getTotalCount() + "人");
+                            if (!channelVO.getOwnerId().equals(GimmeApplication.getUserId())) {
+                                chatBottomEditText.getEditText().setText("仅频道创建人可以发送公告");
+                                chatBottomEditText.getEditText().setTextColor(R.color.teal_700);
+                                chatBottomEditText.getEditText().setEnabled(false);
+                            } else {
+                                chatBottomEditText.getEditText().setEnabled(true);
+                                chatBottomEditText.getEditText().setTextColor(R.color.black);
+                            }
                         }
                     });
                 } else {
@@ -622,5 +655,6 @@ public class ChatActivity extends SwipeBackActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        timer.cancel();
     }
 }

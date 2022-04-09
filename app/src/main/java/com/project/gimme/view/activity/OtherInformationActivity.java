@@ -2,11 +2,13 @@ package com.project.gimme.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,7 +18,11 @@ import com.bumptech.glide.Glide;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
+import com.project.gimme.controller.ChannelUserController;
 import com.project.gimme.controller.GroupController;
+import com.project.gimme.controller.GroupUserController;
+import com.project.gimme.pojo.ChannelUser;
+import com.project.gimme.pojo.GroupUser;
 import com.project.gimme.pojo.vo.ChannelVO;
 import com.project.gimme.pojo.vo.GroupVO;
 import com.project.gimme.pojo.vo.ResponseData;
@@ -24,6 +30,7 @@ import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.FileUtil;
+import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
@@ -66,6 +73,11 @@ public class OtherInformationActivity extends SwipeBackActivity {
     TextView topBarText;
     @BindView(R.id.other_information_member_layout)
     RelativeLayout memberLayout;
+    private Boolean isJoin = false;
+    @BindView(R.id.other_information_bottom_add)
+    Button addButton;
+    @BindView(R.id.other_information_bottom_chat)
+    Button chatButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +138,7 @@ public class OtherInformationActivity extends SwipeBackActivity {
         Bundle bundle = getIntent().getExtras();
         type = bundle.getInt(BundleUtil.CHAT_TYPE_ATTRIBUTE);
         objectId = bundle.getInt(BundleUtil.OBJECT_ID_ATTRIBUTE);
+        isJoin = bundle.getBoolean(BundleUtil.IS_JOINED_ATTRIBUTE);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -200,7 +213,64 @@ public class OtherInformationActivity extends SwipeBackActivity {
     }
 
     private void initBottomLayout() {
+        if (isJoin) {
+            chatButton.setVisibility(View.VISIBLE);
+            addButton.setVisibility(View.GONE);
+        } else {
+            chatButton.setVisibility(View.GONE);
+            addButton.setVisibility(View.VISIBLE);
+        }
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
+                Intent intent = new Intent(mContext, ChatActivity.class).putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chatButton.setVisibility(View.VISIBLE);
+                addButton.setVisibility(View.GONE);
+                if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
+                    createGroupUser(groupVO.getId(), GimmeApplication.getUserId());
+                } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
+                    createChannelUser(channelVO.getId(), GimmeApplication.getUserId());
+                }
+                XToastUtils.toast("加入成功!");
+            }
+        });
+    }
 
+    private void createGroupUser(Integer groupId, Integer userId) {
+        GroupUser groupUser = new GroupUser();
+        groupUser.setGroupId(groupId);
+        groupUser.setUserId(userId);
+        groupUser.setType(UserUtil.GroupCharacter.TYPE_GROUP_USER.getName());
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                GroupUserController.createGroupUser(groupUser);
+            }
+        }).start();
+    }
+
+    private void createChannelUser(Integer channelId, Integer userId) {
+        ChannelUser channelUser = new ChannelUser();
+        channelUser.setChannelId(channelId);
+        channelUser.setUserId(userId);
+        channelUser.setType(UserUtil.ChannelCharacter.TYPE_CHANNEL_USER.getName());
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ChannelUserController.createChannelUser(channelUser);
+            }
+        }).start();
     }
 
     private void getGroupVO(Integer objectId) {

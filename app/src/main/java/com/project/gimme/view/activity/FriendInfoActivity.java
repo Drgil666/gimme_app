@@ -140,6 +140,9 @@ public class FriendInfoActivity extends SwipeBackActivity {
         } else {
             chatButton.setVisibility(View.GONE);
             addButton.setVisibility(View.VISIBLE);
+            if (userVO.getId().equals(GimmeApplication.getUserId())) {
+                addButton.setVisibility(View.GONE);
+            }
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -239,6 +242,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                     .error(R.mipmap.default_icon)
                     .into(imageView);
+            initButton();
         }
     }
 

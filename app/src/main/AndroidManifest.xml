@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gimme">
         <activity
+            android:name=".view.activity.OtherMemberListActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.activity.ChatMsgActivity"
             android:exported="true" />
         <activity
@@ -58,10 +61,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity
-            android:name=".view.activity.ParamActivity"
-            android:exported="false"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".view.activity.ChatFileInfoActivity"
             android:exported="false">

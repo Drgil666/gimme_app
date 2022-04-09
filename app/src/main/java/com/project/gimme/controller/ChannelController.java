@@ -90,7 +90,7 @@ public class ChannelController {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .header(TOKEN, GimmeApplication.getToken())
-                .url(REMOTE_URL + "/api/channel/member/list?channelId=" + channelId + "&limit=" + limit).get().build();
+                .url(REMOTE_URL + "/api/channel/member/list?channelId=" + channelId + "&limit=" + (limit != null ? limit : "")).get().build();
         Call call = client.newCall(request);
         Response response = call.execute();
         if (response.isSuccessful()) {

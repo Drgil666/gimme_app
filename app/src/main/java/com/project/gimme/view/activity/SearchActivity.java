@@ -16,8 +16,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.project.gimme.R;
 import com.project.gimme.controller.SearchController;
 import com.project.gimme.pojo.vo.ResponseData;
@@ -41,7 +39,7 @@ import lombok.SneakyThrows;
  * @author 25741
  */
 @SuppressLint("NonConstantResourceId")
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
     @BindView(R.id.search_search_edit_text)
     EditText searchEditText;
     @BindView(R.id.search_search_cancel)

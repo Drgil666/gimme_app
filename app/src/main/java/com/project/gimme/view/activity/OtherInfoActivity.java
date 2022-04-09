@@ -73,6 +73,8 @@ public class OtherInfoActivity extends SwipeBackActivity {
     TextView topBarNick;
     @BindView(R.id.fragment_other_info_top_description)
     TextView topBarDescription;
+    @BindView(R.id.fragment_other_info_member_layout)
+    RelativeLayout memberLayout;
     @BindView(R.id.fragment_other_info_member_left_text)
     TextView memberLeft;
     @BindView(R.id.fragment_other_info_member_right_text)
@@ -170,6 +172,7 @@ public class OtherInfoActivity extends SwipeBackActivity {
                 Bundle bundle = new Bundle();
                 bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
                 bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
+                bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, true);
                 Intent intent = new Intent(mContext, OtherInformationActivity.class).putExtras(bundle);
                 startActivity(intent);
             }
@@ -186,6 +189,16 @@ public class OtherInfoActivity extends SwipeBackActivity {
         } else {
             XToastUtils.toast("类型错误!");
         }
+        memberLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, objectId);
+                Intent intent = new Intent(mContext, OtherMemberListActivity.class).putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initGridView() {
@@ -441,13 +454,9 @@ public class OtherInfoActivity extends SwipeBackActivity {
             public void afterTextChanged(Editable s) {
                 if (!StringUtils.isEmpty(myNoteRightText.getText().toString())) {
                     if (type.equals(ChatMsgUtil.Character.TYPE_GROUP.getCode())) {
-                        getGroupUser(groupVO.getId());
-                        groupUser.setGroupNick(myNoteRightText.getText().toString());
-                        updateGroupUser();
+                        updateGroupUser(groupVO.getId());
                     } else if (type.equals(ChatMsgUtil.Character.TYPE_CHANNEL.getCode())) {
-                        getChannelUser(channelVO.getId());
-                        channelUser.setChannelNick(myNoteRightText.getText().toString());
-                        updateChannelUser();
+                        updateChannelUser(channelVO.getId());
                     }
                 } else {
                     XToastUtils.toast("备注不可为空!");
@@ -456,7 +465,7 @@ public class OtherInfoActivity extends SwipeBackActivity {
         });
     }
 
-    private void getGroupUser(Integer groupId) {
+    private void updateGroupUser(Integer groupId) {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
@@ -465,22 +474,14 @@ public class OtherInfoActivity extends SwipeBackActivity {
                         GroupUserController.getGroupUser(groupId);
                 if (responseData != null && responseData.isSuccess()) {
                     groupUser = responseData.getData();
+                    groupUser.setGroupNick(myNoteRightText.getText().toString());
+                    GroupUserController.updateGroupUser(groupUser);
                 }
             }
         }).start();
     }
 
-    private void updateGroupUser() {
-        new Thread(new Runnable() {
-            @SneakyThrows
-            @Override
-            public void run() {
-                GroupUserController.updateGroupUser(groupUser);
-            }
-        }).start();
-    }
-
-    private void getChannelUser(Integer channelId) {
+    private void updateChannelUser(Integer channelId) {
         new Thread(new Runnable() {
             @SneakyThrows
             @Override
@@ -489,17 +490,9 @@ public class OtherInfoActivity extends SwipeBackActivity {
                         ChannelUserController.getChannelUser(channelId);
                 if (responseData != null && responseData.isSuccess()) {
                     channelUser = responseData.getData();
+                    channelUser.setChannelNick(myNoteRightText.getText().toString());
+                    ChannelUserController.updateChannelUser(channelUser);
                 }
-            }
-        }).start();
-    }
-
-    private void updateChannelUser() {
-        new Thread(new Runnable() {
-            @SneakyThrows
-            @Override
-            public void run() {
-                ChannelUserController.updateChannelUser(channelUser);
             }
         }).start();
     }

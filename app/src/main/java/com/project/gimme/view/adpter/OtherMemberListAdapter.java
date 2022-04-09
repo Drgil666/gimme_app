@@ -14,7 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
-import com.project.gimme.pojo.vo.SearchVO;
+import com.project.gimme.pojo.vo.UserVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,46 +22,46 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchVoAdapter extends BaseAdapter {
+public class OtherMemberListAdapter extends BaseAdapter {
     LayoutInflater layoutInflater;
-    private List<SearchVO> itemList = new ArrayList<>();
+    private List<UserVO> userVOList = new ArrayList<>();
     private Context context;
 
-    public SearchVoAdapter(Context context, List<SearchVO> personalMsgVOList) {
+    public OtherMemberListAdapter(Context context, List<UserVO> personalMsgVOList) {
         layoutInflater = LayoutInflater.from(context);
-        itemList = personalMsgVOList;
+        userVOList = personalMsgVOList;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        if (itemList == null) {
+        if (userVOList == null) {
             return 0;
         }
-        return itemList.size();
+        return userVOList.size();
     }
 
     @Override
-    public SearchVO getItem(int position) {
-        return itemList.get(position);
+    public UserVO getItem(int position) {
+        return userVOList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return itemList.get(position).getObjectId();
+        return userVOList.get(position).getId();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SearchVO searchVO = getItem(position);
+        UserVO userVO = getItem(position);
         convertView = layoutInflater.inflate(R.layout.listview_search, parent, false);
         ViewHolder viewHolder = new ViewHolder(convertView);
         Glide.with(context)
-                .load(GimmeApplication.getImageUrl(searchVO.getAvatar()))
+                .load(GimmeApplication.getImageUrl(userVO.getAvatar()))
                 .error(R.mipmap.default_icon)
                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                 .into(viewHolder.icon);
-        viewHolder.nick.setText(searchVO.getObjectNick() + "(" + searchVO.getObjectId() + ")");
+        viewHolder.nick.setText(userVO.getOtherNick());
         return convertView;
     }
 

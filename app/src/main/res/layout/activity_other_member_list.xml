@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.OtherMemberListActivity">
+    !--顶边栏-->
+
+    <RelativeLayout
+        android:id="@+id/other_member_list_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:background="@color/gimme_background_lighter">
+
+        <TextView
+            android:id="@+id/other_member_list_top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="群聊成员"
+            android:textColor="@color/black"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/other_member_list_top_left_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20sp"
+            android:src="@mipmap/back" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/other_member_list_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_below="@+id/other_member_list_top_bar"
+        android:background="@color/gimme_background_dark">
+
+        <EditText
+            android:id="@+id/other_member_list_search_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="15sp"
+            android:layout_marginEnd="10sp"
+            android:layout_marginBottom="15sp"
+            android:background="@drawable/rounded_edit_view_white_5px" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/other_member_list_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/other_member_list_search_layout" />
+</RelativeLayout>
