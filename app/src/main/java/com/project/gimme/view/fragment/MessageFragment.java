@@ -22,6 +22,7 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.ContactsUtil;
+import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.view.activity.ChatActivity;
 import com.project.gimme.view.activity.SearchActivity;
 import com.project.gimme.view.adpter.MessageVoAdapter;
@@ -29,6 +30,8 @@ import com.project.gimme.view.listview.PullRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +51,15 @@ public class MessageFragment extends Fragment {
     private MessageVoAdapter messageVoAdapter;
     @BindView(R.id.message_search_edittext)
     EditText searchEditText;
+    private Timer timer = new Timer();
+    private TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            System.out.println("接收消息!" + System.currentTimeMillis());
+            getMessageVOList();
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,6 +97,15 @@ public class MessageFragment extends Fragment {
     public void onStart() {
         super.onStart();
         initListView();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("接收消息!" + System.currentTimeMillis());
+                getMessageVOList();
+            }
+        };
+        timer = new Timer();
+        timer.schedule(timerTask, 0, 1000);
     }
 
     private Integer getNewMessageCount(List<MessageVO> messageVOList) {
@@ -100,6 +121,20 @@ public class MessageFragment extends Fragment {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             getMessageVOList();
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println("接收消息!" + System.currentTimeMillis());
+                    getMessageVOList();
+                }
+            };
+            timer = new Timer();
+            timer.schedule(timerTask, 0, 1000);
+        } else {
+            timer.cancel();
+            timer = null;
+            timerTask.cancel();
+            timerTask = null;
         }
     }
 
@@ -109,6 +144,9 @@ public class MessageFragment extends Fragment {
         unbinder.unbind();
     }
 
+    private Boolean isEqual(List<MessageVO> messageVOList1, List<MessageVO> messageVOList2) {
+        return JsonUtil.toJson(messageVOList1).equals(JsonUtil.toJson(messageVOList2));
+    }
 
     private void getMessageVOList() {
         new Thread(new Runnable() {
@@ -117,12 +155,14 @@ public class MessageFragment extends Fragment {
             public void run() {
                 ResponseData<List<MessageVO>> responseData = ChatMsgController.getMessageVoList("");
                 if (responseData != null && responseData.isSuccess()) {
-                    messageVOList = responseData.getData();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            messageVoAdapter = new MessageVoAdapter(getContext(), messageVOList);
-                            listView.setAdapter(messageVoAdapter);
+                            if (!isEqual(responseData.getData(), messageVOList)) {
+                                messageVOList = responseData.getData();
+                                messageVoAdapter = new MessageVoAdapter(getContext(), messageVOList);
+                                listView.setAdapter(messageVoAdapter);
+                            }
                         }
                     });
                 }
