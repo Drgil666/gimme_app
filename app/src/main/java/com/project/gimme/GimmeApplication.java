@@ -22,13 +22,14 @@ public class GimmeApplication extends Application {
     private static String token = "";
     private static Integer height;
     private static Integer weight;
-    private static Integer userId = 2;
+    private static Integer userId = null;
     public static final Integer TYPE_ERROR = -1;
     public static final String REMOTE_URL = "http://10.21.234.24:8080";
     public static final String APP_KEY = "pvxdm17jpdthr";
     public static final String LOCAL_STORAGE = "gimme_token";
     public static final String TOKEN = "token";
     public static final String APP_NAME = "gimme";
+    public static final String USER_ID = "userId";
 
     public static Integer getUserId() {
         return userId;
@@ -100,11 +101,6 @@ public class GimmeApplication extends Application {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
         }
-//        SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.clear();
-//        editor.apply();
     }
-
 }
 

@@ -141,6 +141,10 @@ public class MessageFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        timer.cancel();
+        timer = null;
+        timerTask.cancel();
+        timerTask = null;
         unbinder.unbind();
     }
 

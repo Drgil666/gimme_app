@@ -111,8 +111,29 @@ public class UserController {
         requestVO.setKey(null);
         RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
         Request request = new Request.Builder()
-                .url(REMOTE_URL + "/api/user")
+                .url(REMOTE_URL + "/api/user/update")
                 .header(TOKEN, GimmeApplication.getToken())
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+            String result = response.body().string();
+            return JsonUtil.fromJson(result, new TypeToken<ResponseData<User>>() {
+            }.getType());
+        }
+        return null;
+    }
+
+    public static ResponseData<User> createUser(User user) throws IOException {
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        CudRequestVO<User, Integer> requestVO = new CudRequestVO<User, Integer>();
+        requestVO.setData(user);
+        requestVO.setMethod(CudRequestVO.CREATE_METHOD);
+        requestVO.setKey(null);
+        RequestBody body = RequestBody.create(JsonUtil.toJson(requestVO), mediaType);
+        Request request = new Request.Builder()
+                .url(REMOTE_URL + "/api/user/create")
                 .post(body)
                 .build();
         Response response = client.newCall(request).execute();

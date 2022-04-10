@@ -2,14 +2,12 @@ package com.project.gimme.view.activity;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.project.gimme.R;
 
 /**
  * @author DrGilbert
  */
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends SwipeBackActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

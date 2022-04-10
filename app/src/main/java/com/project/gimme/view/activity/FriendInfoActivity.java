@@ -95,7 +95,6 @@ public class FriendInfoActivity extends SwipeBackActivity {
         getUserVO();
         initTopBar(0.1);
         initImageView();
-        initButton();
     }
 
     private void getType() {
@@ -158,7 +157,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
             });
             chatButton.setOnClickListener(view -> {
                 Bundle bundle = new Bundle();
-                bundle.putInt(CHAT_TYPE_ATTRIBUTE, type);
+                bundle.putInt(CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
                 bundle.putInt(OBJECT_ID_ATTRIBUTE, objectId);
                 Intent intent = new Intent(this, ChatActivity.class).putExtras(bundle);
                 startActivity(intent);
@@ -242,7 +241,6 @@ public class FriendInfoActivity extends SwipeBackActivity {
                     .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
                     .error(R.mipmap.default_icon)
                     .into(imageView);
-            initButton();
         }
     }
 
@@ -260,6 +258,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
                         @Override
                         public void run() {
                             initUser();
+                            initButton();
                         }
                     });
                 }
@@ -276,7 +275,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
 //        }
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
+        item = new UserVoParamItem("性别", userVO.getGender() != null ? UserUtil.GENDER_LIST[userVO.getGender()].getName() : null, true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
         item = new UserVoParamItem("昵称", userVO.getNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
@@ -284,7 +283,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
         itemList.add(item);
         item = new UserVoParamItem("所在地", userVO.getCity(), false, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName(), false, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
+        item = new UserVoParamItem("职业", userVO.getOccupation() != null ? UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName() : null, true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
         itemList.add(item);
         return itemList;
     }
@@ -302,7 +301,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
             item = new UserVoParamItem("频道昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
             itemList.add(item);
         }
-        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
+        item = new UserVoParamItem("性别", userVO.getGender() != null ? UserUtil.GENDER_LIST[userVO.getGender()].getName() : null, true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
         item = new UserVoParamItem("邮箱", userVO.getMail(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
@@ -310,7 +309,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
         itemList.add(item);
         item = new UserVoParamItem("所在地", userVO.getCity(), true, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName(), true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
+        item = new UserVoParamItem("职业", userVO.getOccupation() != null ? UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName() : null, true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
         itemList.add(item);
         return itemList;
     }
@@ -326,7 +325,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
         itemList.add(item);
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
+        item = new UserVoParamItem("性别", userVO.getGender() != null ? UserUtil.GENDER_LIST[userVO.getGender()].getName() : null, true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
 //        item = new UserVoParamItem("群昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
 //        itemList.add(item);
@@ -334,7 +333,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
         itemList.add(item);
         item = new UserVoParamItem("所在地", userVO.getCity(), true, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName(), false, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
+        item = new UserVoParamItem("职业", userVO.getOccupation() != null ? UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName() : null, true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
         itemList.add(item);
         return itemList;
     }
@@ -350,7 +349,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
         itemList.add(item);
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[userVO.getGender()].getName(), false, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
+        item = new UserVoParamItem("性别", userVO.getGender() != null ? UserUtil.GENDER_LIST[userVO.getGender()].getName() : null, true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
         itemList.add(item);
 //        item = new UserVoParamItem("频道昵称", userVO.getOtherNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
 //        itemList.add(item);
@@ -358,7 +357,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
         itemList.add(item);
         item = new UserVoParamItem("所在地", userVO.getCity(), false, ParamItemUtil.ParamType.TYPE_LOCAL.getCode());
         itemList.add(item);
-        item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName(), false, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
+        item = new UserVoParamItem("职业", userVO.getOccupation() != null ? UserUtil.OCCUPATION_LIST[userVO.getOccupation()].getName() : null, true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
         itemList.add(item);
         return itemList;
     }

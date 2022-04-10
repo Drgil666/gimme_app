@@ -116,11 +116,13 @@ public class MyInfoFragment extends Fragment {
                             itemList = new ArrayList<>();
                             UserVoParamItem item = new UserVoParamItem("Gimme账号", user.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
                             itemList.add(item);
-                            item = new UserVoParamItem("性别", UserUtil.GENDER_LIST[user.getGender()].getName(), true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
+                            item = new UserVoParamItem("昵称", user.getNick(), true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
+                            itemList.add(item);
+                            item = new UserVoParamItem("性别", user.getGender() != null ? UserUtil.GENDER_LIST[user.getGender()].getName() : null, true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
                             itemList.add(item);
                             item = new UserVoParamItem("生日", NumberUtil.changeToYearAndMonthAndDay(user.getBirthday()), true, ParamItemUtil.ParamType.TYPE_DATE.getCode());
                             itemList.add(item);
-                            item = new UserVoParamItem("职业", UserUtil.OCCUPATION_LIST[user.getOccupation()].getName(), true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
+                            item = new UserVoParamItem("职业", user.getOccupation() != null ? UserUtil.OCCUPATION_LIST[user.getOccupation()].getName() : null, true, ParamItemUtil.ParamType.TYPE_OCCUPATION.getCode());
                             itemList.add(item);
                             item = new UserVoParamItem("公司", user.getCompany(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
                             itemList.add(item);

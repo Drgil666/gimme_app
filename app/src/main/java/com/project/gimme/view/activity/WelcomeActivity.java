@@ -32,8 +32,12 @@ public class WelcomeActivity extends BaseActivity {
         setContentView(R.layout.activity_welcome);
         initScreenSize();
         SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+        String token = sharedPreferences.getString(GimmeApplication.TOKEN, "");
+        Integer userId = sharedPreferences.getInt(GimmeApplication.USER_ID, 0);
         GimmeApplication.setToken(token);
+        if (userId != 0) {
+            GimmeApplication.setUserId(userId);
+        }
         LogUtil.log(this.toString(), token);
         setWelcomeIcon(0.5, 0.4);
         setWelcomeText(0.6);

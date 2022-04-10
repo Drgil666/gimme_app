@@ -37,11 +37,6 @@ public class User {
     @Property(nameInDb = "city")
     private String city;
     /**
-     * 用户省份id
-     */
-    @Property(nameInDb = "province")
-    private Integer province;
-    /**
      * 用户生日
      */
     @Property(nameInDb = "birthday")
@@ -83,16 +78,14 @@ public class User {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date personalMsgTimestamp;
 
-    @Generated(hash = 964149244)
-    public User(Integer id, String nick, String avatar, String city,
-                Integer province, Date birthday, String mail, Integer gender,
-                Integer occupation, String motto, String company, String password,
-                Date personalMsgTimestamp) {
+    @Generated(hash = 1475870735)
+    public User(Integer id, String nick, String avatar, String city, Date birthday,
+                String mail, Integer gender, Integer occupation, String motto,
+                String company, String password, Date personalMsgTimestamp) {
         this.id = id;
         this.nick = nick;
         this.avatar = avatar;
         this.city = city;
-        this.province = province;
         this.birthday = birthday;
         this.mail = mail;
         this.gender = gender;
@@ -137,14 +130,6 @@ public class User {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public Integer getProvince() {
-        return this.province;
-    }
-
-    public void setProvince(Integer province) {
-        this.province = province;
     }
 
     public Date getBirthday() {

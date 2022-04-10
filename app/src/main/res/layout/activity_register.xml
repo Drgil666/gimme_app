@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gimme_background"
-    tools:context=".view.activity.LoginActivity">
+    tools:context=".view.activity.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,50 +22,40 @@
             android:src="@mipmap/app_icon_round" />
 
         <EditText
-            android:id="@+id/user_account"
+            android:id="@+id/register_password"
             android:layout_width="220dp"
             android:layout_height="45dp"
             android:layout_below="@+id/user_avatar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:background="@drawable/rounded_edit_view_white_10px"
-            android:hint="Gimme账号"
-            android:inputType="number"
+            android:hint="输入密码"
+            android:inputType="textPassword"
             android:maxLength="12"
             android:text=""
             android:textAlignment="center"
             android:textSize="22sp" />
 
         <EditText
-            android:id="@+id/user_password"
+            android:id="@+id/register_repeat_password"
             android:layout_width="220dp"
             android:layout_height="45dp"
-            android:layout_below="@+id/user_account"
+            android:layout_below="@+id/register_password"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/rounded_edit_view_white_10px"
+            android:hint="重复密码"
             android:inputType="textPassword"
-            android:text=""
             android:textAlignment="center"
-            android:textSize="22sp" />
-
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/user_password"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="登 录"
             android:textSize="22sp" />
 
         <Button
             android:id="@+id/register_button"
             android:layout_width="220dp"
             android:layout_height="50dp"
-            android:layout_below="@+id/login_button"
+            android:layout_below="@+id/register_repeat_password"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:text="注 册"
             android:textSize="22sp" />
     </RelativeLayout>

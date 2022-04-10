@@ -1,6 +1,7 @@
 package com.project.gimme.view.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.xuexiang.xui.XUI;
 
@@ -33,6 +35,13 @@ public abstract class SwipeBackActivity extends AppCompatActivity implements BGA
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initSwipeBackFinish();
         super.onCreate(savedInstanceState);
+    }
+
+    private void clearStorage() {
+        SharedPreferences sharedPreferences = getSharedPreferences(GimmeApplication.LOCAL_STORAGE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 
     /**

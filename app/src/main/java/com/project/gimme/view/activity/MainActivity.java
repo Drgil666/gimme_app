@@ -31,6 +31,7 @@ import com.xuexiang.xqrcode.XQRCode;
 import com.xuexiang.xqrcode.util.QRCodeAnalyzeUtils;
 import com.xuexiang.xui.adapter.simple.AdapterItem;
 import com.xuexiang.xui.adapter.simple.XUISimpleAdapter;
+import com.xuexiang.xui.widget.dialog.DialogLoader;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
 import com.xuexiang.xutil.app.IntentUtils;
@@ -85,6 +86,7 @@ public class MainActivity extends BaseActivity {
      * 选择系统图片Request Code
      */
     public static final int REQUEST_IMAGE = 112;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,8 +242,23 @@ public class MainActivity extends BaseActivity {
                     if (!currentFragment.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
                         mMenuPopup.showDown(view);
                     } else {
-                        Intent intent = new Intent(this, SettingActivity.class);
-                        startActivity(intent);
+//                        Intent intent = new Intent(this, SettingActivity.class);
+                        DialogLoader.getInstance().showConfirmDialog(
+                                mContext,
+                                "是否要注销当前账户?",
+                                "取消",
+                                (dialog, which) -> {
+                                    //XToastUtils.toast("不同意打开蓝牙！");
+                                    dialog.dismiss();
+                                },
+                                "确认",
+                                (dialog, which) -> {
+                                    clearStorage();
+                                    ((Activity) mContext).finish();
+                                    dialog.dismiss();
+                                }
+                        );
+                        //startActivity(intent);
                     }
                 }
         );
@@ -323,7 +340,7 @@ public class MainActivity extends BaseActivity {
         } else if (op.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
             Glide.with(this).load(R.mipmap.my_info_select).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(myInfoIcon);
             myInfoText.setTextColor(R.color.gimme_color);
-            Glide.with(this).load(R.mipmap.setting).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(topRightButton);
+            Glide.with(this).load(R.mipmap.exit_login).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(topRightButton);
         }
     }
 

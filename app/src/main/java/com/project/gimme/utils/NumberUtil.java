@@ -28,18 +28,27 @@ public class NumberUtil {
      */
     @SuppressLint("SimpleDateFormat")
     public static String changeToHourAndMinute(Date date) {
+        if (date == null) {
+            return null;
+        }
         SimpleDateFormat format = new SimpleDateFormat(HOUR_AND_MINUTE, Locale.CHINA);
         return format.format(date);
     }
 
     @SuppressLint("SimpleDateFormat")
     public static String changeToYearAndMonthAndDay(Date date) {
+        if (date == null) {
+            return null;
+        }
         SimpleDateFormat format = new SimpleDateFormat(YEAR_AND_MONTH_DAY, Locale.CHINA);
         return format.format(date);
     }
 
     @SuppressLint("SimpleDateFormat")
     public static String changeToStandardTimestamp(Date date) {
+        if (date == null) {
+            return null;
+        }
         SimpleDateFormat format = new SimpleDateFormat(STANDARD_TIMESTAMP, Locale.CHINA);
         return format.format(date);
     }

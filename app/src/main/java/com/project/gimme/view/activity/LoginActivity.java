@@ -2,6 +2,7 @@ package com.project.gimme.view.activity;
 
 import static com.project.gimme.GimmeApplication.LOCAL_STORAGE;
 import static com.project.gimme.GimmeApplication.TOKEN;
+import static com.project.gimme.GimmeApplication.USER_ID;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +45,10 @@ public class LoginActivity extends BaseActivity {
     EditText userAccount;
     @BindView(R.id.login_button)
     Button loginButton;
+    @BindView(R.id.register_button)
+    Button registerButton;
     private Handler handler = new Handler();
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +82,9 @@ public class LoginActivity extends BaseActivity {
         Integer weight = GimmeApplication.getWeight();
         userAccount.clearFocus();
         userAccount.setSelected(false);
+        if (GimmeApplication.getUserId() != null) {
+            userAccount.setText(GimmeApplication.getUserId().toString());
+        }
         userAccount.getLayoutParams().width = (int) Math.floor(weight * size);
     }
 
@@ -94,8 +102,18 @@ public class LoginActivity extends BaseActivity {
                     || StringUtils.isEmpty(userPassword.getText().toString())) {
                 XToastUtils.toast("用户名或密码不可为空!");
             } else {
+                GimmeApplication.setUserId(null);
                 GimmeApplication.setToken(null);
                 login();
+            }
+        });
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GimmeApplication.setUserId(null);
+                GimmeApplication.setToken(null);
+                Intent intent = new Intent(mContext, RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -118,7 +136,7 @@ public class LoginActivity extends BaseActivity {
                             SharedPreferences sharedPreferences = getSharedPreferences(LOCAL_STORAGE, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString(TOKEN, userResponseData.getData());
-                            editor.putInt("userId", Integer.parseInt(userAccount.getText().toString()));
+                            editor.putInt(USER_ID, Integer.parseInt(userAccount.getText().toString()));
                             editor.apply();
                             File file = new File(getApplicationContext().getFilesDir().getAbsolutePath() + "/" + GimmeApplication.getUserId() + "/");
                             if (!file.exists()) {
