@@ -167,7 +167,7 @@ public class ChatMsgVoAdapter extends BaseAdapter {
                         bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_CHANNEL_SELF.getCode());
                     }
                     bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, chatMsgVO.getOwnerId());
-                    Intent intent = new Intent(mContext, FriendListActivity.class).putExtras(bundle);
+                    Intent intent = new Intent(mContext, FriendInfoActivity.class).putExtras(bundle);
                     mContext.startActivity(intent);
                 }
             });

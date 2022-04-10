@@ -55,7 +55,7 @@ public class MessageFragment extends Fragment {
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            System.out.println("接收消息!" + System.currentTimeMillis());
+            //System.out.println("接收消息!" + System.currentTimeMillis());
             getMessageVOList();
         }
     };
@@ -100,12 +100,12 @@ public class MessageFragment extends Fragment {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("接收消息!" + System.currentTimeMillis());
+                //System.out.println("接收消息!" + System.currentTimeMillis());
                 getMessageVOList();
             }
         };
         timer = new Timer();
-        timer.schedule(timerTask, 0, 1000);
+        timer.schedule(timerTask, 0, 1500);
     }
 
     private Integer getNewMessageCount(List<MessageVO> messageVOList) {
@@ -124,12 +124,12 @@ public class MessageFragment extends Fragment {
             timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    System.out.println("接收消息!" + System.currentTimeMillis());
+//                    System.out.println("接收消息!" + System.currentTimeMillis());
                     getMessageVOList();
                 }
             };
             timer = new Timer();
-            timer.schedule(timerTask, 0, 1000);
+            timer.schedule(timerTask, 0, 1500);
         } else {
             timer.cancel();
             timer = null;
@@ -141,15 +141,23 @@ public class MessageFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        timer.cancel();
-        timer = null;
-        timerTask.cancel();
-        timerTask = null;
         unbinder.unbind();
     }
 
     private Boolean isEqual(List<MessageVO> messageVOList1, List<MessageVO> messageVOList2) {
-        return JsonUtil.toJson(messageVOList1).equals(JsonUtil.toJson(messageVOList2));
+        if (messageVOList1.size() != messageVOList2.size()) {
+            System.out.println("长度不同!");
+            return false;
+        }
+        for (int i = 0; i < messageVOList1.size(); i++) {
+            if (!JsonUtil.toJson(messageVOList1.get(i)).equals(JsonUtil.toJson(messageVOList2.get(i)))) {
+                System.out.println("第" + i + "个长度不同!");
+                System.out.println(JsonUtil.toJson(messageVOList1.get(i)));
+                System.out.println(JsonUtil.toJson(messageVOList2.get(i)));
+                return false;
+            }
+        }
+        return true;
     }
 
     private void getMessageVOList() {
@@ -163,9 +171,11 @@ public class MessageFragment extends Fragment {
                         @Override
                         public void run() {
                             if (!isEqual(responseData.getData(), messageVOList)) {
+                                System.out.println("MessageVO数据更新!");
                                 messageVOList = responseData.getData();
                                 messageVoAdapter = new MessageVoAdapter(getContext(), messageVOList);
                                 listView.setAdapter(messageVoAdapter);
+                                messageVoAdapter.notifyDataSetChanged();
                             }
                         }
                     });

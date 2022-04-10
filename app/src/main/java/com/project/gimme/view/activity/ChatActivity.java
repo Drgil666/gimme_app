@@ -124,7 +124,7 @@ public class ChatActivity extends SwipeBackActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("刷新消息!" + System.currentTimeMillis());
+                //System.out.println("刷新消息!" + System.currentTimeMillis());
                 getChatMessageList(type, objectId);
             }
         }, 0, 1000);
@@ -173,6 +173,8 @@ public class ChatActivity extends SwipeBackActivity {
                         @Override
                         public void run() {
                             if (!isEqual(responseData.getData(), chatMsgVOList)) {
+                                System.out.println("ChatMsgVO数据更新!");
+                                refresh();
                                 chatMsgVOList = responseData.getData();
                                 chatMsgVoAdapter = new ChatMsgVoAdapter(mContext, chatMsgVOList, type);
                                 chatListView.setAdapter(chatMsgVoAdapter);

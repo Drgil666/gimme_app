@@ -148,7 +148,7 @@ public class FriendInfoActivity extends SwipeBackActivity {
                     Friend friend = new Friend();
                     friend.setFriendId(objectId);
                     friend.setMsgTimestamp(new Date());
-                    friend.setFriendNote(null);
+                    friend.setFriendNote(userVO.getNick());
                     createFriend(friend);
                     addButton.setVisibility(View.GONE);
                     XToastUtils.toast("好友添加成功!");
