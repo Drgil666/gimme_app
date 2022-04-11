@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.StrictMode;
 
 import com.project.gimme.controller.TestController;
+import com.tandong.switchlayout.SwitchLayout;
 import com.xuexiang.xui.XUI;
 
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +25,8 @@ public class GimmeApplication extends Application {
     private static Integer weight;
     private static Integer userId = null;
     public static final Integer TYPE_ERROR = -1;
-    public static final String REMOTE_URL = "http://10.21.234.24:8080";
+    //    public static final String REMOTE_URL = "http://10.21.234.24:8080";
+    public static final String REMOTE_URL = "https://zjgsucheckin.top:8443";
     public static final String APP_KEY = "pvxdm17jpdthr";
     public static final String LOCAL_STORAGE = "gimme_token";
     public static final String TOKEN = "token";
@@ -93,9 +95,12 @@ public class GimmeApplication extends Application {
 //        RongIMClient.init(getApplicationContext(), APP_KEY);
         //滑动工具初始化
         BGASwipeBackHelper.init(this, null);
-        //字体初始化
         //TODO:所有的转场动画需要重新完成！
+        //TODO:上传头像功能需要完成！
+        //字体初始化
         XUI.initFontStyle("ping_fang_sc.ttf");
+        //设置动画效果时间
+        SwitchLayout.animDuration = 300;
         TestController.test();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();

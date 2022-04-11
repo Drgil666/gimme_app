@@ -88,6 +88,7 @@
             <!--            左侧文件界面-->
             <RelativeLayout
                 android:id="@+id/left_file_layout"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -95,12 +96,11 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="horizontal"
-                android:padding="10dp"
-                android:visibility="gone">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/left_file_name"
-                    android:layout_width="120sp"
+                    android:layout_width="160sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:ellipsize="end"
@@ -126,7 +126,7 @@
                     android:layout_width="50sp"
                     android:layout_height="50sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="80sp"
+                    android:layout_marginStart="30sp"
                     android:layout_toEndOf="@+id/left_file_name"
                     android:clickable="true"
                     android:focusable="true"
@@ -217,7 +217,7 @@
 
                 <TextView
                     android:id="@+id/right_file_name"
-                    android:layout_width="120sp"
+                    android:layout_width="150sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:ellipsize="end"
@@ -243,7 +243,7 @@
                     android:layout_width="50sp"
                     android:layout_height="50sp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="80sp"
+                    android:layout_marginStart="30sp"
                     android:layout_toEndOf="@+id/right_file_name"
                     android:clickable="true"
                     android:focusable="true"

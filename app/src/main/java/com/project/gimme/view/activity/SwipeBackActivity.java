@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.tandong.switchlayout.SwichLayoutInterFace;
 import com.xuexiang.xui.XUI;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
@@ -20,7 +21,7 @@ import io.github.rockerhieu.emojiconize.Emojiconize;
 /**
  * @author DrGilbert
  */
-public abstract class SwipeBackActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate {
+public abstract class SwipeBackActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate, SwichLayoutInterFace {
     protected BGASwipeBackHelper mSwipeBackHelper;
     protected Toolbar mToolbar;
 
@@ -76,6 +77,11 @@ public abstract class SwipeBackActivity extends AppCompatActivity implements BGA
         super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
 
     /**
      * 是否支持滑动返回。这里在父类中默认返回 true 来支持滑动返回，如果某个界面不想支持滑动返回则重写该方法返回 false 即可
@@ -118,5 +124,15 @@ public abstract class SwipeBackActivity extends AppCompatActivity implements BGA
             return;
         }
         mSwipeBackHelper.backward();
+    }
+
+    @Override
+    public void setEnterSwichLayout() {
+
+    }
+
+    @Override
+    public void setExitSwichLayout() {
+
     }
 }
