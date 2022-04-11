@@ -97,6 +97,7 @@ public class GimmeApplication extends Application {
         BGASwipeBackHelper.init(this, null);
         //TODO:所有的转场动画需要重新完成！
         //TODO:上传头像功能需要完成！
+        //TODO:二维码扫描功能需要完成!
         //字体初始化
         XUI.initFontStyle("ping_fang_sc.ttf");
         //设置动画效果时间

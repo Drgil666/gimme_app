@@ -92,6 +92,7 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
                         .setIsCenter(true)
                         .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
                             dialog.dismiss();
+                            authorize();
                             FileUtil.saveImageToGallery(mContext, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
                             XToastUtils.toast("保存成功!");
                         })
@@ -153,7 +154,8 @@ public class ChatFileInfoActivity extends SwipeBackActivity {
             } else {
                 //申请权限，字符串数组内是一个或多个要申请的权限，1是申请权限结果的返回参数，在onRequestPermissionsResult可以得知申请结果
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,}, 1);
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         }
     }
