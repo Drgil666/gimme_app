@@ -32,6 +32,7 @@ import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.FileUtil;
+import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.MsgTypeUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ChannelNoticeAdapter;
@@ -43,7 +44,10 @@ import com.xuexiang.xutil.app.IntentUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +59,7 @@ import lombok.SneakyThrows;
 @SuppressLint("NonConstantResourceId")
 public class ChannelNoticeActivity extends SwipeBackActivity {
     private Integer channelNoticeId;
-    private List<ChatMsgVO> chatMsgVOList;
+    private List<ChatMsgVO> chatMsgVOList = new ArrayList<>();
     @BindView(R.id.channel_notice_top_left_button)
     ImageView topLeftButton;
     Handler handler = new Handler();
@@ -79,6 +83,7 @@ public class ChannelNoticeActivity extends SwipeBackActivity {
     private static final Integer EMOJI_GRIDVIEW = 0;
     private static final Integer EXTRA_OPTION_GRIDVIEW = 1;
     public static Integer chatMsgId = null;
+    private Timer timer = new Timer();
 
     public static void setChatMsgId(Integer id) {
         chatMsgId = id;
@@ -95,6 +100,19 @@ public class ChannelNoticeActivity extends SwipeBackActivity {
         initImageView();
         initChatBottom();
         initChatBottomBelow();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //System.out.println("刷新消息!" + System.currentTimeMillis());
+                getChatMsgVoList();
+            }
+        }, 0, 1000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
     }
 
     private void initImageView() {
@@ -175,18 +193,34 @@ public class ChannelNoticeActivity extends SwipeBackActivity {
                 ResponseData<List<ChatMsgVO>> responseData =
                         ChannelNoticeController.getChannelNoticeInfo(channelNoticeId);
                 if (responseData != null && responseData.isSuccess()) {
-                    chatMsgVOList = responseData.getData();
+
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            channelNoticeAdapter = new ChannelNoticeAdapter(mContext, chatMsgVOList, ChatMsgUtil.Character.TYPE_CHANNEL_NOTICE.getCode());
-                            channelNoticeListView.setAdapter(channelNoticeAdapter);
-                            channelNoticeListView.setSelection(chatMsgVOList.size() - 1);
+                            if (!isEqual(responseData.getData(), chatMsgVOList)) {
+                                chatMsgVOList = responseData.getData();
+                                channelNoticeAdapter = new ChannelNoticeAdapter(mContext, chatMsgVOList, ChatMsgUtil.Character.TYPE_CHANNEL_NOTICE.getCode());
+                                channelNoticeListView.setAdapter(channelNoticeAdapter);
+                                channelNoticeListView.setSelection(chatMsgVOList.size() - 1);
+                                channelNoticeAdapter.notifyDataSetChanged();
+                            }
                         }
                     });
                 }
             }
         }).start();
+    }
+
+    private Boolean isEqual(List<ChatMsgVO> chatMsgVOList1, List<ChatMsgVO> chatMsgVOList2) {
+        if (chatMsgVOList1.size() != chatMsgVOList2.size()) {
+            return false;
+        }
+        for (int i = 0; i < chatMsgVOList1.size(); i++) {
+            if (!JsonUtil.toJson(chatMsgVOList1.get(i)).equals(JsonUtil.toJson(chatMsgVOList2.get(i)))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void initChatBottom() {
@@ -330,6 +364,7 @@ public class ChannelNoticeActivity extends SwipeBackActivity {
                         @Override
                         public void run() {
                             chatMsgVOList.add(chatMsgVO);
+                            channelNoticeListView.setSelection(chatMsgVOList.size() - 1);
                             getChatMsgVoList();
                         }
                     });
