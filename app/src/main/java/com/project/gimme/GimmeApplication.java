@@ -25,8 +25,8 @@ public class GimmeApplication extends Application {
     private static Integer weight;
     private static Integer userId = null;
     public static final Integer TYPE_ERROR = -1;
-    public static final String REMOTE_URL = "http://10.21.234.24:8080";
-    //    public static final String REMOTE_URL = "https://zjgsucheckin.top:8443";
+    //    public static final String REMOTE_URL = "http://10.21.234.24:8080";
+    public static final String REMOTE_URL = "https://zjgsucheckin.top:8443";
     public static final String APP_KEY = "pvxdm17jpdthr";
     public static final String LOCAL_STORAGE = "gimme_token";
     public static final String TOKEN = "token";
@@ -96,7 +96,6 @@ public class GimmeApplication extends Application {
         //滑动工具初始化
         BGASwipeBackHelper.init(this, null);
         //TODO:所有的转场动画需要重新完成！
-        //TODO:上传头像功能需要完成！
         //TODO:二维码扫描功能需要完成!
         //字体初始化
         XUI.initFontStyle("ping_fang_sc.ttf");
