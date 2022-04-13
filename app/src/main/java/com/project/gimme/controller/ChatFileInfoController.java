@@ -80,4 +80,23 @@ public class ChatFileInfoController {
         }
         return null;
     }
+
+    public static void uploadAvatar(File file, String chatType, Integer objectId) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), file))
+                .addFormDataPart("chatType", chatType)
+                .addFormDataPart("objectId", objectId.toString())
+                .build();
+        Request request = new Request.Builder()
+                .header(TOKEN, GimmeApplication.getToken())
+                .url(REMOTE_URL + "/api/chat/file/upload/avatar")
+                .post(requestBody)
+                .build();
+        Response response = client.newCall(request).execute();
+        if (response.isSuccessful()) {
+        }
+    }
 }

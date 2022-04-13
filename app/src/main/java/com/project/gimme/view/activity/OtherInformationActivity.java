@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -20,10 +22,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.ChannelUserController;
+import com.project.gimme.controller.ChatFileInfoController;
 import com.project.gimme.controller.GroupController;
 import com.project.gimme.controller.GroupUserController;
 import com.project.gimme.pojo.ChannelUser;
@@ -35,12 +40,15 @@ import com.project.gimme.pojo.vo.UserVO;
 import com.project.gimme.utils.BundleUtil;
 import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.FileUtil;
+import com.project.gimme.utils.MsgTypeUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.OtherInfoAdapter;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
+import com.xuexiang.xutil.app.IntentUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,6 +121,46 @@ public class OtherInformationActivity extends SwipeBackActivity {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MsgTypeUtil.MsgType.TYPE_FILE.getCode()) {
+            if (data != null) {
+                Uri uri = data.getData();
+                if (FileUtil.getRealPathFromUri(this, uri) != null) {
+                    //从uri得到绝对路径，并获取到file文件
+                    File file = new File(FileUtil.getRealPathFromUri(this, uri));
+                    uploadFile(file, ChatMsgUtil.CHARACTER_LIST[type].getName(), objectId);
+                }
+            }
+        }
+    }
+
+    private void uploadFile(File file, String type, Integer objectId) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ChatFileInfoController.uploadAvatar(file, type, objectId);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageView.callOnClick();
+                        Glide.with(mContext)
+                                .load(file)
+                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                                .into(topInfoIcon);
+                        Glide.with(mContext)
+                                .load(file)
+                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                                .into(imageView);
+                        XToastUtils.toast("头像上传成功!");
+                    }
+                });
+            }
+        }).start();
+    }
+
     private void initImageView() {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,12 +174,22 @@ public class OtherInformationActivity extends SwipeBackActivity {
             public boolean onLongClick(View v) {
                 new BottomSheet.BottomListSheetBuilder(mContext)
                         .addItem("保存到相册")
+                        .addItem("上传头像")
                         .setIsCenter(true)
                         .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
                             dialog.dismiss();
                             authorize();
-                            FileUtil.saveImageToGallery(mContext, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
-                            XToastUtils.toast("保存成功!");
+                            switch (position) {
+                                case 0: {
+                                    FileUtil.saveImageToGallery(mContext, ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                                    XToastUtils.toast("保存成功!");
+                                    break;
+                                }
+                                case 1: {
+                                    Intent intent = IntentUtils.getDocumentPickerIntent(IntentUtils.DocumentType.IMAGE);
+                                    startActivityForResult(intent, MsgTypeUtil.MsgType.TYPE_FILE.getCode());
+                                }
+                            }
                         })
                         .build()
                         .show();
@@ -188,6 +246,16 @@ public class OtherInformationActivity extends SwipeBackActivity {
         memberLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DialogLoader.getInstance()
+                        .showTipDialog(mContext,
+                                "提示",
+                                "请先加入群/频道!",
+                                "确定");
+            }
+        });
+        memberGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DialogLoader.getInstance()
                         .showTipDialog(mContext,
                                 "提示",

@@ -609,6 +609,7 @@ public class OtherInfoActivity extends SwipeBackActivity {
     protected void onStart() {
         super.onStart();
         getType();
+        initTopBar();
         initMember();
     }
 }

@@ -3,8 +3,10 @@ package com.project.gimme.view.fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -25,19 +27,24 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.controller.ChatFileInfoController;
 import com.project.gimme.controller.UserController;
 import com.project.gimme.pojo.User;
 import com.project.gimme.pojo.vo.MyInfoListVO;
 import com.project.gimme.pojo.vo.ResponseData;
 import com.project.gimme.pojo.vo.UserVoParamItem;
+import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.FileUtil;
+import com.project.gimme.utils.MsgTypeUtil;
 import com.project.gimme.utils.NumberUtil;
 import com.project.gimme.utils.ParamItemUtil;
 import com.project.gimme.utils.UserUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.MyInformationItemAdapter;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
+import com.xuexiang.xutil.app.IntentUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +75,7 @@ public class MyInfoFragment extends Fragment {
     private Unbinder unbinder;
     private User user;
     Handler handler = new Handler();
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -175,18 +183,68 @@ public class MyInfoFragment extends Fragment {
             public boolean onLongClick(View v) {
                 new BottomSheet.BottomListSheetBuilder(getContext())
                         .addItem("保存到相册")
+                        .addItem("上传头像")
                         .setIsCenter(true)
                         .setOnSheetItemClickListener((dialog, itemView, position, tag) -> {
                             dialog.dismiss();
                             authorize();
-                            FileUtil.saveImageToGallery(getContext(), ((BitmapDrawable) imageView.getDrawable()).getBitmap());
-                            XToastUtils.toast("保存成功!");
+                            switch (position) {
+                                case 0: {
+                                    FileUtil.saveImageToGallery(getContext(), ((BitmapDrawable) imageView.getDrawable()).getBitmap());
+                                    XToastUtils.toast("保存成功!");
+                                    break;
+                                }
+                                case 1: {
+                                    Intent intent = IntentUtils.getDocumentPickerIntent(IntentUtils.DocumentType.IMAGE);
+                                    startActivityForResult(intent, MsgTypeUtil.MsgType.TYPE_FILE.getCode());
+                                }
+                            }
                         })
                         .build()
                         .show();
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MsgTypeUtil.MsgType.TYPE_FILE.getCode()) {
+            if (data != null) {
+                Uri uri = data.getData();
+                if (FileUtil.getRealPathFromUri(getContext(), uri) != null) {
+                    //从uri得到绝对路径，并获取到file文件
+                    File file = new File(FileUtil.getRealPathFromUri(getContext(), uri));
+                    uploadFile(file, ChatMsgUtil.Character.TYPE_FRIEND.getName());
+                }
+            }
+        }
+    }
+
+    private void uploadFile(File file, String type) {
+        new Thread(new Runnable() {
+            @SneakyThrows
+            @Override
+            public void run() {
+                ChatFileInfoController.uploadAvatar(file, type, 0);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        imageView.callOnClick();
+                        Glide.with(getContext())
+                                .load(file)
+                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                                .into(userInfoIcon);
+                        Glide.with(getContext())
+                                .load(file)
+                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                                .into(imageView);
+                        XToastUtils.toast("头像上传成功!");
+                    }
+                });
+            }
+        }).start();
     }
 
     private void authorize() {
