@@ -34,10 +34,13 @@ import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.ContactsUtil;
 import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.view.activity.ChatActivity;
+import com.project.gimme.view.activity.MainActivity;
 import com.project.gimme.view.activity.SearchActivity;
 import com.project.gimme.view.activity.WelcomeActivity;
 import com.project.gimme.view.adpter.MessageVoAdapter;
 import com.project.gimme.view.listview.PullRefreshListView;
+import com.xuexiang.xui.widget.textview.badge.Badge;
+import com.xuexiang.xui.widget.textview.badge.BadgeView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -183,6 +186,7 @@ public class MessageFragment extends Fragment {
                                 messageVOList = responseData.getData();
                                 if (messageVOList != null && messageVOList.size() != 0) {
                                     createNotice();
+                                    createBadge();
                                 }
                                 messageVoAdapter = new MessageVoAdapter(getContext(), messageVOList);
                                 listView.setAdapter(messageVoAdapter);
@@ -195,12 +199,32 @@ public class MessageFragment extends Fragment {
         }).start();
     }
 
+    private void createBadge() {
+        Integer total = 0;
+        for (MessageVO messageVO : messageVOList) {
+            if (messageVO.getNewMessageCount() != 0) {
+                total += messageVO.getNewMessageCount();
+            }
+        }
+        View layoutCount = (((MainActivity) getContext()).findViewById(R.id.main_message_layout_new_message_count_background));
+        if (total != 0) {
+            layoutCount.setVisibility(View.VISIBLE);
+            Badge badge = new BadgeView(getContext())
+                    .bindTarget(layoutCount)
+                    .setBadgeTextSize(18, true)
+                    .setBadgeNumber(total);
+        } else {
+            layoutCount.setVisibility(View.GONE);
+        }
+    }
+
     private void createNotice() {
         for (MessageVO messageVO : messageVOList) {
             if (messageVO.getNewMessageCount() != 0) {
                 createNotification(messageVO);
             }
         }
+
     }
 
     public void createNotification(MessageVO messageVO) {

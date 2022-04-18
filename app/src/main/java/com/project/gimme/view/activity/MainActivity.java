@@ -80,8 +80,6 @@ public class MainActivity extends BaseActivity {
     TextView myInfoText;
     @BindView(R.id.main_message_layout_new_message_count_background)
     RelativeLayout newMessageCountBackGround;
-    @BindView(R.id.main_message_layout_new_message_count)
-    TextView newMessageCount;
     private XUISimplePopup mMenuPopup;
     private final Context mContext = this;
     private final Activity activity = this;
