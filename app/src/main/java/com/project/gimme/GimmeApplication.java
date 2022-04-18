@@ -100,7 +100,6 @@ public class GimmeApplication extends Application {
 //        RongIMClient.init(getApplicationContext(), APP_KEY);
         //滑动工具初始化
         BGASwipeBackHelper.init(this, null);
-        //TODO:二维码扫描功能需要完成!
         //字体初始化
         XUI.initFontStyle("ping_fang_sc.ttf");
         //设置动画效果时间
