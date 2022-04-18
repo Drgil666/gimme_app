@@ -111,7 +111,5 @@ public class GimmeApplication extends Application {
             StrictMode.setVmPolicy(builder.build());
         }
     }
-
-
 }
 

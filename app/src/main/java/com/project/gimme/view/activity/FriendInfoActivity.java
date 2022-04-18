@@ -294,10 +294,10 @@ public class FriendInfoActivity extends SwipeBackActivity {
     private List<UserVoParamItem> getFriendItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item;
-//        if(isJoined) {
-//            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
-//            itemList.add(item);
-//        }
+        if (isJoined) {
+            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+            itemList.add(item);
+        }
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("性别", userVO.getGender() != null ? UserUtil.GENDER_LIST[userVO.getGender()].getName() : null, true, ParamItemUtil.ParamType.TYPE_GENDER.getCode());
@@ -342,10 +342,10 @@ public class FriendInfoActivity extends SwipeBackActivity {
     private List<UserVoParamItem> getGroupItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item;
-//        if (isJoined) {
-//            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
-//            itemList.add(item);
-//        }
+        if (isJoined) {
+            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+            itemList.add(item);
+        }
         item = new UserVoParamItem("昵称", userVO.getNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
@@ -366,10 +366,10 @@ public class FriendInfoActivity extends SwipeBackActivity {
     private List<UserVoParamItem> getChannelItemList() {
         List<UserVoParamItem> itemList = new ArrayList<>();
         UserVoParamItem item;
-//        if (isJoined) {
-//            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
-//            itemList.add(item);
-//        }
+        if (isJoined) {
+            item = new UserVoParamItem("备注", userVO.getNote(), true, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
+            itemList.add(item);
+        }
         item = new UserVoParamItem("昵称", userVO.getNick(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());
         itemList.add(item);
         item = new UserVoParamItem("Gimme号", userVO.getId().toString(), false, ParamItemUtil.ParamType.TYPE_TEXT.getCode());

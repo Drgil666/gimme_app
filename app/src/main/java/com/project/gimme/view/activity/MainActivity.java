@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,10 +19,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
+import com.project.gimme.pojo.vo.QrVO;
 import com.project.gimme.utils.BundleUtil;
+import com.project.gimme.utils.ChatMsgUtil;
 import com.project.gimme.utils.ContactsUtil;
+import com.project.gimme.utils.InfoTypeUtil;
+import com.project.gimme.utils.JsonUtil;
 import com.project.gimme.utils.SessionUtil;
 import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.fragment.FriendFragment;
@@ -36,7 +42,6 @@ import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.popupwindow.popup.XUISimplePopup;
 import com.xuexiang.xutil.app.IntentUtils;
 import com.xuexiang.xutil.app.PathUtils;
-import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,10 +60,12 @@ public class MainActivity extends BaseActivity {
     private MessageFragment messageFragment;
     private FriendFragment friendFragment;
     private MyInfoFragment myInfoFragment;
-    @BindView(R.id.main_top_text)
+    @BindView(R.id.main_top_left_text)
     TextView topText;
     @BindView(R.id.main_top_right_button)
     ImageView topRightButton;
+    @BindView(R.id.main_top_left_button)
+    ImageView topLeftButton;
     @BindView(R.id.main_message_layout_icon)
     ImageView messageIcon;
     @BindView(R.id.main_message_layout_text)
@@ -100,7 +107,6 @@ public class MainActivity extends BaseActivity {
         fragmentManager.getFragments().clear();
         fragmentTransaction.add(R.id.main_body_fragment, messageFragment).commit();
         initTopBar(0.1);
-        initTopText();
         initPopUp();
         initBottomBar(0.1);
         setTopRightButton(0.0);
@@ -140,7 +146,7 @@ public class MainActivity extends BaseActivity {
                                                .itemsCallbackSingleChoice(
                                                        0,
                                                        (dialog, itemView, which, text) -> {
-                                                           XToastUtils.toast(which + ": " + text);
+//                                                           XToastUtils.toast(which + ": " + text);
                                                            switch (which) {
                                                                case 0: {
                                                                    XQRCode.startScan(activity, REQUEST_CODE);
@@ -160,7 +166,6 @@ public class MainActivity extends BaseActivity {
                                                .show();
                                    }
                                    default: {
-                                       XToastUtils.toast("类型错误!");
                                        break;
                                    }
                                }
@@ -214,12 +219,35 @@ public class MainActivity extends BaseActivity {
         XQRCode.analyzeQRCode(PathUtils.getFilePathByUri(mContext, uri), new QRCodeAnalyzeUtils.AnalyzeCallback() {
             @Override
             public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-                ToastUtils.toast("解析结果:" + result, Toast.LENGTH_LONG);
+                QrVO qrVO = JsonUtil.fromJson(result, new TypeToken<QrVO>() {
+                }.getType());
+                Bundle bundle = new Bundle();
+                if (qrVO.getChatType().equals(ChatMsgUtil.Character.TYPE_FRIEND.getName())) {
+                    bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, InfoTypeUtil.Character.TYPE_FRIEND.getCode());
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, qrVO.getObjectId());
+                    bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, false);
+                    bundle.putString(BundleUtil.OTHER_ID_ATTRIBUTE, "");
+                    Intent intent = new Intent(mContext, FriendInfoActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                } else if (qrVO.getChatType().equals(ChatMsgUtil.Character.TYPE_GROUP.getName())) {
+                    bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_GROUP.getCode());
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, qrVO.getObjectId());
+                    bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, false);
+                    Intent intent = new Intent(mContext, OtherInformationActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                } else if (qrVO.getChatType().equals(ChatMsgUtil.Character.TYPE_CHANNEL.getName())) {
+                    bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_CHANNEL.getCode());
+                    bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, qrVO.getObjectId());
+                    bundle.putBoolean(BundleUtil.IS_JOINED_ATTRIBUTE, false);
+                    Intent intent = new Intent(mContext, OtherInformationActivity.class).putExtras(bundle);
+                    startActivity(intent);
+                }
+//                XToastUtils.toast("解析结果:" + result);
             }
 
             @Override
             public void onAnalyzeFailed() {
-                ToastUtils.toast("解析二维码失败", Toast.LENGTH_LONG);
+                XToastUtils.toast("解析二维码失败", Toast.LENGTH_LONG);
             }
         });
     }
@@ -227,6 +255,21 @@ public class MainActivity extends BaseActivity {
     private void initTopBar(double size) {
         RelativeLayout relativeLayout = findViewById(R.id.main_top_bar);
         relativeLayout.getLayoutParams().height = (int) Math.floor(height * size);
+        initTopText();
+        initTopLeftButton();
+    }
+
+    private void initTopLeftButton() {
+        topLeftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(BundleUtil.CHAT_TYPE_ATTRIBUTE, ChatMsgUtil.Character.TYPE_FRIEND.getCode());
+                bundle.putInt(BundleUtil.OBJECT_ID_ATTRIBUTE, GimmeApplication.getUserId());
+                Intent intent = new Intent(mContext, QrActivity.class).putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initTopText() {
@@ -332,14 +375,20 @@ public class MainActivity extends BaseActivity {
         if (op.equals(SessionUtil.Character.TYPE_MESSAGE.getCode())) {
             Glide.with(this).load(R.mipmap.message_select).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(messageIcon);
             messageText.setTextColor(R.color.gimme_color);
+            topText.setVisibility(View.VISIBLE);
+            topLeftButton.setVisibility(View.GONE);
             Glide.with(this).load(R.mipmap.add_plus).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(topRightButton);
         } else if (op.equals(SessionUtil.Character.TYPE_FRIEND.getCode())) {
             Glide.with(this).load(R.mipmap.contacts_select).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(friendIcon);
             friendText.setTextColor(R.color.gimme_color);
+            topText.setVisibility(View.VISIBLE);
+            topLeftButton.setVisibility(View.GONE);
             Glide.with(this).load(R.mipmap.add_plus).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(topRightButton);
         } else if (op.equals(SessionUtil.Character.TYPE_MY_INFO.getCode())) {
             Glide.with(this).load(R.mipmap.my_info_select).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(myInfoIcon);
             myInfoText.setTextColor(R.color.gimme_color);
+            topText.setVisibility(View.GONE);
+            topLeftButton.setVisibility(View.VISIBLE);
             Glide.with(this).load(R.mipmap.exit_login).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(topRightButton);
         }
     }

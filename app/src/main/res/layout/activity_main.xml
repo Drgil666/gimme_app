@@ -19,7 +19,7 @@
             android:background="@color/gimme_background_lighter">
 
             <TextView
-                android:id="@+id/main_top_text"
+                android:id="@+id/main_top_left_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -29,6 +29,15 @@
                 android:textColor="@color/black"
                 android:textSize="35sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/main_top_left_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="20sp"
+                android:visibility="gone"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/qr_code" />
 
             <ImageView
                 android:id="@+id/main_top_right_button"

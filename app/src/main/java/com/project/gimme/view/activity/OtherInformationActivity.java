@@ -102,7 +102,6 @@ public class OtherInformationActivity extends SwipeBackActivity {
         initInfoLayout();
         initImageView();
         initMemberLayout();
-        initBottomLayout();
     }
 
     private void initTopBar() {
@@ -380,6 +379,7 @@ public class OtherInformationActivity extends SwipeBackActivity {
                         public void run() {
                             memberRightText.setText("查看" + groupVO.getTotalCount() + "名群成员");
                             topInfoNick.setText(groupVO.getNick());
+                            isJoin = groupVO.getMyNote() != null;
                             introductionDescription.setText(groupVO.getDescription());
                             Glide.with(mContext)
                                     .load(GimmeApplication.getImageUrl(groupVO.getAvatar()))
@@ -389,6 +389,7 @@ public class OtherInformationActivity extends SwipeBackActivity {
                                     .load(GimmeApplication.getImageUrl(groupVO.getAvatar()))
                                     .error(R.mipmap.default_icon)
                                     .into(topInfoIcon);
+                            initBottomLayout();
                         }
                     });
                 }
@@ -410,6 +411,7 @@ public class OtherInformationActivity extends SwipeBackActivity {
                         public void run() {
                             memberRightText.setText("查看" + channelVO.getTotalCount() + "名频道成员");
                             topInfoNick.setText(channelVO.getNick());
+                            isJoin = groupVO.getMyNote() != null;
                             introductionDescription.setText(channelVO.getDescription());
                             Glide.with(mContext)
                                     .load(GimmeApplication.getImageUrl(channelVO.getAvatar()))
@@ -419,6 +421,7 @@ public class OtherInformationActivity extends SwipeBackActivity {
                                     .load(GimmeApplication.getImageUrl(channelVO.getAvatar()))
                                     .error(R.mipmap.default_icon)
                                     .into(topInfoIcon);
+                            initBottomLayout();
                         }
                     });
                 }
