@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
-import com.tandong.switchlayout.SwichLayoutInterFace;
 import com.xuexiang.xui.XUI;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
@@ -21,7 +20,7 @@ import io.github.rockerhieu.emojiconize.Emojiconize;
 /**
  * @author DrGilbert
  */
-public abstract class SwipeBackActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate, SwichLayoutInterFace {
+public abstract class SwipeBackActivity extends AppCompatActivity implements BGASwipeBackHelper.Delegate {
     protected BGASwipeBackHelper mSwipeBackHelper;
     protected Toolbar mToolbar;
 
@@ -124,15 +123,5 @@ public abstract class SwipeBackActivity extends AppCompatActivity implements BGA
             return;
         }
         mSwipeBackHelper.backward();
-    }
-
-    @Override
-    public void setEnterSwichLayout() {
-
-    }
-
-    @Override
-    public void setExitSwichLayout() {
-
     }
 }

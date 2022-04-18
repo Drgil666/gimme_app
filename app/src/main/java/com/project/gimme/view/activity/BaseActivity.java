@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.gimme.GimmeApplication;
-import com.tandong.switchlayout.SwichLayoutInterFace;
 import com.xuexiang.xui.XUI;
 
 import io.github.inflationx.viewpump.ViewPumpContextWrapper;
@@ -18,7 +17,7 @@ import io.github.rockerhieu.emojiconize.Emojiconize;
  * @author DrGilbert
  * @date 2022/1/8 16:48
  */
-public class BaseActivity extends AppCompatActivity implements SwichLayoutInterFace {
+public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +43,5 @@ public class BaseActivity extends AppCompatActivity implements SwichLayoutInterF
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    @Override
-    public void setEnterSwichLayout() {
-
-    }
-
-    @Override
-    public void setExitSwichLayout() {
-
     }
 }

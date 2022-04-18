@@ -7,6 +7,7 @@ import static com.project.gimme.utils.BundleUtil.OBJECT_NICK_ATTRIBUTE;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -59,7 +60,6 @@ import com.project.gimme.utils.XToastUtils;
 import com.project.gimme.view.adpter.ChatMsgVoAdapter;
 import com.project.gimme.view.adpter.EmojiAdapter;
 import com.project.gimme.view.adpter.ExtraOptionAdapter;
-import com.tandong.switchlayout.SwitchLayout;
 import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
 import com.xuexiang.xutil.app.IntentUtils;
@@ -126,7 +126,6 @@ public class ChatActivity extends SwipeBackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
-        setEnterSwichLayout();
         getType();
         timer.schedule(new TimerTask() {
             @Override
@@ -151,6 +150,8 @@ public class ChatActivity extends SwipeBackActivity {
         objectId = bundle.getInt(OBJECT_ID_ATTRIBUTE);
         type = bundle.getInt(CHAT_TYPE_ATTRIBUTE);
         nick = bundle.getString(OBJECT_NICK_ATTRIBUTE);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.cancel(GimmeApplication.getNotice(type, objectId));
         setTopNick(nick);
         //System.out.println("objectId:" + objectId + ",type:" + type + ",nick:" + nick);
     }
@@ -210,7 +211,6 @@ public class ChatActivity extends SwipeBackActivity {
     private void initTopBar() {
         Glide.with(this).load(R.mipmap.back).into(leftButton);
         leftButton.setOnClickListener(view -> {
-            setExitSwichLayout();
             finish();
         });
         Glide.with(this).load(R.mipmap.info).into(rightButton);
@@ -686,17 +686,5 @@ public class ChatActivity extends SwipeBackActivity {
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
-        setExitSwichLayout();
-    }
-
-    @Override
-    public void setEnterSwichLayout() {
-        SwitchLayout.getSlideFromRight(this, false, null);
-    }
-
-    @Override
-    public void setExitSwichLayout() {
-        SwitchLayout.getSlideToLeft(this, true,
-                null);
     }
 }

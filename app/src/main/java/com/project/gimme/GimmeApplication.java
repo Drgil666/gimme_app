@@ -32,9 +32,14 @@ public class GimmeApplication extends Application {
     public static final String TOKEN = "token";
     public static final String APP_NAME = "gimme";
     public static final String USER_ID = "userId";
+    public static final Integer NOTICE_NUMBER = 100000;
 
     public static Integer getUserId() {
         return userId;
+    }
+
+    public static Integer getNotice(Integer type, Integer objectId) {
+        return type * NOTICE_NUMBER + objectId;
     }
 
     /**
@@ -95,7 +100,6 @@ public class GimmeApplication extends Application {
 //        RongIMClient.init(getApplicationContext(), APP_KEY);
         //滑动工具初始化
         BGASwipeBackHelper.init(this, null);
-        //TODO:所有的转场动画需要重新完成！
         //TODO:二维码扫描功能需要完成!
         //字体初始化
         XUI.initFontStyle("ping_fang_sc.ttf");
@@ -107,5 +111,7 @@ public class GimmeApplication extends Application {
             StrictMode.setVmPolicy(builder.build());
         }
     }
+
+
 }
 
