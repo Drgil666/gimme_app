@@ -76,6 +76,9 @@ public class ChatMsgController {
             ResponseData<List<ChatMsgVO>> userResponseData =
                     JsonUtil.fromJson(result, new TypeToken<ResponseData<List<ChatMsgVO>>>() {
                     }.getType());
+//            for (ChatMsgVO chatMsgVO : userResponseData.getData()) {
+//                chatMsgVO.setText(TEAUtil.decryptByTea(chatMsgVO.getText()));
+//            }
             return userResponseData;
         }
         return null;
@@ -84,6 +87,7 @@ public class ChatMsgController {
     public static ResponseData<ChatMsgVO> createChatMsg(ChatMsg chatMsg) throws IOException {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
+//        chatMsg.setText(TEAUtil.encryptByTea(chatMsg.getText()));
         CudRequestVO<ChatMsg, Integer> requestVO = new CudRequestVO<ChatMsg, Integer>();
         requestVO.setData(chatMsg);
         requestVO.setMethod(CudRequestVO.CREATE_METHOD);
@@ -97,8 +101,10 @@ public class ChatMsgController {
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            return JsonUtil.fromJson(result, new TypeToken<ResponseData<ChatMsgVO>>() {
+            ResponseData<ChatMsgVO> responseData = JsonUtil.fromJson(result, new TypeToken<ResponseData<ChatMsgVO>>() {
             }.getType());
+//            responseData.getData().setText(TEAUtil.decryptByTea(responseData.getData().getText()));
+            return responseData;
         }
         return null;
     }
