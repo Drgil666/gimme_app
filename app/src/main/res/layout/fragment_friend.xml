@@ -33,7 +33,6 @@
             android:id="@+id/friend_personal_msg_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_below="@+id/friend_list_top_layout"
             android:cacheColorHint="@android:color/transparent" />
         <!--横向选项卡-->
