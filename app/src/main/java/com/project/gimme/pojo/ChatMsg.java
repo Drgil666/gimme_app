@@ -1,7 +1,13 @@
 package com.project.gimme.pojo;
 
 
+import android.os.Build;
+import android.util.Base64;
+
+import androidx.annotation.RequiresApi;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.gimme.utils.TEAUtil;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -68,6 +74,18 @@ public class ChatMsg {
 
     @Generated(hash = 1355502543)
     public ChatMsg() {
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void encode() {
+        byte[] bytes = TEAUtil.encryptByTea(text);
+        text = Base64.encodeToString(bytes, Base64.NO_WRAP);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void decode() {
+        byte[] bytes = Base64.decode(text, Base64.NO_WRAP);
+        text = TEAUtil.decryptByTea(bytes);
     }
 
     public Integer getId() {

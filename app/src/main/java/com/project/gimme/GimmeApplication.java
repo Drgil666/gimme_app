@@ -25,7 +25,7 @@ public class GimmeApplication extends Application {
     private static Integer weight;
     private static Integer userId = null;
     public static final Integer TYPE_ERROR = -1;
-    //    public static final String REMOTE_URL = "http://10.21.234.24:8080";
+    //        public static final String REMOTE_URL = "http://10.21.234.24:8080";
     public static final String REMOTE_URL = "https://zjgsucheckin.top:8443";
     public static final String APP_KEY = "pvxdm17jpdthr";
     public static final String LOCAL_STORAGE = "gimme_token";
@@ -33,6 +33,8 @@ public class GimmeApplication extends Application {
     public static final String APP_NAME = "gimme";
     public static final String USER_ID = "userId";
     public static final Integer NOTICE_NUMBER = 100000;
+    public static final Integer MESSAGE_TIME = 2500;
+    public static final Integer DRAG_TIME = 1500;
 
     public static Integer getUserId() {
         return userId;

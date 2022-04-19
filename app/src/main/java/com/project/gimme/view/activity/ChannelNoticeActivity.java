@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelNoticeController;
 import com.project.gimme.controller.ChatMsgController;
@@ -106,7 +107,7 @@ public class ChannelNoticeActivity extends SwipeBackActivity {
                 //System.out.println("刷新消息!" + System.currentTimeMillis());
                 getChatMsgVoList();
             }
-        }, 0, 1000);
+        }, 0, GimmeApplication.MESSAGE_TIME);
     }
 
     @Override
@@ -193,7 +194,6 @@ public class ChannelNoticeActivity extends SwipeBackActivity {
                 ResponseData<List<ChatMsgVO>> responseData =
                         ChannelNoticeController.getChannelNoticeInfo(channelNoticeId);
                 if (responseData != null && responseData.isSuccess()) {
-
                     handler.post(new Runnable() {
                         @Override
                         public void run() {

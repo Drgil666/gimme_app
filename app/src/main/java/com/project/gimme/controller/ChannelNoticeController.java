@@ -3,9 +3,14 @@ package com.project.gimme.controller;
 import static com.project.gimme.GimmeApplication.REMOTE_URL;
 import static com.project.gimme.GimmeApplication.TOKEN;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.pojo.ChannelNotice;
+import com.project.gimme.pojo.ChatMsg;
 import com.project.gimme.pojo.vo.ChatMsgVO;
 import com.project.gimme.pojo.vo.CudRequestVO;
 import com.project.gimme.pojo.vo.ResponseData;
@@ -25,6 +30,7 @@ import okhttp3.Response;
  * @author DrGilbert
  * @date 2022/2/13 20:52
  */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ChannelNoticeController {
     public static ResponseData<List<ChatMsgVO>> getChannelNoticeInfo(Integer channelNoticeId) throws IOException {
         //创建OkHttpClient对象
@@ -36,10 +42,13 @@ public class ChannelNoticeController {
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            ResponseData<List<ChatMsgVO>> userResponseData =
+            ResponseData<List<ChatMsgVO>> data =
                     JsonUtil.fromJson(result, new TypeToken<ResponseData<List<ChatMsgVO>>>() {
                     }.getType());
-            return userResponseData;
+            for (ChatMsg chatMsgVO : data.getData()) {
+                chatMsgVO.decode();
+            }
+            return data;
         }
         return null;
     }

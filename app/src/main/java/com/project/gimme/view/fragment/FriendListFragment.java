@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChannelController;
 import com.project.gimme.controller.GroupController;
@@ -128,7 +129,7 @@ public class FriendListFragment extends Fragment {
                         friendUserAdapter.notifyDataSetChanged();
                         userListView.onRefreshComplete();
                     }
-                }, 2000);
+                }, GimmeApplication.DRAG_TIME);
             }
 
             @Override
@@ -180,7 +181,7 @@ public class FriendListFragment extends Fragment {
                         friendGroupAdapter.notifyDataSetChanged();
                         groupListView.onRefreshComplete();
                     }
-                }, 2000);
+                }, GimmeApplication.DRAG_TIME);
             }
 
             @Override
@@ -232,7 +233,7 @@ public class FriendListFragment extends Fragment {
                         friendChannelAdapter.notifyDataSetChanged();
                         channelListView.onRefreshComplete();
                     }
-                }, 2000);
+                }, GimmeApplication.DRAG_TIME);
             }
 
             @Override

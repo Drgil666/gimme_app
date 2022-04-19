@@ -120,7 +120,7 @@ public class MessageFragment extends Fragment {
             }
         };
         timer = new Timer();
-        timer.schedule(timerTask, 0, 1500);
+        timer.schedule(timerTask, 0, GimmeApplication.MESSAGE_TIME);
     }
 
     private Integer getNewMessageCount(List<MessageVO> messageVOList) {
@@ -144,7 +144,7 @@ public class MessageFragment extends Fragment {
                 }
             };
             timer = new Timer();
-            timer.schedule(timerTask, 0, 1500);
+            timer.schedule(timerTask, 0, GimmeApplication.MESSAGE_TIME);
         } else {
         }
     }
@@ -332,7 +332,7 @@ public class MessageFragment extends Fragment {
                         messageVoAdapter.notifyDataSetChanged();
                         listView.onRefreshComplete();
                     }
-                }, 2000);
+                }, GimmeApplication.DRAG_TIME);
             }
 
             @Override

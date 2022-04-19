@@ -133,7 +133,7 @@ public class ChatActivity extends SwipeBackActivity {
                 //System.out.println("刷新消息!" + System.currentTimeMillis());
                 getChatMessageList(type, objectId);
             }
-        }, 0, 1000);
+        }, 0, GimmeApplication.MESSAGE_TIME);
         refresh();
         initTopBar();
         initChatListView();

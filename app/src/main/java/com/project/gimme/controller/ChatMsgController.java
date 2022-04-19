@@ -3,6 +3,10 @@ package com.project.gimme.controller;
 import static com.project.gimme.GimmeApplication.REMOTE_URL;
 import static com.project.gimme.GimmeApplication.TOKEN;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.google.gson.reflect.TypeToken;
 import com.project.gimme.GimmeApplication;
 import com.project.gimme.pojo.ChatMsg;
@@ -27,8 +31,8 @@ import okhttp3.Response;
  * @author DrGilbert
  * @date 2022/2/13 20:52
  */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class ChatMsgController {
-
     public static ResponseData<List<MessageVO>> getMessageVoList(String keyword) throws IOException {
         //创建OkHttpClient对象
         OkHttpClient client = new OkHttpClient();
@@ -73,13 +77,13 @@ public class ChatMsgController {
         Response response = call.execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            ResponseData<List<ChatMsgVO>> userResponseData =
+            ResponseData<List<ChatMsgVO>> data =
                     JsonUtil.fromJson(result, new TypeToken<ResponseData<List<ChatMsgVO>>>() {
                     }.getType());
-//            for (ChatMsgVO chatMsgVO : userResponseData.getData()) {
-//                chatMsgVO.setText(TEAUtil.decryptByTea(chatMsgVO.getText()));
-//            }
-            return userResponseData;
+            for (ChatMsgVO chatMsgVO : data.getData()) {
+                chatMsgVO.decode();
+            }
+            return data;
         }
         return null;
     }
@@ -87,7 +91,7 @@ public class ChatMsgController {
     public static ResponseData<ChatMsgVO> createChatMsg(ChatMsg chatMsg) throws IOException {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
-//        chatMsg.setText(TEAUtil.encryptByTea(chatMsg.getText()));
+        chatMsg.encode();
         CudRequestVO<ChatMsg, Integer> requestVO = new CudRequestVO<ChatMsg, Integer>();
         requestVO.setData(chatMsg);
         requestVO.setMethod(CudRequestVO.CREATE_METHOD);
@@ -101,9 +105,10 @@ public class ChatMsgController {
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
             String result = response.body().string();
-            ResponseData<ChatMsgVO> responseData = JsonUtil.fromJson(result, new TypeToken<ResponseData<ChatMsgVO>>() {
-            }.getType());
-//            responseData.getData().setText(TEAUtil.decryptByTea(responseData.getData().getText()));
+            ResponseData<ChatMsgVO> responseData =
+                    JsonUtil.fromJson(result, new TypeToken<ResponseData<ChatMsgVO>>() {
+                    }.getType());
+            responseData.getData().decode();
             return responseData;
         }
         return null;

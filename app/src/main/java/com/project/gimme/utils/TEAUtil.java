@@ -93,7 +93,7 @@ public class TEAUtil {
         return tempInt;
     }
 
-    public static String encryptByTea(String info) {
+    public static byte[] encryptByTea(String info) {
         byte[] temp = info.getBytes();
         int n = 8 - temp.length % 8;
         //若temp的位数不足8的倍数,需要填充的位数
@@ -105,12 +105,11 @@ public class TEAUtil {
             byte[] tempEncrpt = encrypt(encryptStr, offset);
             System.arraycopy(tempEncrpt, 0, result, offset, 8);
         }
-        return new String(result);
+        return result;
     }
 
     //通过TEA算法解密信息
-    public static String decryptByTea(String code) {
-        byte[] secretInfo = code.getBytes();
+    public static String decryptByTea(byte[] secretInfo) {
         byte[] decryptStr = null;
         byte[] tempDecrypt = new byte[secretInfo.length];
         for (int offset = 0; offset < secretInfo.length; offset += 8) {

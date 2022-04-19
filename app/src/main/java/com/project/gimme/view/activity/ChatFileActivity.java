@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.R;
 import com.project.gimme.controller.ChatFileController;
 import com.project.gimme.controller.ChatFileInfoController;
@@ -189,7 +190,7 @@ public class ChatFileActivity extends SwipeBackActivity {
                         chatFileAdapter.notifyDataSetChanged();
                         chatFileListView.onRefreshComplete();
                     }
-                }, 2000);
+                }, GimmeApplication.DRAG_TIME);
             }
 
             @Override
