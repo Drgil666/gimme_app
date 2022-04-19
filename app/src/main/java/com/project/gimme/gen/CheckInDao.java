@@ -20,15 +20,14 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
     public static final String TABLENAME = "checkin";
 
     /**
-     * Creates the underlying database table.
+     * Properties of entity CheckIn.<br/>
+     * Can be used for QueryBuilder and for referencing column names.
      */
-    public static void createTable(Database db, boolean ifNotExists) {
-        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
-        db.execSQL("CREATE TABLE " + constraint + "\"checkin\" (" + //
-                "\"id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"group_id\" INTEGER," + // 1: groupId
-                "\"address\" TEXT," + // 2: address
-                "\"type\" TEXT);"); // 3: type
+    public static class Properties {
+        public final static Property Id = new Property(0, Integer.class, "id", true, "id");
+        public final static Property GroupId = new Property(1, Integer.class, "groupId", false, "group_id");
+        public final static Property Address = new Property(2, String.class, "address", false, "address");
+        public final static Property Type = new Property(3, String.class, "type", false, "type");
     }
 
 
@@ -38,6 +37,22 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
 
     public CheckInDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+    }
+
+    /** Creates the underlying database table. */
+    public static void createTable(Database db, boolean ifNotExists) {
+        String constraint = ifNotExists ? "IF NOT EXISTS " : "";
+        db.execSQL("CREATE TABLE " + constraint + "\"checkin\" (" + //
+                "\"id\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"group_id\" INTEGER," + // 1: groupId
+                "\"address\" TEXT," + // 2: address
+                "\"type\" TEXT);"); // 3: type
+    }
+
+    /** Drops the underlying database table. */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"checkin\"";
+        db.execSQL(sql);
     }
 
     @Override
@@ -63,14 +78,6 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
         if (type != null) {
             stmt.bindString(4, type);
         }
-    }
-
-    /**
-     * Drops the underlying database table.
-     */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"checkin\"";
-        db.execSQL(sql);
     }
 
     @Override
@@ -134,17 +141,6 @@ public class CheckInDao extends AbstractDao<CheckIn, Integer> {
         } else {
             return null;
         }
-    }
-    
-    /**
-     * Properties of entity CheckIn.<br/>
-     * Can be used for QueryBuilder and for referencing column names.
-     */
-    public static class Properties {
-        public final static Property Id = new Property(0, Integer.class, "id", true, "id");
-        public final static Property GroupId = new Property(1, Integer.class, "groupId", false, "group_id");
-        public final static Property Address = new Property(2, String.class, "address", false, "address");
-        public final static Property Type = new Property(3, String.class, "type", false, "type");
     }
 
     @Override

@@ -19,10 +19,15 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
 
     public static final String TABLENAME = "channel_user";
 
-    /** Drops the underlying database table. */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"channel_user\"";
-        db.execSQL(sql);
+    /**
+     * Properties of entity ChannelUser.<br/>
+     * Can be used for QueryBuilder and for referencing column names.
+     */
+    public static class Properties {
+        public final static Property ChannelId = new Property(0, Integer.class, "channelId", false, "channel_id");
+        public final static Property UserId = new Property(1, Integer.class, "userId", false, "user_id");
+        public final static Property ChannelNick = new Property(2, String.class, "channelNick", false, "channel_nick");
+        public final static Property Type = new Property(3, String.class, "type", false, "type");
     }
 
 
@@ -47,6 +52,14 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
                 " (\"channel_id\" ASC,\"user_id\" ASC);");
     }
 
+    /**
+     * Drops the underlying database table.
+     */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"channel_user\"";
+        db.execSQL(sql);
+    }
+
     @Override
     protected final void bindValues(DatabaseStatement stmt, ChannelUser entity) {
         stmt.clearBindings();
@@ -60,12 +73,12 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
         if (userId != null) {
             stmt.bindLong(2, userId);
         }
-
+ 
         String channelNick = entity.getChannelNick();
         if (channelNick != null) {
             stmt.bindString(3, channelNick);
         }
-
+ 
         String type = entity.getType();
         if (type != null) {
             stmt.bindString(4, type);
@@ -75,17 +88,17 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, ChannelUser entity) {
         stmt.clearBindings();
-
+ 
         Integer channelId = entity.getChannelId();
         if (channelId != null) {
             stmt.bindLong(1, channelId);
         }
-
+ 
         Integer userId = entity.getUserId();
         if (userId != null) {
             stmt.bindLong(2, userId);
         }
-
+ 
         String channelNick = entity.getChannelNick();
         if (channelNick != null) {
             stmt.bindString(3, channelNick);
@@ -119,17 +132,6 @@ public class ChannelUserDao extends AbstractDao<ChannelUser, Void> {
         entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
         entity.setChannelNick(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setType(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-    }
-
-    /**
-     * Properties of entity ChannelUser.<br/>
-     * Can be used for QueryBuilder and for referencing column names.
-     */
-    public static class Properties {
-        public final static Property ChannelId = new Property(0, Integer.class, "channelId", false, "channel_id");
-        public final static Property UserId = new Property(1, Integer.class, "userId", false, "user_id");
-        public final static Property ChannelNick = new Property(2, String.class, "channelNick", false, "channel_nick");
-        public final static Property Type = new Property(3, String.class, "type", false, "type");
     }
 
     @Override

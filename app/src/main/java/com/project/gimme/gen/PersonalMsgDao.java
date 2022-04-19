@@ -32,6 +32,7 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         public final static Property Note = new Property(5, String.class, "note", false, "note");
         public final static Property Status = new Property(6, Integer.class, "status", false, "status");
         public final static Property Type = new Property(7, String.class, "type", false, "type");
+        public final static Property Timestamp = new Property(8, java.util.Date.class, "timestamp", false, "TIMESTAMP");
     }
 
 
@@ -56,7 +57,8 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
                 "\"object_id\" INTEGER," + // 4: objectId
                 "\"note\" TEXT," + // 5: note
                 "\"status\" INTEGER," + // 6: status
-                "\"type\" TEXT);"); // 7: type
+                "\"type\" TEXT," + // 7: type
+                "\"TIMESTAMP\" INTEGER);"); // 8: timestamp
     }
 
     /** Drops the underlying database table. */
@@ -98,15 +100,20 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         if (note != null) {
             stmt.bindString(6, note);
         }
- 
+
         Integer status = entity.getStatus();
         if (status != null) {
             stmt.bindLong(7, status);
         }
- 
+
         String type = entity.getType();
         if (type != null) {
             stmt.bindString(8, type);
+        }
+
+        java.util.Date timestamp = entity.getTimestamp();
+        if (timestamp != null) {
+            stmt.bindLong(9, timestamp.getTime());
         }
     }
 
@@ -143,7 +150,7 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         if (note != null) {
             stmt.bindString(6, note);
         }
- 
+
         Integer status = entity.getStatus();
         if (status != null) {
             stmt.bindLong(7, status);
@@ -152,6 +159,11 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         String type = entity.getType();
         if (type != null) {
             stmt.bindString(8, type);
+        }
+
+        java.util.Date timestamp = entity.getTimestamp();
+        if (timestamp != null) {
+            stmt.bindLong(9, timestamp.getTime());
         }
     }
 
@@ -170,7 +182,8 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
                 cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // objectId
                 cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // note
                 cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // status
-                cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // type
+                cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // type
+                cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)) // timestamp
         );
         return entity;
     }
@@ -185,6 +198,7 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         entity.setNote(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setStatus(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
         entity.setType(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setTimestamp(cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)));
     }
 
     @Override
@@ -199,20 +213,6 @@ public class PersonalMsgDao extends AbstractDao<PersonalMsg, Integer> {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Properties of entity PersonalMsg.<br/>
-     * Can be used for QueryBuilder and for referencing column names.
-     */
-    public static class Properties {
-        public final static Property Id = new Property(0, Integer.class, "id", true, "id");
-        public final static Property Type = new Property(1, String.class, "type", false, "type");
-        public final static Property OwnerId = new Property(2, Integer.class, "ownerId", false, "owner_id");
-        public final static Property OperatorId = new Property(3, Integer.class, "operatorId", false, "operator_id");
-        public final static Property ObjectId = new Property(4, Integer.class, "objectId", false, "object_id");
-        public final static Property Note = new Property(5, String.class, "note", false, "NOTE");
-        public final static Property Status = new Property(6, Integer.class, "status", false, "STATUS");
     }
 
     @Override

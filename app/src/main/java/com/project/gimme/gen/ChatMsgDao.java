@@ -51,16 +51,8 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
                 "\"type\" TEXT," + // 2: type
                 "\"object_id\" INTEGER," + // 3: objectId
                 "\"timestamp\" INTEGER," + // 4: timeStamp
-                "\"owner_id\" INTEGER);"); // 5: ownerId
-    }
-
-
-    public ChatMsgDao(DaoConfig config) {
-        super(config);
-    }
-
-    public ChatMsgDao(DaoConfig config, DaoSession daoSession) {
-        super(config, daoSession);
+                "\"owner_id\" INTEGER," + // 5: ownerId
+                "\"msgType\" INTEGER);"); // 6: msgType
     }
 
     /**
@@ -74,37 +66,37 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, ChatMsg entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         String text = entity.getText();
         if (text != null) {
             stmt.bindString(2, text);
         }
-
+ 
         String type = entity.getType();
         if (type != null) {
             stmt.bindString(3, type);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(4, objectId);
         }
-
+ 
         java.util.Date timeStamp = entity.getTimeStamp();
         if (timeStamp != null) {
             stmt.bindLong(5, timeStamp.getTime());
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(6, ownerId);
         }
-
+ 
         Integer msgType = entity.getMsgType();
         if (msgType != null) {
             stmt.bindLong(7, msgType);
@@ -114,32 +106,32 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, ChatMsg entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         String text = entity.getText();
         if (text != null) {
             stmt.bindString(2, text);
         }
-
+ 
         String type = entity.getType();
         if (type != null) {
             stmt.bindString(3, type);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(4, objectId);
         }
-
+ 
         java.util.Date timeStamp = entity.getTimeStamp();
         if (timeStamp != null) {
             stmt.bindLong(5, timeStamp.getTime());
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(6, ownerId);
@@ -193,19 +185,6 @@ public class ChatMsgDao extends AbstractDao<ChatMsg, Integer> {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Properties of entity ChatMsg.<br/>
-     * Can be used for QueryBuilder and for referencing column names.
-     */
-    public static class Properties {
-        public final static Property Id = new Property(0, Integer.class, "id", true, "id");
-        public final static Property Text = new Property(1, String.class, "text", false, "text");
-        public final static Property Type = new Property(2, String.class, "type", false, "type");
-        public final static Property ObjectId = new Property(3, Integer.class, "objectId", false, "object_id");
-        public final static Property TimeStamp = new Property(4, java.util.Date.class, "timeStamp", false, "timestamp");
-        public final static Property OwnerId = new Property(5, Integer.class, "ownerId", false, "owner_id");
     }
 
     @Override

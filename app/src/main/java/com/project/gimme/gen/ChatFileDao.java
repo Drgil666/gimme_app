@@ -19,10 +19,19 @@ public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
 
     public static final String TABLENAME = "chat_file";
 
-    /** Drops the underlying database table. */
-    public static void dropTable(Database db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"chat_file\"";
-        db.execSQL(sql);
+    /**
+     * Properties of entity ChatFile.<br/>
+     * Can be used for QueryBuilder and for referencing column names.
+     */
+    public static class Properties {
+        public final static Property Id = new Property(0, Integer.class, "id", true, "id");
+        public final static Property OwnerId = new Property(1, Integer.class, "ownerId", false, "owner_id");
+        public final static Property ObjectId = new Property(2, Integer.class, "objectId", false, "object_id");
+        public final static Property MongoId = new Property(3, String.class, "mongoId", false, "mongo_id");
+        public final static Property Filename = new Property(4, String.class, "filename", false, "filename");
+        public final static Property Type = new Property(5, String.class, "type", false, "type");
+        public final static Property Size = new Property(6, Long.class, "size", false, "size");
+        public final static Property Timestamp = new Property(7, java.util.Date.class, "timestamp", false, "timestamp");
     }
 
 
@@ -48,6 +57,14 @@ public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
                 "\"timestamp\" INTEGER);"); // 7: timestamp
     }
 
+    /**
+     * Drops the underlying database table.
+     */
+    public static void dropTable(Database db, boolean ifExists) {
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"chat_file\"";
+        db.execSQL(sql);
+    }
+
     @Override
     protected final void bindValues(DatabaseStatement stmt, ChatFile entity) {
         stmt.clearBindings();
@@ -61,32 +78,32 @@ public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(3, objectId);
         }
-
+ 
         String mongoId = entity.getMongoId();
         if (mongoId != null) {
             stmt.bindString(4, mongoId);
         }
-
+ 
         String filename = entity.getFilename();
         if (filename != null) {
             stmt.bindString(5, filename);
         }
-
+ 
         String type = entity.getType();
         if (type != null) {
             stmt.bindString(6, type);
         }
-
+ 
         Long size = entity.getSize();
         if (size != null) {
             stmt.bindLong(7, size);
         }
-
+ 
         java.util.Date timestamp = entity.getTimestamp();
         if (timestamp != null) {
             stmt.bindLong(8, timestamp.getTime());
@@ -96,37 +113,37 @@ public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, ChatFile entity) {
         stmt.clearBindings();
-
+ 
         Integer id = entity.getId();
         if (id != null) {
             stmt.bindLong(1, id);
         }
-
+ 
         Integer ownerId = entity.getOwnerId();
         if (ownerId != null) {
             stmt.bindLong(2, ownerId);
         }
-
+ 
         Integer objectId = entity.getObjectId();
         if (objectId != null) {
             stmt.bindLong(3, objectId);
         }
-
+ 
         String mongoId = entity.getMongoId();
         if (mongoId != null) {
             stmt.bindString(4, mongoId);
         }
-
+ 
         String filename = entity.getFilename();
         if (filename != null) {
             stmt.bindString(5, filename);
         }
-
+ 
         String type = entity.getType();
         if (type != null) {
             stmt.bindString(6, type);
         }
-
+ 
         Long size = entity.getSize();
         if (size != null) {
             stmt.bindLong(7, size);
@@ -182,21 +199,6 @@ public class ChatFileDao extends AbstractDao<ChatFile, Integer> {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Properties of entity ChatFile.<br/>
-     * Can be used for QueryBuilder and for referencing column names.
-     */
-    public static class Properties {
-        public final static Property Id = new Property(0, Integer.class, "id", true, "id");
-        public final static Property OwnerId = new Property(1, Integer.class, "ownerId", false, "owner_id");
-        public final static Property ObjectId = new Property(2, Integer.class, "objectId", false, "object_id");
-        public final static Property MongoId = new Property(3, String.class, "mongoId", false, "mongo_id");
-        public final static Property Filename = new Property(4, String.class, "filename", false, "filename");
-        public final static Property Type = new Property(5, String.class, "type", false, "type");
-        public final static Property Size = new Property(6, Long.class, "size", false, "size");
-        public final static Property Timestamp = new Property(7, java.util.Date.class, "timestamp", false, "timestamp");
     }
 
     @Override

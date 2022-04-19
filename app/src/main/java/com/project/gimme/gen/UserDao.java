@@ -28,14 +28,14 @@ public class UserDao extends AbstractDao<User, Integer> {
         public final static Property Nick = new Property(1, String.class, "nick", false, "nick");
         public final static Property Avatar = new Property(2, String.class, "avatar", false, "avatar");
         public final static Property City = new Property(3, String.class, "city", false, "city");
-        public final static Property Province = new Property(4, Integer.class, "province", false, "province");
-        public final static Property Birthday = new Property(5, java.util.Date.class, "birthday", false, "birthday");
-        public final static Property Mail = new Property(6, String.class, "mail", false, "mail");
-        public final static Property Gender = new Property(7, Integer.class, "gender", false, "gender");
-        public final static Property Occupation = new Property(8, Integer.class, "occupation", false, "occupation");
-        public final static Property Motto = new Property(9, String.class, "motto", false, "motto");
-        public final static Property Company = new Property(10, String.class, "company", false, "company");
-        public final static Property Password = new Property(11, String.class, "password", false, "password");
+        public final static Property Birthday = new Property(4, java.util.Date.class, "birthday", false, "birthday");
+        public final static Property Mail = new Property(5, String.class, "mail", false, "mail");
+        public final static Property Gender = new Property(6, Integer.class, "gender", false, "gender");
+        public final static Property Occupation = new Property(7, Integer.class, "occupation", false, "occupation");
+        public final static Property Motto = new Property(8, String.class, "motto", false, "motto");
+        public final static Property Company = new Property(9, String.class, "company", false, "company");
+        public final static Property Password = new Property(10, String.class, "password", false, "password");
+        public final static Property PersonalMsgTimestamp = new Property(11, java.util.Date.class, "personalMsgTimestamp", false, "PERSONAL_MSG_TIMESTAMP");
     }
 
 
@@ -55,14 +55,14 @@ public class UserDao extends AbstractDao<User, Integer> {
                 "\"nick\" TEXT," + // 1: nick
                 "\"avatar\" TEXT," + // 2: avatar
                 "\"city\" TEXT," + // 3: city
-                "\"province\" INTEGER," + // 4: province
-                "\"birthday\" INTEGER," + // 5: birthday
-                "\"mail\" TEXT," + // 6: mail
-                "\"gender\" INTEGER," + // 7: gender
-                "\"occupation\" INTEGER," + // 8: occupation
-                "\"motto\" TEXT," + // 9: motto
-                "\"company\" TEXT," + // 10: company
-                "\"password\" TEXT);"); // 11: password
+                "\"birthday\" INTEGER," + // 4: birthday
+                "\"mail\" TEXT," + // 5: mail
+                "\"gender\" INTEGER," + // 6: gender
+                "\"occupation\" INTEGER," + // 7: occupation
+                "\"motto\" TEXT," + // 8: motto
+                "\"company\" TEXT," + // 9: company
+                "\"password\" TEXT," + // 10: password
+                "\"PERSONAL_MSG_TIMESTAMP\" INTEGER);"); // 11: personalMsgTimestamp
     }
 
     /** Drops the underlying database table. */
@@ -95,44 +95,44 @@ public class UserDao extends AbstractDao<User, Integer> {
             stmt.bindString(4, city);
         }
  
-        Integer province = entity.getProvince();
-        if (province != null) {
-            stmt.bindLong(5, province);
-        }
- 
         java.util.Date birthday = entity.getBirthday();
         if (birthday != null) {
-            stmt.bindLong(6, birthday.getTime());
+            stmt.bindLong(5, birthday.getTime());
         }
  
         String mail = entity.getMail();
         if (mail != null) {
-            stmt.bindString(7, mail);
+            stmt.bindString(6, mail);
         }
 
         Integer gender = entity.getGender();
         if (gender != null) {
-            stmt.bindLong(8, gender);
+            stmt.bindLong(7, gender);
         }
 
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
-            stmt.bindLong(9, occupation);
+            stmt.bindLong(8, occupation);
         }
 
         String motto = entity.getMotto();
         if (motto != null) {
-            stmt.bindString(10, motto);
+            stmt.bindString(9, motto);
         }
 
         String company = entity.getCompany();
         if (company != null) {
-            stmt.bindString(11, company);
+            stmt.bindString(10, company);
         }
 
         String password = entity.getPassword();
         if (password != null) {
-            stmt.bindString(12, password);
+            stmt.bindString(11, password);
+        }
+
+        java.util.Date personalMsgTimestamp = entity.getPersonalMsgTimestamp();
+        if (personalMsgTimestamp != null) {
+            stmt.bindLong(12, personalMsgTimestamp.getTime());
         }
     }
 
@@ -160,44 +160,44 @@ public class UserDao extends AbstractDao<User, Integer> {
             stmt.bindString(4, city);
         }
  
-        Integer province = entity.getProvince();
-        if (province != null) {
-            stmt.bindLong(5, province);
-        }
- 
         java.util.Date birthday = entity.getBirthday();
         if (birthday != null) {
-            stmt.bindLong(6, birthday.getTime());
+            stmt.bindLong(5, birthday.getTime());
         }
  
         String mail = entity.getMail();
         if (mail != null) {
-            stmt.bindString(7, mail);
+            stmt.bindString(6, mail);
         }
 
         Integer gender = entity.getGender();
         if (gender != null) {
-            stmt.bindLong(8, gender);
+            stmt.bindLong(7, gender);
         }
 
         Integer occupation = entity.getOccupation();
         if (occupation != null) {
-            stmt.bindLong(9, occupation);
+            stmt.bindLong(8, occupation);
         }
 
         String motto = entity.getMotto();
         if (motto != null) {
-            stmt.bindString(10, motto);
+            stmt.bindString(9, motto);
         }
 
         String company = entity.getCompany();
         if (company != null) {
-            stmt.bindString(11, company);
+            stmt.bindString(10, company);
         }
 
         String password = entity.getPassword();
         if (password != null) {
-            stmt.bindString(12, password);
+            stmt.bindString(11, password);
+        }
+
+        java.util.Date personalMsgTimestamp = entity.getPersonalMsgTimestamp();
+        if (personalMsgTimestamp != null) {
+            stmt.bindLong(12, personalMsgTimestamp.getTime());
         }
     }
 
@@ -213,14 +213,14 @@ public class UserDao extends AbstractDao<User, Integer> {
                 cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // nick
                 cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // avatar
                 cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // city
-                cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // province
-                cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)), // birthday
-                cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // mail
-                cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // gender
-                cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8), // occupation
-                cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // motto
-                cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // company
-                cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // password
+                cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)), // birthday
+                cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // mail
+                cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6), // gender
+                cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7), // occupation
+                cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // motto
+                cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // company
+                cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // password
+                cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)) // personalMsgTimestamp
         );
         return entity;
     }
@@ -231,14 +231,14 @@ public class UserDao extends AbstractDao<User, Integer> {
         entity.setNick(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setAvatar(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setCity(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setProvince(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
-        entity.setBirthday(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
-        entity.setMail(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setGender(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
-        entity.setOccupation(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));
-        entity.setMotto(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setCompany(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setPassword(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setBirthday(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
+        entity.setMail(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setGender(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
+        entity.setOccupation(cursor.isNull(offset + 7) ? null : cursor.getInt(offset + 7));
+        entity.setMotto(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setCompany(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setPassword(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setPersonalMsgTimestamp(cursor.isNull(offset + 11) ? null : new java.util.Date(cursor.getLong(offset + 11)));
     }
     
     @Override
