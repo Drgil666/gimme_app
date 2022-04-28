@@ -80,6 +80,9 @@ dependencies {
     //Emoji支持
     implementation 'io.github.rockerhieu:emojiconize:1.0.0'
     implementation 'io.github.rockerhieu:emojicon:1.4.2'
+    //EmojiCompact支持
+    implementation "androidx.emoji:emoji:1.1.0"
+    implementation 'androidx.emoji:emoji-bundled:1.1.0'
     //Glide支持
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     //SwitchLayout支持

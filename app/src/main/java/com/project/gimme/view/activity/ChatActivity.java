@@ -470,7 +470,7 @@ public class ChatActivity extends SwipeBackActivity {
                             } else if (msgType.equals(MsgTypeUtil.MsgType.TYPE_FILE.getCode())) {
                                 ChatMsgFileVO chatMsgFileVO = new ChatMsgFileVO();
                                 chatMsgFileVO.setChatFileId(chatFile.getId());
-                                chatMsgFileVO.setFileName(file.getName());
+                                chatMsgFileVO.setFileName(chatFile.getFilename());
                                 chatMsgFileVO.setFileSize(file.length() * 8);
                                 chatMsg.setText(JsonUtil.toJson(chatMsgFileVO));
                             }

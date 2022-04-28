@@ -7,6 +7,7 @@ import android.util.Base64;
 import androidx.annotation.RequiresApi;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.gimme.GimmeApplication;
 import com.project.gimme.utils.TEAUtil;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -78,14 +79,18 @@ public class ChatMsg {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void encode() {
-        byte[] bytes = TEAUtil.encryptByTea(text);
-        text = Base64.encodeToString(bytes, Base64.NO_WRAP);
+        if (GimmeApplication.IS_TEA) {
+            byte[] bytes = TEAUtil.encryptByTea(text);
+            text = Base64.encodeToString(bytes, Base64.NO_WRAP);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void decode() {
-        byte[] bytes = Base64.decode(text, Base64.NO_WRAP);
-        text = TEAUtil.decryptByTea(bytes);
+        if (GimmeApplication.IS_TEA) {
+            byte[] bytes = Base64.decode(text, Base64.NO_WRAP);
+            text = TEAUtil.decryptByTea(bytes);
+        }
     }
 
     public Integer getId() {

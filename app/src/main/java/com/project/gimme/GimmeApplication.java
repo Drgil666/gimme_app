@@ -7,6 +7,10 @@ import android.content.ContextWrapper;
 import android.os.Build;
 import android.os.StrictMode;
 
+import androidx.annotation.Nullable;
+import androidx.emoji.bundled.BundledEmojiCompatConfig;
+import androidx.emoji.text.EmojiCompat;
+
 import com.project.gimme.controller.TestController;
 import com.tandong.switchlayout.SwitchLayout;
 import com.xuexiang.xui.XUI;
@@ -25,7 +29,7 @@ public class GimmeApplication extends Application {
     private static Integer weight;
     private static Integer userId = null;
     public static final Integer TYPE_ERROR = -1;
-    //        public static final String REMOTE_URL = "http://10.21.234.24:8080";
+    //            public static final String REMOTE_URL = "http://10.21.234.24:8080";
     public static final String REMOTE_URL = "https://zjgsucheckin.top:8443";
     public static final String APP_KEY = "pvxdm17jpdthr";
     public static final String LOCAL_STORAGE = "gimme_token";
@@ -35,7 +39,7 @@ public class GimmeApplication extends Application {
     public static final Integer NOTICE_NUMBER = 100000;
     public static final Integer MESSAGE_TIME = 2500;
     public static final Integer DRAG_TIME = 1500;
-
+    public static final Boolean IS_TEA = false;
     public static Integer getUserId() {
         return userId;
     }
@@ -107,10 +111,27 @@ public class GimmeApplication extends Application {
         //设置动画效果时间
         SwitchLayout.animDuration = 300;
         TestController.test();
+        loadEmojiFromBundled();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
         }
+    }
+
+    private void loadEmojiFromBundled() {
+        EmojiCompat.Config config = new BundledEmojiCompatConfig(getApplicationContext());
+
+        config.setReplaceAll(true)
+                .registerInitCallback(new EmojiCompat.InitCallback() {
+                    @Override
+                    public void onInitialized() {
+                    }
+
+                    @Override
+                    public void onFailed(@Nullable Throwable throwable) {
+                    }
+                });
+        EmojiCompat.init(config);
     }
 }
 
