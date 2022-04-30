@@ -1,4 +1,4 @@
-package com.project.gimme.DataBase;
+package com.project.gimme.dataBase;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
